@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "mongoose": "^6.5.2",
+    "next": "latest",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  }
+}
