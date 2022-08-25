@@ -31,6 +31,10 @@ app.use(
     })
 )
 
+// router of app in server
+const userRouter = require('./routers/userRouter')
+app.use('/', userRouter)
+
 // Tells the app to listen on port 3000 and logs that information to the console.
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server is alive!')
