@@ -1,4 +1,6 @@
 const { User } = require("../models/user");
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const registerUser = async (req, res) => {
   const user = new User(req.body);
@@ -20,30 +22,54 @@ const registerUser = async (req, res) => {
 };
 
 const getUser = (req, res) => {
-  res.send(req.user);
+  res.status(200).send({
+    message: "Login Successful",
+    user: req.user
+  });
 };
 
-// sample logout version, but still under development
-/*
-const logout = (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      res.status(500).send({
-        message: "Error found",
-      err
-    })
-  console.log(err)
-  }
+const loginUser = (req, res) => {
+ 
+  User.findOne({ username: req.body.username }).then((user) => {
+      bcrypt.compare(req.body.password, user.password).then((checkPass) => {
 
-  res.status(201).send({
-    message: "Logout successfully",
-    isValid: true
-  });
-  })
-  console.log("backend logout")
-  
+          if(!checkPass) {
+            return res.status(400).send({
+              message: "Invalid password",
+              isValid: false,
+              error,
+            });
+          }
+
+          //generate JWT token
+          const token = jwt.sign(
+            { userId: user._id,
+              username: user.username
+            },
+            "RANDOM-TOKEN",
+            { expiresIn: "24h" }
+          );
+          res.status(200).send({
+            message: "Login Successful",
+            username: user.username,
+            isValid: true,
+            token,
+          });
+        }).catch((error) => {
+          res.status(400).send({
+            message: "Passwords does not match",
+            isValid: false,
+            error,
+          });
+        });
+    }).catch((e) => {
+      res.status(404).send({
+        message: "User doesn't exist",
+        isValid: false,
+        e,
+      });
+    });
 }
-*/
 
 const logout = (req, res) => {
   if (req.session) {
@@ -55,6 +81,7 @@ const logout = (req, res) => {
       } else {
         res.status(201).send({
           message: "Logout successful",
+          isValid: false
         });
       }
     });
@@ -68,4 +95,5 @@ module.exports = {
   registerUser,
   getUser,
   logout,
+  loginUser
 };

@@ -1,10 +1,8 @@
 // imports libraries and frameworks used for the project
 const express = require('express'),
-      session = require('express-session'),
       bodyParser = require('body-parser'),
-      cookieParser = require('cookie-parser'),
       cors = require('cors'),
-      passport = require('passport')
+      jwt = require('jsonwebtoken')
 
 // app runs on express.js
 const app = express()
@@ -21,22 +19,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app uses express-session for logged-in users
-app.use(
-    session({
-    // The secret used to sign session cookies 
-    secret: process.env.SESSION_SECRET || 'COMP300022',
-    name: 'Sterling Artefacts', 
-    saveUninitialized: true,
-    resave: true
-    })
-)
-
-// parses cookie for the session
-app.use(cookieParser("COMP300022"));
-
-// app uses passport to authenticate session
-app.use(passport.authenticate('session'))
 
 // router of app in server
 const userRouter = require('./routers/userRouter')
