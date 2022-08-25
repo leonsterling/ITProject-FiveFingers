@@ -18,7 +18,7 @@ const registerUser = async (req, res) => {
 }
 
 const getUser = (req, res) => {
-    
+  res.send(req.user)
 }
 
 

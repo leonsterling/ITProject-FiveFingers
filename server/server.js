@@ -32,6 +32,9 @@ app.use(
     })
 )
 
+// parses cookie for the session
+app.use(cookieParser("COMP300022"));
+
 // app uses passport to authenticate session
 app.use(passport.authenticate('session'))
 
@@ -40,7 +43,7 @@ const userRouter = require('./routers/userRouter')
 app.use('/', userRouter)
 
 // Tells the app to listen on port 3000 and logs that information to the console.
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 5000, () => {
     console.log('Server is alive!')
 })
 
