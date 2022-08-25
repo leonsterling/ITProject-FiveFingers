@@ -1,0 +1,55 @@
+.App {
+  height: 100vh;
+  flex-direction: column;
+}
+
+.App, .form-template {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100vw;
+}
+
+.form-template {
+  display: flex;
+}
+.form-template button {
+  padding: 20px;
+}
+
+.login-page {
+  background: rgb(215, 229, 234);
+  background: linear-gradient(135deg, rgb(215, 229, 234) 0%, rgb(141, 179, 195) 100%);
+  width: 40%;
+  margin-left: 5vw;
+  border-radius: 10px;
+  box-shadow: 0px 4px 9px -3px hsla(0deg, 0%, 0%, 0.5);
+  display: flex;
+  justify-content: center;
+}
+.login-page ul {
+  list-style: none;
+  line-height: 1.55;
+}
+.login-page input {
+  border-radius: 6px;
+  border: 1px solid rgba(128, 128, 128, 0.3411764706);
+  margin-bottom: 25px;
+}
+.login-page label {
+  font-weight: bold;
+}
+
+.login-initial {
+  outline: 2px solid #808080;
+}
+
+.login-invalid {
+  outline: 2px solid red;
+}
+
+.login-valid {
+  outline: 2px solid green;
+}
+
+/*# sourceMappingURL=login.css.map */

@@ -53,7 +53,7 @@ userRouter.post('/login', (req, res, next) => {
       
   });
 
-userRouter.post('/logout', userController.logout)
+userRouter.delete('/logout', userController.logout)
 userRouter.get('/getUser', userController.getUser)
 
 // export Router object
