@@ -1,54 +1,60 @@
 // libraries imported
 const express = require('express') // for express-validator
-const passport = require('passport') // for passport and session
+const passport = require('../passport')
 
-// create Router object
+// create userRouter object
 const userRouter = express.Router()
 
-// import patient controller functions
+// import user controller functions
 const userController = require('../controllers/userController')
-
-// Passport Authentication middleware
-const isAuthenticated = (req, res, next) => {
-    // patient not authenticated, redirect to patient login page
-    if (!req.isAuthenticated()) {
-        return res.redirect('/login')
-    }
-    // if successful, proceed to dashboard in controller
-    return next()
-}
 
 // Routes
 userRouter.post('/register', userController.registerUser)
-userRouter.post("/login", (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
-      if (err) {
+
+userRouter.post('/login', (req, res, next) => {
+    passport.authenticate("local", (err, user) => {
+        if (err) {
           res.status(500).send({
-              message: "error found",
-              err,
-          });
-      }
-      if (!user) {
+            message: "Error found",
+            err
+          })
+          console.log (err)
+        }
+        
+        if (!user) {
           res.status(201).send({
-              test: "No user exists",
-              isValid: false,
-          });
-          console.log(user)}
-      else {
-        req.logIn(user, (err) => {
-          if (err) throw err;
+            message: "No User Exists",
+            isValid: false
+          })
+          console.log(user)
+        }
+
+        else {
+          req.logIn(user, (err) => {
+            if (err) {
+              res.status(500).send({
+                message: "Error found",
+              err
+            })
+          console.log (err)
+          }
+
           res.status(201).send({
-              test: "User exists",
-              isValid: true,
+            message: "Successfully Authenticated",
+            isValid: true
           });
           console.log(req.user);
-        });
-      }
-    })(req, res, next);
+          });
+        }
+      })
+      
+      // callback function called next
+      (req, res, next);
+      
   });
 
-
+userRouter.delete('/logout', userController.logout)
 userRouter.get('/getUser', userController.getUser)
 
-
+// export Router object
 module.exports = userRouter

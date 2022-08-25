@@ -19,24 +19,7 @@ export default function LoginPage () {
     const [username, setUserName] = useState("");
     const [password ,setPassword] = useState("");
 
-    function handleRegister (e) {
-      // set configurations
-      const configuration = {
-        method: "post",
-        url: "http://localhost:5000/register",
-        data: {
-          username,
-          password,
-        },
-      };
-
-      // make the API call
-      axios(configuration)
-
-      // prevent the form from refreshing the whole page
-      e.preventDefault();
-    }
-
+    
     async function handleLogin (e) {
       // set configurations
       setLoginState({validLogin: false});

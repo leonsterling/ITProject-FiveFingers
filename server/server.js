@@ -1,3 +1,4 @@
+// imports libraries and frameworks used for the project
 const express = require('express'),
       session = require('express-session'),
       bodyParser = require('body-parser'),
@@ -5,22 +6,22 @@ const express = require('express'),
       cors = require('cors'),
       passport = require('passport')
 
+// app runs on express.js
 const app = express()
 
+// app uses cors to authenticate user
 app.use(
-  cors({
-    origin: "http://localhost:3000", // <-- location of the react app were connecting to
-    credentials: true,
-  })
+    cors({
+      origin: "http://localhost:3000", // location of the react app were connecting to
+      credentials: true,
+    })
 );
 
+// app uses bodyParser to parse JSON objects from HTTP requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-if (app.get('env') === 'production') {
-    app.set('trust proxy', 1); // Trust first proxy
-}
-
+// app uses express-session for logged-in users
 app.use(
     session({
     // The secret used to sign session cookies 
@@ -31,11 +32,13 @@ app.use(
     })
 )
 
-app.use(passport.initialize());
-app.use(passport.session());
-require("./passport")(passport);
+// parses cookie for the session
 app.use(cookieParser("COMP300022"));
 
+// app uses passport to authenticate session
+app.use(passport.authenticate('session'))
+
+// router of app in server
 const userRouter = require('./routers/userRouter')
 app.use('/', userRouter)
 
@@ -44,8 +47,5 @@ app.listen(process.env.PORT || 5000, () => {
     console.log('Server is alive!')
 })
 
-
-
+// connect mongoose index in models folder
 require('./models')
-
-
