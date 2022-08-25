@@ -53,6 +53,7 @@
     position: relative;
     display: flex;
     margin-bottom: 10px;
+    background-color: var(--input-bg);
     padding: 15px;
     border-radius: 20px;
 }
@@ -69,6 +70,7 @@
 }
 
 .drop-file-preview__item__del {
+    background-color: var(--box-bg);
     width: 40px;
     height: 40px;
     border-radius: 50%;

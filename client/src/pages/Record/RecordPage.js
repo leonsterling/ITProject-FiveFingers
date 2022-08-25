@@ -25,7 +25,7 @@ const RecordForm = () => {
       <form>
         <Typography>Create Artefact</Typography>
         <Grid container spacing={10}>
-          <Grid item xs={3}>
+          <Grid item xs={3.7}>
             <label>
               <p>Artefact Name:</p>
               <input type="text" id="emailAddress" />
@@ -53,9 +53,9 @@ const RecordForm = () => {
               />
             </label>
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={8.3}>
             <div className="box">
-              <h2 className="header">React drop files input</h2>
+            <h2 className="header">React drop files input</h2>
               <DropFileInput onFileChange={(files) => onFileChange(files)} />
             </div>
           </Grid>
