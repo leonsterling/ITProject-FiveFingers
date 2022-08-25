@@ -82,7 +82,6 @@ export default function LoginPage () {
     }
 
     return (
-        <div className='form-template'>
           <form className='login-page' action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
             <ul>
                 <li>
@@ -112,19 +111,6 @@ export default function LoginPage () {
                 </li>
             </ul>
           </form>
-
-          <button onClick={() => setLoginState({currState: states.valid})}>
-            Valid Button
-          </button>
-
-          <button onClick={() => setLoginState({currState: states.invalid})}>
-            Invalid Button
-          </button>
-
-          <button onClick={() => setLoginState({currState: states.initial})}>
-            Initial State
-          </button>
-        </div>
     )
 }
 
