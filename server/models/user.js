@@ -6,6 +6,13 @@ const tagSchema = new mongoose.Schema({
     name: {type: String}
  });
 
+ // schema for image 
+const imageSchema = new mongoose.Schema({
+    name: {type: String},
+    data: Buffer,
+    contentType: String
+})
+
 // schema for artefact
 const artefactSchema = new mongoose.Schema({
     artefact_name: {type: String},
@@ -13,10 +20,7 @@ const artefactSchema = new mongoose.Schema({
     artefact_location: {type: String},
     artefact_date_created: {type: Date, default: new Date()},
     artefact_date_origin: {type: Date},
-    artefact_image: {
-        data: Buffer,
-        contentType: String
-    },
+    artefact_images: [imageSchema],
     artefact_tags: [tagSchema]
  });
 
@@ -65,6 +69,7 @@ const User = mongoose.model('User', userSchema)
 const Artefact = mongoose.model('Artefact', artefactSchema)
 const Album = mongoose.model('Album', albumSchema)
 const Tag = mongoose.model('Tag', tagSchema)
+const Image = mongoose.model('Image', imageSchema)
 
 // export the constants
-module.exports = {User, Artefact, Album, Tag}
+module.exports = {User, Artefact, Album, Tag, Image}
