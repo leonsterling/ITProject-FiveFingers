@@ -3,7 +3,8 @@ const express = require('express'),
       session = require('express-session'),
       bodyParser = require('body-parser'),
       cookieParser = require('cookie-parser'),
-      cors = require('cors')
+      cors = require('cors'),
+      passport = require('passport')
 
 // app runs on express.js
 const app = express()
@@ -30,6 +31,9 @@ app.use(
     resave: true
     })
 )
+
+// app uses passport to authenticate session
+app.use(passport.authenticate('session'))
 
 // router of app in server
 const userRouter = require('./routers/userRouter')
