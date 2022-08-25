@@ -39,3 +39,6 @@ app.use('/', userRouter)
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server is alive!')
 })
+
+// connect mongoose index in models folder
+require('./models')
