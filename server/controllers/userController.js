@@ -21,9 +21,13 @@ const getUser = (req, res) => {
   res.send(req.user)
 }
 
+const logout = (req, res) => {
+  req.logOut
+}
 
 // exports objects containing functions imported by router
 module.exports = {
     registerUser,
-    getUser
+    getUser,
+    logout
 }

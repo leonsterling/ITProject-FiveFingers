@@ -12,20 +12,48 @@ const userController = require('../controllers/userController')
 userRouter.post('/register', userController.registerUser)
 
 userRouter.post('/login', (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
-        if (err) throw err;
-        if (!user) res.send("No User Exists")
+    passport.authenticate("local", (err, user) => {
+        if (err) {
+          res.status(500).send({
+            message: "Error found",
+            err
+          })
+          console.log (err)
+        }
+        
+        if (!user) {
+          res.status(201).send({
+            message: "No User Exists",
+            isValid: false
+          })
+          console.log(user)
+        }
+
         else {
           req.logIn(user, (err) => {
-            if (err) throw err;
-            res.send("Successfully Authenticated");
-            console.log(req.user);
+            if (err) {
+              res.status(500).send({
+                message: "Error found",
+              err
+            })
+          console.log (err)
+          }
+
+          res.status(201).send({
+            message: "Successfully Authenticated",
+            isValid: true
+          });
+          console.log(req.user);
           });
         }
-      })(req, res, next);
+      })
+      
+      // callback function called next
+      (req, res, next);
       
   });
 
+userRouter.post('/logout', userController.logout)
 userRouter.get('/getUser', userController.getUser)
 
 // export Router object

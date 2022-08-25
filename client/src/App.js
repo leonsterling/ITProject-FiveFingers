@@ -55,6 +55,19 @@ function App() {
   
   }
 
+  const handleLogout = (e) => {
+     // set configurations
+    const configuration = {
+    method: "post",
+    url: "http://localhost:5000/logout",
+    withCredentials: true,
+  };
+
+  axios(configuration)
+
+  e.preventDefault()
+  }
+
   const handleUser = (e) => {
 
     // set configurations
@@ -105,6 +118,7 @@ function App() {
           onChange={(e) => logpassword(e.target.value)}
         />
         <button onClick={(e) => handleLogin(e)}>Log-In</button>
+        <button onClick={(e) => handleLogout(e)}>Log-Out</button>
       </div>
 
       <div>
