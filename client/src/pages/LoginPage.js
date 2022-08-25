@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import classes from "./LoginPage.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 const theme = createTheme();
 
 function LoginPage() {
@@ -28,6 +28,8 @@ function LoginPage() {
   };
 
   return (
+    <h1>HELLO</h1>
+    /*
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
@@ -66,55 +68,58 @@ function LoginPage() {
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Enter your email address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                variant="standard"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailOutlinedIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Enter your password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                variant="standard"
-                InputProps={{
+              <form onSubmit={(e) => handleLogin(e)}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Enter your username"
+                  name="username"
+                  autoComplete="Username"
+                  autoFocus
+                  variant="standard"
+                  onChange={(e) => setUserName(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EmailOutlinedIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Enter your password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  variant="standard"
+                  onChange={(e) => setPassword(e.target.value)}
+                  InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
                         <LockOutlinedIcon />
                       </InputAdornment>
                     ),
                   }}
-              />
+                />
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                className={classes.submit}
-              >
-                Sign In
-              </Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  className={classes.submit}
+                >
+                  Sign In
+                </Button>
+              </form>
               <Grid container spacing={2}>
-                <Grid item xs={8}>
-                </Grid>
+                <Grid item xs={8}></Grid>
                 <Grid item xs={4}>
                   <Link to="/forgotpassword">Forgot Password</Link>
                 </Grid>
@@ -123,7 +128,7 @@ function LoginPage() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </ThemeProvider>*/
   );
 }
 
