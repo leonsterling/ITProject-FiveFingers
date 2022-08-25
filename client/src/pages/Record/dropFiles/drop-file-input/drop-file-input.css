@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: center;
 
+    background-color: var(--input-bg);
 }
 
 .drop-file-input input {

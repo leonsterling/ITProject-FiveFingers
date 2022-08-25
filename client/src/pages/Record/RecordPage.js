@@ -16,10 +16,14 @@ import useStyles from "./styles";
 import DropFileInput from "/Users/nicholaswidjaja/Desktop/ITProject-FiveFingers/client/src/pages/Record/dropFiles/drop-file-input/DropFileInput.jsx";
 import "/Users/nicholaswidjaja/Desktop/ITProject-FiveFingers/client/src/pages/Record/dropFiles/DropFiles.css";
 
+
 const RecordForm = () => {
+
+  const classes = useStyles();
   const onFileChange = (files) => {
     console.log(files);
   };
+
   return (
     <>
       <form>
@@ -55,14 +59,28 @@ const RecordForm = () => {
           </Grid>
           <Grid item xs={8.3}>
             <div className="box">
-            <h2 className="header">React drop files input</h2>
+              <h2 className="header">React drop files input</h2>
               <DropFileInput onFileChange={(files) => onFileChange(files)} />
             </div>
           </Grid>
         </Grid>
+         <button className="button" type="submit"> Submit</button>
+         <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          type="submit"
+          fullWidth
+          className={classes.submit}
+        >
+          Submit
+        </Button>
+
       </form>
     </>
   );
 };
 
 export default RecordForm;
+// notes:
+// insert clear button maybe?
