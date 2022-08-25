@@ -12,8 +12,8 @@ const states = {
 
 export default function LoginPage () {
     const navigate = useNavigate();
-    const [loginState, setLoginState] = useState({
-        firstRender: true,
+    let [loginState, setLoginState] = useState({
+        isValid: false,
         currState: states.initial,
     });
     const [username, setUserName] = useState("");
@@ -33,14 +33,13 @@ export default function LoginPage () {
       // make the API call
       axios(configuration)
 
-
       // prevent the form from refreshing the whole page
       e.preventDefault();
-
     }
 
     async function handleLogin (e) {
       // set configurations
+      setLoginState({validLogin: false});
       const configuration = {
         method: "post",
         url: "http://localhost:5000/login",
@@ -55,13 +54,16 @@ export default function LoginPage () {
 
       // make the API call
       await axios(configuration).then((res) => {
-          const reponseData = res.data;
-          inputClass = (reponseData.isValid) ? states.valid : states.invalid;
-          console.log(inputClass);
-          setLoginState({ currState: inputClass });
+          inputClass = (res.data.isValid) ? states.valid : states.invalid;
+          setLoginState({
+              currState: inputClass,
+              isValid: res.data.isValid,
+          });
       }).catch((err) => {
           console.log(err);
       });
+
+      console.log("hello there");
     }
 
     let inputClass;
@@ -75,12 +77,16 @@ export default function LoginPage () {
         inputClass = states.valid;
     }
 
+    if (loginState.isValid) {
+        navigate('/');
+    }
+
     return (
         <div className='form-template'>
-          <form class='login-page' action='/login' method='post'>
+          <form className='login-page' action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
             <ul>
                 <li>
-                    <label for='userName'> Username: </label>
+                    <label> Username: </label>
                 </li>
                 <li>
                     <input
@@ -102,8 +108,7 @@ export default function LoginPage () {
                     />
                 </li>
                 <li>
-                    <button onClick={(e) => handleRegister(e)}>Register</button>
-                    <button onClick={(e) => handleLogin(e)}>Log-In</button>
+                    <button type='submit' >Log-In</button>
                 </li>
             </ul>
           </form>
