@@ -9,8 +9,7 @@ const states = {
     valid: 'login-valid',
 };
 
-
-export default function LoginPage () {
+export default function LoginForm () {
     const navigate = useNavigate();
     let [loginState, setLoginState] = useState({
         isValid: false,

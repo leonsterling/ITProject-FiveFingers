@@ -6,10 +6,9 @@ import {
   Route,
 } from "react-router-dom";
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Home from './Home';
-import LoginPage from './LoginPage';
+import Home from './pages/Welcome/Home';
+import LoginForm from './pages/Login/LoginForm.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,7 +16,7 @@ root.render(
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />}></Route>
-      <Route path="/login" element={<LoginPage />}></Route>
+      <Route path="/login" element={<LoginForm />}></Route>
     </Routes>
   </BrowserRouter>
   </React.StrictMode>
