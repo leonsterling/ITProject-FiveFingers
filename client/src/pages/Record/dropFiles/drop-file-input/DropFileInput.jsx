@@ -15,6 +15,7 @@ const DropFileInput = (props) => {
 
   const onDrop = () => wrapperRef.current.classList.remove("dragover");
 
+  // Add the new file into the list
   const onFileDrop = (e) => {
     const newFile = e.target.files[0];
     if (newFile) {
@@ -24,6 +25,7 @@ const DropFileInput = (props) => {
     }
   };
 
+  // Remove the file from the list
   const fileRemove = (file) => {
     const updatedList = [...fileList];
     updatedList.splice(fileList.indexOf(file), 1);
@@ -44,8 +46,12 @@ const DropFileInput = (props) => {
           <img src={uploadImg} alt="" />
           <p>Place your Artefacts Image Here</p>
         </div>
+
+        {/* option to add file into the list */}
         <input type="file" value="" onChange={onFileDrop} />
       </div>
+
+      {/* Render the list of files if more than 0 files is added  */}
       {fileList.length > 0 ? (
         <div className="drop-file-preview">
           <p className="drop-file-preview__title">Ready to upload</p>
@@ -61,6 +67,8 @@ const DropFileInput = (props) => {
                 <p>{item.name}</p>
                 <p>{item.size}B</p>
               </div>
+
+              {/* If the client press X, the item will be removed */}
               <span
                 className="drop-file-preview__item__del"
                 onClick={() => fileRemove(item)}
