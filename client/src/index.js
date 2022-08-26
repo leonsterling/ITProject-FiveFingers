@@ -5,19 +5,19 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Home from './Home';
-import LoginPage from './LoginPage';
+import LoginPage from './pages/LoginPage';
+import Dashboard from './pages/Dashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/login" element={<LoginPage />}></Route>
+      <Route path="/" element={<LoginPage />}></Route>
+      <Route path="/dashboard" element={<Dashboard />}></Route>
     </Routes>
   </BrowserRouter>
   </React.StrictMode>

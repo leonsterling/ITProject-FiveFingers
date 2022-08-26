@@ -1,31 +1,79 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
+// React imports
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
+
+// MUI imports
+// import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import classes from "./LoginPage.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
+// Axios imports
+import axios from "axios";
+
+// CSS imports
+import classes from "./LoginPage.css";
+
 const theme = createTheme();
 
+const states = {
+  initial: { borderBottom: "1px solid grey" },
+  invalid: { borderBottom: "1px solid red" },
+  valid: { borderBottom: "1px solid green" },
+};
+
 function LoginPage() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const navigate = useNavigate();
+  let [state, setState] = useState({
+    currentState: states.initial,
+    isValid: false,
+  });
+
+  async function handleSubmit(e) {
+    // set configurations
+    const data = new FormData(e.currentTarget);
+    const username = data.get("email");
+    const password = data.get("password");
+    const configuration = {
+      method: "post",
+      url: "http://localhost:5000/login",
+      data: {
+        username,
+        password,
+      },
+    };
+
+    // prevent the form from refreshing the whole page
+    e.preventDefault();
+
+    // make the API call
+    await axios(configuration)
+      .then((res) => {
+        let inputClass = res.data.isValid ? states.valid : states.invalid;
+        setState({
+          currentState: inputClass,
+          isValid: res.data.isValid,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  if (state.isValid) {
+    navigate("/dashboard");
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,6 +121,7 @@ function LoginPage() {
                 id="email"
                 label="Enter your email address"
                 name="email"
+                sx={state.currentState}
                 autoComplete="email"
                 autoFocus
                 variant="standard"
@@ -94,13 +143,14 @@ function LoginPage() {
                 id="password"
                 autoComplete="current-password"
                 variant="standard"
+                sx={state.currentState}
                 InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LockOutlinedIcon />
-                      </InputAdornment>
-                    ),
-                  }}
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockOutlinedIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <Button
@@ -108,13 +158,12 @@ function LoginPage() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                className={classes.submit}
+                className={classes.Button}
               >
                 Sign In
               </Button>
               <Grid container spacing={2}>
-                <Grid item xs={8}>
-                </Grid>
+                <Grid item xs={8}></Grid>
                 <Grid item xs={4}>
                   <Link to="/forgotpassword">Forgot Password</Link>
                 </Grid>
@@ -128,3 +177,4 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
