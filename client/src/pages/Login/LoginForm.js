@@ -59,37 +59,39 @@ export default function LoginForm () {
         inputClass = states.valid;
     }
 
+    inputClass = 'input-field ' + inputClass
+
     if (loginState.isValid) {
-        navigate('/');
+        navigate('/dashboard');
     }
 
     return (
-          <form className='login-page' action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
+          <form action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
             <ul>
                 <li>
-                    <label> Username: </label>
+                    <label> Email </label>
                 </li>
-                <li>
+                <li className={inputClass}>
+                    <span className="material-icons">mail</span>
                     <input
                         type='text'
                         id='userName'
-                        className={inputClass}
                         onChange={(e) => setUserName(e.target.value)}
                     />
                 </li>
                 <li>
-                    <label for='password'> Password: </label>
+                    <label for='password'> Password </label>
                 </li>
-                <li>
+                <li className={inputClass}>
+                    <span className="material-icons">lock</span>
                     <input
                         type='password'
                         id='password'
-                        className={inputClass}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </li>
                 <li>
-                    <button type='submit' >Log-In</button>
+                    <button type='submit' >Sign In</button>
                 </li>
             </ul>
           </form>

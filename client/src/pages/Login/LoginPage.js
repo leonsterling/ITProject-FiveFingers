@@ -1,99 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './login.css';
-import { useNavigate } from 'react-router';
-import axios from 'axios';
+import LoginForm from './LoginForm';
 
-const states = {
-    initial: 'login-initial',
-    invalid: 'login-invalid',
-    valid: 'login-valid',
-};
-
-
-export default function LoginForm () {
-    const navigate = useNavigate();
-    let [loginState, setLoginState] = useState({
-        isValid: false,
-        currState: states.initial,
-    });
-    const [username, setUserName] = useState("");
-    const [password ,setPassword] = useState("");
-
-    
-    async function handleLogin (e) {
-      // set configurations
-      setLoginState({validLogin: false});
-      const configuration = {
-        method: "post",
-        url: "http://localhost:5000/login",
-        data: {
-          username,
-          password,
-        },
-      };
-
-      // prevent the form from refreshing the whole page
-      e.preventDefault();
-
-      // make the API call
-      await axios(configuration).then((res) => {
-          inputClass = (res.data.isValid) ? states.valid : states.invalid;
-          setLoginState({
-              currState: inputClass,
-              isValid: res.data.isValid,
-          });
-      }).catch((err) => {
-          console.log(err);
-      });
-
-      console.log("hello there");
-    }
-
-    let inputClass;
-    if (loginState.currState === states.initial) {
-        inputClass = states.initial;
-    }
-    else if (loginState.currState === states.invalid) {
-        inputClass = states.invalid;
-    }
-    else if (loginState.currState === states.valid) {
-        inputClass = states.valid;
-    }
-
-    if (loginState.isValid) {
-        navigate('/');
-    }
-
+export default function LoginPage () {
+    const showcaseImage = require("./temp.jpg");
     return (
-          <form className='login-page' action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
-            <ul>
-                <li>
-                    <label> Username: </label>
-                </li>
-                <li>
-                    <input
-                        type='text'
-                        id='userName'
-                        className={inputClass}
-                        onChange={(e) => setUserName(e.target.value)}
-                    />
-                </li>
-                <li>
-                    <label for='password'> Password: </label>
-                </li>
-                <li>
-                    <input
-                        type='password'
-                        id='password'
-                        className={inputClass}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </li>
-                <li>
-                    <button type='submit' >Log-In</button>
-                </li>
-            </ul>
-          </form>
+        <div class='login-page'>
+          <img src={showcaseImage} alt="Artifacts of Leon Sterling"/>
+          <div>
+            <h1>Sign In</h1>
+            <h2>Welcome! Log in to access your personal artefact register</h2>
+            <LoginForm />
+          </div>
+        </div>
     )
 }
 

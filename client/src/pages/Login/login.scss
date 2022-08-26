@@ -1,61 +1,120 @@
-.App {
-    height: 100vh;
-    flex-direction: column;
-}
-
-.App, .form-template {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100vw;
-}
-
-.form-template {
-    display: flex;
-    button {
-        padding: 20px;
-    }
-}
-
 .login-page {
-    background: rgb(215,229,234);
-    background: linear-gradient(135deg, rgba(215,229,234,1) 0%, rgba(141,179,195,1) 100%);
-    width: 40%;
-    margin-left: 5vw;
-    border-radius: 10px;
-    box-shadow: 0px 4px 9px -3px hsla(0, 0%, 0%, 50%);
-
-    // Display properties
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 
-    ul {
-        list-style: none;
-        line-height: 1.55;
+    img {
+        width: 58vw;
+        height: 100vh;
+        box-shadow: 6px 0 11px -9px black;
     }
 
-    input {
-        border-radius: 6px;
-        border: 1px solid #80808057;
-        margin-bottom: 25px;
+    h1 {
+        font-family: Monsterrat-bold;
+        margin: 0;
     }
 
-    label {
-        font-weight: bold;
+    h2 {
+        font-size: 16px;
+        font-weight: lighter;
+    }
+
+    & > div {
+        --margin-width: 71px;
+        margin-left: var(--margin-width);
+        margin-right: var(--margin-width);
+
+        display: flex;
+        flex-direction: column;
+
+        height: 100vh;
+        width: 43vw;
+        justify-content: center;
+    }
+
+    form {
+        ul {
+            list-style: none;
+            line-height: 2.25;
+            padding: 0;
+
+            /* We need a way to make the form elements take the full
+             * width of the container */
+            li > * {
+                width: 100%;
+            }
+
+            .input-field {
+                display: flex;
+                margin-bottom: 25px;
+
+                span {
+                    flex-basis: 0;
+                    color: grey;
+                    font-size: 21px;
+                    margin-top: 2px;
+                }
+            }
+
+            label {
+                font-size: 14px;
+                font-family: Monsterrat-bold;
+                margin-left: 5px;
+                font-weight: lighter;
+
+                &:after {
+                    content: '*';
+                    --light-red: #f97878;
+                    color: var(--light-red);
+                    font-size: 12px;
+                    font-weight: lighter;
+                }
+            }
+        }
+
+        input {
+            border: none;
+            outline: none;
+            margin-bottom: 5px;
+            padding-left: 8px;
+        }
+
+        // All of the '.login-' classes are of type li
+        $weight: 3px;
+        .login-initial {
+            border-bottom: $weight solid #808080;
+        }
+
+        .login-invalid {
+            border-bottom: $weight solid red;
+        }
+
+        .login-valid {
+            border-bottom: $weight solid green;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        button {
+            font-family: Monsterrat-bold;
+            font-size: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            height: 50px;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0px 6px 11px -9px black;
+            margin-top: 4vh;
+            transition: 250ms;
+
+            &:hover {
+                background-color: var(--accent-color-darker);
+                box-shadow: 0px 6px 11px -6px black;
+            }
+        }
     }
 }
 
-$weight: 2px;
 
-.login-initial {
-    outline: $weight solid #808080;
-}
-
-.login-invalid {
-    outline: $weight solid red;
-}
-
-.login-valid {
-    outline: $weight solid green;
-}
 
