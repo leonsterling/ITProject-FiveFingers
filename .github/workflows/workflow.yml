@@ -34,7 +34,6 @@ jobs:
     - name: Run linters
       uses: wearerequired/lint-action@v2
       with:
-        eslint: true
         prettier: true
     - run: npm i
     - run: npm run build --if-present
