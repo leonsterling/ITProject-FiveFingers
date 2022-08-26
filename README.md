@@ -1,6 +1,7 @@
 # ITProject
 
-COMP 30022 Capstone IT Project in University of Melbourne 2022
+<Family Artefact App> by Five Fingers
+This project is a web application made by Team 098 of COMP30022.
 
 ## Group members:
 
@@ -9,3 +10,10 @@ Nadya Aurelia Herryyanto <br/>
 Nicholas Riykco Widjaya<br/>
 Tahmin Ahmed<br/>
 Vincent Kurniawan <br/>
+
+
+## Table of content:
+- Project Background
+- Project Requirements
+- Project Development and Documentation
+- Installation
