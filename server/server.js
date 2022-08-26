@@ -1,8 +1,7 @@
 // imports libraries and frameworks used for the project
 const express = require('express'),
       bodyParser = require('body-parser'),
-      cors = require('cors'),
-      jwt = require('jsonwebtoken')
+      cors = require('cors')
 
 // app runs on express.js
 const app = express()

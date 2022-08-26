@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './login.css';
-import { useNavigate } from 'react-router';
 import axios from 'axios';
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
+// login states for coloring with "inputClass"
 const states = {
     initial: 'login-initial',
     invalid: 'login-invalid',
@@ -10,8 +12,8 @@ const states = {
 };
 
 
-export default function LoginPage () {
-    const navigate = useNavigate();
+export default function Login () {
+    
     let [loginState, setLoginState] = useState({
         isValid: false,
         currState: states.initial,
@@ -37,16 +39,27 @@ export default function LoginPage () {
 
       // make the API call
       await axios(configuration).then((res) => {
+        
+        // set the cookie upon successful login
+        cookies.set("TOKEN", res.data.token, {
+            path: "/",
+          }) 
           inputClass = (res.data.isValid) ? states.valid : states.invalid;
           setLoginState({
               currState: inputClass,
               isValid: res.data.isValid,
           });
+          
       }).catch((err) => {
+        console.log("fail login")
+        inputClass = states.invalid;
+        setLoginState({
+            currState: inputClass,
+            isValid: false
+        });
           console.log(err);
       });
 
-      console.log("hello there");
     }
 
     let inputClass;
@@ -61,9 +74,12 @@ export default function LoginPage () {
     }
 
     if (loginState.isValid) {
-        navigate('/');
+        console.log("here")
+        // redirect user to the auth page
+        window.location.href = "/dashboard";
     }
 
+         
     return (
           <form className='login-page' action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
             <ul>

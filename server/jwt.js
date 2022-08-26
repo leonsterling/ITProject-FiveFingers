@@ -5,10 +5,8 @@ module.exports = async (req, res, next) => {
     const token = await req.headers.authorization.split(" ")[1];
     const user = await jwt.verify(token, "RANDOM-TOKEN");
 
-    // pass the user down to the endpoints here
+    // verify user with token that was signed during authentication process
     req.user = user;
-
-    // pass down functionality to the endpoint
     next();
     
   } catch (error) {

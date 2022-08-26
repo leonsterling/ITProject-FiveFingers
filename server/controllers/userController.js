@@ -1,10 +1,11 @@
+// libraries and mongoose models imported
 const { User } = require("../models/user");
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+// register new users (will be removed)
 const registerUser = async (req, res) => {
   const user = new User(req.body);
-  console.log(user);
   await user
     .save()
     .then((result) => {
@@ -15,24 +16,41 @@ const registerUser = async (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "Error creating user",
+        message: "Error upon creating user",
         error,
       });
     });
+
+    console.log(user);
 };
 
-const getUser = (req, res) => {
+// gets users dashboard once successfully logged in
+const getDashboard = (req, res) => {
+
+  // sample response status
   res.status(200).send({
-    message: "Login Successful",
+    message: "Login Successful, hello user!",
     user: req.user
   });
+
+  // insert function below to find userin mongoDB using  with req.user.userId 
 };
 
+// gets about page 
+const getAbout = (req,res) => {
+  // sample response status
+  res.status(200).send({
+    message: "Welcome, pls log in!"
+  })
+}
+
+// gets POST request, attempt to log-in user
 const loginUser = (req, res) => {
  
   User.findOne({ username: req.body.username }).then((user) => {
       bcrypt.compare(req.body.password, user.password).then((checkPass) => {
 
+          // invalid
           if(!checkPass) {
             return res.status(400).send({
               message: "Invalid password",
@@ -57,20 +75,24 @@ const loginUser = (req, res) => {
           });
         }).catch((error) => {
           res.status(400).send({
-            message: "Passwords does not match",
+            message: "Error in loggin in",
             isValid: false,
             error,
           });
         });
-    }).catch((e) => {
+    })
+    
+    // user is not registered in database
+    .catch((error) => {
       res.status(404).send({
         message: "User doesn't exist",
         isValid: false,
-        e,
+        error,
       });
     });
 }
 
+// log-out user from current session
 const logout = (req, res) => {
   if (req.session) {
     req.session.destroy((err) => {
@@ -93,7 +115,8 @@ const logout = (req, res) => {
 // exports objects containing functions imported by router
 module.exports = {
   registerUser,
-  getUser,
   logout,
-  loginUser
+  loginUser,
+  getDashboard,
+  getAbout
 };
