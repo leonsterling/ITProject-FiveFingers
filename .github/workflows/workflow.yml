@@ -31,10 +31,11 @@ jobs:
         cache: 'npm'
         cache-dependency-path: './server/package-lock.json'
         
-    - name: Run linters
-      uses: wearerequired/lint-action@v2
-      with:
-        prettier: true
+  
+    #- name: Run linters
+      #uses: wearerequired/lint-action@v2
+      #with:
+        #prettier: true
     - run: npm i
     - run: npm run build --if-present
     - run: npm test
