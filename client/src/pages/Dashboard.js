@@ -1,8 +1,116 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
+import { Link } from "react-router-dom";
 
-export default function Dashboard() {
+
+// CSS imports
+import classes from "./Dashboard.css";
+
+const Artefact = (props) => (
+<tr>
+  <td>{props.artefact.artefact_name}</td>
+  <td>
+    <Link className="btn btn-link" to={`/edit/${props.artefact._id}`}>Edit</Link> |
+    <button className="btn btn-link"
+      onClick={() => {
+        //props.deleteRecord(props.artefact._id);
+      }}
+    >
+      Delete
+    </button>
+  </td>
+</tr>
+/*
+
+const artefactSchema = new mongoose.Schema({
+    artefact_name: {type: String},
+    artefact_description: {type: String},
+    artefact_location: {type: String},
+    artefact_date_created: {type: Date, default: new Date()},
+    artefact_date_origin: {type: Date},
+    artefact_images: [imageSchema],
+    artefact_tags: [tagSchema]
+ });
+*/
+
+
+
+
+
+)
+
+
+const Dashboard = () => {
+
+  const [sideNavOpen, setSideNavOpen] = useState(false);
+
+  const openSideNav = () => {
+    setSideNavOpen(true);
+  }
+
+  const closeSideNav = () => {
+    setSideNavOpen(false);
+  }
+
+  return (
+    <div className="container">
+
+      <h1>this is the dashboard, three different components will be here</h1>
+      <h2>sideNav</h2>
+      <h2>topNav</h2>
+      <h2>list or picture mode</h2>
+    </div>
+  );
+
+
+};
+
+/*
+function PictureDashboard() {
     return (
-      <div>Hello World, Leoni will be working on this!</div>
+      <main>
+          <div className="main-container">
+            <div className="main-title">
+            
+            </div>
+
+            <div className="main-cards">
+
+              <div className="card">
+                <img></img>
+                <p>Title of Artefact</p>
+              </div>
+
+              <div className="card">
+                <h2>Title of Artefact</h2>
+              </div>
+
+              <div className="card">
+                <h2>Title of Artefact</h2>
+              </div>
+
+              <div className="card">
+                <h2>Title of Artefact</h2>
+              </div>
+
+              <div className="card">
+                <h2>Title of Artefact</h2>
+              </div>
+
+              <div className="card">
+                <h2>Title of Artefact</h2>
+              </div>
+
+              <div className="card">
+                <h2>Title of Artefact</h2>
+              </div>
+            </div>
+
+
+
+          </div>
+      </main>
     )
 }
+*/
 
+export default Dashboard;
