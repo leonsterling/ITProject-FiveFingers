@@ -41,6 +41,7 @@ main {
 
 .card > img {
     height: 200px;
+    object-fit: contain;
 }
 
 .card-title {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
+import { Icon } from '@iconify/react';
 
 // CSS imports
 import "./TopNav.css";
@@ -11,7 +12,7 @@ const TopNav = ({sideNavOpen, openSideNav}) => {
     return (
         <nav className="topnav">
             <div className="nav-icon" onClick={() => openSideNav()}>
-                <button>expand side bar</button>
+                <Icon icon="charm:menu-hamburger"/>
             </div>
             <div className="topnav-left">
                 <a href="#">My Artefacts</a>
