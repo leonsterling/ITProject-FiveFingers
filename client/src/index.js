@@ -6,7 +6,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
 import LoginPage from "./pages/Login/LoginPage";
-import About from "./components/About";
+import About from "./pages/About/About";
 import AuthRoutes from "./components/AuthRoutes";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Cookies from "universal-cookie";
