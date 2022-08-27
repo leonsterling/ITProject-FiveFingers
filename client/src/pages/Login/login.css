@@ -1,0 +1,96 @@
+.login-page {
+  display: flex;
+  justify-content: space-between;
+}
+.login-page img {
+  width: 58vw;
+  height: 100vh;
+  box-shadow: 6px 0 11px -9px black;
+}
+.login-page h1 {
+  font-family: Monsterrat-bold;
+  margin: 0;
+}
+.login-page h2 {
+  font-size: 16px;
+  font-weight: lighter;
+}
+.login-page > div {
+  --margin-width: 71px;
+  margin-left: var(--margin-width);
+  margin-right: var(--margin-width);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 43vw;
+  justify-content: center;
+}
+.login-page form ul {
+  list-style: none;
+  line-height: 2.25;
+  padding: 0;
+  /* We need a way to make the form elements take the full
+   * width of the container */
+}
+.login-page form ul li > * {
+  width: 100%;
+}
+.login-page form ul .input-field {
+  display: flex;
+  margin-bottom: 25px;
+}
+.login-page form ul .input-field span {
+  flex-basis: 0;
+  color: grey;
+  font-size: 21px;
+  margin-top: 2px;
+}
+.login-page form ul label {
+  font-size: 14px;
+  font-family: Monsterrat-bold;
+  margin-left: 5px;
+  font-weight: lighter;
+}
+.login-page form ul label:after {
+  content: "*";
+  --light-red: #f97878;
+  color: var(--light-red);
+  font-size: 12px;
+  font-weight: lighter;
+}
+.login-page form input {
+  border: none;
+  outline: none;
+  margin-bottom: 5px;
+  padding-left: 8px;
+}
+.login-page form .login-initial {
+  border-bottom: 3px solid #808080;
+}
+.login-page form .login-invalid {
+  border-bottom: 3px solid red;
+}
+.login-page form .login-valid {
+  border-bottom: 3px solid green;
+}
+.login-page form label {
+  font-weight: bold;
+}
+.login-page form button {
+  font-family: Monsterrat-bold;
+  font-size: 15px;
+  background-color: var(--accent-color);
+  color: white;
+  height: 50px;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0px 6px 11px -9px black;
+  margin-top: 4vh;
+  transition: 250ms;
+}
+.login-page form button:hover {
+  background-color: var(--accent-color-darker);
+  box-shadow: 0px 6px 11px -6px black;
+}
+
+/*# sourceMappingURL=login.css.map */
