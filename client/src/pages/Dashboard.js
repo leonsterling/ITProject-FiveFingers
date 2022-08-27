@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import TopNav from './TopNav';
 import SideNav from './SideNav';
+import PictureMode from './PictureMode';
 
 // CSS imports
 import "./Dashboard.css";
@@ -55,7 +56,7 @@ const Dashboard = () => {
   return (
     <div className="container">
       <TopNav sideNavOpen={sideNavOpen} openSideNav={openSideNav} />
-      <h1>this is the dashboard, three different components will be here</h1>
+      <PictureMode />
       <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
     </div>
   );
@@ -63,53 +64,6 @@ const Dashboard = () => {
 
 };
 
-/*
-function PictureDashboard() {
-    return (
-      <main>
-          <div className="main-container">
-            <div className="main-title">
-            
-            </div>
 
-            <div className="main-cards">
-
-              <div className="card">
-                <img></img>
-                <p>Title of Artefact</p>
-              </div>
-
-              <div className="card">
-                <h2>Title of Artefact</h2>
-              </div>
-
-              <div className="card">
-                <h2>Title of Artefact</h2>
-              </div>
-
-              <div className="card">
-                <h2>Title of Artefact</h2>
-              </div>
-
-              <div className="card">
-                <h2>Title of Artefact</h2>
-              </div>
-
-              <div className="card">
-                <h2>Title of Artefact</h2>
-              </div>
-
-              <div className="card">
-                <h2>Title of Artefact</h2>
-              </div>
-            </div>
-
-
-
-          </div>
-      </main>
-    )
-}
-*/
 
 export default Dashboard;

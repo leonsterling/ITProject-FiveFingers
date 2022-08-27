@@ -6,6 +6,7 @@ import "./TopNav.css";
 import logo from "../assets/LOGO-BLACK.png";
 // <Link to="/add-artefact" className="add-artefact"></Link>
 // <img width="30px" src={logo} alt="logo"/>
+
 const TopNav = ({sideNavOpen, openSideNav}) => {
     return (
         <nav className="topnav">
@@ -16,9 +17,11 @@ const TopNav = ({sideNavOpen, openSideNav}) => {
                 <a href="#">My Artefacts</a>
             </div>
             <div className="topnav-right">
+                <a href="#">List Mode</a>
                 <a href="#">Search Bar Here</a>
                 <a className="active-link" href="#">Add Artefact</a>
             </div>
+            
         </nav>
     );
 };
