@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const userRouter = require('./routers/userRouter')
 app.use('/', userRouter)
 
-// Tells the app to listen on port 3000 and logs that information to the console.
+// Tells the app to listen on port 5000 and logs that information to the console.
 app.listen(process.env.PORT || 5000, () => {
     console.log('Server is alive!')
 })

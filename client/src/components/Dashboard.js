@@ -8,7 +8,6 @@ const token = cookies.get("TOKEN");
 
 // dummy dashboard page
 export default function Dashboard() {
-
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -30,16 +29,16 @@ export default function Dashboard() {
       });
   }, []);
 
-  // logout function 
+  // logout function
   const logout = () => {
     // cookie removed
     cookies.remove("TOKEN", { path: "/" });
     // user redirected to login page
     window.location.href = "/";
-  }
+  };
 
   return (
-      <>
+    <>
       <h1>This is your Dashboard</h1>
 
       <h3>Halo {message.username}</h3>
@@ -47,6 +46,6 @@ export default function Dashboard() {
       <button type="submit" variant="danger" onClick={() => logout()}>
         Logout
       </button>
-      </>
+    </>
   );
 }

@@ -3,7 +3,6 @@ import axios from "axios";
 
 // dummy About page
 export default function About() {
-  
   const [message, setMessage] = useState("");
 
   useEffect(() => {

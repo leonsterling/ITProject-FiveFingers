@@ -1,7 +1,7 @@
 // libraries and mongoose models imported
 const { User } = require("../models/user");
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // register new users (will be removed)
 const registerUser = async (req, res) => {
@@ -21,37 +21,37 @@ const registerUser = async (req, res) => {
       });
     });
 
-    console.log(user);
+  console.log(user);
 };
 
 // gets users dashboard once successfully logged in
 const getDashboard = (req, res) => {
-
   // sample response status
   res.status(200).send({
     message: "Login Successful, hello user!",
-    user: req.user
+    user: req.user,
   });
 
-  // insert function below to find userin mongoDB using  with req.user.userId 
+  // insert function below to find userin mongoDB using  with req.user.userId
 };
 
-// gets about page 
-const getAbout = (req,res) => {
+// gets about page
+const getAbout = (req, res) => {
   // sample response status
   res.status(200).send({
-    message: "Welcome, pls log in!"
-  })
-}
+    message: "Welcome, pls log in!",
+  });
+};
 
 // gets POST request, attempt to log-in user
 const loginUser = (req, res) => {
- 
-  User.findOne({ username: req.body.username }).then((user) => {
-      bcrypt.compare(req.body.password, user.password).then((checkPass) => {
-
+  User.findOne({ username: req.body.username })
+    .then((user) => {
+      bcrypt
+        .compare(req.body.password, user.password)
+        .then((checkPass) => {
           // invalid
-          if(!checkPass) {
+          if (!checkPass) {
             return res.status(400).send({
               message: "Invalid password",
               isValid: false,
@@ -61,9 +61,7 @@ const loginUser = (req, res) => {
 
           //generate JWT token
           const token = jwt.sign(
-            { userId: user._id,
-              username: user.username
-            },
+            { userId: user._id, username: user.username },
             "RANDOM-TOKEN",
             { expiresIn: "24h" }
           );
@@ -73,7 +71,8 @@ const loginUser = (req, res) => {
             isValid: true,
             token,
           });
-        }).catch((error) => {
+        })
+        .catch((error) => {
           res.status(400).send({
             message: "Error in loggin in",
             isValid: false,
@@ -81,7 +80,7 @@ const loginUser = (req, res) => {
           });
         });
     })
-    
+
     // user is not registered in database
     .catch((error) => {
       res.status(404).send({
@@ -90,7 +89,7 @@ const loginUser = (req, res) => {
         error,
       });
     });
-}
+};
 
 // log-out user from current session
 const logout = (req, res) => {
@@ -103,7 +102,7 @@ const logout = (req, res) => {
       } else {
         res.status(201).send({
           message: "Logout successful",
-          isValid: false
+          isValid: false,
         });
       }
     });
@@ -118,5 +117,5 @@ module.exports = {
   logout,
   loginUser,
   getDashboard,
-  getAbout
+  getAbout,
 };
