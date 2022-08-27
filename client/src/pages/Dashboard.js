@@ -1,9 +1,10 @@
 import React, { useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
-
+import TopNav from './TopNav';
+import SideNav from './SideNav';
 
 // CSS imports
-import classes from "./Dashboard.css";
+import "./Dashboard.css";
 
 const Artefact = (props) => (
 <tr>
@@ -53,11 +54,9 @@ const Dashboard = () => {
 
   return (
     <div className="container">
-
+      <TopNav sideNavOpen={sideNavOpen} openSideNav={openSideNav} />
       <h1>this is the dashboard, three different components will be here</h1>
-      <h2>sideNav</h2>
-      <h2>topNav</h2>
-      <h2>list or picture mode</h2>
+      <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
     </div>
   );
 
