@@ -37,6 +37,7 @@
 :root {
   --accent-color: hsl(198, 31%, 66%);
   --accent-color-darker: hsl(198, 31%, 50%);
+  --accent-color-complement: hsl(15.8, 33.3%, 68.8%);
 }
 
 body {

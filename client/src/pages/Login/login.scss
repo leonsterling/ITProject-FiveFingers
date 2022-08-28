@@ -1,12 +1,8 @@
+@use './loginGlobals';
+
 .login-page {
     display: flex;
     justify-content: space-between;
-
-    img {
-        width: 58vw;
-        height: 100vh;
-        box-shadow: 6px 0 11px -9px black;
-    }
 
     h1 {
         font-family: Monsterrat-bold;
@@ -18,17 +14,21 @@
         font-weight: lighter;
     }
 
-    & > div {
+    .login-form {
+        background-color: white;
+        box-shadow: -6px 0 11px -9px black;
+
         --margin-width: 71px;
-        margin-left: var(--margin-width);
-        margin-right: var(--margin-width);
+        padding-left: var(--margin-width);
+        padding-right: var(--margin-width);
 
         display: flex;
         flex-direction: column;
-
-        height: 100vh;
-        width: 43vw;
         justify-content: center;
+
+        position: relative;
+        height: 100vh;
+        width: calc(100vw - loginGlobals.$chosen-width);
     }
 
     form {
@@ -46,6 +46,7 @@
             .input-field {
                 display: flex;
                 margin-bottom: 25px;
+                position: relative;
 
                 span {
                     flex-basis: 0;
@@ -69,6 +70,14 @@
                     font-weight: lighter;
                 }
             }
+
+            .feedback {
+                text-align: end;
+                letter-spacing: -0.02em;
+                font-family: Monsterrat-bold;
+                font-size: 14.5px;
+                font-weight: lighter;
+            }
         }
 
         input {
@@ -86,6 +95,7 @@
 
         .login-invalid {
             border-bottom: $weight solid red;
+            animation: 400ms shake;
         }
 
         .login-valid {
@@ -116,5 +126,16 @@
     }
 }
 
+@keyframes shake {
+    0%, 100% {
+         left: 0vw;
+    }
+    25%{
+         left: -1vw;
+    }
+    50%{
+         left: 1vw;
+    }
+}
 
 

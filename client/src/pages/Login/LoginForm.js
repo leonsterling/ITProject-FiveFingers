@@ -14,6 +14,12 @@ const states = {
     valid: 'login-valid',
 };
 
+const feedbackMapper = {
+    'login-initial' : '',
+    'login-invalid' : 'Invalid username or password. Please try again',
+    'login-valid' : 'Successfully logged in!',
+}
+
 export default function LoginForm () {
     const navigate = useNavigate();
     let [loginState, setLoginState] = useState({
@@ -41,8 +47,6 @@ export default function LoginForm () {
 
       // make the API call
       await axios(configuration).then((res) => {
-        
-        console.log("Cookies captured successfully: ", res.data.token);
         // set the cookie upon successful login
         cookies.set("TOKEN", res.data.token, {
             path: "/",
@@ -62,26 +66,15 @@ export default function LoginForm () {
         });
           console.log(err);
       });
-
     }
-
-    let inputClass;
-    if (loginState.currState === states.initial) {
-        inputClass = states.initial;
-    }
-    else if (loginState.currState === states.invalid) {
-        inputClass = states.invalid;
-    }
-    else if (loginState.currState === states.valid) {
-        inputClass = states.valid;
-    }
-
-    inputClass = 'input-field ' + inputClass
 
     if (loginState.isValid) {
         navigate('/dashboard');
     }
 
+    let inputClass;
+    inputClass = 'input-field ' + loginState.currState
+    let feedbackMessage = feedbackMapper[loginState.currState];
          
     return (
           <form action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
@@ -98,7 +91,7 @@ export default function LoginForm () {
                     />
                 </li>
                 <li>
-                    <label for='password'> Password </label>
+                    <label> Password </label>
                 </li>
                 <li className={inputClass}>
                     <span className="material-icons">lock</span>
@@ -107,6 +100,9 @@ export default function LoginForm () {
                         id='password'
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                </li>
+                <li>
+                    <p className='feedback'>{feedbackMessage}</p>
                 </li>
                 <li>
                     <button type='submit' >Sign In</button>
