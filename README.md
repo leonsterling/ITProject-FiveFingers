@@ -18,3 +18,19 @@ Vincent Kurniawan <br/>
 - Project Requirements
 - Project Development and Documentation
 - Installation
+
+
+## Technology
+
+Frontend
+Axios
+Bootstrap
+HTML
+React.js
+
+Backend
+Mocha.js
+Mongoose ODM + MongoDB Atlas
+Node.js + Express
+JWT Authentication
+Javascript
