@@ -14,7 +14,7 @@ const viewSates = {
 
 // dummy dashboard page
 export default function Dashboard() {
-  const [message, setMessage] = useState("");
+  const [userData, setData] = useState("");
   const [view, setView] = useState(viewSates.gallery);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Dashboard() {
     // make the API call
     axios(configuration)
       .then((result) => {
-        setMessage(result.data.user);
+        setData(result.data.user);
       })
       .catch((error) => {
         error = new Error();
@@ -62,7 +62,7 @@ export default function Dashboard() {
     <>
       <h1>This is your Dashboard</h1>
 
-      <h3>Halo {message.username}</h3>
+      <h3>Halo {userData.username}</h3>
 
       <ul className={view}>
         {dataComponents}
