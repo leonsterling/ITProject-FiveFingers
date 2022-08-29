@@ -1,11 +1,3 @@
-* {
-    /* Reset browser's padding and margin */
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; 
-    background: #4a69bd;
-  }
-
   .search-bar {
     margin: 200px auto;
     width: 500px;

@@ -1,12 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import "./index.css";
 
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import LoginPage from './pages/LoginPage';
-import Dashboard from './pages/Dashboard';
 
 import LoginPage from "./pages/Login/LoginPage";
 import About from "./pages/About/About";

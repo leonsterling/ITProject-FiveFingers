@@ -1,77 +1,33 @@
-import './viewDummy.css';
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Cookies from "universal-cookie";
+import React, { useEffect, useState} from 'react';
+import { Link } from "react-router-dom";
+import TopNav from './TopNav';
+import SideNav from './SideNav';
+import PictureMode from './PictureMode';
 
-// obtain token from cookie
-const cookies = new Cookies();
-const token = cookies.get("TOKEN");
+// CSS imports
+import "./Dashboard.css";
 
-const viewSates = {
-    gallery : "dashboard-gallery",
-    list : "dashboard-list",
-}
+const Dashboard = () => {
 
-// dummy dashboard page
-export default function Dashboard() {
-  const [message, setMessage] = useState("");
-  const [view, setView] = useState(viewSates.gallery);
+  const [sideNavOpen, setSideNavOpen] = useState(false);
 
-  useEffect(() => {
-    const configuration = {
-      method: "get",
-      url: "http://localhost:5000/dashboard",
-      headers: {
-        Authorization: `Bearer ${token}`, // authorized route with jwt token
-      },
-    };
+  const openSideNav = () => {
+    setSideNavOpen(true);
+  }
 
-    // make the API call
-    axios(configuration)
-      .then((result) => {
-        setMessage(result.data.user);
-      })
-      .catch((error) => {
-        error = new Error();
-      });
-  }, []);
-
-  // logout function
-  const logout = () => {
-    // cookie removed
-    cookies.remove("TOKEN", { path: "/" });
-    // user redirected to login page
-    window.location.href = "/";
-  };
-
-  let data = require('./data.json').data;
-  console.log(data);
-
-  // Emulating grid with list view
-  let dataComponents = data.map((currData, index) => {
-      return (
-          <li>{currData.Name}</li>
-      )
-  });
-
-  function changeView() {
-      setView( (view === viewSates.gallery) ? viewSates.list : viewSates.gallery )
+  const closeSideNav = () => {
+    setSideNavOpen(false);
   }
 
   return (
-    <>
-      <h1>This is your Dashboard</h1>
-
-      <h3>Halo {message.username}</h3>
-
-      <ul className={view}>
-        {dataComponents}
-      </ul>
-
-      <button type="submit" variant="danger" onClick={() => logout()}>
-        Logout
-      </button>
-      <button onClick={() => changeView()}>Change button</button>
-    </>
+    <div className="container">
+      <TopNav sideNavOpen={sideNavOpen} openSideNav={openSideNav} />
+      <PictureMode />
+      <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
+    </div>
   );
-}
+};
+
+
+
+export default Dashboard;
