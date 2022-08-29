@@ -10,6 +10,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
+import SearchBar from './pages/SearchBar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,8 @@ root.render(
     <Routes>
       <Route path="/" element={<LoginPage />}></Route>
       <Route path="/dashboard" element={<Dashboard />}></Route>
+      <Route path="/search" element={<SearchBar />}></Route>
+
     </Routes>
   </BrowserRouter>
   </React.StrictMode>

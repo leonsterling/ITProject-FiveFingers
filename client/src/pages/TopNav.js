@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
+import SearchBar from './SearchBar';
 
 // CSS imports
 import "./TopNav.css";
@@ -23,7 +24,7 @@ const TopNav = ({sideNavOpen, openSideNav}) => {
                 </div>
 
                 <div className="search-bar">
-                    <a href="#">Search Bar Here</a>
+                    <SearchBar />
                 </div>
 
                 <div className='add-button'>
