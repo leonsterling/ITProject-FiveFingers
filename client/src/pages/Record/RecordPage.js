@@ -1,60 +1,75 @@
 import React, { useState, useEffect, Component } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useStyles from "./styles";
 import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
 import "../Record/dropFiles/DropFiles.css";
+//import axios from 'axios';
 
 const RecordForm = () => {
-
   const classes = useStyles();
+
   const onFileChange = (files) => {
     console.log(files);
+    setRecord(record.artefactFiles = files);
   };
 
+  const initialState = {
+		artefactName: "",
+		artefactDate: "",
+		location: "",
+		description: "",
+    artefactFiles : [],
+	};
+
+  const [record, setRecord] = useState(initialState);
+
+
+  function handleSubmit(e) {
+    console.log(record)
+		e.preventDefault();
+	}
+
+  function handleChange(event) {
+		setRecord({ ...record, [event.target.name]: event.target.value });
+    console.log(record);
+	}
   return (
     <>
-      <form>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <Typography>Create Artefact</Typography>
         <Grid container spacing={10}>
           <Grid item xs={3.7}>
-            <label>
-              <p>Artefact Name:</p>
-              <input type="text" id="emailAddress" />
+            <label> <p>Artefact Name:</p>
+              <input 
+                name = "artefactName"
+                type="text" 
+                onChange={handleChange}
+                required
+               />
             </label>
-            <label>
-              <p>Date of origin</p>
-              <input type="date" tabIndex={"2"} id="dateofOrigin" />
-            </label>
-            <label>
-              <p>Location</p>
+            <label>Date of origin:</label>
+              <input 
+              name = "artefactDate"
+              type="date" 
+              tabIndex={"2"} 
+              onChange={handleChange}
+               />
+            <label>Location</label>
               <input
+                name = "location"
                 type="text"
                 tabIndex={"2"}
-                //className="form-control"
-                id="artefactLocation"
+                onChange={handleChange}
               />
-            </label>
-            <label>
-              <p>Description</p>
+            <label>Description</label>
               <textarea
+                name = "description"
                 type="text"
                 tabIndex={"2"}
-                //className="form-control"
-                id="artefactDescription"
+                onChange={handleChange}
+                //className="form-control" 
               />
-            </label>
           </Grid>
           <Grid item xs={8.3}>
             <div className="box">
@@ -63,18 +78,10 @@ const RecordForm = () => {
             </div>
           </Grid>
         </Grid>
-         <button className="button" type="submit"> Submit</button>
-         <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          type="submit"
-          fullWidth
-          className={classes.submit}
-        >
-          Submit
-        </Button>
 
+        <button className="button" type="submit">
+          Submit
+        </button>
       </form>
     </>
   );

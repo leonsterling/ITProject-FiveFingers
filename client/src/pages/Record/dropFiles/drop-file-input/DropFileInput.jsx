@@ -23,6 +23,7 @@ const DropFileInput = (props) => {
       setFileList(updatedList);
       props.onFileChange(updatedList);
     }
+    console.log(fileList);
   };
 
   // Remove the file from the list
@@ -31,6 +32,7 @@ const DropFileInput = (props) => {
     updatedList.splice(fileList.indexOf(file), 1);
     setFileList(updatedList);
     props.onFileChange(updatedList);
+    console.log(fileList);
   };
 
   return (
