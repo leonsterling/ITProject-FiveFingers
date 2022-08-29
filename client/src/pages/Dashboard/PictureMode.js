@@ -10,7 +10,8 @@ import Chaeyoung from "../assets/Chaeyoung.JPG"
 import Tzuyu from "../assets/Tzuyu.JPG"
 import Twice from "../assets/Twice.JPG"
 
-
+  /*
+    
 const Artefact = (props) => (
     <tr>
       <td>{props.artefact.artefact_name}</td>
@@ -25,8 +26,6 @@ const Artefact = (props) => (
         </button>
       </td>
     </tr>
-    /*
-    
     const artefactSchema = new mongoose.Schema({
         artefact_name: {type: String},
         artefact_description: {type: String},
@@ -36,9 +35,9 @@ const Artefact = (props) => (
         artefact_images: [imageSchema],
         artefact_tags: [tagSchema]
      });
-    */
+    
 )
-
+*/
     
 const PictureMode = () => {
     return (
@@ -46,7 +45,7 @@ const PictureMode = () => {
             <div className="main-container">
                 <div className="main-title">
                     <div className="main-greeting">
-                        <h1>welcome to your dashboard</h1>
+                        <h1>My Artefacts</h1>
                     </div>
                 </div>
 

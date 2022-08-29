@@ -15,14 +15,25 @@ const TopNav = ({sideNavOpen, openSideNav}) => {
                 <Icon icon="charm:menu-hamburger"/>
             </div>
             <div className="topnav-left">
-                <a href="#">My Artefacts</a>
             </div>
             <div className="topnav-right">
-                <a href="#">List Mode</a>
-                <a href="#">Search Bar Here</a>
-                <a className="active-link" href="#">Add Artefact</a>
+
+                <div className="list-icon">
+                    <Icon icon="charm:layout-list" />
+                </div>
+
+                <div className="search-bar">
+                    <a href="#">Search Bar Here</a>
+                </div>
+
+                <div className='add-button'>
+                    <Link to={`/addartefact`}>
+                        Add Artefact
+                        <Icon icon="akar-icons:plus" />
+                    </Link>
+                </div>
+
             </div>
-            
         </nav>
     );
 };

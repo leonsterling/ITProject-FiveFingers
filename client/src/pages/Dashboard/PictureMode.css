@@ -2,7 +2,6 @@ main {
     background: #f3f4f6;
     grid-area: main;
     overflow-y: auto;
-
 }
 
 .main-container {
@@ -23,12 +22,12 @@ main {
 .main-cards {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-row: 1fr 1fr;
     gap: 30px;
     margin: 20px 0;
 }
 
 .card {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
