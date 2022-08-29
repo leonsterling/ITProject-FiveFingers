@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
 import './login.css';
 import axios from 'axios';
 import Cookies from "universal-cookie";
@@ -21,7 +20,7 @@ const feedbackMapper = {
 }
 
 export default function LoginForm () {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     let [loginState, setLoginState] = useState({
         isValid: false,
         currState: states.initial,
@@ -69,7 +68,7 @@ export default function LoginForm () {
     }
 
     if (loginState.isValid) {
-        navigate('/dashboard');
+        window.location.href = '/dashboard';
     }
 
     let inputClass;
