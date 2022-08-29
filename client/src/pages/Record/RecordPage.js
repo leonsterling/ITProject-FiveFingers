@@ -13,9 +13,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useStyles from "./styles";
-import DropFileInput from "/Users/nicholaswidjaja/Desktop/ITProject-FiveFingers/client/src/pages/Record/dropFiles/drop-file-input/DropFileInput.jsx";
-import "/Users/nicholaswidjaja/Desktop/ITProject-FiveFingers/client/src/pages/Record/dropFiles/DropFiles.css";
-
+import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
+import "../Record/dropFiles/DropFiles.css";
 
 const RecordForm = () => {
 
