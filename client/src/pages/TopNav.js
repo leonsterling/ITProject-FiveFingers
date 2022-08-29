@@ -20,7 +20,7 @@ const TopNav = ({sideNavOpen, openSideNav}) => {
             <div className="topnav-right">
 
                 <div className="list-icon">
-                    <Icon icon="charm:layout-list" />
+                    <Icon className="list-icon" icon="charm:layout-list" />
                 </div>
 
                 <div className="search-bar">
