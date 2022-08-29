@@ -1,0 +1,15 @@
+.dashboard-list, .dashboard-gallery {
+    list-style: none;
+    display: flex;
+}
+
+.dashboard-gallery {
+    background-color: green;
+    flex-direction: row;
+}
+
+.dashboard-list {
+    background-color: blue;
+    flex-direction: column;
+}
+
