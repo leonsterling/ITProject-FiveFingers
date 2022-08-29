@@ -2,22 +2,38 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./index.css";
- 
+
 import reportWebVitals from "./reportWebVitals";
 
-import Login from "./components/Login";
-import About from "./components/About";
+import LoginPage from "./pages/Login/LoginPage";
+import About from "./pages/About/About";
 import AuthRoutes from "./components/AuthRoutes";
-import Dashboard from "./components/Dashboard";
-{/*import App from "./App";*/}
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Cookies from "universal-cookie";
+
+// Cookies for checking if the user is currently logged in
+const cookies = new Cookies();
+
+// If not logged in, requesting the TOKEN returns null
+const isLoggedIn = cookies.get("TOKEN");
+const path = isLoggedIn ? "/dashboard" : "/login";
+
+// To render the page on the client-side
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      {/*<App />*/}
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} exact></Route>
-        <Route element={<Login />} path="/login" exact></Route>
+        <Route path="/" element={<Navigate to={path} />} exact></Route>
+        <Route
+          element={
+            isLoggedIn ?
+              <Navigate to={path} /> :
+              <LoginPage />
+          }
+          path="/login"
+          exact
+        ></Route>
         <Route element={<About />} path="/about" exact>
           {" "}
         </Route>

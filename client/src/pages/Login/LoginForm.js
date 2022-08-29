@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './login.css';
 import axios from 'axios';
 import Cookies from "universal-cookie";
+
+// Cookies for checking if the user is currently logged in
 const cookies = new Cookies();
 
 // login states for coloring with "inputClass"
@@ -11,9 +13,14 @@ const states = {
     valid: 'login-valid',
 };
 
+const feedbackMapper = {
+    'login-initial' : '',
+    'login-invalid' : 'Invalid username or password. Please try again',
+    'login-valid' : 'Successfully logged in!',
+}
 
-export default function Login () {
-    
+export default function LoginForm () {
+    // const navigate = useNavigate();
     let [loginState, setLoginState] = useState({
         isValid: false,
         currState: states.initial,
@@ -39,7 +46,6 @@ export default function Login () {
 
       // make the API call
       await axios(configuration).then((res) => {
-        
         // set the cookie upon successful login
         cookies.set("TOKEN", res.data.token, {
             path: "/",
@@ -59,54 +65,46 @@ export default function Login () {
         });
           console.log(err);
       });
-
-    }
-
-    let inputClass;
-    if (loginState.currState === states.initial) {
-        inputClass = states.initial;
-    }
-    else if (loginState.currState === states.invalid) {
-        inputClass = states.invalid;
-    }
-    else if (loginState.currState === states.valid) {
-        inputClass = states.valid;
     }
 
     if (loginState.isValid) {
-        console.log("here")
-        // redirect user to the auth page
-        window.location.href = "/dashboard";
+        window.location.href = '/dashboard';
     }
 
+    let inputClass;
+    inputClass = 'input-field ' + loginState.currState
+    let feedbackMessage = feedbackMapper[loginState.currState];
          
     return (
-          <form className='login-page' action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
+          <form action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
             <ul>
                 <li>
-                    <label> Username: </label>
+                    <label> Email </label>
                 </li>
-                <li>
+                <li className={inputClass}>
+                    <span className="material-icons">mail</span>
                     <input
                         type='text'
                         id='userName'
-                        className={inputClass}
                         onChange={(e) => setUserName(e.target.value)}
                     />
                 </li>
                 <li>
-                    <label for='password'> Password: </label>
+                    <label> Password </label>
                 </li>
-                <li>
+                <li className={inputClass}>
+                    <span className="material-icons">lock</span>
                     <input
                         type='password'
                         id='password'
-                        className={inputClass}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </li>
                 <li>
-                    <button type='submit' >Log-In</button>
+                    <p className='feedback'>{feedbackMessage}</p>
+                </li>
+                <li>
+                    <button type='submit' >Sign In</button>
                 </li>
             </ul>
           </form>
