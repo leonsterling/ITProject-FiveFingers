@@ -1,0 +1,33 @@
+  .search-bar {
+    margin: 200px auto;
+    width: 500px;
+    height: 60px;
+  }
+
+  .search-form {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .search-field {
+    width: 100%;
+    padding: 10px 35px 10px 15px;
+    border: none;
+    border-radius: 100px;
+    outline: none;
+  }
+
+  .search-button {
+    background: transparent;
+    border: none;
+    outline: none;
+    margin-left: -33px;
+  }
+  
+  .search-button .search-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+  }
+
+  

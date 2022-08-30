@@ -1,13 +1,53 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import './index.css';
-import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import LoginPage from "./pages/Login/LoginPage";
+import About from "./pages/About/About";
+import AuthRoutes from "./components/AuthRoutes";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Cookies from "universal-cookie";
+
+// Cookies for checking if the user is currently logged in
+const cookies = new Cookies();
+
+// If not logged in, requesting the TOKEN returns null
+const isLoggedIn = cookies.get("TOKEN");
+const path = isLoggedIn ? "/dashboard" : "/login";
+
+// To render the page on the client-side
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to={path} />} exact></Route>
+        <Route
+          element={
+            isLoggedIn ?
+              <Navigate to={path} /> :
+              <LoginPage />
+          }
+          path="/login"
+          exact
+        ></Route>
+        <Route element={<About />} path="/about" exact>
+          {" "}
+        </Route>
+        <Route element={<AuthRoutes />}>
+          <Route element={<Dashboard />} path="/dashboard" exact>
+            {" "}
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
 );
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

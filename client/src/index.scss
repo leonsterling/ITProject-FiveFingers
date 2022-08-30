@@ -1,0 +1,25 @@
+@use './fonts/Monsterrat';
+@use './API/Material-icons.scss';
+
+:root {
+    --accent-color: hsl(198, 31%, 66%);
+    --accent-color-darker: hsl(198, 31%, 50%);
+
+    // Its complementary color; when the hue is shifted 180 degrees
+    --accent-color-complement: hsl(15.8, 33.3%, 68.8%);
+}
+
+body {
+  margin: 0;
+  font-family: Monsterrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
