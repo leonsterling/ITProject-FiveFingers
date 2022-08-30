@@ -1,8 +1,9 @@
 // Import the necessary libraries
 import React, { useState, useEffect, Component } from "react";
-import SideNav from "../../components/SideNav";
+import SideNav from "../../components/SideNav.js";
 import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
 import "../Record/dropFiles/DropFiles.css";
+
 
 // CSS imports
 import "./RecordPage.css";
@@ -25,7 +26,7 @@ const RecordForm = () => {
     artefactFiles: [],
   };
 
-  // React hook to change the state of record
+  // React  to change the state of record
   const [record, setRecord] = useState(initialState);
 
   // NOT DONE YET
@@ -56,11 +57,7 @@ const RecordForm = () => {
   return (
     <>
       <div class="container1">
-        
-         {/* Render the side nav*/}
-        <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
-
-         {/* The form that the user to send to database */}
+        {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
           <h1>Create Artefact</h1>
           <div class="container2">
@@ -121,6 +118,9 @@ const RecordForm = () => {
             </button>
           </div>
         </form>
+
+        {/* Render the side nav*/}
+        <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
       </div>
     </>
   );
