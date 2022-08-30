@@ -18,24 +18,28 @@ const SideNav = ({ sideNavOpen, closeSideNav}) => {
                 </i>
             </div>
 
-            <div className="sidenav-menu">
-                <div className="sidenav-link active-menu-link">
-                    <i><Icon icon="bxs:dashboard"/></i>
-                    <a href="#">Dashboard</a>
+            <div className="sidenav-content">
+                <div className="sidenav-menu">
+                    <div className="sidenav-link active-menu-link">
+                        <i><Icon icon="bxs:dashboard"/></i>
+                        <a href="#">Dashboard</a>
+                    </div>
+                    <div className="sidenav-link">
+                        <i><Icon icon="ion:albums" /></i>
+                        <a href="#">Albums</a>
+                    </div>
+                    <div className="sidenav-link">
+                        <i><Icon icon="bxs:add-to-queue" /></i>
+                        <a href="#">Add Artefact</a>
+                    </div>
                 </div>
-                <div className="sidenav-link">
-                    <i><Icon icon="ion:albums" /></i>
-                    <a href="#">Albums</a>
-                </div>
-                <div className="sidenav-link">
-                    <i><Icon icon="bxs:add-to-queue" /></i>
-                    <a href="#">Add Artefact</a>
-                </div>
+
                 <div className="sidenav-logout">
                     <i><Icon icon="icon-park-outline:logout" /></i>
                     <a href="#">Sign Out</a>
                 </div>
             </div>
+            
         </div>
     );
 };
