@@ -3,10 +3,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import './index.css';
-import reportWebVitals from './reportWebVitals';
 
 import LoginPage from "./pages/Login/LoginPage";
-import About from "./pages/About/About";
 import AuthRoutes from "./components/AuthRoutes";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Cookies from "universal-cookie";
@@ -34,9 +32,6 @@ root.render(
           path="/login"
           exact
         ></Route>
-        <Route element={<About />} path="/about" exact>
-          {" "}
-        </Route>
         <Route element={<AuthRoutes />}>
           <Route element={<Dashboard />} path="/dashboard" exact>
             {" "}
@@ -46,8 +41,3 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
