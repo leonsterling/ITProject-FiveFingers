@@ -1,15 +1,11 @@
 .drop-file-input {
     position: relative;
-    width: 400px;
-    height: 200px;
-    border: 2px dashed var(--border-color);
+    border: 2px dashed #787878;
     border-radius: 20px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background-color: var(--input-bg);
+    height:100%;
 }
 
 .drop-file-input input {
@@ -30,7 +26,8 @@
 .drop-file-input__label {
     text-align: center;
     color: var(--txt-second-color);
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 1.2em;
     padding: 10px;
 }
 

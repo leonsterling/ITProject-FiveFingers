@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@material-ui/styles": "^4.11.5"
-  },
-  "devDependencies": {
-    "@iconify/react": "^3.2.2"
-  }
-}

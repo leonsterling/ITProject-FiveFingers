@@ -1,92 +1,129 @@
+// Import the necessary libraries
 import React, { useState, useEffect, Component } from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import useStyles from "./styles";
+import SideNav from "../../components/SideNav";
 import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
 import "../Record/dropFiles/DropFiles.css";
-//import axios from 'axios';
 
+// CSS imports
+import "./RecordPage.css";
+
+// Record form to add a new Artefact
 const RecordForm = () => {
-  const classes = useStyles();
-
+  // Change the artefactFiles list if a new file is added or removed
   const onFileChange = (files) => {
     console.log(files);
-    setRecord(record.artefactFiles = files);
+    setRecord((record.artefactFiles = files));
   };
 
+  // The JSON object that is being constantly updated and sent
   const initialState = {
-		artefactName: "",
-		artefactDate: "",
-		location: "",
-		description: "",
-    artefactFiles : [],
-	};
+    artefactName: "",
+    artefactDate: "",
+    location: "",
+    description: "",
+    tags: "",
+    artefactFiles: [],
+  };
 
+  // React hook to change the state of record
   const [record, setRecord] = useState(initialState);
 
-
+  // NOT DONE YET
   function handleSubmit(e) {
-    console.log(record)
-		e.preventDefault();
-	}
-
-  function handleChange(event) {
-		setRecord({ ...record, [event.target.name]: event.target.value });
     console.log(record);
-	}
+
+    // Prevent the user from refreshing the page when they input "enter"
+    e.preventDefault();
+  }
+
+  // Change the state of the record object based on user input
+  function handleChange(event) {
+    setRecord({ ...record, [event.target.name]: event.target.value });
+    console.log(record);
+  }
+
+  const [sideNavOpen, setSideNavOpen] = useState(false);
+
+  const openSideNav = () => {
+    setSideNavOpen(true);
+  };
+
+  const closeSideNav = () => {
+    setSideNavOpen(false);
+  };
+
+  // Return an HTML of the Record Page
   return (
     <>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <Typography>Create Artefact</Typography>
-        <Grid container spacing={10}>
-          <Grid item xs={3.7}>
-            <label> <p>Artefact Name:</p>
-              <input 
-                name = "artefactName"
-                type="text" 
+      <div class="container1">
+        
+         {/* Render the side nav*/}
+        <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
+
+         {/* The form that the user to send to database */}
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <h1>Create Artefact</h1>
+          <div class="container2">
+            <div class="container3" id="input">
+              <label for="artefactName">Artefact Name *</label>
+              <input
+                name="artefactName"
+                id="artefactName"
+                type="text"
                 onChange={handleChange}
                 required
-               />
-            </label>
-            <label>Date of origin:</label>
-              <input 
-              name = "artefactDate"
-              type="date" 
-              tabIndex={"2"} 
-              onChange={handleChange}
-               />
-            <label>Location</label>
+              />
+              <label for="artefacDate">Date of origin</label>
               <input
-                name = "location"
+                name="artefactDate"
+                id="artefactDate"
+                type="date"
+                tabIndex={"2"}
+                onChange={handleChange}
+              />
+              <label for="location">Location</label>
+              <input
+                name="location"
+                id="location"
                 type="text"
                 tabIndex={"2"}
                 onChange={handleChange}
               />
-            <label>Description</label>
+              <label for="description">Description</label>
               <textarea
-                name = "description"
+                name="description"
+                id="description"
                 type="text"
+                rows="5"
                 tabIndex={"2"}
                 onChange={handleChange}
-                //className="form-control" 
+                //className="form-control"
               />
-          </Grid>
-          <Grid item xs={8.3}>
-            <div className="box">
-              <h2 className="header">React drop files input</h2>
-              <DropFileInput onFileChange={(files) => onFileChange(files)} />
+              <label for="tags">Tags</label>
+              <input
+                name="tags"
+                id="tags"
+                type="text" //for now
+                tabIndex={"2"}
+                onChange={handleChange}
+              />
             </div>
-          </Grid>
-        </Grid>
-
-        <button className="button" type="submit">
-          Submit
-        </button>
-      </form>
+            <div class="container3" id="upload">
+              <label>Upload image *</label>
+              <div className="box">
+                <DropFileInput onFileChange={(files) => onFileChange(files)} />
+              </div>
+            </div>
+          </div>
+          <div class="container2" id="button">
+            <button className="button" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </>
   );
 };
 
 export default RecordForm;
-// notes:
-// insert clear button maybe?

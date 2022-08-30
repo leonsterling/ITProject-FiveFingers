@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./drop-file-input.css";
 import { ImageConfig } from "../config/ImageConfig.js";
-import uploadImg from "../assets/cloud-upload-regular-240.png";
+import { Icon } from '@iconify/react';
 
 const DropFileInput = (props) => {
   const wrapperRef = useRef(null);
@@ -45,8 +45,9 @@ const DropFileInput = (props) => {
         onDrop={onDrop}
       >
         <div className="drop-file-input__label">
-          <img src={uploadImg} alt="" />
-          <p>Place your Artefacts Image Here</p>
+          <Icon icon="bx:image" color="#c5c5c5" width="3em"/>
+          <p>Drop your images here, or</p>
+          <p>click to browse.</p>
         </div>
 
         {/* option to add file into the list */}
