@@ -13,7 +13,7 @@ const TopNav = ({sideNavOpen, openSideNav}) => {
     return (
         <nav className="topnav">
             <div className="nav-icon" onClick={() => openSideNav()}>
-                <Icon icon="charm:menu-hamburger"/>
+                <Icon className="nav-icon-button" icon="charm:menu-hamburger"/>
             </div>
             <div className="topnav-left">
             </div>
@@ -27,12 +27,12 @@ const TopNav = ({sideNavOpen, openSideNav}) => {
                     <SearchBar />
                 </div>
 
-                <div className='add-button'>
-                    <Link to={`/addartefact`}>
+                <Link className="add-artefact" to={`/addartefact`}>
+                    <button className='add-artefact-button'>
                         Add Artefact
                         <Icon icon="akar-icons:plus" />
-                    </Link>
-                </div>
+                    </button>
+                </Link>
 
             </div>
         </nav>

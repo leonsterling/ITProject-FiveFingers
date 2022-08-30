@@ -4,14 +4,16 @@ import { Icon } from '@iconify/react';
 
 const SearchBar = () => {
     return (
+        <body>
         <div className="search-bar">
             <form className="search-form" action="/" method="GET">
                 <input className="search-field" type="search" placeholder="search"/>
-                <button className="search-button" type="submit">
+                <div className="search-button">
                     <Icon className="search-icon" icon="bi:search" />
-                </button>
+                </div>
             </form>
         </div>
+        </body>
     );
 };
 
