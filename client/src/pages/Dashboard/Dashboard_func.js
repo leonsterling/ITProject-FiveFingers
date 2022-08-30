@@ -7,7 +7,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-const viewSates = {
+const viewStates = {
     gallery : "dashboard-gallery",
     list : "dashboard-list",
 }
@@ -15,7 +15,7 @@ const viewSates = {
 // dummy dashboard page
 export default function Dashboard() {
   const [message, setMessage] = useState("");
-  const [view, setView] = useState(viewSates.gallery);
+  const [view, setView] = useState(viewStates.gallery);
 
   useEffect(() => {
     const configuration = {
@@ -55,7 +55,7 @@ export default function Dashboard() {
   });
 
   function changeView() {
-      setView( (view === viewSates.gallery) ? viewSates.list : viewSates.gallery )
+      setView( (view === viewStates.gallery) ? viewStates.list : viewStates.gallery )
   }
 
   console.log(message);

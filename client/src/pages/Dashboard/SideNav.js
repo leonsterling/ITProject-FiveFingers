@@ -22,13 +22,13 @@ const SideNav = ({ sideNavOpen, closeSideNav}) => {
               <div className="sidenav-img">
                   <img src={logo} alt="Sterling logo"/>
               </div>
-              <i>
+              
               <Icon 
                   icon="akar-icons:cross"
                   id="sidenavIcon" 
                   onClick={() => closeSideNav()}
               />
-              </i>
+              
           </div>
 
           <div className="sidenav-menu">

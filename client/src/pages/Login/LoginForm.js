@@ -78,7 +78,7 @@ export default function LoginForm () {
           <form action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
             <ul>
                 <li>
-                    <label> Email </label>
+                    <label> Username </label>
                 </li>
                 <li className={inputClass}>
                     <span className="material-icons">mail</span>

@@ -54,6 +54,7 @@ const loginUser = (req, res) => {
       bcrypt
         .compare(req.body.password, user.password)
         .then((checkPass) => {
+          
           // invalid
           if (!checkPass) {
             return res.status(400).send({
