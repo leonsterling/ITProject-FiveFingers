@@ -33,7 +33,7 @@ body {
         "sidenav main"
 }
 
-form {
+.container1 form {
     padding: 70px 35px;
     grid-area: main;
     display: grid;
@@ -51,12 +51,12 @@ form {
         "input gap upload";
 }
 
-#input.container3 {
+.container1 #input.container3 {
     grid-area: input;
     box-sizing:border-box;
 }
 
-#upload.container3 {
+.container1 #upload.container3 {
     grid-area: upload;
     box-sizing:border-box;
 }
@@ -81,20 +81,20 @@ form {
     }
 }
 
-h1 {
+.container h1 {
     font-weight: 600;
     font-size: 1.7em;
     color: var(--txt-color);
     margin-bottom: 2em;
 }
 
-label {
+.container1 label {
     font-weight: 500;
     font-size: 1.3em;
     color: var(--txt-color);
 }
 
-input, textarea {
+.container1 input, .container1 textarea {
     box-sizing:border-box;
     border: 1px solid #C5C5C5;
     border-radius: 7px;
@@ -107,17 +107,17 @@ input, textarea {
     width: 100%;
 }
 
-input[type="date"] {
+.container1 input[type="date"] {
     font-family: "Montserrat" !important;
     align-items: flex-start;
 }
 
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
+.container1 input[type="date"]::-webkit-inner-spin-button,
+.container1 input[type="date"]::-webkit-calendar-picker-indicator {
     align-self: flex-end;
 }
 
-button {
+.container1 button {
     font-family: "Montserrat";
     cursor: pointer;
     color: white;
@@ -130,11 +130,11 @@ button {
     box-shadow: 0px 36px 14px rgba(0, 0, 0, 0.01), 0px 20px 12px rgba(0, 0, 0, 0.05), 0px 9px 9px rgba(0, 0, 0, 0.09), 0px 2px 5px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 }
 
-#button.container2 {
+.container1 #button.container2 {
     justify-items:right;
 }
 
-.box {
+.container1 .box {
     height: 60%;
     margin-top: 0.75em;
     box-sizing: border-box;

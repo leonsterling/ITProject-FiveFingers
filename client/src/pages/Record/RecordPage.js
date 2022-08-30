@@ -3,6 +3,7 @@ import React, { useState, useEffect, Component } from "react";
 import SideNav from "../../components/SideNav";
 import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
 import "../Record/dropFiles/DropFiles.css";
+import { Link } from "react-router-dom";
 
 // CSS imports
 import "./RecordPage.css";
@@ -34,6 +35,7 @@ const RecordForm = () => {
 
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
+
   }
 
   // Change the state of the record object based on user input
@@ -55,7 +57,7 @@ const RecordForm = () => {
   // Return an HTML of the Record Page
   return (
     <>
-      <div class="container1">
+      <div className="container1">
         
          {/* Render the side nav*/}
         <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
@@ -63,8 +65,8 @@ const RecordForm = () => {
          {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
           <h1>Create Artefact</h1>
-          <div class="container2">
-            <div class="container3" id="input">
+          <div className="container2">
+            <div className="container3" id="input">
               <label for="artefactName">Artefact Name *</label>
               <input
                 name="artefactName"
@@ -108,7 +110,7 @@ const RecordForm = () => {
                 onChange={handleChange}
               />
             </div>
-            <div class="container3" id="upload">
+            <div className="container3" id="upload">
               <label>Upload image *</label>
               <div className="box">
                 <DropFileInput onFileChange={(files) => onFileChange(files)} />
@@ -116,9 +118,12 @@ const RecordForm = () => {
             </div>
           </div>
           <div class="container2" id="button">
-            <button className="button" type="submit">
+
+          <Link to={`/dashboard`}>
+          <button className="button" type="submit">
               Submit
-            </button>
+            </button>     
+           </Link>
           </div>
         </form>
       </div>

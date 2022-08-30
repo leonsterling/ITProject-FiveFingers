@@ -7,6 +7,7 @@ import './index.css';
 import LoginPage from "./pages/Login/LoginPage";
 import AuthRoutes from "./components/AuthRoutes";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import RecordPage from "./pages/Record/RecordPage";
 import Cookies from "universal-cookie";
 
 // Cookies for checking if the user is currently logged in
@@ -34,6 +35,9 @@ root.render(
         ></Route>
         <Route element={<AuthRoutes />}>
           <Route element={<Dashboard />} path="/dashboard" exact>
+            {" "}
+          </Route>
+          <Route element={<RecordPage />} path="/addartefact" exact>
             {" "}
           </Route>
         </Route>
