@@ -1,8 +1,23 @@
 import "./SideNav.css";
 import logo from "../assets/LOGO-BLACK.png";
 import { Icon } from '@iconify/react';
+import Cookies from "universal-cookie";
+
+// obtain token from cookie
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
 
 const SideNav = ({ sideNavOpen, closeSideNav}) => {
+    
+    // logout function
+    const logout = () => {
+        // cookie removed
+        cookies.remove("TOKEN", { path: "/" });
+        // user redirected to login page
+        window.location.href = "/";
+    };
+    
+    
     return (
         <div className={sideNavOpen ? "sidenav-responsive" : ""} id="sidenav">
             <div className="sidenav-title">
@@ -36,7 +51,7 @@ const SideNav = ({ sideNavOpen, closeSideNav}) => {
 
                 <div className="sidenav-logout">
                     <i><Icon icon="icon-park-outline:logout" /></i>
-                    <a href="#">Sign Out</a>
+                    <a href="#" onClick={() => logout()}>Sign Out</a>
                 </div>
             </div>
             
