@@ -45,7 +45,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    height: calc(10vh - 120px);
+    height: calc(100vh - 120px);
     padding-bottom: 20px;
 }
 
