@@ -26,6 +26,8 @@ const Dashboard = () => {
       <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
     </div>
   );
+
+
 };
 
 
