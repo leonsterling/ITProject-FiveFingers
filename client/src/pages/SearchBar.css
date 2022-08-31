@@ -1,19 +1,19 @@
 .search-bar {
     width: 60vw;
-    height: 25px;
 }
 
 .search-form {
     display: flex;
     flex-direction: row;
-    height: 10px;
+    height: 40px;
 }
 
 .search-field {
     width: 100%;
     padding: 10px 35px 10px 15px;
-    border: 1px solid black;
-    border-radius: 100px;
+    background: #e2e2e2;
+    border: none;
+    border-radius: 10px;
     outline: none;
 }
 
@@ -22,7 +22,7 @@
     border: none;
     outline: none;
     margin-left: -33px;
-    margin-top: 2px;
+    margin-top: 10px;
     
 }
 

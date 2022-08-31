@@ -8,6 +8,11 @@ import "./TopNav.css";
 import logo from "../assets/LOGO-BLACK.png";
 // <Link to="/add-artefact" className="add-artefact"></Link>
 // <img width="30px" src={logo} alt="logo"/>
+/* List Mode button should be in the dashboard area
+<div className="list-icon">
+<Icon className="list-icon" icon="charm:layout-list" />
+</div>
+*/
 
 const TopNav = ({sideNavOpen, openSideNav}) => {
     return (
@@ -19,18 +24,14 @@ const TopNav = ({sideNavOpen, openSideNav}) => {
             </div>
             <div className="topnav-right">
 
-                <div className="list-icon">
-                    <Icon className="list-icon" icon="charm:layout-list" />
-                </div>
-
                 <div className="search-bar">
                     <SearchBar />
                 </div>
 
-                <Link className="add-artefact" to={`/addartefact`}>
-                    <button className='add-artefact-button'>
+                <Link className="add-artefact-button" to={`/addartefact`}>
+                    <button className='add-artefact'>
                         Add Artefact
-                        <Icon icon="akar-icons:plus" />
+                        <Icon className="add-icon" icon="akar-icons:plus" />
                     </button>
                 </Link>
 

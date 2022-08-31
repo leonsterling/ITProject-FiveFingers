@@ -35,12 +35,21 @@
 }
 
 .add-artefact-button {
-    border: 2px solid black;
+    border: 2px solid rgb(167, 167, 167);
     border-radius: 20px;
     padding: 5px;
     margin: 5px;
     display:inline-block;
+}
 
+.add-artefact {
+    border: none;
+    background: none;
+    justify-content: center;
+}
+
+.add-icon {
+    font-size: 15px;
 }
 
 @media only screen and (max-width: 978px) {
