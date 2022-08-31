@@ -5,7 +5,7 @@
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
     border-right: 2px solid #8DB3C3;
-    height: calc(100vh - 40px);
+    height: calc(100vh -40px);
 }
 
 #sidenav * {

@@ -8,30 +8,32 @@ const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
 const SideNav = ({ sideNavOpen, closeSideNav}) => {
-  // logout function
-  const logout = () => {
-    // cookie removed
-    cookies.remove("TOKEN", { path: "/" });
-    // user redirected to login page
-    window.location.href = "/";
-  };
+    
+    // logout function
+    const logout = () => {
+        // cookie removed
+        cookies.remove("TOKEN", { path: "/" });
+        // user redirected to login page
+        window.location.href = "/";
+    };
+    
+    
+    return (
+        <div className={sideNavOpen ? "sidenav-responsive" : ""} id="sidenav">
+            <div className="sidenav-title">
+                <div className="sidenav-img">
+                    <img src={logo} alt="Sterling logo"/>
+                </div>
+                <i>
+                <Icon 
+                    icon="akar-icons:cross"
+                    id="sidenavIcon" 
+                    onClick={() => closeSideNav()}
+                />
+                </i>
+            </div>
 
-  return (
-      <div className={sideNavOpen ? "sidenav-responsive" : ""} id="sidenav">
-          <div className="sidenav-title">
-              <div className="sidenav-img">
-                  <img src={logo} alt="Sterling logo"/>
-              </div>
-              
-              <Icon 
-                  icon="akar-icons:cross"
-                  id="sidenavIcon" 
-                  onClick={() => closeSideNav()}
-              />
-              
-          </div>
-
-          <div className="sidenav-content">
+            <div className="sidenav-content">
                 <div className="sidenav-menu">
                     <div className="sidenav-link active-menu-link">
                         <i><Icon icon="bxs:dashboard"/></i>
@@ -52,8 +54,9 @@ const SideNav = ({ sideNavOpen, closeSideNav}) => {
                     <a href="#" onClick={() => logout()}>Sign Out</a>
                 </div>
             </div>
-      </div>
-  );
+            
+        </div>
+    );
 };
 
 export default SideNav;
