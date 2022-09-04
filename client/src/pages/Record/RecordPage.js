@@ -4,12 +4,18 @@ import SideNav from "../../components/SideNav";
 import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
 import "../Record/dropFiles/DropFiles.css";
 import { Link } from "react-router-dom";
+import Axios from "axios";
+import { useNavigate } from "react-router-dom";
+import FileBase from 'react-file-base64';
 
 // CSS imports
 import "./RecordPage.css";
 
 // Record form to add a new Artefact
 const RecordForm = () => {
+  // Initialize the navigate function
+  const navigate = useNavigate();
+
   // Change the artefactFiles list if a new file is added or removed
   const onFileChange = (files) => {
     console.log(files);
@@ -22,8 +28,8 @@ const RecordForm = () => {
     artefactDate: "",
     location: "",
     description: "",
-    tags: "",
-    artefactFiles: [],
+    //tags: "",
+    artefactImg: "",
   };
 
   // React hook to change the state of record
@@ -36,6 +42,15 @@ const RecordForm = () => {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
 
+    async function recordArtefact() {
+      try {
+        const response = await Axios.post("http://localhost:5100/recordArtefact", record);
+        navigate('/dashboard');
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+    recordArtefact();
   }
 
   // Change the state of the record object based on user input
@@ -58,11 +73,10 @@ const RecordForm = () => {
   return (
     <>
       <div className="container1">
-        
-         {/* Render the side nav*/}
+        {/* Render the side nav*/}
         <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
 
-         {/* The form that the user to send to database */}
+        {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
           <h1>Create Artefact</h1>
           <div className="container2">
@@ -75,7 +89,7 @@ const RecordForm = () => {
                 onChange={handleChange}
                 required
               />
-              <label for="artefacDate">Date of origin</label>
+              <label for="artefacDate">Date of ???</label>
               <input
                 name="artefactDate"
                 id="artefactDate"
@@ -83,7 +97,7 @@ const RecordForm = () => {
                 tabIndex={"2"}
                 onChange={handleChange}
               />
-              <label for="location">Location</label>
+              <label for="location">Location of ???</label>
               <input
                 name="location"
                 id="location"
@@ -93,37 +107,54 @@ const RecordForm = () => {
               />
               <label for="description">Description</label>
               <textarea
+                className="descriptionArea"
                 name="description"
                 id="description"
                 type="text"
-                rows="5"
+                rows="15"
+
                 tabIndex={"2"}
                 onChange={handleChange}
+                maxLength = {2000}
+                placeholder = {"Insert artefact description"}
+
                 //className="form-control"
               />
-              <label for="tags">Tags</label>
+              {/*<label for="tags">Tags</label>
               <input
                 name="tags"
                 id="tags"
                 type="text" //for now
                 tabIndex={"2"}
                 onChange={handleChange}
-              />
+            />*/}
             </div>
+            {/*}
             <div className="container3" id="upload">
               <label>Upload image *</label>
               <div className="box">
                 <DropFileInput onFileChange={(files) => onFileChange(files)} />
               </div>
+          </div>*/}
+            {/* Upload Images */}
+            <div >
+              <FileBase type="file" name="artefactImg" multiple={false} onDone={({ base64 }) => setRecord({ ...record, artefactImg: base64 })} />
+              <div><img src={record.artefactImg} alt="No Images have been Uploaded Yet" /></div>
             </div>
           </div>
-          <div class="container2" id="button">
 
-          <Link to={`/dashboard`}>
-          <button className="button" type="submit">
-              Submit
-            </button>     
-           </Link>
+          {/* This is the cancel button it just redirects to dashboard */}
+          <div className="container2" id="button">
+            <Link to={`/dashboard`}>
+              <button className="button" type="submit">
+                Cancel
+              </button>
+            </Link>
+          </div>
+          <div className="container2" id="button">
+              <button className="button" type="submit">
+                Submit
+              </button>
           </div>
         </form>
       </div>

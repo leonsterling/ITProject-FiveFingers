@@ -139,3 +139,7 @@ body {
     margin-top: 0.75em;
     box-sizing: border-box;
 }
+
+.descriptionArea {
+    resize: none;
+}

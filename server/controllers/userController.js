@@ -3,6 +3,18 @@ const { User, Artefact, Album, Tag, Image } = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken")
 
+// Create new Artefact Record
+const registerArtefact = (req, res) => {
+	let artefact = new Artefact(req.body);
+	artefact
+		.save()
+		.then((artefact) => {
+			res.send(artefact);
+		})
+		.catch((error) => {
+			res.status(422).send("Failed to add artefact");
+		});
+};
 
 // register new users (will be removed)
 const registerUser = async (req, res) => {
@@ -116,84 +128,14 @@ const logout = (req, res) => {
   }
 };
 
-const addArtefact = async (req, res) => {
-  const artefactData = new Artefact({
-    artefact_name: "artefact 2",
-    artefact_description: "my second ever artefact",
-    artefact_location: "singapore",
-    artefact_date_origin: new Date(),
-    artefact_images: null,
-    artefact_tags: null,
-  });
 
-  User.updateOne(
-    { username: "vincent" },
-    { $push: { artefact_list: artefactData } },
-    function (err, doc) {
-      if (err) return null;
-      else {
-      }
-    }
-  );
-
-  await artefactData
-    .save()
-    .then((result) => {
-      res.status(201).send({
-        message: "Artefact created successfully",
-        result,
-      });
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message: "Error upon creating artefact",
-        error,
-      });
-    });
-};
-
-const updateArtefact = (req, res) => {
-  const loc = "iran";
-
-  User.updateOne(
-    { username: "vincent", "artefact_list.artefact_name": "artefact 2" },
-    { $set: { "artefact_list.$.artefact_location": loc } },
-    function (err, doc) {
-      if (err) {
-        res.status(500).send({
-          message: "Error upon updating artefact 1",
-          err,
-      })}
-      else {
-        Artefact.updateOne(
-          {artefact_name: "artefact 2" },
-          { $set: { artefact_location: loc } },
-          function (err, doc) {
-            if (err) {
-              res.status(500).send({
-                message: "Error upon updating artefact 1",
-                err,
-            })}
-            else {
-              res.status(201).send({
-                message: "Artefact updated successfully"
-              });
-            }
-          }
-        )
-      }
-    }
-  )
-
-};
 
 // exports objects containing functions imported by router
 module.exports = {
+  registerArtefact,
   registerUser,
   logout,
   loginUser,
   getDashboard,
   getAbout,
-  addArtefact,
-  updateArtefact,
 };

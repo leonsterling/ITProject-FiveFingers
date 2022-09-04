@@ -12,11 +12,13 @@ const userController = require('../controllers/userController')
 userRouter.get('/about', userController.getAbout)
 userRouter.get('/dashboard', jwtAuth, userController.getDashboard)
 
-// POST routes
+// POST routes for Login activities
 userRouter.post('/register', userController.registerUser)
 userRouter.post('/login', userController.loginUser)
-userRouter.post('/dashboard/add-artefact', userController.addArtefact),
-userRouter.post('/dashboard/update-artefact', userController.updateArtefact)
+
+// POST route for registering artefacts
+userRouter.post('/recordArtefact', userController.registerArtefact),
+
 
 // DELETE route
 userRouter.delete('/logout', userController.logout)

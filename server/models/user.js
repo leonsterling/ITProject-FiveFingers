@@ -15,13 +15,20 @@ const imageSchema = new mongoose.Schema({
 
 // schema for artefact
 const artefactSchema = new mongoose.Schema({
-    artefact_name: {type: String},
-    artefact_description: {type: String},
-    artefact_location: {type: String},
-    artefact_date_created: {type: Date, default: new Date()},
-    artefact_date_origin: {type: Date},
-    artefact_images: [imageSchema],
-    artefact_tags: [tagSchema]
+    artefactName: {
+        type: String, 
+        required: [true, 'Artefact Name is Required']},
+    artefactDate :{type: Date},
+    location: {type: String},
+    description: {type: String},
+    artefactImg : {
+        type: String,
+        required: [true, 'Artefact Image is Required']    
+    }
+    //artefactDateCreated: {type: Date, default: new Date()},
+   //artefact_date_origin: {type: Date},
+    //artefact_images: [imageSchema] ,
+    //artefact_tags: [tagSchema]
  });
 
  // schema for album
@@ -66,7 +73,7 @@ userSchema.pre('save', function save(next) {
 
 // constants to export as collections in DB to be used in userController
 const User = mongoose.model('User', userSchema)
-const Artefact = mongoose.model('Artefact', artefactSchema)
+const Artefact = mongoose.model('ArtefactRecord', artefactSchema, 'ArtefactRecords')
 const Album = mongoose.model('Album', albumSchema)
 const Tag = mongoose.model('Tag', tagSchema)
 const Image = mongoose.model('Image', imageSchema)
