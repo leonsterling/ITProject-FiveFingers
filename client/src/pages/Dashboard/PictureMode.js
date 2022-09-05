@@ -37,21 +37,8 @@ const Artefact = (props) => (
      });
     
 )
-*/
-    
-const PictureMode = () => {
-    return (
-        <main>
-            <div className="main-container">
-                <div className="main-title">
-                    <div className="main-greeting">
-                        <h1>My Artefacts</h1>
-                    </div>
-                </div>
 
-                <div className="main-cards">
-
-                    <div className="card">
+<div className="card">
                         <img src={Nayeon}/>
                         <div className="card-title">
                             <p>Nayeon</p>
@@ -121,6 +108,21 @@ const PictureMode = () => {
                         </div>
                     </div>
 
+*/
+    
+const PictureMode = () => {
+    return (
+        <main>
+            <div className="main-container">
+                <div className="main-title">
+                    <div className="main-greeting">
+                        <h1>My Artefacts</h1>
+                    </div>
+                </div>
+
+                <div className="main-cards">
+
+                    
                 </div>
             </div>
         </main>
