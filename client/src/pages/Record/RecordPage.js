@@ -4,12 +4,17 @@ import SideNav from "../../components/SideNav";
 import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
 import "../Record/dropFiles/DropFiles.css";
 import { Link } from "react-router-dom";
-import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import FileBase from 'react-file-base64';
+import axios from "axios";
+import Cookies from "universal-cookie";
 
 // CSS imports
 import "./RecordPage.css";
+
+// obtain token from cookie
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
 
 // Record form to add a new Artefact
 const RecordForm = () => {
@@ -37,20 +42,36 @@ const RecordForm = () => {
 
   // NOT DONE YET
   function handleSubmit(e) {
-    console.log(record);
-
+    
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
 
-    async function recordArtefact() {
-      try {
-        const response = await Axios.post("http://localhost:5100/recordArtefact", record);
-        navigate('/dashboard');
-      } catch (error) {
-        console.log("error", error);
-      }
+    async function recordArtefact (e) {
+      // set configurations
+      const configuration = {
+        method: "post",
+        url: "http://localhost:5100/add-artefact",
+        data: {
+          record
+        },
+        headers: {
+          Authorization: `Bearer ${token}`, // authorized route with jwt token
+        },
+      };
+
+     // make the API call
+    axios(configuration)
+    .then((result) => {
+      console.log(result)
+      window.location.href = "/dashboard"
+    })
+    .catch((error) => {
+      error = new Error();
+      console.log(error)
+    });
     }
-    recordArtefact();
+
+    recordArtefact()
   }
 
   // Change the state of the record object based on user input
@@ -89,7 +110,7 @@ const RecordForm = () => {
                 onChange={handleChange}
                 required
               />
-              <label for="artefacDate">Date of ???</label>
+              <label for="artefacDate">Date of Artefact</label>
               <input
                 name="artefactDate"
                 id="artefactDate"
@@ -97,7 +118,7 @@ const RecordForm = () => {
                 tabIndex={"2"}
                 onChange={handleChange}
               />
-              <label for="location">Location of ???</label>
+              <label for="location">Location of Artefact</label>
               <input
                 name="location"
                 id="location"
@@ -161,5 +182,6 @@ const RecordForm = () => {
     </>
   );
 };
+
 
 export default RecordForm;

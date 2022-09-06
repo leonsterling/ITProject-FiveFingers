@@ -1,6 +1,7 @@
 // libraries imported
 const express = require('express') 
-const jwtAuth = require('../jwt') 
+const jwtAuth = require('../utils/jwt') 
+const upload = require('../utils/multer')
 
 // create userRouter object
 const userRouter = express.Router()
@@ -9,19 +10,20 @@ const userRouter = express.Router()
 const userController = require('../controllers/userController')
 
 // GET routes
-userRouter.get('/about', userController.getAbout)
 userRouter.get('/dashboard', jwtAuth, userController.getDashboard)
 
 // POST routes for Login activities
 userRouter.post('/register', userController.registerUser)
 userRouter.post('/login', userController.loginUser)
 
-// POST route for registering artefacts
-userRouter.post('/recordArtefact', userController.registerArtefact),
+// POST route to register, edit or delete artefacts
+userRouter.post('/add-artefact', jwtAuth, upload.single("artefact-image"), userController.registerArtefact),
+userRouter.post('/edit-artefact', jwtAuth, userController.editArtefact),
 
 
 // DELETE route
-userRouter.delete('/logout', userController.logout)
+userRouter.delete('/logout', userController.logout),
+userRouter.delete('/delete-artefact', jwtAuth, userController.deleteArtefact)
 
 // export Router object
 module.exports = userRouter

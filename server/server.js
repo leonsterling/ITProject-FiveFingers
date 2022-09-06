@@ -9,7 +9,7 @@ const app = express()
 // app uses cors to authenticate user
 app.use(
     cors({
-      origin: "http://localhost:3001", // location of the react app were connecting to
+      origin: "http://localhost:3000", // location of the react app were connecting to
       credentials: true,
     })
 );
@@ -32,3 +32,5 @@ app.listen(process.env.PORT || 5100, () => {
 
 // connect mongoose index in models folder
 require('./models')
+
+require('./utils/cloudinary')

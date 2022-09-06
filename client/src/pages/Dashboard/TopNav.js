@@ -28,7 +28,7 @@ const TopNav = ({sideNavOpen, openSideNav}) => {
                     <SearchBar />
                 </div>
 
-                <Link className="add-artefact-button" to={`/addartefact`}>
+                <Link className="add-artefact-button" to={`/add-artefact`}>
                     <button className='add-artefact'>
                         Add Artefact
                         <Icon className="add-icon" icon="akar-icons:plus" />

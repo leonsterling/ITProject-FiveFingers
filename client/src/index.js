@@ -37,11 +37,11 @@ root.render(
           <Route element={<Dashboard />} path="/dashboard" exact>
             {" "}
           </Route>
-          <Route element={<RecordPage />} path="/addartefact" exact>
+          <Route element={<RecordPage />} path="/add-artefact" exact>
             {" "}
           </Route>
         </Route>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
