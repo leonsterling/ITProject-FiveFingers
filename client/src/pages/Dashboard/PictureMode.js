@@ -1,14 +1,10 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import "./PictureMode.css";
 import Nayeon from "../assets/Nayeon.JPG";
 
 import axios from "axios";
 import Cookies from "universal-cookie";
-
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useCallback } from "react";
-import { getCurrentProfile } from "./action";
 
 // obtain token from cookie
 const cookies = new Cookies();
@@ -45,10 +41,8 @@ const Artefact = (props) => (
 */
 
 const PictureMode = () => {
-  const [userData, setUserData] = useState([]);
-  useEffect(() => {
-
-    async function handleDashboard() {
+  const [userData, setUserData] = useState(null);
+  async function handleDashboard() {
     const configuration = {
       method: "get",
       url: "http://localhost:5100/dashboard",
@@ -66,17 +60,32 @@ const PictureMode = () => {
     else {
       return response
     }
-    }
+  }
+
+  useEffect(() => {
     handleDashboard().then((res) => {
       setUserData(res.data.user)
     }).catch((e)=> {
       console.log(e.message)
     })
   }, [])
+
+  let pictures = null;
+  if (userData) {
+      pictures = userData.artefactList.map(({artefactName, artefactImg}) => (
+        <div className="card">
+          <img src={artefactImg.imgURL} />
+          <div className="card-title">
+          <p>{artefactName}</p>
+          </div>
+        </div>
+      ));
+  }
   
   return (
     <main>
       <div className="main-container">
+
         <div className="main-title">
           <div className="main-greeting">
             <h1>My Artefacts</h1>
@@ -84,16 +93,9 @@ const PictureMode = () => {
         </div>
 
         <div className="main-cards">
-         
-           {userData.artefactList.map(({artefactName, artefactImg}) => (
-        <div className="card">
-        <img src={artefactImg.imgURL} />
-        <div className="card-title">
-        <p>{artefactName}</p>
+          {pictures} 
         </div>
-        </div> ))} 
-        
-        </div>
+
       </div>
     </main>
   );
