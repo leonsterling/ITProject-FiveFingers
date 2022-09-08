@@ -1,5 +1,5 @@
 // libraries and mongoose models imported
-const { User, Artefact, Categories } = require("../models/user");
+const { User, Artefact} = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
@@ -34,9 +34,11 @@ const registerArtefact = async (req, res) => {
   
   const artefact = new Artefact({
     artefactName: req.body.record.artefactName,
-    artefactDate: req.body.record.artefactDate,
-    location: req.body.record.location,
+    category: req.body.category,
     description: req.body.record.description,
+    memories: req.body.record.memories,
+    location: req.body.record.location,
+    artefactDate: req.body.record.artefactDate,
     "artefactImg.imgURL": image_data.url,
     "artefactImg.publicID": image_data.public_id,
   });
