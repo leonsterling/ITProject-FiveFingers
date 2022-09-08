@@ -4,6 +4,31 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
+
+// gets users dashboard once successfully logged in
+const getDashboard = async (req, res) => {
+  const current_user = await User.findById({ _id: req.user.userId });
+  // sample response status
+  res.status(200).send({
+    message: "Login Successful, hello user!",
+    user: current_user,
+  });
+};
+
+// Get the particular Artefact detail
+const artefact_details = async (req, res) => {
+  const {id} = req.params;
+  console.log(id);
+  try{
+    const record = await Artefact.findById('631999cb760715ca7e308d9c')
+    res.status(200).json(record);
+  }catch (error){
+    res.status(404).json({ message: error.message });
+  }
+};
+
+
+
 // register new users (will be removed)
 const registerUser = async (req, res) => {
   const user = new User(req.body);
@@ -73,15 +98,6 @@ const editArtefact = (req, res) => {};
 
 const deleteArtefact = (req, res) => {};
 
-// gets users dashboard once successfully logged in
-const getDashboard = async (req, res) => {
-  const current_user = await User.findById({ _id: req.user.userId });
-  // sample response status
-  res.status(200).send({
-    message: "Login Successful, hello user!",
-    user: current_user,
-  });
-};
 
 // gets POST request, attempt to log-in user
 const loginUser = (req, res) => {
@@ -151,6 +167,7 @@ const logout = (req, res) => {
   }
 };
 
+
 // exports objects containing functions imported by router
 module.exports = {
   registerArtefact,
@@ -160,4 +177,5 @@ module.exports = {
   getDashboard,
   editArtefact,
   deleteArtefact,
+  artefact_details,
 };

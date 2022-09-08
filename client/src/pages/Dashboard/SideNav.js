@@ -2,6 +2,7 @@ import "./SideNav.css";
 import logo from "../assets/LOGO-BLACK.png";
 import { Icon } from '@iconify/react';
 import Cookies from "universal-cookie";
+import React from 'react';
 
 // obtain token from cookie
 const cookies = new Cookies();

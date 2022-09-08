@@ -1,6 +1,7 @@
 import "./SideNav.css";
 import logo from "../pages/Record/dropFiles/assets/LOGO-BLACK.png";
 import { Icon } from '@iconify/react';
+import React from 'react';
 const SideNav = ({ sideNavOpen, closeSideNav}) => {
     return (
         <div className={sideNavOpen ? "sidenav-responsive" : ""} id="sidenav">

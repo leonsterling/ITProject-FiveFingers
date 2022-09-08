@@ -11,6 +11,8 @@ const userController = require('../controllers/userController')
 
 // GET routes
 userRouter.get('/dashboard', jwtAuth, userController.getDashboard)
+userRouter.get("/dashboard/:_id", jwtAuth, userController.artefact_details);
+
 
 // POST routes for Login activities
 userRouter.post('/register', userController.registerUser)
