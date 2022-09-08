@@ -2,7 +2,6 @@
 import React, { useState, useEffect, Component } from "react";
 import SideNav from "../../components/SideNav";
 import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
-import TextInsertField from './TextInsertField.js';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import FileBase from 'react-file-base64';
@@ -42,7 +41,7 @@ const RecordForm = () => {
 
   // NOT DONE YET
   function handleSubmit(e) {
-
+    
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
 
@@ -99,12 +98,49 @@ const RecordForm = () => {
 
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
-          <h1>Add Artefact</h1>
+          <h1>Create Artefact</h1>
           <div className="data-entry-fields">
-            <TextInsertField handleChange={handleChange}/>
+            <div className="data-entry-fields--text-insert" id="input">
+              <label> Artefact Name </label>
+              <input
+                name="artefactName"
+                id="artefactName"
+                type="text"
+                onChange={handleChange}
+                required
+              />
+              <label>Date of Artefact</label>
+              <input
+                name="artefactDate"
+                id="artefactDate"
+                type="date"
+                tabIndex={"2"}
+                onChange={handleChange}
+              />
+              <label> Location of Artefact</label>
+              <input
+                name="location"
+                id="location"
+                type="text"
+                tabIndex={"2"}
+                onChange={handleChange}
+              />
+              <label> Description </label>
+              <textarea
+                className="descriptionArea"
+                name="description"
+                id="description"
+                type="text"
+                rows="15"
+
+                tabIndex={"2"}
+                onChange={handleChange}
+                maxLength = {2000}
+                placeholder = {"Insert artefact description"}
+              />
+            </div>
             {/* Upload Images */}
             <div className='data-entry-fields--image-upload'>
-              <label>Upload Image</label>
               <FileBase type="file" name="artefactImg" multiple={false} onDone={({ base64 }) => setRecord({ ...record, artefactImg: base64 })} />
               <div><img src={record.artefactImg} alt="No Images have been Uploaded Yet" /></div>
             </div>
@@ -113,13 +149,15 @@ const RecordForm = () => {
           {/* This is the cancel button it just redirects to dashboard */}
           <div className="response-button" id="button">
             <Link to={`/dashboard`}>
-              <button className="response-button__cancel" type="submit">
+              <button className="button" type="submit">
                 Cancel
               </button>
             </Link>
-            <button className="response-button__submit" type="submit">
-              Submit
-            </button>
+          </div>
+          <div className="response-button" id="button">
+              <button className="button" type="submit">
+                Submit
+              </button>
           </div>
         </form>
       </div>

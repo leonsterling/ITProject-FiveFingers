@@ -23,17 +23,6 @@
 
 
 /* overall styling */
-
-* {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    box-sizing: border-box;
-    font-family: "Montserrat";
-} 
-
 .text-primary-p {
     color: #a5aaad;
     font-size: 14px;
