@@ -45,7 +45,7 @@ function FullView() {
       .catch((e) => {
         console.log(e.message);
       });
-  });
+  },[]);
 
   let recordName,
     recordImg,
