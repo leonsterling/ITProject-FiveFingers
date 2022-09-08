@@ -15,8 +15,8 @@ app.use(
 );
 
 // app uses bodyParser to parse JSON objects from HTTP requests
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '25mb'}));
+app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
 
 app.use(express.json())
 app.use(cors())
