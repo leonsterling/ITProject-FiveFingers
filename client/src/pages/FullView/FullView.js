@@ -15,16 +15,21 @@ function FullView() {
   const navigate = useNavigate();
   const [recordData, setRecordData] = useState(null);
 
+  let ArtefactID = null;
+  ArtefactID = JSON.stringify({_id}._id);
+  console.log(ArtefactID)
   const configuration = {
     method: "get",
-    url: "http://localhost:5100/dashboard/${_id}",
+    url: `http://localhost:5100/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
   };
 
+  console.log("URL ="+configuration.url);
   async function getRecord() {
     const response = await axios(configuration);
+    
     //console.log(recordData);
     if (!response) {
     } else {

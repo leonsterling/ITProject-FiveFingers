@@ -48,7 +48,7 @@ const PictureMode = () => {
   if (userData) {
     pictures = userData.artefactList.map(
       ({ artefactName, artefactImg, _id }) => (
-        <Link to={`/dashboard/${_id}`} className="link-line">
+        <Link to={`/${_id}`} className="link-line">
           <div className="card">
             <img src={artefactImg.imgURL} />
             <div className="card-title">

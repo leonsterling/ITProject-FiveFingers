@@ -41,7 +41,7 @@ root.render(
           <Route element={<RecordPage />} path="/add-artefact" exact>
             {" "}
           </Route>
-          <Route element={<FullView />} path="/dashboard/:_id" exact>
+          <Route element={<FullView />} path="/:_id" exact>
             {" "}
           </Route>
        

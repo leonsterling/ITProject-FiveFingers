@@ -17,10 +17,10 @@ const getDashboard = async (req, res) => {
 
 // Get the particular Artefact detail
 const artefact_details = async (req, res) => {
-  const {id} = req.params;
-  console.log(id);
+  console.log("ID IS:"+ (JSON.stringify(req.url)));
+  //console.log("ID IS:"+ JSON.stringify(req.parse,null,4));
   try{
-    const record = await Artefact.findById('631999cb760715ca7e308d9c')
+    const record = await Artefact.findById((req.url).substring(1));
     res.status(200).json(record);
   }catch (error){
     res.status(404).json({ message: error.message });
