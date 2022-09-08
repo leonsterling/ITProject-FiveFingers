@@ -16,10 +16,17 @@ import "./RecordPage.css";
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
+const feedbackMessages = {
+    initial: '',
+    invalid: 'The artefact must have a valid name and a picture uploaded',
+    valid:   'Adding your artefact'
+}
+
 // Record form to add a new Artefact
 const RecordForm = () => {
   // Initialize the navigate function
   const navigate = useNavigate();
+  const [feedback, setFeedback] = useState(feedbackMessages.initial);
 
   // Change the artefactFiles list if a new file is added or removed
   const onFileChange = (files) => {
@@ -46,6 +53,12 @@ const RecordForm = () => {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
 
+    if (!isValidInput(record)) {
+        setFeedback(feedbackMessages.invalid);
+        return;
+    }
+
+    setFeedback(feedbackMessages.valid);
     async function recordArtefact (e) {
       // set configurations
       const configuration = {
@@ -59,16 +72,16 @@ const RecordForm = () => {
         },
       };
 
-     // make the API call
-    axios(configuration)
-    .then((result) => {
-      console.log(result)
-      window.location.href = "/dashboard"
-    })
-    .catch((error) => {
-      error = new Error();
-      console.log(error)
-    });
+
+      // make the API call
+      axios(configuration)
+      .then((result) => {
+        window.location.href = "/dashboard"
+      })
+      .catch((error) => {
+        error = new Error();
+        console.log(error)
+      });
     }
 
     recordArtefact()
@@ -111,6 +124,7 @@ const RecordForm = () => {
           </div>
 
           {/* This is the cancel button it just redirects to dashboard */}
+          <p>{feedback}</p>
           <div className="response-button" id="button">
             <Link to={`/dashboard`}>
               <button className="response-button__cancel" type="submit">
@@ -126,6 +140,10 @@ const RecordForm = () => {
     </>
   );
 };
+
+function isValidInput(data) {
+    return (data.artefactName !== '' && data.artefactImg !== '');
+}
 
 
 export default RecordForm;

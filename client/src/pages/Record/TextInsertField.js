@@ -2,7 +2,6 @@ import React, { useState, useEffect, Component } from "react";
 
 export default function TextInsertField ( { handleChange } ) {
     const fieldData = require('./fields.json');
-    console.log(fieldData);
 
     const fieldComponents = fieldData.componentArray.map( (data, index) => {
         return (data.component === 'input') ?
