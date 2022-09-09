@@ -1,19 +1,34 @@
+// Import React and Hooks
 import React, { useState, useEffect } from "react";
-import FsLightbox from "fslightbox-react";
-import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
+
+// Lightbox Import
+import FsLightbox from "fslightbox-react";
+
+import axios from "axios";
 import Cookies from "universal-cookie";
 import "./FullView.css";
+
+// Import Authentication and Cookies
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
+
+
 function FullView() {
+
   // if toggler is updated when lightbox is closed it will open it
   // if toggler is updated when lightbox is opened it will close it
   const [toggler, setToggler] = useState(false);
+
+  // id constant to send request based on the specific artefact id
   const { _id } = useParams();
+
   const navigate = useNavigate();
+
+  // State to update the recordData of the artefact
   const [recordData, setRecordData] = useState(null);
+
 
   let ArtefactID = null;
   ArtefactID = JSON.stringify({_id}._id);
@@ -27,6 +42,8 @@ function FullView() {
   };
 
   console.log("URL ="+configuration.url);
+
+  // Get Function to retirev the artefact data
   async function getRecord() {
     const response = await axios(configuration);
     
@@ -47,6 +64,7 @@ function FullView() {
       });
   },[]);
 
+  // Store the artefact data in a list of variable
   let recordName,
     recordImg,
     recordDescription,
