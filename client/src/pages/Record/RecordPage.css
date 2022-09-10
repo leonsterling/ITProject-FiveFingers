@@ -63,36 +63,73 @@
   width: 55vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
+  padding-left: 3vw;
 }
 .record-page form .data-entry-fields .data-entry-fields--image-upload label {
   color: var(--color--primary__900);
   font-size: medium;
-  margin-right: 250px;
   letter-spacing: -0.06em;
   font-weight: bold;
-  margin-bottom: 12px;
+  margin-top: 10px;
+  margin-bottom: -5px;
+  padding-left: 4px;
 }
-.record-page form .data-entry-fields .data-entry-fields--image-upload input {
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button {
+  width: 29vw;
   height: 40vh;
-  border: 1px solid #f2f2f2;
+  border: 1px dashed #000;
   border-radius: 10px;
   padding: 40px;
   margin-bottom: 40px;
-  width: 290px;
-  background-color: white;
   box-shadow: var(--shadow);
+  color: hsl(0deg, 0%, 57%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.record-page form .data-entry-fields .data-entry-fields--image-upload img {
-  width: 30vw;
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button > span {
   color: var(--color--primary__700);
+  font-family: Monsterrat-bold;
+  cursor: pointer;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button:hover > span {
+  text-decoration: underline;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button input {
+  display: none;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-complete img {
+  width: calc(29vw + 80px);
+  color: var(--color--primary__700);
+  border-radius: 10px;
+  box-shadow: 0px 5px 3px hsla(198deg, 100%, 0%, 0.2), 0 15px 20px hsla(198deg, 100%, 7%, 0.2);
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--restart {
+  margin-top: 27px;
+  color: var(--color--primary__700);
+  font-size: 14px;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--restart input[type=file] {
+  display: none;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--restart > label {
+  font-size: 14px;
+  color: var(--color--primary__900);
+  cursor: pointer;
+  font-family: Monsterrat-bold;
+  text-decoration: underline;
+  transition: 200ms ease-in;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--restart > label:hover {
+  font-size: 15px;
 }
 .record-page form .response-button {
   width: 40vw;
   display: flex;
   justify-content: space-around;
   padding-bottom: 50px;
-  margin-top: 40px;
 }
 .record-page form .response-button button {
   font-family: Monsterrat-bold;
@@ -127,6 +164,11 @@
 .record-page input[type=date]::-webkit-calendar-picker-indicator {
   align-self: flex-end;
 }
+.record-page .feedback {
+  font-size: 14px;
+  font-family: Monsterrat-bold;
+  color: var(--color--primary__900);
+}
 .record-page .box {
   height: 60%;
   margin-top: 0.75em;
@@ -137,10 +179,6 @@
 }
 
 @media only screen and (max-width: 978px) {
-  .record-page {
-    grid-template-columns: 1fr;
-    grid-template-areas: "main";
-  }
   .record-page form .data-entry-fields {
     flex-direction: column;
     width: 80vw;
@@ -148,7 +186,6 @@
     margin-bottom: 0;
   }
   .record-page form .data-entry-fields .data-entry-fields--text-insert {
-    margin-bottom: 55px;
     width: 60vw;
   }
   .record-page form .data-entry-fields .data-entry-fields--text-insert li {
@@ -158,12 +195,27 @@
   .record-page form .data-entry-fields .data-entry-fields--text-insert li input, .record-page form .data-entry-fields .data-entry-fields--text-insert li textarea {
     width: 60vw;
   }
-  .record-page form .data-entry-fields .data-entry-fields--image-upload input {
-    width: calc(60vw - 82px);
-    margin-left: 8px;
+  .record-page form .data-entry-fields .data-entry-fields--image-upload {
+    width: 60vw;
+    padding-left: 0;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--description {
+    margin-right: 0;
+    width: 58vw;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button {
+    width: 51.6vw;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-complete img {
+    width: 61vw;
   }
   .record-page form .response-button {
-    width: 80vw;
+    width: 85vw;
+  }
+  .record-page form .feedback {
+    margin: 20px auto;
+    position: relative;
+    left: 3vw;
   }
 }
 
