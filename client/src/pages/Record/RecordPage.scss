@@ -162,10 +162,6 @@
 
 @media only screen and (max-width: 978px) {
     .record-page {
-        grid-template-columns: 1fr;
-        grid-template-areas: 
-            "main";
-
         form {
             .data-entry-fields {
                 flex-direction: column;
@@ -197,7 +193,7 @@
             }
 
             .response-button {
-                width: 80vw;
+                width: 85vw;
             }
         }
     }
