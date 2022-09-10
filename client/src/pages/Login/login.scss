@@ -29,6 +29,10 @@
         position: relative;
         height: 100vh;
         width: calc(100vw - loginGlobals.$chosen-width);
+
+        .sterling-brand {
+            display: none;
+        }
     }
 
     form {
@@ -138,4 +142,34 @@
     }
 }
 
+@media only screen and (max-width: 722px) {
+    .login-page {
+        .login-form {
+            width: 100vw;
+            justify-content: start;
+            padding-top: 6vh;
+            
+            .sterling-brand {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                font-family: Monsterrat-bold;
+                font-size: 21px;
+                margin-bottom: 4vh;
+
+                img {
+                    width: 30vw;
+                    background: linear-gradient(90deg, var(--accent-color-darker) 0%, var(--accent-color) 100%);
+                    border-radius: 10px;
+                    box-shadow: 0px 3px 5px hsla(0, 0%, 0%, 0.6);
+                }
+
+                span {
+                    margin-top: 1.75vh;
+                }
+            }
+        }
+    }
+}
 

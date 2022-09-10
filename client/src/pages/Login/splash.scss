@@ -100,3 +100,9 @@ $half-point: calc($size/2*-1);
     }
 }
 
+@media only screen and (max-width: 722px) {
+    .login-splash {
+        display: none;
+    }
+}
+
