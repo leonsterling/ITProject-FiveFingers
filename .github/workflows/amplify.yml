@@ -3,9 +3,16 @@ name: Deployment Flow
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
+  
+  
+  
+  
+  
+  
   
   deploy:
     name: Deploy to Heroku
