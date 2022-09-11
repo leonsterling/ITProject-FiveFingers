@@ -1,7 +1,7 @@
 import "./SearchBar.css"
 import { Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
-
+import React from 'react';
 const SearchBar = () => {
     return (
         <body>
