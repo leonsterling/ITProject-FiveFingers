@@ -1,6 +1,5 @@
 // Import the necessary libraries
 import React, { useState, useEffect, Component } from "react";
-import SideNav from "../../components/SideNav";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TextUpdateField from "./TextUpdateField.js";
 import FileBase from "react-file-base64";

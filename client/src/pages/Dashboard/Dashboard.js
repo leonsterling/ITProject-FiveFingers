@@ -3,6 +3,7 @@ import TopNav from './TopNav';
 import MobileNav from './MobileNav';
 import ViewToggle from './viewToggle';
 import PictureMode from './PictureMode';
+import ListView from '../ListView/ListView';
 import axios from "axios";
 import Cookies from "universal-cookie";
 
@@ -40,7 +41,7 @@ const Dashboard = () => {
         <h2>My Artefacts</h2>
         <ViewToggle className="viewToggle" isToggled={isToggled} onToggle={()=>setIsToggled(!isToggled)}/>
     </div>
-    {isToggled? <PictureMode/> : null}
+    {isToggled? <PictureMode/> : <ListView/>}
     </>
   );
 
