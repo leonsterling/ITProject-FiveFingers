@@ -1,6 +1,7 @@
 // libraries and mongoose models imported
 const { User, Artefact} = require("../models/user");
 const bcrypt = require("bcryptjs");
+const SALT_FACTOR = 10
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
@@ -203,6 +204,64 @@ const logout = (req, res) => {
   }
 };
 
+const changePassword = async (req,res) => {
+  
+      // hash the password using bcrypt before saving to mongodb
+      const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR)
+        User.findOneAndUpdate(
+            {username: req.body.username},
+            {password: hashed_pass},
+            function(err, doc) {
+                if (err) {
+                  res.status(500).send({
+                    message: "Error upon changing password",
+                    err,
+                  })
+                } else {
+                  res.status(201).send({
+                    message: "Password changed successfully",
+                    hashed_pass,
+                  })    
+                }
+            }
+        )
+}
+
+// Function to update patient's password
+const updatePass = async (req,res) =>{
+
+  try {
+      
+      const errors = validationResult(req)
+
+      if (!errors.isEmpty()) {
+          const errorsFound = validationResult(req).array()
+          req.flash('errors', errorsFound);
+          return res.redirect('/patient/change-password')
+      }
+
+      // hash the password using bcrypt before saving to mongodb
+      const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR)
+      Patient.findOneAndUpdate(
+          { _id: req.user._id},
+          {password: hashed_pass},
+          function(err, doc) {
+              if (err) {
+                  return res.redirect('/patient/404')
+              } else {
+                    
+              }
+          }
+      )
+  
+      return res.redirect('/patient/dashboard')
+      
+
+  } catch(err) {
+      // error detected, renders patient error page
+      return res.redirect('/patient/404')
+  }
+}
 
 // exports objects containing functions imported by router
 module.exports = {
@@ -214,5 +273,6 @@ module.exports = {
   editArtefact,
   deleteArtefact,
   artefact_details,
-  searchBar
+  searchBar,
+  changePassword
 };

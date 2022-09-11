@@ -14,16 +14,14 @@ userRouter.get('/dashboard', jwtAuth, userController.getDashboard)
 userRouter.get("/:id", userController.artefact_details);
 userRouter.get('/search-artefacts/:query', jwtAuth, userController.searchBar)
 
-
 // POST routes for Login activities
 userRouter.post('/register', userController.registerUser)
 userRouter.post('/login', userController.loginUser)
-
+userRouter.post('/change-password', userController.changePassword)
 
 // POST route to register, edit or delete artefacts
 userRouter.post('/add-artefact', jwtAuth, upload.single("artefact-image"), userController.registerArtefact),
 userRouter.post('/edit-artefact', jwtAuth, userController.editArtefact),
-
 
 // DELETE route
 userRouter.delete('/logout', userController.logout),
