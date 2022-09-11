@@ -81,5 +81,10 @@
     opacity: 0;
   }
 }
+@media only screen and (max-width: 722px) {
+  .login-splash {
+    display: none;
+  }
+}
 
 /*# sourceMappingURL=splash.css.map */

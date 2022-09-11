@@ -88,12 +88,31 @@ const RecordForm = () => {
 
   // Change the state of the record object based on user input
   function handleChange(event) {
+    let name = event.target.name;
+    let value = event.target.value;
+    console.log({name, value});
     setRecord({ ...record, [event.target.name]: event.target.value });
-    console.log(record);
   }
 
   const [sideNavOpen, setSideNavOpen] = useState(false);
 
+  const openSideNav = () => {
+    setSideNavOpen(true);
+  };
+
+  const closeSideNav = () => {
+    setSideNavOpen(false);
+  };
+
+  let imageDisplay = record.artefactImg === '' ?
+      <UploadPending
+         setRecord={setRecord}
+         record={record}
+      />:
+      <UploadDone 
+         setRecord={setRecord}
+         record={record}
+      />;
   // Return an HTML of the Record Page
   return (
     <>
@@ -107,14 +126,12 @@ const RecordForm = () => {
             <TextInsertField handleChange={handleChange}/>
             {/* Upload Images */}
             <div className='data-entry-fields--image-upload'>
-              <label>Upload Image</label>
-              <FileBase type="file" name="artefactImg" multiple={false} onDone={({ base64 }) => setRecord({ ...record, artefactImg: base64 })} />
-              <div><img src={record.artefactImg} alt="No Images have been Uploaded Yet" /></div>
+              {imageDisplay}
             </div>
           </div>
 
           {/* This is the cancel button it just redirects to dashboard */}
-          <p>{feedback}</p>
+          <p className='feedback'>{feedback}</p>
           <div className="response-button" id="button">
             <Link to={`/dashboard`}>
               <button className="response-button__cancel" type="submit">
@@ -135,5 +152,36 @@ function isValidInput(data) {
     return (data.artefactName !== '' && data.artefactImg !== '');
 }
 
+function UploadPending ({setRecord, record}) {
+    return (
+        <>
+          <label className='data-entry-fields--image-upload--description'>Upload Image</label>
+          <label className='data-entry-fields--image-upload--upload-button'>
+            <FileBase type="file" name="artefactImg" multiple={false} onDone={({ base64 }) => setRecord({ ...record, artefactImg: base64 })} />
+            Drop your images here, or select <span>click to browse</span>
+          </label>
+        </>
+    );
+}
+
+function UploadDone ({record, setRecord}) {
+    return (
+      <>
+        <label className='data-entry-fields--image-upload--description'>Selected Image</label>
+        <label>
+          <div className='data-entry-fields--image-upload--upload-complete'>
+            <img src={record.artefactImg} />
+          </div>
+        </label>
+        <label className='data-entry-fields--image-upload--restart'>
+          Not satisfied?
+          <label>
+            Upload again
+            <FileBase type="file" name="artefactImg" multiple={false} onDone={({ base64 }) => setRecord({ ...record, artefactImg: base64 })} />
+          </label>
+        </label>
+      </>
+    );
+}
 
 export default RecordForm;
