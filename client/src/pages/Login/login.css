@@ -43,9 +43,14 @@
 }
 .login-page form ul .input-field span {
   flex-basis: 0;
-  color: grey;
+  height: 21px;
   font-size: 21px;
   margin-top: 2px;
+  display: flex;
+}
+.login-page form ul .input-field span svg {
+  stroke: gray;
+  stroke-width: 0.6;
 }
 .login-page form ul label {
   font-size: 14px;
@@ -137,6 +142,7 @@
   }
   .login-page .login-form .sterling-brand span {
     margin-top: 1.75vh;
+    text-align: center;
   }
 }
 
