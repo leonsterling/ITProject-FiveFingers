@@ -86,12 +86,6 @@ const PictureMode = () => {
     <main>
       <div className="main-container">
 
-        <div className="main-title">
-          <div className="main-greeting">
-            <h1>My Artefacts</h1>
-          </div>
-        </div>
-
         <div className="main-cards">
           {pictures} 
         </div>

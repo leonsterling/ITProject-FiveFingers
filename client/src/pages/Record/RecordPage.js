@@ -1,6 +1,5 @@
 // Import the necessary libraries
 import React, { useState, useEffect, Component } from "react";
-import SideNav from "../../components/SideNav";
 import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
 import TextInsertField from './TextInsertField.js';
 import { Link } from "react-router-dom";
@@ -95,20 +94,11 @@ const RecordForm = () => {
 
   const [sideNavOpen, setSideNavOpen] = useState(false);
 
-  const openSideNav = () => {
-    setSideNavOpen(true);
-  };
-
-  const closeSideNav = () => {
-    setSideNavOpen(false);
-  };
-
   // Return an HTML of the Record Page
   return (
     <>
       <div className="record-page">
         {/* Render the side nav*/}
-        <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
 
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
