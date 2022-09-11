@@ -40,7 +40,8 @@ const RecordForm = () => {
     artefactDate: "",
     location: "",
     description: "",
-    //tags: "",
+    category: "",
+    associated: "",
     artefactImg: "",
   };
 

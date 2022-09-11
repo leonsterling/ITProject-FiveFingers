@@ -37,7 +37,7 @@ const PictureMode = () => {
   useEffect(() => {
     handleDashboard()
       .then((res) => {
-        setUserData(res.data.user);
+        setUserData(res.data.artefact_list);
       })
       .catch((e) => {
         console.log(e.message);
@@ -46,7 +46,7 @@ const PictureMode = () => {
 
   let pictures = null;
   if (userData) {
-    pictures = userData.artefactList.map(
+    pictures = userData.map(
       ({ artefactName, artefactImg, _id }) => (
         <Link to={`/${_id}`} className="link-line">
           <div className="card">

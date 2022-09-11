@@ -4,23 +4,58 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
+// search function
+const searchBar = async (req,res) => {
+
+  const query = req.params.query
+
+  Artefact.aggregate([
+    {
+      $search: {
+        "index": "artefacts_search_index",
+        "text": {
+          "path": ["associated", "category"],
+          "query": query
+        }
+      }
+    }, 
+  ]).then((searched) => {
+    
+    if (searched.length == 0) {
+      res.status(201).send({
+        message: "Search query success with 0 results",
+        searched,
+      });
+    }
+    else {
+      res.status(201).send({
+        message: "Search query success with atleast 1 result",
+        searched,
+      });
+    }
+  })
+  .catch((error) => {
+    res.status(500).send({
+      message: "Error upon searching",
+      error,
+    });
+  });
+}
 
 // gets users dashboard once successfully logged in
 const getDashboard = async (req, res) => {
-  const current_user = await User.findById({ _id: req.user.userId });
+  const allArtefacts = await Artefact.find();
   // sample response status
   res.status(200).send({
     message: "Login Successful, hello user!",
-    user: current_user,
+    artefact_list: allArtefacts,
   });
 };
 
 // Get the particular Artefact detail
 const artefact_details = async (req, res) => {
-  console.log("ID IS:"+ (JSON.stringify(req.url)));
-  //console.log("ID IS:"+ JSON.stringify(req.parse,null,4));
   try{
-    const record = await Artefact.findById((req.url).substring(1));
+    const record = await Artefact.findById(req.params.id)
     res.status(200).json(record);
   }catch (error){
     res.status(404).json({ message: error.message });
@@ -59,9 +94,10 @@ const registerArtefact = async (req, res) => {
   
   const artefact = new Artefact({
     artefactName: req.body.record.artefactName,
-    category: req.body.category,
+    category: req.body.record.category,
     description: req.body.record.description,
     memories: req.body.record.memories,
+    associated: req.body.record.associated,
     location: req.body.record.location,
     artefactDate: req.body.record.artefactDate,
     "artefactImg.imgURL": image_data.url,
@@ -178,4 +214,5 @@ module.exports = {
   editArtefact,
   deleteArtefact,
   artefact_details,
+  searchBar
 };
