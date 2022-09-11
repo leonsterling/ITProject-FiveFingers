@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import FileBase from 'react-file-base64';
 import axios from "axios";
 import Cookies from "universal-cookie";
+import TopNav from "../Dashboard/TopNav.js";
+import MobileNav from "../Dashboard/MobileNav.js";
 
 // CSS imports
 import "./RecordPage.css";
@@ -26,6 +28,17 @@ const RecordForm = () => {
   // Initialize the navigate function
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
+
+  // To toggle the top navigatino
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const openMobileNav = () => {
+    setMobileNavOpen(true);
+  }
+
+  const closeMobileNav = () => {
+    setMobileNavOpen(false);
+  }
 
   // Change the artefactFiles list if a new file is added or removed
   const onFileChange = (files) => {
@@ -116,6 +129,10 @@ const RecordForm = () => {
   // Return an HTML of the Record Page
   return (
     <>
+      <div className="container">
+        <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
+        <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
+      </div>
       <div className="record-page">
         {/* Render the side nav*/}
 
