@@ -5,6 +5,14 @@ const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
 
+// Display All CRUD Data
+const allData = (req, res) => {
+  console.log("artefact data");
+	Artefact.find(function (err, artefactRecords) {
+		res.status(200).send(artefactRecords);
+	});
+};
+
 // gets users dashboard once successfully logged in
 const getDashboard = async (req, res) => {
   const current_user = await User.findById({ _id: req.user.userId });
@@ -17,6 +25,7 @@ const getDashboard = async (req, res) => {
 
 // Get the particular Artefact detail
 const artefact_details = async (req, res) => {
+  console.log("artefact details");
   console.log("ID IS:"+ (JSON.stringify(req.url)));
   //console.log("ID IS:"+ JSON.stringify(req.parse,null,4));
   try{
@@ -25,6 +34,22 @@ const artefact_details = async (req, res) => {
   }catch (error){
     res.status(404).json({ message: error.message });
   }
+};
+
+// Update CRUD Detail by Id
+const editArtefact = (req, res) => {
+  console.log("IDFORCRUD")
+  console.log(JSON.stringify(req.params.id));
+  console.log("BODYFORCRUD")
+  console.log(JSON.stringify(req.body['record']));
+	Artefact.findByIdAndUpdate(req.params.id,req.body['record'])
+		.then(function () {
+      console.log("it worked")
+			res.json("Artefact Edited");
+		})
+		.catch(function (err) {
+			res.status(422).send("Artefact Failed to be edited.");
+		});
 };
 
 
@@ -94,9 +119,13 @@ const registerArtefact = async (req, res) => {
   );
 };
 
-const editArtefact = (req, res) => {};
 
-const deleteArtefact = (req, res) => {};
+
+
+
+const deleteArtefact = (req, res) => {
+
+};
 
 
 // gets POST request, attempt to log-in user
@@ -170,6 +199,7 @@ const logout = (req, res) => {
 
 // exports objects containing functions imported by router
 module.exports = {
+  allData,
   registerArtefact,
   registerUser,
   logout,

@@ -1,0 +1,53 @@
+{
+    "componentArray" : [
+        {
+            "name" : "artefactName",
+            "label" : "Name",
+            "placeholder" : "What is it called...",
+            "type" : "text",
+            "component" : "input",
+            "required": true
+        },
+        {
+            "name" : "category",
+            "label" : "Category",
+            "placeholder" : "Part of...",
+            "type" : "text",
+            "component" : "input",
+            "required": true
+        },
+        {
+            "name" : "description",
+            "label" : "Description",
+            "placeholder" : "If someone asked you, you would say...",
+            "type" : "text",
+            "component" : "textarea",
+            "required": false
+        },
+        {
+            "name" : "memories",
+            "label" : "Memories",
+            "placeholder" : "What you best remember",
+            "type" : "text",
+            "component" : "input",
+            "required": false
+        },
+        {
+            "name" : "associated",
+            "label" : "People associated with",
+            "placeholder" : "The people you share this memory with",
+            "type" : "text",
+            "component" : "input",
+            "required": false
+        },
+        {
+            "name" : "location",
+            "label" : "Location",
+            "placeholder" : "Where it came to your life...",
+            "type" : "text",
+            "component" : "input",
+            "required": false
+        }
+    ]
+}
+

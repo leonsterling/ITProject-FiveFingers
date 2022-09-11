@@ -11,6 +11,7 @@ const userController = require('../controllers/userController')
 
 // GET routes
 userRouter.get('/dashboard', jwtAuth, userController.getDashboard)
+userRouter.get("/data", jwtAuth, userController.allData);
 userRouter.get("/:id", userController.artefact_details);
 
 
@@ -18,10 +19,11 @@ userRouter.get("/:id", userController.artefact_details);
 userRouter.post('/register', userController.registerUser)
 userRouter.post('/login', userController.loginUser)
 
-// POST route to register, edit or delete artefacts
+// POST route to register Artefact
 userRouter.post('/add-artefact', jwtAuth, upload.single("artefact-image"), userController.registerArtefact),
-userRouter.post('/edit-artefact', jwtAuth, userController.editArtefact),
 
+//PATCH route to edit artefact
+userRouter.patch("/:id", userController.editArtefact);
 
 // DELETE route
 userRouter.delete('/logout', userController.logout),
