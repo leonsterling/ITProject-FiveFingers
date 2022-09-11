@@ -1,5 +1,12 @@
 :root {
-    --shadow: -4px -3px 4px hsla(0, 0%, 100%, 1), inset 1px 1px 4px hsla(198, 100%, 70%, 0.1), 0px 2px 4px hsla(198, 100%, 0%, 0.1), 0px 4px 9px hsla(198, 100%, 60%, 0.1);
+    --shadow: -4px -3px 4px hsla(0, 0%, 100%, 1),
+              inset 1px 1px 4px hsla(198, 100%, 70%, 0.1),
+              0px 2px 4px hsla(198, 100%, 0%, 0.1),
+              0px 4px 9px hsla(198, 100%, 60%, 0.1);
+    --shadow-click: inset -4px -3px 4px hsla(0, 0%, 100%, 1),
+                    1px 1px 4px hsla(198, 100%, 70%, 0.1),
+                    inset 0px 2px 4px hsla(198, 100%, 0%, 0.1),
+                    inset 0px 4px 9px hsla(198, 100%, 60%, 0.1);
     --color--primary__900: hsl(190deg, 100%, 15%);
     --color--primary__900: hsl(190deg, 100%, 15%);
     --color--primary__500: hsl(190deg, 31%, 50%);
@@ -172,6 +179,12 @@
 
             .response-button__submit {
                 background-color: var(--accent-color-darker);
+                box-shadow: 1px 2px 4px hsla(198deg, 70%, 20%, 0.4);
+                transition: 200ms;
+
+                &:active {
+                    box-shadow: inset -2px -4px 6px hsla(198deg, 51%, 40%, 0.7), 0px 1px 4px hsla(198deg, 70%, 20%, 0.4);
+                }
             }
 
             .response-button__cancel {
@@ -179,6 +192,10 @@
                 color: var(--color--primary__500);
                 box-shadow: var(--shadow);
                 border: 1px solid hsla(198, 31%, 88%, 0.2);
+
+                &:active {
+                    box-shadow: var(--shadow-click);
+                }
             }
         }
     }
