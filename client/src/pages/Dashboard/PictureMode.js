@@ -19,7 +19,7 @@ const PictureMode = () => {
   async function handleDashboard() {
     const configuration = {
       method: "get",
-      url: "http://localhost:5100/dashboard",
+      url: "http://localhost:5100/data",
       headers: {
         Authorization: `Bearer ${token}`, // authorized route with jwt token
       },
@@ -37,16 +37,17 @@ const PictureMode = () => {
   useEffect(() => {
     handleDashboard()
       .then((res) => {
-        setUserData(res.data.user);
+        setUserData(res.data);
       })
       .catch((e) => {
         console.log(e.message);
       });
   }, []);
+  
 
   let pictures = null;
   if (userData) {
-    pictures = userData.artefactList.map(
+    pictures = userData.map(
       ({ artefactName, artefactImg, _id }) => (
         <Link to={`/${_id}`} className="link-line">
           <div className="card">
