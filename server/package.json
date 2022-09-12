@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "start": "nodemon server.js",
-    "server": "yarn start",
+    "server": "npm start",
     "client": "npm start --prefix ../client",
     "dev": "concurrently \"npm run client \" \"npm run server\""
   },
