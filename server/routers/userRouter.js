@@ -25,7 +25,7 @@ userRouter.post('/edit-artefact', jwtAuth, userController.editArtefact),
 
 // DELETE route
 userRouter.delete('/logout', userController.logout),
-userRouter.delete('/delete-artefact', jwtAuth, userController.deleteArtefact)
+userRouter.delete('/delete-artefact/:id', jwtAuth, userController.deleteArtefact)
 
 // export Router object
 module.exports = userRouter

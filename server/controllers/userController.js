@@ -131,9 +131,36 @@ const registerArtefact = async (req, res) => {
   );
 };
 
-const editArtefact = (req, res) => {};
+const deleteArtefact = async(req, res) => {
 
-const deleteArtefact = (req, res) => {};
+  const artefact_id = req.params.id
+  const artefact_record = await Artefact.findOne({_id: artefact_id})
+
+  await Artefact.deleteOne({_id: artefact_id})
+    .then( (result) => {
+      console.log(result)
+      console.log(artefact_record)
+      cloudinary.uploader.destroy(artefact_record.artefactImg.publicID, function (error, result) {
+        res.status(201).send({
+          message: "Artefact deleted successfully",
+          result,
+          artefact_record
+        });
+      })
+    })
+    .catch( (error) => {
+      console.log(error)
+      res.status(500).send({
+        message: "Error upon deleting artefact",
+        result,
+      });
+    })
+}
+
+  
+
+
+const editArtefact = (req, res) => {};
 
 
 // gets POST request, attempt to log-in user
