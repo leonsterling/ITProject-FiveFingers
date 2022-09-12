@@ -6,7 +6,6 @@ import Lightbox from "react-awesome-lightbox";
 // Required stylesheet
 import "react-awesome-lightbox/build/style.css";
 import "./PictureMode.css";
-import Nayeon from "../assets/Nayeon.JPG";
 
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -66,12 +65,6 @@ const PictureMode = () => {
   return (
     <main>
       <div className="main-container">
-        <div className="main-title">
-          <div className="main-greeting">
-            <h1>My Artefacts</h1>
-          </div>
-        </div>
-
         <div className="main-cards">{pictures}</div>
       </div>
     </main>
