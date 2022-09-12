@@ -5,10 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "nodemon server.js",
-    "server": "nodemon app.js",
-    "client": "npm  start --prefix ../client",
-    "dev": "concurrently \"npm:server \" \"npm:client\""
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
