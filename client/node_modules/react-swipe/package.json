@@ -1,0 +1,92 @@
+{
+  "name": "react-swipe",
+  "version": "6.0.4",
+  "description": "Brad Birdsall's Swipe.js as a React component",
+  "homepage": "https://github.com/voronianski/react-swipe",
+  "keywords": [
+    "react",
+    "component",
+    "carousel",
+    "swipe",
+    "react-component"
+  ],
+  "author": "Dmitri Voronianski <dmitri.voronianski@gmail.com>",
+  "contributors": [
+    "Jed Schmidt <where@jed.is>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/voronianski/react-swipe.git"
+  },
+  "main": "./lib/index.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.0.0",
+    "npm": ">=5.5.1"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged --ignore-path ./public"
+    }
+  },
+  "browserslist": [
+    "> 0.2%",
+    "last 2 versions",
+    "not ie <= 8",
+    "not op_mini all"
+  ],
+  "dependencies": {
+    "lodash.isequal": "^4.5.0",
+    "prop-types": "^15.6.0",
+    "swipe-js-iso": "^2.1.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-do-expressions": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-bind": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/plugin-transform-object-assign": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babelify": "^10.0.0",
+    "browserify": "^16.2.3",
+    "husky": "^1.2.0",
+    "prettier": "^1.15.2",
+    "pretty-quick": "^1.8.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.26.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-umd-external": "^1.0.2"
+  },
+  "scripts": {
+    "build": "npm run build-babel && npm run build-dist-dev && npm run build-dist-prod && npm run build-demo",
+    "build-babel": "babel ./src/index.js --out-file ./lib/index.js",
+    "build-dist-dev": "NODE_ENV=development webpack --config webpack.config --colors",
+    "build-dist-prod": "NODE_ENV=production webpack --config webpack.config --progress --colors -p",
+    "build-demo": "browserify ./demo/index.js -t [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] -o ./demo/bundle.js",
+    "test": "echo \"Comming soon ;)\" && exit 0",
+    "prepublishOnly": "npm run build"
+  }
+}

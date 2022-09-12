@@ -1,0 +1,71 @@
+{
+  "name": "intrinsic-scale",
+  "version": "3.0.4",
+  "description": "Replicate background-size: cover/contain (scale+crop) for canvas/CSS/Node/… on any type of media.",
+  "keywords": [
+    "background-size",
+    "browser",
+    "canvas",
+    "contain",
+    "cover",
+    "crop",
+    "css",
+    "image",
+    "intrinsic",
+    "media",
+    "object-fit",
+    "scale",
+    "video",
+    "webcam"
+  ],
+  "repository": "fregante/intrinsic-scale",
+  "license": "MIT",
+  "author": "Federico Brigante <opensource@bfred.it> (bfred.it)",
+  "files": [
+    "dist/intrinsic-scale.common-js.js",
+    "dist/intrinsic-scale.es-modules.js"
+  ],
+  "main": "dist/intrinsic-scale.common-js.js",
+  "jsnext:main": "dist/intrinsic-scale.es-modules.js",
+  "scripts": {
+    "build": "npm-run-all --silent jsfix build:*",
+    "build:js": "bfred-npm-bundler intrinsic-scale intrinsicScale",
+    "jsfix": "xo --fix",
+    "prepublish": "npm run build",
+    "test": "xo && jest; npm run build",
+    "watch": "npm-run-all --parallel --silent watch:*",
+    "watch:build": "onchange 'index.js' --initial -- npm run build -- --continue-on-error"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "xo": {
+    "env": [
+      "browser"
+    ],
+    "esnext": true,
+    "overrides": [
+      {
+        "files": "*.test.js",
+        "rules": {
+          "no-undef": "off"
+        }
+      }
+    ],
+    "rules": {
+      "prefer-spread": 0
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-core": "^7.0.0-bridge.0",
+    "bfred-npm-bundler": "^7.1.2",
+    "jest": "^23.6.0",
+    "npm-run-all": "^2.3.0",
+    "onchange": "^2.5.0",
+    "xo": "^0.16.0"
+  }
+}
