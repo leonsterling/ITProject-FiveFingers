@@ -7,8 +7,8 @@ const viewToggle = ({isToggled, onToggle}) => {
         <label className="viewToggle">
             <input type="checkbox" checked = {isToggled} onChange = {onToggle}/>
             <span className="slider">
-                <Icon icon="system-uicons:menu-hamburger" className="view-icon"/>
                 <Icon icon="clarity:grid-view-line" className="view-icon"/>
+                <Icon icon="system-uicons:menu-hamburger" className="view-icon"/>
             </span>
         </label>
     );

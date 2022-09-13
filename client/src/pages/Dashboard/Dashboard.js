@@ -41,7 +41,7 @@ const Dashboard = () => {
         <h2>My Artefacts</h2>
         <ViewToggle className="viewToggle" isToggled={isToggled} onToggle={()=>setIsToggled(!isToggled)}/>
     </div>
-    {isToggled? <PictureMode/> : <ListView/>}
+    {isToggled? <ListView/> : <PictureMode/>}
     </>
   );
 
