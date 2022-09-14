@@ -4,7 +4,7 @@ main {
 }
 
 .list-view-container {
-    padding: 20px 35px;
+    padding: 20px 7rem;
     box-sizing: border-box;
 }
 
@@ -67,6 +67,10 @@ td.table-cell {
 }
 
 @media only screen and (max-width: 600px) {
+
+    .list-view-container {
+        padding: 20px 4rem;
+    }
 
     .desc-table, .person-table, .category-table {
         display: none;

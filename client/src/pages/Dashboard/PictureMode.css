@@ -4,7 +4,7 @@ main {
 }
 
 .main-container {
-    padding: 20px 35px;
+    padding: 20px 7rem;
 }
 
 .main-cards {
@@ -45,7 +45,7 @@ a.link-line {
 
 @media only screen and (max-width: 855px) {
     .main-container {
-        padding: 20px 15%;
+        padding: 20px 4rem;
     }
     .main-cards {
         grid-template-columns: 1fr;

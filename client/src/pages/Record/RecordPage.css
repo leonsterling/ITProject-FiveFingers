@@ -13,38 +13,37 @@
   --color--primary__700: hsl(190.6deg, 23.3%, 32.3%);
 }
 
-.record-page {
-  display: flex;
-  height: 100vh;
-}
 .record-page form {
-  padding: 70px 42px;
   display: flex;
   flex-direction: column;
-  width: 80vw;
+  margin-top: 75px;
+  padding: 40px 3rem 0px 3rem;
+  box-sizing: border-box;
+  justify-content: center;
 }
-.record-page form > h1 {
-  font-size: 20px;
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.05em;
-  font-family: Monsterrat-bold;
-  color: hsl(180deg, 7%, 49%);
+
+.record-page h2 {
+  margin-bottom: 32px;
 }
+
 .record-page form .data-entry-fields {
   display: flex;
   justify-content: center;
-  padding: 0 20px;
-  margin-bottom: -50px;
 }
+
 .record-page form .data-entry-fields .data-entry-fields--text-insert {
-  width: 45vw;
   list-style: none;
-  padding: 0;
 }
+
 .record-page form .data-entry-fields .data-entry-fields--text-insert li {
   line-height: 0.35;
   margin-bottom: 15px;
 }
+
+.record-page form .data-entry-fields .data-entry-fields--text-insert label, .record-page form .data-entry-fields .data-entry-fields--text-insert input {
+  display:block;
+}
+
 .record-page form .data-entry-fields .data-entry-fields--text-insert label {
   letter-spacing: -0.06em;
   font-size: medium;
@@ -52,29 +51,31 @@
   padding-left: 4px;
   color: var(--color--primary__900);
 }
+
 .record-page form .data-entry-fields .data-entry-fields--text-insert input, .record-page form .data-entry-fields .data-entry-fields--text-insert textarea {
   font-family: Monsterrat;
-  border: 1px solid #fdfdfd;
+  border: 1px solid #C5C5C5;
   border-radius: 7px;
   margin-top: 0.75em;
   margin-bottom: 25px;
   padding: 10px;
   font-weight: bold;
   font-size: 0.95em;
-  width: 35vw;
-  box-shadow: var(--shadow);
+  width: 50vw;
   background-color: #f8f8f8;
 }
+
 .record-page form .data-entry-fields .data-entry-fields--text-insert input:focus, .record-page form .data-entry-fields .data-entry-fields--text-insert textarea:focus {
   outline: 2px solid var(--accent-color);
 }
+
 .record-page form .data-entry-fields .data-entry-fields--image-upload {
-  width: 55vw;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding-left: 3vw;
 }
+
 .record-page form .data-entry-fields .data-entry-fields--image-upload label {
   color: var(--color--primary__900);
   font-size: medium;
@@ -98,6 +99,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button > span {
   color: var(--color--primary__700);
   font-family: Monsterrat-bold;
@@ -135,10 +137,13 @@
   font-size: 15px;
 }
 .record-page form .response-button {
-  width: 40vw;
+  width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-bottom: 50px;
+  padding: 0 2rem;
+  box-sizing: border-box;
+
 }
 .record-page form .response-button button {
   font-family: Monsterrat-bold;
@@ -199,7 +204,6 @@
 @media only screen and (max-width: 978px) {
   .record-page form .data-entry-fields {
     flex-direction: column;
-    width: 80vw;
     align-items: center;
     margin-bottom: 0;
   }
@@ -228,7 +232,11 @@
     width: 61vw;
   }
   .record-page form .response-button {
-    width: 85vw;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5em;
+    box-sizing: border-box;
   }
   .record-page form .feedback {
     margin: 20px auto;

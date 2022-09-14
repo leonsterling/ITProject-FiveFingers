@@ -138,7 +138,7 @@ const RecordForm = () => {
 
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
-          <h1>Add Artefact</h1>
+          <h2>Add Artefact</h2>
           <div className="data-entry-fields">
             <TextInsertField handleChange={handleChange}/>
             {/* Upload Images */}
