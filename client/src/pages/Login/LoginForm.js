@@ -26,6 +26,7 @@ export default function LoginForm () {
         isValid: false,
         currState: states.initial,
     });
+
     const [username, setUserName] = useState("");
     const [password ,setPassword] = useState("");
     
@@ -99,6 +100,10 @@ export default function LoginForm () {
                         id='password'
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <span><Icon className="password-toggle" icon="bi:eye-slash-fill" /></span>
+                </li>
+                <li className='forget-password-link'>
+                    <h5>Forgot password?</h5>
                 </li>
                 <li>
                     <p className='feedback'>{feedbackMessage}</p>
