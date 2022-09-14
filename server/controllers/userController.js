@@ -43,6 +43,14 @@ const searchBar = async (req,res) => {
   });
 }
 
+// Display All CRUD Data
+const allData = (req, res) => {
+  console.log("artefact data");
+	Artefact.find(function (err, artefactRecords) {
+		res.status(200).send(artefactRecords);
+	});
+};
+
 // gets users dashboard once successfully logged in
 const getDashboard = async (req, res) => {
   const allArtefacts = await Artefact.find();
@@ -55,12 +63,31 @@ const getDashboard = async (req, res) => {
 
 // Get the particular Artefact detail
 const artefact_details = async (req, res) => {
+  console.log("artefact details");
+  console.log("ID IS:"+ (JSON.stringify(req.url)));
+  //console.log("ID IS:"+ JSON.stringify(req.parse,null,4));
   try{
     const record = await Artefact.findById(req.params.id)
     res.status(200).json(record);
   }catch (error){
     res.status(404).json({ message: error.message });
   }
+};
+
+// Update CRUD Detail by Id
+const editArtefact = (req, res) => {
+  console.log("IDFORCRUD")
+  console.log(JSON.stringify(req.params.id));
+  console.log("BODYFORCRUD")
+  console.log(JSON.stringify(req.body['record']));
+	Artefact.findByIdAndUpdate(req.params.id,req.body['record'])
+		.then(function () {
+      console.log("it worked")
+			res.json("Artefact Edited");
+		})
+		.catch(function (err) {
+			res.status(422).send("Artefact Failed to be edited.");
+		});
 };
 
 
@@ -292,6 +319,7 @@ const updatePass = async (req,res) =>{
 
 // exports objects containing functions imported by router
 module.exports = {
+  allData,
   registerArtefact,
   registerUser,
   logout,

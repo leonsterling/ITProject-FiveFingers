@@ -1,5 +1,13 @@
 :root {
-    --shadow: 0px 2px 4px hsla(198, 100%, 0%, 0.1), 0px 4px 9px hsla(198, 100%, 60%, 0.1);
+    --shadow: -4px -3px 4px hsla(0, 0%, 100%, 1),
+              inset 1px 1px 4px hsla(198, 100%, 70%, 0.1),
+              0px 2px 4px hsla(198, 100%, 0%, 0.1),
+              0px 4px 9px hsla(198, 100%, 60%, 0.1);
+    --shadow-click: inset -4px -3px 4px hsla(0, 0%, 100%, 1),
+                    1px 1px 4px hsla(198, 100%, 70%, 0.1),
+                    inset 0px 2px 4px hsla(198, 100%, 0%, 0.1),
+                    inset 0px 4px 9px hsla(198, 100%, 60%, 0.1);
+    --color--primary__900: hsl(190deg, 100%, 15%);
     --color--primary__900: hsl(190deg, 100%, 15%);
     --color--primary__500: hsl(190deg, 31%, 50%);
     --color--primary__700: hsl(190.6deg, 23.3%, 32.3%);
@@ -55,10 +63,11 @@
                     margin-top: 0.75em;
                     margin-bottom: 25px;
                     padding: 10px;
-                    font-weight: 400;
+                    font-weight: bold;
                     font-size: 0.95em;
                     width: 35vw;
                     box-shadow: var(--shadow);
+                    background-color: #f8f8f8;
 
                     &:focus {
                         outline: 2px solid var(--accent-color);
@@ -71,32 +80,80 @@
 
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
+                padding-left: 3vw;
 
                 label {
                     color: var(--color--primary__900);
                     font-size: medium;
-                    margin-right: 250px;
                     letter-spacing: -0.06em;
                     font-weight: bold;
-                    margin-bottom: 12px;
+                    margin-top: 10px;
+                    margin-bottom: -5px;
+                    padding-left: 4px;
                 }
 
-                input {
+                .data-entry-fields--image-upload--upload-button {
+                    width: 29vw;
                     height: 40vh;
-                    border: 1px solid #f2f2f2;
+                    // background-color: white;
+                    border: 1px dashed #000;
                     border-radius: 10px;
                     padding: 40px;
                     margin-bottom: 40px;
-                    width: 290px;
+                    box-shadow: 1px 1px 3px hsla(198deg, 100%, 10%, 0.05), 0px 8px 10px hsla(198deg, 100%, 45%, 0.05);
+                    color: hsl(0, 0%, 57%);
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
 
-                    background-color: white;
-                    box-shadow: var(--shadow);
+                    & > span {
+                        color: var(--color--primary__700);
+                        font-family: Monsterrat-bold;
+                        cursor: pointer;
+                    }
+
+                    &:hover > span {
+                        text-decoration: underline;
+                    }
+                    
+                    input {
+                        display: none;
+                    }
                 }
 
-                img {
-                    width: 30vw;
+                .data-entry-fields--image-upload--upload-complete {
+                    img {
+                        width: calc(29vw + 80px);
+                        color: var(--color--primary__700);
+                        border-radius: 10px;
+                        box-shadow: -8px -4px 5px white, 0px 5px 3px hsla(198deg, 100%, 0%, 0.05), 0 10px 20px hsla(198deg, 100%, 7%, 0.15);
+                    }
+                }
+
+                .data-entry-fields--image-upload--restart {
+                    margin-top: 27px;
                     color: var(--color--primary__700);
+                    font-size: 14px;
+                    
+
+                    input[type='file'] {
+                        display: none;
+                    }
+
+                    & > label {
+                        font-size: 14px;
+                        color: var(--color--primary__900);
+                        cursor: pointer;
+                        font-family: Monsterrat-bold;
+                        text-decoration: underline;
+                        transition: 200ms ease-in;
+
+                        &:hover {
+                            font-size: 15px;
+                        }
+                    }
                 }
             }
         }
@@ -106,7 +163,6 @@
             display: flex;
             justify-content: space-around;
             padding-bottom: 50px;
-            margin-top: 40px;
 
             button {
                 font-family: Monsterrat-bold;
@@ -122,13 +178,24 @@
             }
 
             .response-button__submit {
-                background-color: var(--accent-color);
+                background-color: var(--accent-color-darker);
+                box-shadow: 1px 2px 4px hsla(198deg, 70%, 20%, 0.4);
+                transition: 200ms;
+
+                &:active {
+                    box-shadow: inset -2px -4px 6px hsla(198deg, 51%, 40%, 0.7), 0px 1px 4px hsla(198deg, 70%, 20%, 0.4);
+                }
             }
 
             .response-button__cancel {
-                background-color: white;
+                background-color: #f9f9f9;
                 color: var(--color--primary__500);
-                border: 2px solid var(--color--primary__500);
+                box-shadow: var(--shadow);
+                border: 1px solid hsla(198, 31%, 88%, 0.2);
+
+                &:active {
+                    box-shadow: var(--shadow-click);
+                }
             }
         }
     }
@@ -150,6 +217,12 @@
         align-self: flex-end;
     }
 
+    .feedback {
+        font-size: 14px;
+        font-family: Monsterrat-bold;
+        color: var(--color--primary__900);
+    }
+
     .box {
         height: 60%;
         margin-top: 0.75em;
@@ -162,10 +235,6 @@
 
 @media only screen and (max-width: 978px) {
     .record-page {
-        grid-template-columns: 1fr;
-        grid-template-areas: 
-            "main";
-
         form {
             .data-entry-fields {
                 flex-direction: column;
@@ -175,7 +244,6 @@
 
                 $inner-width: 60vw;
                 .data-entry-fields--text-insert {
-                    margin-bottom: 55px;
                     width: $inner-width;
 
                     li {
@@ -189,15 +257,35 @@
                 }
 
                 .data-entry-fields--image-upload {
-                    input {
-                        width: calc(60vw - 82px);
-                        margin-left: 8px;
+                    width: $inner-width;
+                    padding-left: 0;
+
+                    .data-entry-fields--image-upload--description {
+                        margin-right: 0;
+                        width: 58vw;
                     }
+
+                    .data-entry-fields--image-upload--upload-button {
+                        width: 51.6vw;
+                    }
+
+                    .data-entry-fields--image-upload--upload-complete {
+                        img {
+                            width: 61vw;
+                        }
+                    }
+                    
                 }
             }
 
             .response-button {
-                width: 80vw;
+                width: 85vw;
+            }
+
+            .feedback {
+                margin: 20px auto;
+                position: relative;
+                left: 3vw;
             }
         }
     }

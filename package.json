@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "react-router-dom": "^6.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.0",
+    "babel-loader": "^8.2.5"
+  }
+}
