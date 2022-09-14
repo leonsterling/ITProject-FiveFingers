@@ -1,0 +1,19 @@
+.partial-view {
+    display: flex;
+    height: 300px;
+    background: #333333;
+}
+
+.image-side {
+    display: flex;
+    padding: 20px;
+}
+
+.info-side {
+    display: inline;
+}
+
+.info-side > p {
+    color: white;
+
+}

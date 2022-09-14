@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 // Required component
 import Lightbox from "react-awesome-lightbox";
+import PartialView from "./PartialView";
 // Required stylesheet
 import "react-awesome-lightbox/build/style.css";
 import "./PictureMode.css";
@@ -16,6 +17,7 @@ const token = cookies.get("TOKEN");
 
 const PictureMode = () => {
   const [userData, setUserData] = useState(null);
+
   async function handleDashboard() {
     const configuration = {
       method: "get",
@@ -43,23 +45,44 @@ const PictureMode = () => {
         console.log(e.message);
       });
   }, []);
-  
+
+  const [open, setOpen] = useState(false);
+  const toggle = () => setOpen(!open);
+
+  function openFunction (id) {
+    setOpen({
+      ...open,
+      [id]: !open[id],
+    });
+  }
+
 
   let pictures = null;
   if (userData) {
     pictures = userData.map(
-      ({ artefactName, artefactImg, _id }) => (
-        <Link to={`/${_id}`} className="link-line">
+      ({ artefactName, artefactImg, description, artefactDate, _id }) => (
+        <div 
+          key={_id}
+          role="button" 
+          className="button-partial-view" 
+          onKeyPress={() => openFunction(_id)} 
+          onClick={() => openFunction(_id)}
+        >
           <div className="card">
             <img src={artefactImg.imgURL} />
             <div className="card-title">
               <p>{artefactName}</p>
             </div>
           </div>
-        </Link>
+          <div style={{ display: open[_id] ? 'block' : 'none' }}>
+            <PartialView title={artefactName} image={artefactImg} desc={description} date={artefactDate} />
+          </div>
+        </div>
       )
     );
+    
   }
+
 
   return (
     <main>
@@ -105,4 +128,10 @@ const Artefact = (props) => (
      });
     
 )
+
+
+
+          {open && (
+        
+          )}
 */

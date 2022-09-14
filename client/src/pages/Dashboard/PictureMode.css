@@ -48,6 +48,13 @@ main {
     margin: 0 auto;
 }
 
+.button-partial-view {
+    background: transparent;
+    border: none !important;
+}
+
+
+
 @media only screen and (max-width: 855px) {
     .main-cards {
         grid-template-columns: 1fr;

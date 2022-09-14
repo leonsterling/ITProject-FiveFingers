@@ -12,6 +12,7 @@ import Cookies from "universal-cookie";
 import FullView from "./pages/FullView/FullView";
 import ListView from "./pages/ListView/ListView.js"
 import EditPage from "./pages/EditPage/EditPage";
+import PartialView from "./pages/Dashboard/PartialView";
 
 // Cookies for checking if the user is currently logged in
 const cookies = new Cookies();
@@ -54,6 +55,10 @@ root.render(
           </Route>
 
           <Route element={<EditPage />} path="/:_id/edit" exact>
+            {" "}
+          </Route>
+
+          <Route element={<PartialView />} path="partialview" exact>
             {" "}
           </Route>
        
