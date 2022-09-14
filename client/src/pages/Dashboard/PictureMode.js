@@ -47,13 +47,21 @@ const PictureMode = () => {
   }, []);
 
   const [open, setOpen] = useState(false);
+  const [noClick, setStyle] = useState("");
 
   function openFunction (id) {
     setOpen({
       ...open,
       [id]: !open[id],
     });
+
+    setStyle({
+      ...noClick,
+      [id]: "card-expanded"[id],
+    });
   }
+
+
 
   let pictures = null;
   if (userData) {
@@ -84,7 +92,9 @@ const PictureMode = () => {
   return (
     <main>
       <div className="main-container">
-        <div className="main-cards">{pictures}</div>
+        <div className="main-cards">
+          {pictures}
+        </div>
       </div>
     </main>
   );

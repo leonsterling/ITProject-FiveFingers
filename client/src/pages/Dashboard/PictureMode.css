@@ -17,7 +17,6 @@ main {
 
 .card {
     min-width: 0;
-    width: 200px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -25,7 +24,6 @@ main {
     border-radius: 5px;
     background: #ffffff;
     box-shadow: 5px 5px 13px #ededed, -5px -5px 13px #ffffff;
-    position: static;
 }
 
 .card > img {
