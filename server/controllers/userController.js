@@ -184,11 +184,6 @@ const deleteArtefact = async(req, res) => {
     })
 }
 
-  
-
-
-const editArtefact = (req, res) => {};
-
 
 // gets POST request, attempt to log-in user
 const loginUser = (req, res) => {
