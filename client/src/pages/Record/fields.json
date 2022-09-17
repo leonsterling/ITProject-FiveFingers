@@ -12,9 +12,8 @@
             "name" : "category",
             "label" : "Category",
             "placeholder" : "Part of...",
-            "type" : "text",
-            "component" : "input",
-            "required": true
+            "component" : "category",
+            "required": false
         },
         {
             "name" : "description",
