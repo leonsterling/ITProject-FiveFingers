@@ -233,26 +233,6 @@ const loginUser = (req, res) => {
     });
 };
 
-// log-out user from current session
-const logout = (req, res) => {
-  if (req.session) {
-    req.session.destroy((err) => {
-      if (err) {
-        res.status(500).send({
-          message: "Unable to log out, error occured",
-        });
-      } else {
-        res.status(201).send({
-          message: "Logout successful",
-          isValid: false,
-        });
-      }
-    });
-  } else {
-    res.end();
-  }
-};
-
 const changePassword = async (req,res) => {
   
       // hash the password using bcrypt before saving to mongodb
@@ -317,7 +297,6 @@ module.exports = {
   allData,
   registerArtefact,
   registerUser,
-  logout,
   loginUser,
   getDashboard,
   editArtefact,
