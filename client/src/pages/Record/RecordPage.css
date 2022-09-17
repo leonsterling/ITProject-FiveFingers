@@ -74,6 +74,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding-left: 3vw;
+  margin-bottom: 20px;
 }
 
 .record-page form .data-entry-fields .data-entry-fields--image-upload label {
@@ -81,9 +82,7 @@
   font-size: medium;
   letter-spacing: -0.06em;
   font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: -5px;
-  padding-left: 4px;
+  margin-bottom: 10px;
 }
 .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button {
   width: 29vw;
@@ -111,6 +110,7 @@
 .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button input {
   display: none;
 }
+
 .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-complete img {
   width: calc(29vw + 80px);
   color: var(--color--primary__700);

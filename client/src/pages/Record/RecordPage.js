@@ -135,7 +135,6 @@ const RecordForm = () => {
         <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
       </div>
       <div className="record-page">
-        {/* Render the side nav*/}
 
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>

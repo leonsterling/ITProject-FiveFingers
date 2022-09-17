@@ -39,7 +39,7 @@ const PictureMode = () => {
   useEffect(() => {
     handleDashboard()
       .then((res) => {
-        setUserData(res.data);
+        setUserData(res.data.artefactRecords);
       })
       .catch((e) => {
         console.log(e.message);

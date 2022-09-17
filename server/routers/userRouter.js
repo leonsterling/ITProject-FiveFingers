@@ -27,7 +27,6 @@ userRouter.post('/add-artefact', jwtAuth, upload.single("artefact-image"), userC
 userRouter.patch("/:id", userController.editArtefact);
 
 // DELETE route
-userRouter.delete('/logout', userController.logout),
 userRouter.delete('/delete-artefact/:id', jwtAuth, userController.deleteArtefact)
 
 // export Router object

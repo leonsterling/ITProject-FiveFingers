@@ -34,3 +34,6 @@ app.listen(process.env.PORT || 5100, () => {
 require('./models')
 
 require('./utils/cloudinary')
+
+module.exports = app
+

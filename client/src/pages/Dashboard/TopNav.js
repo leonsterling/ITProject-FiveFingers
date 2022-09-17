@@ -9,7 +9,6 @@ import logo from "../assets/LS-Logo.png";
 
 // obtain token from cookie
 const cookies = new Cookies();
-const token = cookies.get("TOKEN");
 
 const TopNav = ({mobileNavOpen, openMobileNav}) => {
     
