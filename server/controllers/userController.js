@@ -9,14 +9,17 @@ const { cloudinary } = require("../utils/cloudinary");
 const searchBar = async (req,res) => {
 
   const query = req.params.query
-
+  const exact =  "\""+query+"\""
+  const text = "\"ssl certificate\""
+  console.log(text)
+  console.log(exact)
   Artefact.aggregate([
     {
       $search: {
         "index": "artefacts_search_index",
         "text": {
-          "path": ["associated", "category"],
-          "query": query
+          "path": ["associated.person", "category.category_name"],
+          "query": exact
         }
       }
     }, 
@@ -30,7 +33,7 @@ const searchBar = async (req,res) => {
     }
     else {
       res.status(201).send({
-        message: "Search query success with atleast 1 result",
+        message: "Search query success with "+ searched.length +" result",
         searched,
       });
     }
