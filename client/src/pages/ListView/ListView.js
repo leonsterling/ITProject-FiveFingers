@@ -25,7 +25,7 @@ const ListView = () => {
       try {
         const response = await axios(configuration);
         //console.log(JSON.stringify(response.data));
-        setList(response.data);
+        setList(response.data.artefactRecords);
       } catch (error) {
         console.log("error", error);
       }
@@ -40,8 +40,8 @@ const ListView = () => {
         <tr className='table-body' key={_id}>
           <td className='table-cell' id="name-cell">{artefactName}</td>
           <td className='table-cell' id="desc-cell">{description.substring(0, 60)}</td>
-          <td className='table-cell' id="category-cell">{category}</td>
-          <td className='table-cell' id="person-cell">{associated}</td>
+          <td className='table-cell' id="category-cell">{category.category_name}</td>
+          <td className='table-cell' id="person-cell">{associated.person}</td>
           <td className='table-cell' id="kebab-menu"></td>
         </tr>
       )

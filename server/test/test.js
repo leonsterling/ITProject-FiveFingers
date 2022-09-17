@@ -74,35 +74,17 @@ describe("login users", () => {
 });
 
 describe("dashboard", () => {
-  it("should retrieve user dashboard", (done) => {
+  it("should retrieve artefacts", (done) => {
     request(app)
-      .get("/dashboard")
-      .expect(200)
+      .get("/data")
+      .expect(201)
       .set({
         Authorization: tempToken,
       })
       .then((res) => {
-        expect(res.body.message).to.be.eql("Login Successful, hello user!");
+        expect(res.body.message).to.be.eql("Successful in getting artefacts");
         done();
       })
       .catch((err) => done(err));
   });
 });
-
-describe("dashboard", () => {
-  it("should retrieve user dashboard", (done) => {
-    request(app)
-      .get("/dashboard")
-      .expect(200)
-      .set({
-        Authorization: tempToken,
-      })
-      .then((res) => {
-        expect(res.body.message).to.be.eql("Login Successful, hello user!");
-        done();
-      })
-      .catch((err) => done(err));
-  });
-});
-
-

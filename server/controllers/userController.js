@@ -1,5 +1,5 @@
 // libraries and mongoose models imported
-const { User, Artefact} = require("../models/user");
+const { User, Artefact, Category, Associated} = require("../models/user");
 const bcrypt = require("bcryptjs");
 const SALT_FACTOR = 10
 const jwt = require("jsonwebtoken");
@@ -45,21 +45,36 @@ const searchBar = async (req,res) => {
 
 // Display All CRUD Data
 const allData = (req, res) => {
+  /*
   console.log("artefact data");
 	Artefact.find(function (err, artefactRecords) {
 		res.status(200).send(artefactRecords);
 	});
+  */
+  Artefact.find()
+    .then((artefactRecords) => {
+      res.status(201).send({
+        message: "Successful in getting artefacts",
+        artefactRecords,
+      });
+    })
+  .catch((error) => {
+    res.status(500).send({
+      message: "Error upon getting artefacts",
+      error,
+    });
+  })
+
 };
+
 
 // gets users dashboard once successfully logged in
 const getDashboard = async (req, res) => {
-  const allArtefacts = await Artefact.find();
-  // sample response status
   res.status(200).send({
     message: "Login Successful, hello user!",
-    artefact_list: allArtefacts,
   });
 };
+
 
 // Get the particular Artefact detail
 const artefact_details = async (req, res) => {
@@ -119,19 +134,102 @@ const registerArtefact = async (req, res) => {
     upload_preset: "sterling_family_account",
   });
   
-  
   const artefact = new Artefact({
     artefactName: req.body.record.artefactName,
-    category: req.body.record.category,
     description: req.body.record.description,
     memories: req.body.record.memories,
-    associated: req.body.record.associated,
+    associated: null,
+    category: null,
     location: req.body.record.location,
-    artefactDate: req.body.record.artefactDate,
+    // artefactDate: req.body.record.artefactDate,
     "artefactImg.imgURL": image_data.url,
     "artefactImg.publicID": image_data.public_id,
   });
 
+  await artefact.save().then((result1) => {
+    Category.findOne({category_name: req.body.record.category})
+    .then((result2)=>{
+      if (result2) {
+          Artefact.updateOne({_id: result1._id}, {
+            $set: {category: result2}
+          }, function(err, doc) {
+            if (err) {
+              
+            } else {
+                
+            }
+        }
+        )
+      }
+      else {
+        const cat = new Category ({
+          category_name: req.body.record.category
+        })
+
+        Artefact.updateOne({_id: result1._id}, {
+          $set: {category: cat}
+        },function(err, doc) {
+          if (err) {
+            
+          } else {
+              
+          }
+      })
+        cat.save()
+      }
+    })
+    .catch((error)=> {
+      
+    })
+
+    Associated.findOne({person: req.body.record.associated})
+    .then((result3)=>{
+      if (result3) {
+          Artefact.updateOne({_id: result1._id}, {
+            $set: {associated: result3}
+          }, function(err, doc) {
+            if (err) {
+              
+            } else {
+                
+            }
+        })
+      }
+      else {
+        const ass = new Associated ({
+          person: req.body.record.associated
+        })
+
+        Artefact.updateOne({_id: result1._id}, {
+          $set: {associated: ass}
+        }, function(err, doc) {
+          if (err) {
+            
+          } else {
+              
+          }
+      })
+        ass.save()
+      }
+    })
+    .catch((error)=> {
+      
+    })
+
+
+    res.status(201).send({
+      message: "Artefact registered successfully",
+      result1,
+    });
+  }).catch((error) => {
+    res.status(500).send({
+      message: "Error upon registering artefact",
+      error,
+    });
+  })
+  
+
+  /*
   User.updateOne(
     { _id: req.user.userId },
     { $push: { artefactList: artefact } },
@@ -156,6 +254,7 @@ const registerArtefact = async (req, res) => {
       }
     }
   );
+  */
 };
 
 const deleteArtefact = async(req, res) => {
