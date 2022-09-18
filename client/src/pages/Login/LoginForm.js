@@ -35,7 +35,7 @@ export default function LoginForm () {
       setLoginState({validLogin: false});
       const configuration = {
         method: "post",
-        url: "http://localhost:5100/login",
+        url: "https://sterlingfamilyartefacts.herokuapp.com/login",
         data: {
           username,
           password,
