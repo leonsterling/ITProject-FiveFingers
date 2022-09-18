@@ -19,7 +19,15 @@ const Dashboard = () => {
   let [ userData, setUserData ] = useState(null)
   let [searchClicked, setSearchClick] = useState(false);
   let [searchText, setSearchText] = useState('');
-  let [getArtefactCallback, setGetArtefactCallback] = useState(handleDashboard);
+  let [getArtefactCallback, setGetArtefactCallback] = useState([handleDashboard]);
+
+  let [response, setResponse] = useState(null);
+  let [rendered, setRendered] = useState(false);
+  if (!rendered) {
+      handleDashboard(setResponse);
+      setRendered(true);
+  }
+
 
   let searchContent;
   if (searchClicked) {
@@ -27,9 +35,10 @@ const Dashboard = () => {
           <>
           <Icon icon='akar-icons:search'/>
           <form
-            onSubmit={(e) =>
-                changeCallback(e, setGetArtefactCallback, handleSearch)
-            }
+            onSubmit={(e) => {
+                changeCallback(e, setGetArtefactCallback, handleSearch);
+                getArtefactCallback(setResponse);
+            }}
           >
             <input type='text'
               className=''
@@ -45,7 +54,7 @@ const Dashboard = () => {
       searchContent = <Icon icon='akar-icons:search'/>
   }
 
-  async function handleSearch () {
+  async function handleSearch (setResponse) {
     const configuration = {
       method: "get",
       url: `http://localhost:5100/search-artefacts/${searchText}`,
@@ -54,18 +63,12 @@ const Dashboard = () => {
       },
     };
 
-    await axios(configuration)
-      .then((res) => {
-        setUserData(res.data.artefactRecords);
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
-    // if (!response) {
-        // // Do nothing
-    // } else {
-      // return response;
-    // };
+    let promise = await axios(configuration);
+    if (!promise) {
+    } else {
+      console.log(promise);
+      setResponse(promise);
+    }
   }
 
 
@@ -90,11 +93,15 @@ const Dashboard = () => {
         </div>
     </div>
     { isToggled ?
-        <ListView/> :
+        <ListView
+          userData={userData}
+          setUserData={setUserData}
+          response={response}
+        /> :
         <PictureMode 
           userData={userData}
           setUserData={setUserData}
-          handleDashboard={handleDashboard}
+          response={response}
         />
     }
     </>
@@ -108,7 +115,7 @@ function changeCallback (e, setter, callback) {
   setter(callback);
 }
 
-async function handleDashboard() {
+async function handleDashboard(setResponse) {
   const configuration = {
     method: "get",
     url: "http://localhost:5100/data",
@@ -119,10 +126,10 @@ async function handleDashboard() {
 
   // make the API call
   const response = await axios(configuration);
-  console.log(response);
+  console.log(response.data.artefactRecords);
   if (!response) {
   } else {
-    return response;
+    setResponse(response);
   }
 }
 
