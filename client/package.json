@@ -66,6 +66,7 @@
     "@storybook/test-runner": "^0.7.2",
     "@storybook/testing-library": "^0.0.13",
     "babel-loader": "^8.2.5",
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "react-test-renderer": "^18.2.0"
   }
 }
