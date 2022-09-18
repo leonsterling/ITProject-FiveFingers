@@ -15,6 +15,9 @@ userRouter.get("/data", jwtAuth, userController.allData);
 userRouter.get("/:id", userController.artefact_details);
 userRouter.get('/search-artefacts/:query', jwtAuth, userController.searchBar)
 
+userRouter.get('/add-artefact/categories', jwtAuth, userController.getCategories)
+userRouter.get('/add-artefact/associated', jwtAuth, userController.getAssociated)
+
 // POST routes for Login activities
 userRouter.post('/register', userController.registerUser)
 userRouter.post('/login', userController.loginUser)

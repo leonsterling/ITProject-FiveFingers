@@ -92,6 +92,38 @@ const artefact_details = async (req, res) => {
   }
 };
 
+const getCategories = (req,res) => {
+  Category.find()
+    .then((result)=> {
+      res.status(200).json({
+        categories: result,
+        message: "Categories recieved successfully"
+      });
+    })
+    .catch((error)=> {
+      res.status(404).json({ 
+        message: "Error in getting categories",
+        error
+      });
+    })
+}
+
+const getAssociated = (req,res) => {
+  Associated.find()
+    .then((result)=> {
+      res.status(200).json({
+        associated: result,
+        message: "Categories recieved successfully"
+      });
+    })
+    .catch((error)=> {
+      res.status(404).json({ 
+        message: "Error in getting categories",
+        error
+      });
+    })
+}
+
 // Update CRUD Detail by Id
 const editArtefact = (req, res) => {
   console.log("IDFORCRUD")
@@ -405,5 +437,7 @@ module.exports = {
   deleteArtefact,
   artefact_details,
   searchBar,
-  changePassword
+  changePassword,
+  getCategories,
+  getAssociated
 };

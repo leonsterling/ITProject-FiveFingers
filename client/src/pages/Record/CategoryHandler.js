@@ -3,7 +3,10 @@ import axios from 'axios';
 async function getObject (requestURI) {
     const configuration = {
       method: "get",
-      url: `http://localhost:5100/${requestURI}`,
+      headers: {
+        Authorization: `Bearer ${token}`, // authorized route with jwt token
+      },
+      url: `http://localhost:5100/add-artefact/${requestURI}`,
     };
 
     await axios(configuration).then((res) => {
