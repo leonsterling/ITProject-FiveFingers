@@ -1,10 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import TopNav from './TopNav';
 import MobileNav from './MobileNav';
 import ViewToggle from './viewToggle';
 import PictureMode from './PictureMode';
 import ListView from '../ListView/ListView';
-import axios from "axios";
 import Cookies from "universal-cookie";
 
 // CSS imports
@@ -17,8 +16,6 @@ const token = cookies.get("TOKEN");
 
 const Dashboard = () => { 
   
-
-
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
  
   const openMobileNav = () => {

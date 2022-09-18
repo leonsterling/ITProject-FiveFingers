@@ -1,15 +1,25 @@
 const mongoose = require('mongoose') // import mongoose
 const bcrypt = require('bcryptjs') // import bycrypt
 
+// schema for category
+const categorySchema = new mongoose.Schema({
+    category_name: {type: String}
+ })
+
+ // schema for people associated
+ const associatedSchema = new mongoose.Schema({
+    person: {type: String}
+ })
+
 // schema for artefact
 const artefactSchema = new mongoose.Schema({
     artefactName: {
         type: String, 
         required: [true, 'Artefact Name is Required']},
-    category: {type: String},
+    category: categorySchema,
     description: {type: String},
     memories: {type: String},
-    associated: {type: String},
+    associated: associatedSchema,
     location: {type: String},
     artefactDate :{type: Date},
     artefactImg : {
@@ -21,10 +31,10 @@ const artefactSchema = new mongoose.Schema({
  // schema for user
 const userSchema = new mongoose.Schema({
     username: {type: String, required: true},
-    password: {type: String, required: true},
-    artefactList: [artefactSchema]
+    password: {type: String, required: true}
  });
 
+ 
  // password comparison function
 userSchema.methods.verifyPassword = function (password, callback) {
     bcrypt.compare(password, this.password, (err, valid) => {
@@ -54,6 +64,8 @@ userSchema.pre('save', function save(next) {
 // constants to export as collections in DB to be used in userController
 const User = mongoose.model('User', userSchema, "Users")
 const Artefact = mongoose.model('Artefacts', artefactSchema, 'Artefacts')
+const Category = mongoose.model('Categories', categorySchema, 'Categories')
+const Associated = mongoose.model('Associated', associatedSchema, 'Associated')
 
 // export the constants
-module.exports = {User, Artefact}
+module.exports = {User, Artefact, Category, Associated}

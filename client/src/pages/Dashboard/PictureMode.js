@@ -39,7 +39,7 @@ const PictureMode = () => {
   useEffect(() => {
     handleDashboard()
       .then((res) => {
-        setUserData(res.data);
+        setUserData(res.data.artefactRecords);
       })
       .catch((e) => {
         console.log(e.message);
@@ -47,43 +47,45 @@ const PictureMode = () => {
   }, []);
 
   const [open, setOpen] = useState(false);
-  const [noClick, setStyle] = useState("");
 
   function openFunction (id) {
     setOpen({
       ...open,
       [id]: !open[id],
     });
-
-    setStyle({
-      ...noClick,
-      [id]: "card-expanded"[id],
-    });
   }
 
+  const [clicked, setClicked] = useState(new Array(3).fill(false));
+  function openClick (event, id) {
+    let result = [...clicked];
+    result= result.map(x => false); // reset previous click
+    result[id] = true;
+    setClicked(result);
+ }  
 
-
+//          style={{ padding: open[_id] ? '0 0 480px 0' : '0 0 0 0' }}
   let pictures = null;
   if (userData) {
     pictures = userData.map(
       ({ artefactName, artefactImg, description, artefactDate, _id }) => (
-        <div 
-          key={_id}
-          role="button" 
-          className="button-partial-view" 
-          onKeyPress={() => openFunction(_id)} 
+        <article 
+          className="card-container"
           onClick={() => openFunction(_id)}
+          style={{ padding: open[_id] ? '0 0 480px 0' : '0 0 0 0' }}
         >
-          <div className="card">
-            <img src={artefactImg.imgURL} />
-            <div className="card-title">
-              <p>{artefactName}</p>
+          <div>
+            <div className="card">
+              <img src={artefactImg.imgURL} />
+              <div className="card-title">
+                <p>{artefactName}</p>
+              </div>
+            </div>
+
+            <div style={{ display: open[_id] ? 'block' : 'none' }}>
+            <PartialView title={artefactName} image={artefactImg} desc={description} date={artefactDate} _id={_id} />
             </div>
           </div>
-          <div style={{ display: open[_id] ? 'block' : 'none' }}>
-            <PartialView title={artefactName} image={artefactImg} desc={description} date={artefactDate} />
-          </div>
-        </div>
+        </article>
       )
     );
     
@@ -93,7 +95,11 @@ const PictureMode = () => {
     <main>
       <div className="main-container">
         <div className="main-cards">
-          {pictures}
+          <div className="section-cards">
+            <div className="feed-cards">
+              {pictures}
+            </div>
+          </div>
         </div>
       </div>
     </main>
