@@ -1,6 +1,5 @@
 // Import the necessary libraries
 import React, { useState, useEffect, Component } from "react";
-import SideNav from "../../components/SideNav";
 import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
 import TextInsertField from './TextInsertField.js';
 import { Link } from "react-router-dom";
@@ -8,9 +7,11 @@ import { useNavigate } from "react-router-dom";
 import FileBase from 'react-file-base64';
 import axios from "axios";
 import Cookies from "universal-cookie";
+import TopNav from "../Dashboard/TopNav.js";
+import MobileNav from "../Dashboard/MobileNav.js";
 
 // CSS imports
-import "./RecordPage.css";
+import "./RecordPage.scss";
 
 // obtain token from cookie
 const cookies = new Cookies();
@@ -28,6 +29,17 @@ const RecordForm = () => {
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
 
+  // To toggle the top navigatino
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const openMobileNav = () => {
+    setMobileNavOpen(true);
+  }
+
+  const closeMobileNav = () => {
+    setMobileNavOpen(false);
+  }
+
   // Change the artefactFiles list if a new file is added or removed
   const onFileChange = (files) => {
     console.log(files);
@@ -40,7 +52,8 @@ const RecordForm = () => {
     artefactDate: "",
     location: "",
     description: "",
-    //tags: "",
+    category: "",
+    associated: "",
     artefactImg: "",
   };
 
@@ -117,9 +130,11 @@ const RecordForm = () => {
   // Return an HTML of the Record Page
   return (
     <>
+      <div className="container">
+        <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
+        <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
+      </div>
       <div className="record-page">
-        {/* Render the side nav*/}
-        <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
 
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>

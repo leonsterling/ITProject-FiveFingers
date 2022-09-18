@@ -10,7 +10,7 @@ export default function LoginPage () {
           <div className='login-form'>
             <SterlingBrand />
             <h1>Sign In</h1>
-            <h2>Welcome! Log in to access your personal artefact register</h2>
+            <h2>Welcome! Log in to access your personal artefact register.</h2>
             <LoginForm />
           </div>
         </div>

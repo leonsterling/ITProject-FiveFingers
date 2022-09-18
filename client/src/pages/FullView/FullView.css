@@ -1,0 +1,76 @@
+.view-bg {
+  background-color: white;
+}
+
+.header-fv {
+  position: absolute;
+  width: 243px;
+  height: 32px;
+  left: 98px;
+  top: 50px;
+
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 37px;
+
+  color: #000000;
+}
+.img-container {
+  position: relative;
+  text-align: center;
+}
+
+.cropped-ofp {
+  width: 1300px;
+  height: 580px;
+  left: 1610px;
+  top: 226px;
+  margin-top: 10rem;;
+  object-fit: cover;
+  object-position: 25% 25%;
+  border-radius: 20px;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  filter: brightness(60%);
+}
+
+.img-container img:hover {
+  opacity: 0.7;
+}
+
+.artefact-intro {
+  position: absolute;
+  bottom: 6rem;
+  left: 10rem;
+  color: white;
+}
+
+.artefact-name {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 37px;
+
+  position: absolute;
+  bottom: 50px;
+  left: 200px;
+  color: white;
+}
+
+.artefact-tags {
+  background: #8db3c3;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  width: 7%;
+  height: 5%;
+
+  position: absolute;
+  bottom: 20px;
+  left: 200px;
+}

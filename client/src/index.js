@@ -9,6 +9,9 @@ import AuthRoutes from "./components/AuthRoutes";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import RecordPage from "./pages/Record/RecordPage";
 import Cookies from "universal-cookie";
+import FullView from "./pages/FullView/FullView";
+import ListView from "./pages/ListView/ListView.js"
+import EditPage from "./pages/EditPage/EditPage";
 
 // Cookies for checking if the user is currently logged in
 const cookies = new Cookies();
@@ -37,10 +40,24 @@ root.render(
           <Route element={<Dashboard />} path="/dashboard" exact>
             {" "}
           </Route>
+          <Route element={<ListView/>} path="/list-view" exact>
+            {" "}
+          </Route>
+          <Route element={<FullView />} path="/:_id" exact>
+            {" "}
+          </Route>
           <Route element={<RecordPage />} path="/add-artefact" exact>
             {" "}
           </Route>
-        </Route>
+          <Route element={<FullView />} path="/:_id" exact>
+            {" "}
+          </Route>
+
+          <Route element={<EditPage />} path="/:_id/edit" exact>
+            {" "}
+          </Route>
+       
+       </Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

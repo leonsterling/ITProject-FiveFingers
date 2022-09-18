@@ -8,20 +8,26 @@
                     inset 0px 2px 4px hsla(198, 100%, 0%, 0.1),
                     inset 0px 4px 9px hsla(198, 100%, 60%, 0.1);
     --color--primary__900: hsl(190deg, 100%, 15%);
-    --color--primary__900: hsl(190deg, 100%, 15%);
-    --color--primary__500: hsl(190deg, 31%, 50%);
     --color--primary__700: hsl(190.6deg, 23.3%, 32.3%);
+    --color--primary__500: hsl(190deg, 31%, 50%);
+    --color--primary__300: hsl(190deg, 35%, 58%);
 }
 
 .record-page {
     display: flex;
     height: 100vh;
 
+    & * {
+        position: relative;
+        z-index: 1;
+    }
+
     form {
         padding: 70px 42px;
         display: flex;
         flex-direction: column;
         width: 80vw;
+        margin: auto;
 
         & > h1 {
             font-size: 20px;
@@ -29,13 +35,13 @@
             letter-spacing: 0.05em;
             font-family: Monsterrat-bold;
             color: hsl(180deg, 7%, 49%);
+            margin-bottom: 30px;
         }
 
         .data-entry-fields {
             display: flex;
             justify-content: center;
             padding: 0 20px;
-            margin-bottom: -50px;
 
             $width: 45vw;
             .data-entry-fields--text-insert {
@@ -56,7 +62,7 @@
                     color: var(--color--primary__900)
                 }
 
-                input, textarea {
+                input, textarea, .input-like {
                     font-family: Monsterrat;
                     border: 1px solid #fdfdfd;
                     border-radius: 7px;
@@ -82,15 +88,18 @@
                 flex-direction: column;
                 align-items: flex-start;
                 padding-left: 3vw;
+                margin-bottom: 20px;
+
+                // Needed for categories to work
+                z-index: 0;
 
                 label {
+                    display: flex;
                     color: var(--color--primary__900);
                     font-size: medium;
                     letter-spacing: -0.06em;
                     font-weight: bold;
-                    margin-top: 10px;
-                    margin-bottom: -5px;
-                    padding-left: 4px;
+                    margin-bottom: 10px;
                 }
 
                 .data-entry-fields--image-upload--upload-button {
@@ -159,10 +168,10 @@
         }
 
         .response-button {
-            width: 40vw;
+            width: 100%;
             display: flex;
-            justify-content: space-around;
-            padding-bottom: 50px;
+            justify-content: space-between;
+            padding: 0 2rem;
 
             button {
                 font-family: Monsterrat-bold;
@@ -250,7 +259,7 @@
                         display: flex;
                         flex-direction: column;
 
-                        input, textarea {
+                        input, textarea, .input-like {
                             width: $inner-width;
                         }
                     }

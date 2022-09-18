@@ -13,13 +13,17 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "fslightbox-react": "^1.6.2-2",
+    "lightbox.js-react": "^0.0.8",
     "react": "^18.2.0",
+    "react-awesome-lightbox": "^1.8.1",
     "react-dom": "^18.2.0",
     "react-file-base64": "^1.0.3",
+    "react-image-lightbox": "^5.1.4",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "react-select": "^5.4.0",
+    "sass": "^1.54.9",
     "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.4",
     "yarn": "^1.22.19"
@@ -28,7 +32,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "test-storybook": "test-storybook"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +56,18 @@
     ]
   },
   "devDependencies": {
-    "@iconify/react": "^3.2.2"
+    "@babel/core": "^7.19.0",
+    "@iconify/react": "^3.2.2",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/builder-webpack5": "^6.5.10",
+    "@storybook/manager-webpack5": "^6.5.10",
+    "@storybook/react": "^6.5.10",
+    "@storybook/test-runner": "^0.7.1",
+    "@storybook/testing-library": "^0.0.13",
+    "babel-loader": "^8.2.5",
+    "jest": "^27.5.1"
   }
 }

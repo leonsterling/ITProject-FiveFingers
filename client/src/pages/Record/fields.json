@@ -46,14 +46,8 @@
             "type" : "text",
             "component" : "input",
             "required": false
-        },
-        {
-            "name" : "artefactDate",
-            "label" : "Date of Artefact",
-            "type" : "date",
-            "component" : "input",
-            "required": false
         }
+
     ]
 }
 
