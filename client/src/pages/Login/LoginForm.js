@@ -94,13 +94,13 @@ export default function LoginForm () {
                     <label> Password </label>
                 </li>
                 <li className={inputClass}>
-                    <span><Icon icon='codicon:lock-small'/></span>
+                    <span>{/*<Icon icon='codicon:lock-small'/>*/}</span>
                     <input
                         type='password'
                         id='password'
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <span><Icon className="password-toggle" icon="bi:eye-slash-fill" /></span>
+                    <span>{/*<Icon className="password-toggle" icon="bi:eye-slash-fill" /> */}</span>
                 </li>
                 <li className='forget-password-link'>
                     <h5>Forgot password?</h5>
