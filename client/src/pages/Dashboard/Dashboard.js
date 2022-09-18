@@ -29,18 +29,14 @@ const Dashboard = () => {
   }
 
 
-  let [isSearched, setIsSearched] = useState(false)
-
   let searchContent;
   if (searchClicked) {
       searchContent = (
           <>
           <Icon icon='akar-icons:search'/>
           <form
-            onSubmit={(e) =>{
-                setIsSearched(true)
+            onSubmit={(e) =>
                 changeCallback(e, setGetArtefactCallback, handleSearch)
-            }
             }
           >
             <input type='text'
@@ -96,17 +92,11 @@ const Dashboard = () => {
         </div>
     </div>
     { isToggled ?
-        <ListView
-        userData={userData}
-        setUserData={setUserData}
-        handleDashboard={isSearched ? handleSearch: handleDashboard}
-        />
-      
-        :
+        <ListView/> :
         <PictureMode 
           userData={userData}
           setUserData={setUserData}
-          handleDashboard={isSearched ? handleSearch: handleDashboard}
+          handleDashboard={handleDashboard}
         />
     }
     </>
