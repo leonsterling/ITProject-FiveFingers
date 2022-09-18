@@ -113,7 +113,7 @@ const getAssociated = (req,res) => {
     .then((result)=> {
       res.status(200).json({
         associated: result,
-        message: "Categories recieved successfully"
+        message: "Associated recieved successfully"
       });
     })
     .catch((error)=> {

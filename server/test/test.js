@@ -88,3 +88,35 @@ describe("dashboard", () => {
       .catch((err) => done(err));
   });
 });
+
+describe("categories", () => {
+  it("should retrieve categories", (done) => {
+    request(app)
+      .get("/add-artefact/categories")
+      .expect(200)
+      .set({
+        Authorization: tempToken,
+      })
+      .then((res) => {
+        expect(res.body.message).to.be.eql("Categories recieved successfully");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});
+
+describe("associated", () => {
+  it("should retrieve associated", (done) => {
+    request(app)
+      .get("/add-artefact/associated")
+      .expect(200)
+      .set({
+        Authorization: tempToken,
+      })
+      .then((res) => {
+        expect(res.body.message).to.be.eql("Associated recieved successfully");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});
