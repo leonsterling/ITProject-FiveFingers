@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Icon } from '@iconify/react';
+import { getObject } from './CategoryHandler';
 
 // Sass import
 import './categories.scss';
@@ -13,6 +14,7 @@ const dummyCategories = [
 ]
 
 export default function Categories ( { data, index, handleChange } ) {
+  console.log(getObject('category'));
   let [label, setLabel] = useState("Choose a category");
 
   // Changes based on what the user clicks - whether its outside the

@@ -80,8 +80,6 @@ function FullView() {
   }
 
   return (
-    <>
-      <body>
         <div>
           <div className="header-fv">Full View</div>
           <div className="img-container">
@@ -95,15 +93,12 @@ function FullView() {
             <p className="artefact-tags">TestTag</p>
             <FsLightbox toggler={toggler} sources={[recordImg]} />
           </div>
-
           <div>
             <div>{recordDescription}</div>
             <div>{recordCategory}</div>
             <div>{recordPerson}</div>
           </div>
         </div>
-      </body>
-    </>
   );
 }
 
