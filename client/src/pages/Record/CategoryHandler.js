@@ -1,4 +1,9 @@
 import axios from 'axios';
+import Cookies from "universal-cookie";
+
+// obtain token from cookie
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
 
 async function getObject (requestURI) {
     const configuration = {

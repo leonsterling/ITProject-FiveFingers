@@ -2,7 +2,7 @@
     --mobile-nav-height: 300px;
 }
 
-#mobilenav {
+.mobilenav {
     background: #96b3c2;
     padding: 20px;
     height: var(--mobile-nav-height);
@@ -56,9 +56,9 @@
 }
 
 .mobilenav-responsive {
-    display: inline !important;
-    z-index: 9999 !important;
-    left: 0 !important;
+    display: inline;
+    z-index: 9;
+    left: 0;
     position: absolute;
 }
 
@@ -74,4 +74,11 @@
         margin: 0;
         padding: 0;
     }
+}
+
+@media only screen and (min-width: 978px) {
+    .mobilenav {
+        display: none;
+    }
+    
 }

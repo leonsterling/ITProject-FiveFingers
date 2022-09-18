@@ -4,7 +4,7 @@ import "./viewToggle.css";
 
 const viewToggle = ({isToggled, onToggle}) => {
     return (
-        <label className="viewToggle">
+        <label className="viewToggle" data-testid="viewToggle">
             <input type="checkbox" checked = {isToggled} onChange = {onToggle}/>
             <span className="slider">
                 <Icon icon="clarity:grid-view-line" className="view-icon"/>

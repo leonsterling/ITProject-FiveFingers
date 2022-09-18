@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import TopNav from './TopNav';
 import MobileNav from './MobileNav';
-import ViewToggle from './viewToggle';
+import ViewToggle from '../../components/viewToggle';
 import PictureMode from './PictureMode';
 import ListView from '../ListView/ListView';
 import Cookies from "universal-cookie";
