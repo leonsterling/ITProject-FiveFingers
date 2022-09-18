@@ -19,7 +19,6 @@ app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
 
 app.use(express.json())
-app.use(cors())
 
 // router of app in server
 const userRouter = require('./routers/userRouter')
