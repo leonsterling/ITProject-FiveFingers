@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "./static/css/main.14a2e4e8.css",
+    "main.js": "./static/js/main.b135bdb1.js",
+    "static/media/MaterialIcons-Regular.ttf": "./static/media/MaterialIcons-Regular.e751952f99a391b623f3.ttf",
+    "static/media/Montserrat-Regular.woff2": "./static/media/Montserrat-Regular.58a8d7ebc386843b62c5.woff2",
+    "static/media/Montserrat-Bold.woff2": "./static/media/Montserrat-Bold.109e3207d9afea8524be.woff2",
+    "static/media/LOGO-BLACK.png": "./static/media/LOGO-BLACK.e7f8dd1f1dbb8bd69535.png",
+    "static/media/Nayeon.JPG": "./static/media/Nayeon.227e279d1d0f8ca7f3a2.JPG",
+    "index.html": "./index.html",
+    "main.14a2e4e8.css.map": "./static/css/main.14a2e4e8.css.map",
+    "main.b135bdb1.js.map": "./static/js/main.b135bdb1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.14a2e4e8.css",
+    "static/js/main.b135bdb1.js"
+  ]
+}
