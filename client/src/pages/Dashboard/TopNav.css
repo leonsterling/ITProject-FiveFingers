@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+
 /* hamburger menu */
 
 .nav-icon {
@@ -22,6 +24,7 @@
     color: white;
     font-weight: 600;
     z-index: 0;
+    font-family: "Montserrat";
 }
 
 .topnav-left {
