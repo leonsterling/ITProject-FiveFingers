@@ -21,20 +21,6 @@ app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
 app.use(express.json())
 app.use(cors())
 
-// Curb Cores Error by adding a header here
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-  );
-  next();
-});
-
 // router of app in server
 const userRouter = require('./routers/userRouter')
 app.use('/', userRouter)
