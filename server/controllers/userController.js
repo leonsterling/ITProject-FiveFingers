@@ -1,6 +1,6 @@
 // libraries and mongoose models imported
 const { User, Artefact, Category, Associated} = require("../models/user");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const SALT_FACTOR = 10
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
