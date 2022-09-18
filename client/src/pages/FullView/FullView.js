@@ -92,7 +92,7 @@ function FullView() {
             />
             <p className="artefact-name">{recordName}</p>
             <p className="artefact-tags">TestTag</p>
-            <FsLightbox toggler={toggler} sources={[{Larry}]} />
+            <FsLightbox toggler={toggler} sources={[Larry]} />
           </div>
           <div>
             <div>{recordDescription}</div>
