@@ -11,7 +11,7 @@ async function getObject (requestURI) {
       headers: {
         Authorization: `Bearer ${token}`, // authorized route with jwt token
       },
-      url: `http://localhost:5100/add-artefact/${requestURI}`,
+      url: `https://sterlingfamilyartefacts.herokuapp.com/add-artefact/${requestURI}`,
     };
 
     await axios(configuration).then((res) => {

@@ -68,7 +68,7 @@ const EditPage = () => {
       // set configurations
       const configuration = {
         method: "patch",
-        url: `http://localhost:5100/${_id}`,
+        url: `https://sterlingfamilyartefacts.herokuapp.com/${_id}`,
         data: {
           record,
         },
@@ -97,7 +97,7 @@ const EditPage = () => {
   // Hook to get the data
   const configuration = {
     method: "get",
-    url: `http://localhost:5100/${_id}`,
+    url: `https://sterlingfamilyartefacts.herokuapp.com/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
