@@ -1,5 +1,5 @@
 import "./MobileNav.css";
-import { Icon } from '@iconify/react';
+//import { Icon } from '@iconify/react';
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 
@@ -21,11 +21,7 @@ const MobileNav = ({ mobileNavOpen, closeMobileNav}) => {
     return (
         <div className={mobileNavOpen ? "mobilenav-responsive" : ""} id="mobilenav">
             <div className="mobilenav-exit">
-                <Icon 
-                    icon="akar-icons:cross"
-                    id="exitNavIcon" 
-                    onClick={() => closeMobileNav()}
-                />
+                
             </div>
 
             <div className="mobilenav-content">
@@ -36,7 +32,7 @@ const MobileNav = ({ mobileNavOpen, closeMobileNav}) => {
                     <a>Add Artefact</a>
                 </Link>
                 <div className="mobilenav-link">
-                    <i><Icon icon="icon-park-outline:logout" /></i>
+                
                     <a onClick={() => logout()}>Sign Out</a>
                 </div>
             </div>
@@ -44,5 +40,16 @@ const MobileNav = ({ mobileNavOpen, closeMobileNav}) => {
         </div>
     );
 };
+
+/*
+
+<Icon 
+                    icon="akar-icons:cross"
+                    id="exitNavIcon" 
+                    onClick={() => closeMobileNav()}
+                />
+
+                <i><Icon icon="icon-park-outline:logout" /></i>
+*/
 
 export default MobileNav;

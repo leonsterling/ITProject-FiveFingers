@@ -4,7 +4,7 @@ import Lightbox from "react-awesome-lightbox";
 // Required stylesheet
 import "react-awesome-lightbox/build/style.css";
 import "./PartialView.scss";
-import { Icon } from '@iconify/react';
+//import { Icon } from '@iconify/react';
 
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -35,7 +35,6 @@ const PartialView = ({ title, image, desc, date, _id }) => {
                 <div className="info-more">
                     <Link to={`/${_id}`} className="link-line">
                         <p>Click to Display Full View
-                        <Icon className="redirect-icon" icon="bi:box-arrow-in-down-right" flip="vertical"/>
                         </p>
                     </Link>
                 </div>
@@ -47,6 +46,8 @@ const PartialView = ({ title, image, desc, date, _id }) => {
 export default PartialView;
 
 /*
+                        <Icon className="redirect-icon" icon="bi:box-arrow-in-down-right" flip="vertical"/>
+
     <div className="partial-view">
         <p>testing for content</p>
         <div className="image-side">
