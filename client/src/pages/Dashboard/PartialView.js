@@ -4,7 +4,6 @@ import Lightbox from "react-awesome-lightbox";
 // Required stylesheet
 import "react-awesome-lightbox/build/style.css";
 import "./PartialView.scss";
-import Nayeon from "../assets/Nayeon.JPG";
 import { Icon } from '@iconify/react';
 
 import axios from "axios";
