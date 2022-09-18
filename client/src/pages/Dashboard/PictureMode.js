@@ -77,7 +77,9 @@ const PictureMode = () => {
             <div className="card">
               <img src={artefactImg.imgURL} />
               <div className="card-title">
-                <p>{artefactName}</p>
+                <Link to={`/${_id}`} >
+                  <p>{artefactName}</p>
+                </Link>
               </div>
             </div>
 

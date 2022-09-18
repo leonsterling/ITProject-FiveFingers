@@ -85,7 +85,7 @@ const artefact_details = async (req, res) => {
   console.log("ID IS:"+ (JSON.stringify(req.url)));
   //console.log("ID IS:"+ JSON.stringify(req.parse,null,4));
   try{
-    const record = await Artefact.findById(req.params.id)
+    const record = await Artefact.findById((req.url).substring(1));
     res.status(200).json(record);
   }catch (error){
     res.status(404).json({ message: error.message });

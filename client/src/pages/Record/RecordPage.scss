@@ -19,6 +19,8 @@
 
     & * {
         position: relative;
+
+        // Required for categories to work
         z-index: 1;
     }
 

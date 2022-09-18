@@ -13,9 +13,8 @@ import { Link } from "react-router-dom";
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
-  
-const PartialView = ({title, image, desc, date, _id}) => {
 
+const PartialView = ({ title, image, desc, date, _id }) => {
   return (
         <figure className="partial-view">
             <div className="image-side">
@@ -91,4 +90,3 @@ const itemsInput = [
   ];
 
 */
-
