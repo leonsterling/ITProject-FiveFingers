@@ -8,7 +8,7 @@ import FsLightbox from "fslightbox-react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import "./FullView.css";
-import {Larry} from "./larry.jpg";
+import Larry from "./larry.jpg";
 
 // Import Authentication and Cookies
 const cookies = new Cookies();
@@ -92,7 +92,7 @@ function FullView() {
             />
             <p className="artefact-name">{recordName}</p>
             <p className="artefact-tags">TestTag</p>
-            <FsLightbox toggler={toggler} sources={[{Larry}]} />
+            <FsLightbox toggler={toggler} sources={[Larry]} />
           </div>
           <div>
             <div>{recordDescription}</div>
