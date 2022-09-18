@@ -10,17 +10,17 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
+const PictureMode = ( { userData, setUserData, response } ) => {
+  let [rendered, setRendered] = useState(false);
 
   useEffect(() => {
-    handleDashboard()
-      .then((res) => {
-        setUserData(res.data.artefactRecords);
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
   }, []);
+
+  console.log({response});
+  if (!rendered && response) {
+      setUserData(response.data.artefactRecords);
+      setRendered(true);
+  }
 
   const [open, setOpen] = useState(false);
 

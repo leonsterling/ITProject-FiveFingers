@@ -19,21 +19,21 @@ export default function Categories ( { data, index, handleChange } ) {
   // Assign a button to every category we get
   let options;
   if (categoryList !== null) {
-      options = categoryList.map( (data, index) => {
+      options = categoryList.map( (currData, index) => {
           return (
             <input key={index}
               className="category__option"
               type="button"
-              value={data}
+              value={currData}
               onClick={() => {
                   setVisibility(false);
-                  setLabel(data);
+                  setLabel(currData);
 
                   // Mimicks the event-handler
                   let e = {
                       target : {
-                          name : "category",
-                          value : data,
+                          name : `${data.name}`,
+                          value : currData,
                       }
                   }
                   handleChange(e);
