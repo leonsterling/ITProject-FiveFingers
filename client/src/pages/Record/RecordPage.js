@@ -48,12 +48,12 @@ const RecordForm = () => {
 
   // The JSON object that is being constantly updated and sent
   const initialState = {
-    artefactName: "",
+    artefactName: " ",
     artefactDate: "",
-    location: "",
-    description: "",
-    category: "",
-    associated: "",
+    location: " ",
+    description: " ",
+    category: " ",
+    associated: " ",
     artefactImg: "",
   };
 
