@@ -104,12 +104,11 @@
 
                 .data-entry-fields--image-upload--upload-button {
                     width: 29vw;
-                    height: 40vh;
+                    height: 79.5%;
                     // background-color: white;
                     border: 1px dashed #000;
                     border-radius: 10px;
                     padding: 40px;
-                    margin-bottom: 40px;
                     box-shadow: 1px 1px 3px hsla(198deg, 100%, 10%, 0.05), 0px 8px 10px hsla(198deg, 100%, 45%, 0.05);
                     color: hsl(0, 0%, 57%);
                     display: flex;
@@ -168,10 +167,11 @@
         }
 
         .response-button {
-            width: 100%;
+            width: 80%;
             display: flex;
             justify-content: space-between;
             padding: 0 2rem;
+            margin: auto;
 
             button {
                 font-family: Monsterrat-bold;
@@ -230,6 +230,8 @@
         font-size: 14px;
         font-family: Monsterrat-bold;
         color: var(--color--primary__900);
+        margin: auto;
+        margin-bottom: 16px;
     }
 
     .box {
@@ -245,10 +247,11 @@
 @media only screen and (max-width: 978px) {
     .record-page {
         form {
+            $outer-width: 80vw;
             .data-entry-fields {
                 flex-direction: column;
-                width: 80vw;
-                align-items: center;
+                width: $outer-width;
+                align-items: flex-start;
                 margin-bottom: 0;
 
                 $inner-width: 60vw;
@@ -260,13 +263,13 @@
                         flex-direction: column;
 
                         input, textarea, .input-like {
-                            width: $inner-width;
+                            width: calc($outer-width - 10vw);
                         }
                     }
                 }
 
                 .data-entry-fields--image-upload {
-                    width: $inner-width;
+                    width: $outer-width;
                     padding-left: 0;
 
                     .data-entry-fields--image-upload--description {
@@ -276,6 +279,8 @@
 
                     .data-entry-fields--image-upload--upload-button {
                         width: 51.6vw;
+                        margin: auto;
+                        margin-right: 11.5vw;
                     }
 
                     .data-entry-fields--image-upload--upload-complete {
@@ -288,13 +293,13 @@
             }
 
             .response-button {
-                width: 85vw;
+                width: 69vw;
+                margin: auto;
             }
 
             .feedback {
                 margin: 20px auto;
                 position: relative;
-                left: 3vw;
             }
         }
     }
