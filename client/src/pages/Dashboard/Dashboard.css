@@ -57,7 +57,35 @@ body {
     width: 100%;
     position: relative;
     background: none;
-    margin-top: 75px;
+    justify-content: space-between;
+}
+
+.dashboard-header .dashboard-header__right-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dashboard-header__right-area .search-icon {
+  scale: 1.5;
+  border: 1px solid lightgray;
+  padding: 4px;
+  border-radius: 4px;
+  margin-right: 18px;
+  transition: 400ms;
+  width: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-header__right-area .search-icon:hover, .extended {
+    background-color: white;
+    width: 41vw;
+    margin-right: 11.5vw;
+    justify-content: flex-start;
+    padding-left: 12px;
+    box-shadow: 0px 2px 3px hsla(198deg, 100%, 9%, 10%);
 }
 
 .viewToggle {

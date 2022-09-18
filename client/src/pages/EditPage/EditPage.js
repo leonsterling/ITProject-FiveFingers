@@ -2,16 +2,12 @@
 import React, { useState, useEffect, Component } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TextUpdateField from "./TextUpdateField.js";
-import FileBase from "react-file-base64";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
 // Import Nav Bar
 import TopNav from '../Dashboard/TopNav';
 import MobileNav from '../Dashboard/MobileNav';
-
-// CSS imports
-
 
 // obtain token from cookie
 const cookies = new Cookies();

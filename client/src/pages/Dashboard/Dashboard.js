@@ -1,50 +1,129 @@
 import React, { useState} from 'react';
-import TopNav from './TopNav';
-import MobileNav from './MobileNav';
 import ViewToggle from './viewToggle';
 import PictureMode from './PictureMode';
 import ListView from '../ListView/ListView';
-import Cookies from "universal-cookie";
+import Navbar from './Navbar';
+import { Icon } from '@iconify/react';
+import axios from 'axios';
 
 // CSS imports
 import "./Dashboard.css";
 
+import Cookies from "universal-cookie";
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-
 const Dashboard = () => { 
-  
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
- 
-  const openMobileNav = () => {
-    setMobileNavOpen(true);
-  }
-
-  const closeMobileNav = () => {
-    setMobileNavOpen(false);
-  }
-
   const [isToggled, setIsToggled] = useState(false);
+  let [ userData, setUserData ] = useState(null)
+  let [searchClicked, setSearchClick] = useState(false);
+  let [searchText, setSearchText] = useState('');
+  let [getArtefactCallback, setGetArtefactCallback] = useState(handleDashboard);
+
+  let searchContent;
+  if (searchClicked) {
+      searchContent = (
+          <>
+          <Icon icon='akar-icons:search'/>
+          <form
+            onSubmit={(e) =>
+                changeCallback(e, setGetArtefactCallback, handleSearch)
+            }
+          >
+            <input type='text'
+              className=''
+              onClick={() => console.log("Hello world")}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </form>
+             
+          </>
+      )
+  }
+  else {
+      searchContent = <Icon icon='akar-icons:search'/>
+  }
+
+  async function handleSearch () {
+    const configuration = {
+      method: "get",
+      url: `http://localhost:5100/search-artefacts/${searchText}`,
+      headers: {
+        Authorization: `Bearer ${token}`, // authorized route with jwt token
+      },
+    };
+
+    await axios(configuration)
+      .then((res) => {
+        setUserData(res.data.artefactRecords);
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+    // if (!response) {
+        // // Do nothing
+    // } else {
+      // return response;
+    // };
+  }
+
 
   return (
     <>
-    <div className="container">
-      <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
-      <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
-    </div>
+    <Navbar />
     <div className="dashboard-header">
         <h2>My Artefacts</h2>
-        <ViewToggle className="viewToggle" isToggled={isToggled} onToggle={()=>setIsToggled(!isToggled)}/>
+
+        <div className='dashboard-header__right-area'>
+          <div className='search-icon extended'
+               onClick={() => setSearchClick(true)}
+          >
+            {searchContent}
+          </div>
+
+          <ViewToggle
+             className="viewToggle"
+             isToggled={isToggled}
+             onToggle={()=>setIsToggled(!isToggled)}
+          />
+        </div>
     </div>
-    {isToggled? <ListView/> : <PictureMode/>}
+    { isToggled ?
+        <ListView/> :
+        <PictureMode 
+          userData={userData}
+          setUserData={setUserData}
+          handleDashboard={handleDashboard}
+        />
+    }
     </>
   );
 
 
 };
 
+function changeCallback (e, setter, callback) {
+  e.preventDefault();
+  setter(callback);
+}
 
+async function handleDashboard() {
+  const configuration = {
+    method: "get",
+    url: "http://localhost:5100/data",
+    headers: {
+      Authorization: `Bearer ${token}`, // authorized route with jwt token
+    },
+  };
+
+  // make the API call
+  const response = await axios(configuration);
+  console.log(response);
+  if (!response) {
+  } else {
+    return response;
+  }
+}
 
 export default Dashboard;

@@ -23,18 +23,18 @@ const searchBar = async (req,res) => {
         }
       }
     }, 
-  ]).then((searched) => {
+  ]).then((artefactRecords) => {
     
-    if (searched.length == 0) {
+    if (artefactRecords.length == 0) {
       res.status(201).send({
         message: "Search query success with 0 results",
-        searched,
+        artefactRecords,
       });
     }
     else {
       res.status(201).send({
-        message: "Search query success with "+ searched.length +" result",
-        searched,
+        message: "Search query success with "+ artefactRecords.length +" result",
+        artefactRecords,
       });
     }
   })

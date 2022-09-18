@@ -1,6 +1,11 @@
 import axios from 'axios';
+import Cookies from "universal-cookie";
 
-async function getObject (requestURI) {
+// obtain token from cookie
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
+
+async function getObject (requestURI, setCategoryList) {
     const configuration = {
       method: "get",
       headers: {
@@ -10,7 +15,14 @@ async function getObject (requestURI) {
     };
 
     await axios(configuration).then((res) => {
-        return res.data;
+        let data = res.data.categories;
+        console.log(data);
+        setCategoryList([
+            "Books",
+            "Sculptures",
+            "Photographs",
+            "Furniture",
+        ]);
     }).catch((err) => {
       console.log("fail login");
       console.log(err);
