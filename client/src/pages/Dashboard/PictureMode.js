@@ -77,11 +77,15 @@ const PictureMode = () => {
           <div className="card">
             <img src={artefactImg.imgURL} />
             <div className="card-title">
-              <p>{artefactName}</p>
+              <Link to={`/${_id}`} >
+                <p>{artefactName}</p>
+              </Link>
+              
             </div>
           </div>
+
           <div style={{ display: open[_id] ? 'block' : 'none' }}>
-            <PartialView title={artefactName} image={artefactImg} desc={description} date={artefactDate} />
+            <PartialView title={artefactName} image={artefactImg} desc={description} date={artefactDate} id ='${_id}'/>
           </div>
         </div>
       )

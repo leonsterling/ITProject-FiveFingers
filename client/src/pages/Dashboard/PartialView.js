@@ -12,20 +12,23 @@ import { Link } from "react-router-dom";
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
-  
-const PartialView = ({title, image, desc, date}) => {
 
+const PartialView = ({ title, image, desc, date, _id }) => {
   return (
-        <div className="partial-view">
-            <div className="image-side">
-                <img className="image-partial-view" src={image.imgURL}/>
-            </div>
-            <div className="info-side">
-                <p>{title}</p>
-                <p>{desc}</p>
-                <p>{date}</p>
-            </div>
-        </div>
+    <div className="partial-view">
+      <div className="image-side">
+        <img className="image-partial-view" src={image.imgURL} />
+      </div>
+
+      <div className="info-side">
+        <Link to={`/${_id}`}>
+          <p>{title}</p>
+        </Link>
+
+        <p>{desc}</p>
+        <p>{date}</p>
+      </div>
+    </div>
   );
 };
 
@@ -75,4 +78,3 @@ const itemsInput = [
   ];
 
 */
-
