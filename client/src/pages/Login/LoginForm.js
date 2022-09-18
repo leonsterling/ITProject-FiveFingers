@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './login.css';
 import axios from 'axios';
 import Cookies from "universal-cookie";
-import { Icon } from '@iconify/react';
+//import { Icon } from '@iconify/react';
 
 // Cookies for checking if the user is currently logged in
 const cookies = new Cookies();
@@ -83,7 +83,7 @@ export default function LoginForm () {
                     <label> Username </label>
                 </li>
                 <li className={inputClass}>
-                    <span><Icon icon='codicon:mail'/></span>
+                    <span> </span>
                     <input
                         type='text'
                         id='userName'
@@ -115,4 +115,5 @@ export default function LoginForm () {
           </form>
     )
 }
+//<Icon icon='codicon:mail'/>
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Icon } from '@iconify/react';
+//import { Icon } from '@iconify/react';
 import { getObject } from './CategoryHandler';
 
 // Sass import
@@ -87,11 +87,11 @@ function CategoryInput ( { isVisible, setVisibility, handleChange, label } ) {
         onClick={() => setVisibility(!isVisible)}
       >
         <span className={labelClass}> {label} </span>
-        <Icon icon={icon}/>
+
       </div>
     );
 }
-
+//        <Icon icon={icon}/>
 function AddCategory () {
     return (
       <input
