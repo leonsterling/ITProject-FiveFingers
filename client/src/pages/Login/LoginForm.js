@@ -33,7 +33,7 @@ export default function LoginForm () {
       setLoginState({validLogin: false});
       const configuration = {
         method: "post",
-        url: "http://44.204.14.108:5100/login",
+        url: "http://172.31.95.58:5100/login",
         data: {
           username,
           password,
