@@ -13,7 +13,7 @@
             "label" : "Category",
             "placeholder" : "Part of...",
             "type" : "text",
-            "component" : "input",
+            "component" : "component",
             "required": true
         },
         {
@@ -37,7 +37,7 @@
             "label" : "People associated with",
             "placeholder" : "The people you share this memory with",
             "type" : "text",
-            "component" : "input",
+            "component" : "component",
             "required": false
         },
         {

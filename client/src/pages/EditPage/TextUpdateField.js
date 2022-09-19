@@ -7,9 +7,9 @@ export default function TextUpdateField ( { handleChange, initialData }) {
     console.log({initialData});
     const fieldComponents = fieldData.componentArray.map( (data, index) => {
       
-      return (data.component === 'input') ?
-        (
-          <li key={index}>
+      if (data.name === 'input'){
+        return (
+        <li key={index}>
             <label>{data.label}</label>
             <input
               name={data.name}
@@ -20,9 +20,27 @@ export default function TextUpdateField ( { handleChange, initialData }) {
             />
           </li>
         )
-        : // else
-        (
-          <li key={index}>
+      }
+
+      else if (data.name === 'component') {
+        return (
+        <li key={index}>
+            <label>{data.label}</label>
+            <input
+              name={data.name}
+              value ={initialData[data.name]}
+              placeholder={data.placeholder}
+              type={data.type}
+              onChange={handleChange}
+            />
+          </li>
+        )
+      }
+
+      else {
+
+        return (
+        <li key={index}>
             <label>{data.label}</label>
             <textarea
               className="descriptionArea"
@@ -38,9 +56,12 @@ export default function TextUpdateField ( { handleChange, initialData }) {
               placeholder = {data.placeholder}
             />
           </li>
-        );
-    });
+        )
+      }
+    })
 
+
+    
     return (
         <ul className='data-entry-fields--text-insert'>
           {fieldComponents}
