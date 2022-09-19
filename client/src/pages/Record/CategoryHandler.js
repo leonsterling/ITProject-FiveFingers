@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
+
 async function getObject (requestURI, setCategoryList) {
     const configuration = {
       method: "get",
@@ -33,3 +34,4 @@ async function getObject (requestURI, setCategoryList) {
 
 export { getObject };
 
+ 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { getObject } from './CategoryHandler';
 
 // Sass import
 import "./categories.scss";
