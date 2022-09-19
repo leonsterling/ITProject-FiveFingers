@@ -10,6 +10,7 @@ test("viewToggle slider renders correctly", () => {
     expect(viewToggle).toMatchSnapshot();
 });
 
+// Unit Testing
 test("viewToggle slider contains initial input value of false", () => {
     const { getByTestId } = render(<ViewToggle />);
     const checkEl = getByTestId("check-viewToggle");
