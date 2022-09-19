@@ -5,7 +5,7 @@ import Lightbox from "react-awesome-lightbox";
 import "react-awesome-lightbox/build/style.css";
 import "./PartialView.scss";
 //import { Icon } from '@iconify/react';
-
+import Skewer from "../../components/Skewer";
 import axios from "axios";
 import Cookies from "universal-cookie";
 

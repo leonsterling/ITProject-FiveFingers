@@ -10,7 +10,7 @@ import PartialView from "./PartialView";
 
 import axios from "axios";
 import Cookies from "universal-cookie";
-
+import Skewer from "../../components/Skewer";
 import { Link } from "react-router-dom";
 // obtain token from cookie
 const cookies = new Cookies();
