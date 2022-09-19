@@ -50,45 +50,41 @@ const EditPage = () => {
     memories: "",
   };
 
+  async function updateArtefact(e) {
+    // set configurations
+    const configuration = {
+      method: "patch",
+      url: `http://localhost:5100/edit-artefact/${_id}`,
+      data: {
+        record,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`, // authorized route with jwt token
+      },
+    };
+
+    // make the API call
+    axios(configuration)
+      .then((result) => {
+        window.location.href = "/dashboard";
+      })
+      .catch((error) => {
+        error = new Error();
+        console.log(error);
+      });
+  }
   // NOT DONE YET
   function handleSubmit(e) {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
-
+    console.log("here")
     if (!isValidInput(record)) {
       setFeedback(feedbackMessages.invalid);
       return;
     }
-
-    setFeedback(feedbackMessages.valid);
-    async function updateArtefact(e) {
-
-      console.log("HELLO")
-      // set configurations
-      const configuration = {
-        method: "patch",
-        url: `http://localhost:5100/edit-artefact/${_id}`,
-        data: {
-          record,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`, // authorized route with jwt token
-        },
-      };
-      console.log(`/${_id}`)
-
-      // make the API call
-      axios(configuration)
-        .then((result) => {
-          window.location.href = "/dashboard";
-        })
-        .catch((error) => {
-          error = new Error();
-          console.log(error);
-        });
-    }
-
     updateArtefact();
+    setFeedback(feedbackMessages.valid);
+   
   }
 
   // React hook to change the state of record
@@ -155,13 +151,16 @@ const EditPage = () => {
 
           {/* This is the cancel button it just redirects to dashboard */}
           {/*<p>{feedback}</p>*/}
-          <div className="response-button" id="button">
+
+          <div className="response-button" id="button" >
+            {/*
             <Link to={`/dashboard`}>
               <button className="response-button__cancel" type="submit">
                 Cancel
               </button>
             </Link>
-            <button className="response-button__submit" type="submit">
+          */}
+            <button className="response-button__submit" type="submit" >
               Save
             </button>
           </div>
