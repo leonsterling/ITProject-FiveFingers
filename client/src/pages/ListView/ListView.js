@@ -9,21 +9,33 @@ import "./ListView.css";
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-const ListView = ({ userData, setUserData, handleDashboard }) => {
+const ListView = () => {
+  const [rowList, setList] = useState([]);
 
-  useEffect(() => {
-    handleDashboard()
-      .then((res) => {
-        setUserData(res.data.artefactRecords);
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
+  const configuration = {
+    method: "get",
+    url: `http://localhost:5100/data`,
+    headers: {
+      Authorization: `Bearer ${token}`, // authorized route with jwt token
+    },
+  };
+
+  useEffect(function () {
+    async function getCruds() {
+      try {
+        const response = await axios(configuration);
+        //console.log(JSON.stringify(response.data));
+        setList(response.data.artefactRecords);
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+    getCruds();
   }, []);
 
   let row = null;
-  if (userData) {
-    row = userData.map(
+  if (rowList) {
+    row = rowList.map(
       ({ _id, artefactName, description, associated, category }) => (
         <tr className='table-body' key={_id}>
           <td className='table-cell' id="name-cell">{artefactName}</td>
