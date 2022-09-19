@@ -68,6 +68,7 @@ function FullView() {
     recordLocation,
     recordPerson,
     recordCategory = null;
+    
 
   if (recordData) {
     recordName = recordData.artefactName;
@@ -77,7 +78,7 @@ function FullView() {
     recordLocation = recordData.location;
     recordPerson = recordData.associated.person;
     recordCategory = recordData.category.category_name;
-  }
+    recordImg = recordImg.substring(0,4)+'s'+recordImg.substring(4,recordImg.length);  }
 
   return (
     <div>
