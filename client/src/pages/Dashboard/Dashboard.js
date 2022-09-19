@@ -77,7 +77,10 @@ const Dashboard = () => {
               'dashboard-header__right-area post-search':
               'dashboard-header__right-area pre-search'
         }>
-          <div className='search-icon extended'
+          <div className={isSearched ? 
+              'search-icon post-search':
+              'search-icon pre-search'
+        }
                onClick={() => setSearchClick(true)}
           >
             {searchContent}

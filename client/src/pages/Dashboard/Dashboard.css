@@ -79,7 +79,7 @@ body {
     display: none;
 }
 
-.dashboard-header .dashboard-header__right-area:hover input,
+.dashboard-header .search-icon:hover input,
 .dashboard-header .post-search input,
 .dashboard-header .post-search .search-icon
 {
@@ -102,7 +102,7 @@ body {
 }
 
 .dashboard-header .post-search .search-icon,
-.dashboard-header__right-area .search-icon:hover, .extended {
+.dashboard-header__right-area .search-icon:hover {
     background-color: white;
     width: 41vw;
     margin-right: 11.75vw;
