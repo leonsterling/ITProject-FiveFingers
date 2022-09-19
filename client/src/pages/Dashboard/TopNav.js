@@ -1,43 +1,59 @@
 import React, { useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
-import { Icon } from '@iconify/react';
-import SearchBar from './SearchBar';
+//import { Icon } from '@iconify/react';
+import Cookies from "universal-cookie";
 
 // CSS imports
 import "./TopNav.css";
-import logo from "../assets/LOGO-BLACK.png";
-// <Link to="/add-artefact" className="add-artefact"></Link>
-// <img width="30px" src={logo} alt="logo"/>
-/* List Mode button should be in the dashboard area
-<div className="list-icon">
-<Icon className="list-icon" icon="charm:layout-list" />
-</div>
-*/
+import logo from "../assets/LS-Logo.png";
 
-const TopNav = ({sideNavOpen, openSideNav}) => {
+// obtain token from cookie
+const cookies = new Cookies();
+
+//<Icon className='logout-icon-button' icon="icon-park-outline:logout" />
+const TopNav = ({mobileNavOpen, openMobileNav}) => {
+    
+    // logout function
+    const logout = () => {
+        // cookie removed
+        cookies.remove("TOKEN", { path: "/" });
+        // user redirected to login page
+        window.location.href = "/";
+    };
+
     return (
         <nav className="topnav">
-            <div className="nav-icon" onClick={() => openSideNav()}>
-                <Icon className="nav-icon-button" icon="charm:menu-hamburger"/>
-            </div>
             <div className="topnav-left">
+                <img src={logo} alt="Sterling logo"/>
+                Sterling Family Artefacts
             </div>
             <div className="topnav-right">
 
-                <div className="search-bar">
-                    <SearchBar />
-                </div>
-
-                <Link className="add-artefact-button" to={`/add-artefact`}>
-                    <button className='add-artefact'>
-                        Add Artefact
-                        <Icon className="add-icon" icon="akar-icons:plus" />
+                <Link className="topnav-button" to={`/dashboard`}>
+                    <button className='dashboard'>
+                        Dashboard
                     </button>
                 </Link>
+
+                <Link className="topnav-button" to={`/add-artefact`}>
+                    <button className='add-artefact'>
+                        Add Artefact
+                    </button>
+                </Link>
+                <div className="topnav-button" onClick={() => logout()}>
+                    <button className='logout'>
+
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+
+            <div className="nav-icon" onClick={() => openMobileNav()}>
 
             </div>
         </nav>
     );
 };
+//                <Icon className="nav-icon-button" icon="charm:menu-hamburger"/>
 
 export default TopNav;

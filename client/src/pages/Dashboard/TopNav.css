@@ -1,60 +1,74 @@
-.topnav {
-    background: #ffffff;
-    grid-area: nav;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 5px 0 30px;
-    border-bottom: 2px solid #8db3c3;
-}
+/* hamburger menu */
 
 .nav-icon {
     display: none;
 }
 
 .nav-icon-button {
-    font-size: 26px;
+    font-size: 30px;
 }
 
-.topnav-right {
+/* navbar styling */
+
+.topnav {
+    background: #96b3c2;
+    grid-area: nav;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-weight: 600;
+    z-index: 0;
+}
+
+.topnav-left {
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-align-last:justify;
 }
 
-.list-icon {
-    font-size: 24px;
-    line-height: 1em;
-    display:inline-block;
+.topnav-left > img {
+    height: 40px;
+    margin-right: 20px;
 }
 
-.search-bar {
-    display:inline-block;
+.topnav-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align-last: justify;
 }
 
-.add-artefact-button {
-    border: 2px solid rgb(167, 167, 167);
-    border-radius: 20px;
-    padding: 5px;
-    margin: 5px;
-    display:inline-block;
-}
-
-.add-artefact {
+.topnav-button > button {
+    margin-left: 40px;
     border: none;
     background: none;
-    justify-content: center;
+    color: white;
+    font-family: "Montserrat";
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.add-icon {
-    font-size: 15px;
+.topnav-button > button:hover {
+    color: #d9d9d9;
 }
+
+.logout-icon-button {
+    margin-right: 5px;
+}
+
 
 @media only screen and (max-width: 978px) {
     .nav-icon {
         display:inline;
+    }
+    
+    .topnav-right {
+        display: none;
     }
 }
 

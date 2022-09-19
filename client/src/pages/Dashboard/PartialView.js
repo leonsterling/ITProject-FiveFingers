@@ -4,7 +4,7 @@ import Lightbox from "react-awesome-lightbox";
 // Required stylesheet
 import "react-awesome-lightbox/build/style.css";
 import "./PartialView.scss";
-import Nayeon from "../assets/Nayeon.JPG";
+//import { Icon } from '@iconify/react';
 
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -13,26 +13,41 @@ import { Link } from "react-router-dom";
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
-  
-const PartialView = ({title, image, desc, date}) => {
 
+const PartialView = ({ title, image, desc, date, _id }) => {
   return (
-        <div className="partial-view">
+        <figure className="partial-view">
             <div className="image-side">
                 <img className="image-partial-view" src={image.imgURL}/>
             </div>
             <div className="info-side">
-                <p>{title}</p>
-                <p>{desc}</p>
-                <p>{date}</p>
+                <div className="info-title">
+                    <p>{title}</p>
+                </div>
+                <div className="info-dec">
+                    <p>Description:</p>
+                    <br></br>
+                    <p>{desc}</p>
+                </div>
+                <div className="info-date">
+                    <p>{date}</p>
+                </div>
+                <div className="info-more">
+                    <Link to={`/${_id}`} className="link-line">
+                        <p>Click to Display Full View
+                        </p>
+                    </Link>
+                </div>
             </div>
-        </div>
+        </figure>
   );
 };
 
 export default PartialView;
 
 /*
+                        <Icon className="redirect-icon" icon="bi:box-arrow-in-down-right" flip="vertical"/>
+
     <div className="partial-view">
         <p>testing for content</p>
         <div className="image-side">
@@ -76,4 +91,3 @@ const itemsInput = [
   ];
 
 */
-

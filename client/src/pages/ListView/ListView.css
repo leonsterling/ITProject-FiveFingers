@@ -1,0 +1,86 @@
+main {
+    grid-area: main;
+    overflow-y: auto;
+}
+
+.list-view-container {
+    padding: 20px 7rem;
+    box-sizing: border-box;
+}
+
+.list-table {
+    border: 1px #DEDEDE solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px 0;
+    height: 65vh;
+    overflow-y: auto;
+}
+
+.artefact-list {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.name-table, .desc-table, .person-table, .category-table, .kebab-menu {
+    color: #787878;
+    font-size: small;
+    text-align: start;
+    border-bottom: #DEDEDE 1px solid;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 5px 10px;
+}
+
+.name-table {
+    width: 25%;
+}
+
+.desc-table {
+    width: 40%;
+}
+
+.person-table, .category-table {
+    width: 15%;
+}
+
+.kebab-menu {
+    width: 5%;
+}
+
+.table-cell {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+tr.table-body:hover {
+    background: #E4E4E4;
+    cursor: pointer;
+}
+
+td.table-cell {
+    font-weight: 600;
+    font-size: medium;
+    padding: 12px 10px;
+    border-bottom: #DEDEDE 1px solid;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .list-view-container {
+        padding: 20px 4rem;
+    }
+
+    .desc-table, .person-table, .category-table {
+        display: none;
+    }
+
+    #desc-cell, #person-cell, #category-cell {
+        display: none;
+    }
+
+    .name-table {
+        width: 95%;
+    }
+}

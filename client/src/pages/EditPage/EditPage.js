@@ -1,13 +1,17 @@
 // Import the necessary libraries
 import React, { useState, useEffect, Component } from "react";
-import SideNav from "../../components/SideNav";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TextUpdateField from "./TextUpdateField.js";
 import FileBase from "react-file-base64";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
+// Import Nav Bar
+import TopNav from '../Dashboard/TopNav';
+import MobileNav from '../Dashboard/MobileNav';
+
 // CSS imports
+
 
 // obtain token from cookie
 const cookies = new Cookies();
@@ -20,6 +24,16 @@ const feedbackMessages = {
 };
 
 const EditPage = () => {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+ 
+  const openMobileNav = () => {
+    setMobileNavOpen(true);
+  };
+
+  const closeMobileNav = () => {
+    setMobileNavOpen(false);
+  };
+  
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
 
   // id constant to send request based on the specific artefact id
@@ -54,7 +68,7 @@ const EditPage = () => {
       // set configurations
       const configuration = {
         method: "patch",
-        url: `http://localhost:5100/${_id}`,
+        url: `https://sterlingfamilyartefacts.herokuapp.com/${_id}`,
         data: {
           record,
         },
@@ -83,7 +97,7 @@ const EditPage = () => {
   // Hook to get the data
   const configuration = {
     method: "get",
-    url: `http://localhost:5100/${_id}`,
+    url: `https://sterlingfamilyartefacts.herokuapp.com/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
@@ -112,27 +126,24 @@ const EditPage = () => {
 
   return (
     <>
+      <div className="container">
+        <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
+        <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
+      </div>
+
       <div className="record-page">
+
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
-          <h1>Edit {record.artefactName}</h1>
+          <h2>Edit Artefact</h2>
           <div className="data-entry-fields">
             {/* TEXT DATA*/}
             <TextUpdateField handleChange={handleChange} initialData={record} />
 
-            {/* Upload Images */}
-
+            {/* Image Display */}
             <div className="data-entry-fields--image-upload">
-              <label>Upload Image</label>
-              <FileBase
-                type="file"
-                name="artefactImg"
-                multiple={false}
-                onDone={({ base64 }) =>
-                  setRecord({ ...record, artefactImg: base64 })
-                }
-              />
-              <div>
+              <label className='data-entry-fields--image-upload--description'>Artefact image</label>
+              <div className='data-entry-fields--image-upload--upload-complete'>
                 <img
                   src={record.artefactImg.imgURL}
                   alt="No Images have been Uploaded Yet"
@@ -150,7 +161,7 @@ const EditPage = () => {
               </button>
             </Link>
             <button className="response-button__submit" type="submit">
-              Submit
+              Save
             </button>
           </div>
         </form>

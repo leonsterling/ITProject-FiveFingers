@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './login.css';
 import axios from 'axios';
 import Cookies from "universal-cookie";
+//import { Icon } from '@iconify/react';
 
 // Cookies for checking if the user is currently logged in
 const cookies = new Cookies();
@@ -25,6 +26,7 @@ export default function LoginForm () {
         isValid: false,
         currState: states.initial,
     });
+
     const [username, setUserName] = useState("");
     const [password ,setPassword] = useState("");
     
@@ -33,7 +35,7 @@ export default function LoginForm () {
       setLoginState({validLogin: false});
       const configuration = {
         method: "post",
-        url: "http://localhost:5100/login",
+        url: "https://sterlingfamilyartefacts.herokuapp.com/login",
         data: {
           username,
           password,
@@ -81,7 +83,7 @@ export default function LoginForm () {
                     <label> Username </label>
                 </li>
                 <li className={inputClass}>
-                    <span className="material-icons">mail</span>
+                    <span> </span>
                     <input
                         type='text'
                         id='userName'
@@ -92,12 +94,16 @@ export default function LoginForm () {
                     <label> Password </label>
                 </li>
                 <li className={inputClass}>
-                    <span className="material-icons">lock</span>
+                    <span>{/*<Icon icon='codicon:lock-small'/>*/}</span>
                     <input
                         type='password'
                         id='password'
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <span>{/*<Icon className="password-toggle" icon="bi:eye-slash-fill" /> */}</span>
+                </li>
+                <li className='forget-password-link'>
+                    <h5>Forgot password?</h5>
                 </li>
                 <li>
                     <p className='feedback'>{feedbackMessage}</p>
@@ -109,4 +115,5 @@ export default function LoginForm () {
           </form>
     )
 }
+//<Icon icon='codicon:mail'/>
 
