@@ -9,6 +9,10 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import "./FullView.css";
 
+// Import TopNav
+import TopNav from "../../components/TopNav";
+import MobileNav from "../../components/MobileNav";
+
 // Import Authentication and Cookies
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
@@ -79,8 +83,23 @@ function FullView() {
     recordCategory = recordData.category.category_name;
   }
 
+  // Function to render Mobile Nav  
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+ 
+  const openMobileNav = () => {
+    setMobileNavOpen(true);
+  }
+
+  const closeMobileNav = () => {
+    setMobileNavOpen(false);
+  }
+
   return (
         <div>
+          <div className="container">
+            <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
+            <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
+          </div>
           <div className="header-fv">Full View</div>
           <div className="img-container">
             <img

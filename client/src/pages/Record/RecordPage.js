@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 import FileBase from 'react-file-base64';
 import axios from "axios";
 import Cookies from "universal-cookie";
-import TopNav from "../Dashboard/TopNav.js";
-import MobileNav from "../Dashboard/MobileNav.js";
+import TopNav from "../../components/TopNav";
+import MobileNav from "../../components/MobileNav";
 
 // CSS imports
 import "./RecordPage.scss";

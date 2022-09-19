@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
-import TopNav from './TopNav';
-import MobileNav from './MobileNav';
+import TopNav from '../../components/TopNav';
+import MobileNav from '../../components/MobileNav';
 import ViewToggle from '../../components/viewToggle';
 import PictureMode from './PictureMode';
 import ListView from '../ListView/ListView';

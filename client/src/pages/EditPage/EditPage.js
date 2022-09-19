@@ -7,8 +7,8 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 // Import Nav Bar
-import TopNav from '../Dashboard/TopNav';
-import MobileNav from '../Dashboard/MobileNav';
+import TopNav from '../../components/TopNav';
+import MobileNav from '../../components/MobileNav';
 
 // CSS imports
 

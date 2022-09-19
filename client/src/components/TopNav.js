@@ -5,7 +5,7 @@ import Cookies from "universal-cookie";
 
 // CSS imports
 import "./TopNav.css";
-import logo from "../assets/LS-Logo.png";
+import logo from "../pages/assets/LS-Logo.png";
 
 // obtain token from cookie
 const cookies = new Cookies();
