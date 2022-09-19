@@ -5,7 +5,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import Lightbox from "react-awesome-lightbox";
 // Required stylesheet
 import "react-awesome-lightbox/build/style.css";
-import "./PictureMode.css";
+import "./PictureMode.scss";
 import PartialView from "./PartialView";
 
 import axios from "axios";
@@ -80,11 +80,7 @@ const PictureMode = () => {
           <div>
             <div className="card">
               <img src={artefactImg.imgURL} />
-              <div className="card-title">
-                <Link to={`/${_id}`} >
-                  <p>{artefactName}</p>
-                </Link>
-              </div>
+              <div className="card-title">{artefactName}</div>
             </div>
 
             <div style={{ display: open[_id] ? 'block' : 'none' }}>

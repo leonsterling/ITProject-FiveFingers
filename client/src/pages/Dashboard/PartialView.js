@@ -34,8 +34,7 @@ const PartialView = ({ title, image, desc, date, _id }) => {
                 </div>
                 <div className="info-more">
                     <Link to={`/${_id}`} className="link-line">
-                        <p>Click to Display Full View
-                        </p>
+                        <p>Click to Display Full View</p>
                     </Link>
                 </div>
             </div>

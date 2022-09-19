@@ -12,11 +12,13 @@
     margin-block-start: 1em;
     margin-block-end: 1em;
     left: 0;
+    
 
     .image-side {
         display: flex;
         padding: 20px;
         height: 300px;
+        contain: content;
     }
 
     .info-side {
@@ -28,22 +30,30 @@
         height: 300px;
         flex: 1;
         margin-left: 10px;
+        box-sizing: border-box;
 
 
         .info-title {
+            display: flex;
+            box-sizing: border-box;
         }
 
         .info-desc {
-            
+            display: flex;
+            box-sizing: border-box;
         }
 
         .info-date {
-            
+            display: flex;
+            box-sizing: border-box;
         }
 
         .info-more {
-            text-align: right;
-            margin-right: 100px;
+            display: flex;
+            width: 100%;
+            padding-right: 40px;
+            justify-content: right;
+            box-sizing: border-box;
 
             .redirect-icon {
                 margin-left: 5px;
@@ -54,6 +64,44 @@
         p {
             color: white;
         }
+    }
+
+
+}
+
+@media only screen and (max-width: 700px) {
+
+    .partial-view {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: fit-content;
+        width: 100%;
+        margin-top: -300px;
+
+        .image-side {
+            display: flex;
+            position: relative;
+        
+        }
+        .image-partial-view {
+            height: 100%;
+            width: fit-content;
+        }
+
+        .info-side {
+            display: flex;
+            position: relative;
+            margin-left: 0px;
+            margin-bottom: 10px;
+            
+            .info-title{
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+        }
+        
     }
 
 
