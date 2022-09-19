@@ -18,6 +18,7 @@ const SideNav = ({ sideNavOpen, closeSideNav}) => {
                 </i>
             </div>
 
+
             <div className="sidenav-menu">
                 <div className="sidenav-link active-menu-link">
                     <i><Icon icon="bxs:dashboard"/></i>
