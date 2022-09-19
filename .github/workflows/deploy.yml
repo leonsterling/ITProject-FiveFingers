@@ -1,0 +1,17 @@
+name: Deployment Flow
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    name: Deploy to Heroku
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "sterlingfamilyartefacts" 
+          heroku_email: "leoniangelaaa29@gmail.com"
