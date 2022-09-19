@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Partial View renders correctly 1`] = `
+<figure
+  className="partial-view"
+>
+  <div
+    className="image-side"
+  >
+    <img
+      className="image-partial-view"
+    />
+  </div>
+  <div
+    className="info-side"
+  >
+    <div
+      className="info-title"
+    >
+      <p>
+        StoryBook Test
+      </p>
+    </div>
+    <div
+      className="info-dec"
+    >
+      <p>
+        Description:
+      </p>
+      <br />
+      <p>
+        testing if storybook is working and if partial view is working
+      </p>
+    </div>
+    <div
+      className="info-date"
+    >
+      <p>
+        12/02/02
+      </p>
+    </div>
+    <div
+      className="info-more"
+    >
+      <a
+        className="link-line"
+        href="//6325c0d2c579241489ad0bd0"
+        onClick={[Function]}
+      >
+        <p>
+          Click to Display Full View
+          <span />
+        </p>
+      </a>
+    </div>
+  </div>
+</figure>
+`;

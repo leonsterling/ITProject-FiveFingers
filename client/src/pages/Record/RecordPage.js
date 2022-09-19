@@ -22,6 +22,9 @@ const feedbackMessages = {
 
 // Record form to add a new Artefact
 const RecordForm = () => {
+  const checkKeyDown = (e) => {
+    if (e.code === 'Enter') e.preventDefault();
+  };
   // Initialize the navigate function
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
 
@@ -103,7 +106,7 @@ const RecordForm = () => {
       <div className="record-page">
 
         {/* The form that the user to send to database */}
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} onKeyDown={(e) => checkKeyDown(e)}>
           <h1>Add Artefact</h1>
           <div className="data-entry-fields">
             <TextInsertField handleChange={handleChange}/>

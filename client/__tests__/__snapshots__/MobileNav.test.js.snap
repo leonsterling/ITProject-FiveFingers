@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileNav renders correctly 1`] = `
+<div
+  className="mobilenav"
+  data-testid="mobile-nav"
+>
+  <div
+    className="mobilenav-exit"
+    data-testid="mobile-exit"
+    onClick={[Function]}
+  >
+    <span />
+  </div>
+  <div
+    className="mobilenav-content"
+  >
+    <a
+      className="mobilenav-link"
+      href="/dashboard"
+      onClick={[Function]}
+    >
+      <a>
+        Dashboard
+      </a>
+    </a>
+    <a
+      className="mobilenav-link"
+      href="/add-artefact"
+      onClick={[Function]}
+    >
+      <a>
+        Add Artefact
+      </a>
+    </a>
+    <div
+      className="mobilenav-link"
+    >
+      <i>
+        <span />
+      </i>
+      <a
+        onClick={[Function]}
+      >
+        Sign Out
+      </a>
+    </div>
+  </div>
+</div>
+`;
