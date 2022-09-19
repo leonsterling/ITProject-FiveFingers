@@ -77,7 +77,7 @@ export default function LoginForm () {
     let feedbackMessage = feedbackMapper[loginState.currState];
          
     return (
-          <form action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
+          <form action='/login' method='post' onSubmit={(e) => handleLogin(e)} data-testid='submit-form'>
             <ul>
                 <li>
                     <label> Username </label>
@@ -87,6 +87,7 @@ export default function LoginForm () {
                     <input
                         type='text'
                         id='userName'
+                        data-testid='userField'
                         onChange={(e) => setUserName(e.target.value)}
                     />
                 </li>
@@ -98,6 +99,7 @@ export default function LoginForm () {
                     <input
                         type='password'
                         id='password'
+                        data-testid='passwordField'
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <span><Icon className="password-toggle" icon="bi:eye-slash-fill" /></span>
@@ -106,10 +108,10 @@ export default function LoginForm () {
                     <h5>Forgot password?</h5>
                 </li>
                 <li>
-                    <p className='feedback'>{feedbackMessage}</p>
+                    <p className='feedback' data-testid='feedback-test'>{feedbackMessage}</p>
                 </li>
                 <li>
-                    <button type='submit' >Sign In</button>
+                    <button type='submit' data-testid='submit-btn'>Sign In</button>
                 </li>
             </ul>
           </form>
