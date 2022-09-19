@@ -10,13 +10,12 @@ const userRouter = express.Router()
 const userController = require('../controllers/userController')
 
 // GET routes
-userRouter.get('/dashboard', jwtAuth, userController.getDashboard)
-userRouter.get("/data", jwtAuth, userController.allData);
+userRouter.get('/data', jwtAuth, userController.allData);
 userRouter.get('/get-artefact/:id', userController.artefact_details);
 userRouter.get('/search-artefacts/:query', jwtAuth, userController.searchBar)
 
-userRouter.get('/add-artefact/categories', jwtAuth, userController.getCategories)
-userRouter.get('/add-artefact/associated', jwtAuth, userController.getAssociated)
+userRouter.get('/get-categories', jwtAuth, userController.getCategories)
+userRouter.get('/get-associated', jwtAuth, userController.getAssociated)
 
 // POST routes for Login activities
 userRouter.post('/register', userController.registerUser)

@@ -5,6 +5,54 @@ const SALT_FACTOR = 10;
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
+// login function
+const loginUser = (req, res) => {
+  User.findOne({ username: req.body.username })
+    .then((user) => {
+      bcrypt
+        .compare(req.body.password, user.password)
+        .then((checkPass) => {
+          // invalid
+          if (!checkPass) {
+            return res.status(500).send({
+              message: "Login Unsuccessful",
+              isValid: false,
+              error,
+            });
+          }
+
+          //generate JWT token
+          const token = jwt.sign(
+            { userId: user._id, username: user.username },
+            "RANDOM-TOKEN",
+            { expiresIn: "24h" }
+          );
+          res.status(200).send({
+            message: "Login Successful",
+            username: user.username,
+            isValid: true,
+            token,
+          });
+        })
+        .catch((error) => {
+          res.status(500).send({
+            message: "Login Unsuccessful",
+            isValid: false,
+            error,
+          });
+        });
+    })
+
+    // user is not registered in database
+    .catch((error) => {
+      res.status(500).send({
+        message: "Login Unsuccessful",
+        isValid: false,
+        error,
+      });
+    });
+};
+
 // search function
 const searchBar = async (req, res) => {
   const query = req.params.query;
@@ -21,12 +69,12 @@ const searchBar = async (req, res) => {
   ])
     .then((artefactRecords) => {
       if (artefactRecords.length == 0) {
-        res.status(201).send({
+        res.status(200).send({
           message: "Search query success with 0 results",
           artefactRecords,
         });
       } else {
-        res.status(201).send({
+        res.status(200).send({
           message:
             "Search query success with " + artefactRecords.length + " result",
           artefactRecords,
@@ -41,17 +89,11 @@ const searchBar = async (req, res) => {
     });
 };
 
-// Display All CRUD Data
+// get artefacts function
 const allData = (req, res) => {
-  /*
-  console.log("artefact data");
-	Artefact.find(function (err, artefactRecords) {
-		res.status(200).send(artefactRecords);
-	});
-  */
   Artefact.find()
     .then((artefactRecords) => {
-      res.status(201).send({
+      res.status(200).send({
         message: "Successful in getting artefacts",
         artefactRecords,
       });
@@ -64,179 +106,55 @@ const allData = (req, res) => {
     });
 };
 
-// gets users dashboard once successfully logged in
-const getDashboard = async (req, res) => {
-  res.status(200).send({
-    message: "Login Successful, hello user!",
-  });
-};
-
-// Get the particular Artefact detail
-const artefact_details = async (req, res) => {
-  console.log(req.params.id);
-  try {
-    const record = await Artefact.findById(req.params.id);
-    res.status(200).json(record);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
+// get categories function
 const getCategories = (req, res) => {
   Category.find()
     .then((result) => {
-      res.status(200).json({
+      res.status(200).send({
         categories: result,
         message: "Categories recieved successfully",
       });
     })
     .catch((error) => {
-      res.status(404).json({
+      res.status(500).send({
         message: "Error in getting categories",
         error,
       });
     });
 };
 
+// get associated function
 const getAssociated = (req, res) => {
   Associated.find()
     .then((result) => {
-      res.status(200).json({
+      res.status(200).send({
         associated: result,
         message: "Associated recieved successfully",
       });
     })
     .catch((error) => {
-      res.status(404).json({
+      res.status(500).send({
         message: "Error in getting categories",
         error,
       });
     });
 };
 
-// Update CRUD Detail by Id
-const editArtefact = (req, res) => {
-
-  Artefact.findByIdAndUpdate(
-    { _id: req.params.id },
-    {
-      artefactName: req.body.record.artefactName,
-      description: req.body.record.description,
-      memories: req.body.record.memories,
-      location: req.body.record.location,
-    }
-  ).then((result1) => {
-    Category.findOne({ category_name: req.body.record.category })
-      .then((result2) => {
-        if (result2) {
-          Artefact.updateOne(
-            { _id: result1._id },
-            {
-              $set: { category: result2 },
-            },
-            function (err, doc) {
-              if (err) {
-              } else {
-              }
-            }
-          );
-        } else {
-          const cat = new Category({
-            category_name: req.body.record.category,
-          });
-
-          Artefact.updateOne(
-            { _id: result1._id },
-            {
-              $set: { category: cat },
-            },
-            function (err, doc) {
-              if (err) {
-              } else {
-              }
-            }
-          );
-          cat.save();
-        }
-      })
-      .catch((error) => {});
-
-    Associated.findOne({ person: req.body.record.associated }).then(
-      (result3) => {
-        if (result3) {
-          Artefact.updateOne(
-            { _id: result1._id },
-            {
-              $set: { associated: result3 },
-            },
-            function (err, doc) {
-              if (err) {
-              } else {
-              }
-            }
-          );
-        } else {
-          const ass = new Associated({
-            person: req.body.record.associated,
-          });
-
-          Artefact.updateOne(
-            { _id: result1._id },
-            {
-              $set: { associated: ass },
-            },
-            function (err, doc) {
-              if (err) {
-              } else {
-              }
-            }
-          );
-          ass.save();
-        }
-      }
-    )
-    .catch((error)=> {
-      res.status(404).send({
-        message: "Error in edit 1",
-        error,
-      })
-    });
-      
-    res.status(201).send({
-      message: "Artefact registered successfully",
-      result1,
-    });
-  })
-    .catch((error)=> {
-      res.status(404).send({
-        message: "Error in edit 2",
-        error,
-      })
-    });
-
-
-
-};
-
-// register new users (will be removed)
-const registerUser = async (req, res) => {
-  const user = new User(req.body);
-  await user
-    .save()
+// get an artefact functiono
+const artefact_details = async (req, res) => {
+  Artefact.findById(req.params.id)
     .then((result) => {
-      res.status(201).send({
-        message: "User Created Successfully",
+      res.status(200).send({
+        message: "Artefact retrieved successfully",
         result,
       });
     })
     .catch((error) => {
       res.status(500).send({
-        message: "Error upon creating user",
+        message: "Artefact retrieved unsuccessfully",
         error,
       });
     });
-
-  console.log(user);
 };
 
 // Create new Artefact Record
@@ -255,7 +173,6 @@ const registerArtefact = async (req, res) => {
     associated: null,
     category: null,
     location: req.body.record.location,
-    // artefactDate: req.body.record.artefactDate,
     "artefactImg.imgURL": image_data.url,
     "artefactImg.publicID": image_data.public_id,
   });
@@ -333,7 +250,7 @@ const registerArtefact = async (req, res) => {
         })
         .catch((error) => {});
 
-      res.status(201).send({
+      res.status(200).send({
         message: "Artefact registered successfully",
         result1,
       });
@@ -341,6 +258,106 @@ const registerArtefact = async (req, res) => {
     .catch((error) => {
       res.status(500).send({
         message: "Error upon registering artefact",
+        error,
+      });
+    });
+};
+
+// edit artefact function
+const editArtefact = (req, res) => {
+  Artefact.findByIdAndUpdate(
+    { _id: req.params.id },
+    {
+      artefactName: req.body.record.artefactName,
+      description: req.body.record.description,
+      memories: req.body.record.memories,
+      location: req.body.record.location,
+    }
+  )
+    .then((result1) => {
+      Category.findOne({ category_name: req.body.record.category })
+        .then((result2) => {
+          if (result2) {
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { category: result2 },
+              },
+              function (err, doc) {
+                if (err) {
+                } else {
+                }
+              }
+            );
+          } else {
+            const cat = new Category({
+              category_name: req.body.record.category,
+            });
+
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { category: cat },
+              },
+              function (err, doc) {
+                if (err) {
+                } else {
+                }
+              }
+            );
+            cat.save();
+          }
+        })
+        .catch((error) => {});
+
+      Associated.findOne({ person: req.body.record.associated })
+        .then((result3) => {
+          if (result3) {
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { associated: result3 },
+              },
+              function (err, doc) {
+                if (err) {
+                } else {
+                }
+              }
+            );
+          } else {
+            const ass = new Associated({
+              person: req.body.record.associated,
+            });
+
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { associated: ass },
+              },
+              function (err, doc) {
+                if (err) {
+                } else {
+                }
+              }
+            );
+            ass.save();
+          }
+        })
+        .catch((error) => {
+          res.status(500).send({
+            message: "Error in edit",
+            error,
+          });
+        });
+
+      res.status(200).send({
+        message: "Edit artefact successfully",
+        result1,
+      });
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error in edit",
         error,
       });
     });
@@ -370,54 +387,6 @@ const deleteArtefact = async (req, res) => {
       res.status(500).send({
         message: "Error upon deleting artefact",
         result,
-      });
-    });
-};
-
-// gets POST request, attempt to log-in user
-const loginUser = (req, res) => {
-  User.findOne({ username: req.body.username })
-    .then((user) => {
-      bcrypt
-        .compare(req.body.password, user.password)
-        .then((checkPass) => {
-          // invalid
-          if (!checkPass) {
-            return res.status(400).send({
-              message: "Invalid password",
-              isValid: false,
-              error,
-            });
-          }
-
-          //generate JWT token
-          const token = jwt.sign(
-            { userId: user._id, username: user.username },
-            "RANDOM-TOKEN",
-            { expiresIn: "24h" }
-          );
-          res.status(200).send({
-            message: "Login Successful",
-            username: user.username,
-            isValid: true,
-            token,
-          });
-        })
-        .catch((error) => {
-          res.status(400).send({
-            message: "Error in loggin in",
-            isValid: false,
-            error,
-          });
-        });
-    })
-
-    // user is not registered in database
-    .catch((error) => {
-      res.status(404).send({
-        message: "User doesn't exist",
-        isValid: false,
-        error,
       });
     });
 };
@@ -475,13 +444,33 @@ const updatePass = async (req, res) => {
   }
 };
 
+// register new users (will be removed)
+const registerUser = async (req, res) => {
+  const user = new User(req.body);
+  await user
+    .save()
+    .then((result) => {
+      res.status(201).send({
+        message: "User Created Successfully",
+        result,
+      });
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error upon creating user",
+        error,
+      });
+    });
+
+  console.log(user);
+};
+
 // exports objects containing functions imported by router
 module.exports = {
   allData,
   registerArtefact,
   registerUser,
   loginUser,
-  getDashboard,
   editArtefact,
   deleteArtefact,
   artefact_details,
