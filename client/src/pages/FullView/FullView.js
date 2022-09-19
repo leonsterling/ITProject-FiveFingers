@@ -67,13 +67,13 @@ function FullView() {
     recordCategory = null;
 
   if (recordData) {
-    recordName = recordData.artefactName;
-    recordImg = recordData.artefactImg.imgURL;
-    recordDescription = recordData.description;
-    recordMemories = recordData.memories;
-    recordLocation = recordData.location;
-    recordPerson = recordData.associated.person;
-    recordCategory = recordData.category.category_name;
+    recordName = recordData.result.artefactName;
+    recordImg = recordData.result.artefactImg.imgURL;
+    recordDescription = recordData.result.description;
+    recordMemories = recordData.result.memories;
+    recordLocation = recordData.result.location;
+    recordPerson = recordData.result.associated.person;
+    recordCategory = recordData.result.category.category_name;
   }
 
   return (

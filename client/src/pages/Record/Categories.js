@@ -28,23 +28,25 @@ export default function Categories({ data, index, handleChange }) {
     else {
         filteredArray = categoryList;
     }
-    options = filteredArray.map((data, index) => {
+    options = filteredArray.map((categoryData, index) => {
       return (
         <input
           key={index}
           className="category__option"
           type="button"
-          value={data}
+          value={categoryData}
           onClick={() => {
             setVisibility(false);
-            setLabel(data);
+            setLabel(categoryData);
+
+            console.log(categoryData);
 
             // Mimicks the event-handler
             console.log(data.name);
             let e = {
               target: {
                 name: `${data.name}`,
-                value: data,
+                value: categoryData,
               },
             };
             handleChange(e);
@@ -63,7 +65,7 @@ export default function Categories({ data, index, handleChange }) {
   useEffect(() => {
     if (!isRetrieved) {
       let uri =
-        data.label === "Category" ? "categories" : "associated";
+        data.label === "Category" ? "get-categories" : "get-associated";
 
       let data_container =
         data.label === "Category" ? "category_name" : "person";
@@ -159,17 +161,17 @@ async function getObject(requestURI, setCategoryList, data_container) {
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
-    url: `http://localhost:5100/add-artefact/${requestURI}`,
+    url: `http://localhost:5100/${requestURI}`,
   };
-
+  console.log(`http://localhost:5100/${requestURI}`)
   await axios(configuration)
     .then((res) => {
-      let data = cleanCategories(res.data[requestURI], data_container);
+      console.log(res.data)
+      let data = cleanCategories(res.data.result,  data_container);
       // console.log(res.data[requestURI]);
       setCategoryList(data);
     })
     .catch((err) => {
-      console.log("fail login");
       console.log(err);
     });
 }

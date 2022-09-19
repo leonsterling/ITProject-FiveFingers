@@ -11,7 +11,7 @@ async function getObject (requestURI, setCategoryList) {
       headers: {
         Authorization: `Bearer ${token}`, // authorized route with jwt token
       },
-      url: `http://localhost:5100/add-artefact/${requestURI}`,
+      url: `http://localhost:5100/${requestURI}`,
     };
 
     await axios(configuration).then((res) => {

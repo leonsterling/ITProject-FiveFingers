@@ -98,8 +98,9 @@ const EditPage = () => {
     async function updatePage() {
       try {
         const response = await axios(configuration);
-        console.log(JSON.stringify(response.data));
-        setRecord(response.data);
+        
+        setRecord(response.data.result);
+        console.log(JSON.stringify(response.data.re));
       } catch (error) {
         console.log(error);
       }

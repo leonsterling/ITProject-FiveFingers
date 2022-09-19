@@ -111,8 +111,8 @@ const getCategories = (req, res) => {
   Category.find()
     .then((result) => {
       res.status(200).send({
-        categories: result,
         message: "Categories recieved successfully",
+        result
       });
     })
     .catch((error) => {
@@ -128,8 +128,8 @@ const getAssociated = (req, res) => {
   Associated.find()
     .then((result) => {
       res.status(200).send({
-        associated: result,
         message: "Associated recieved successfully",
+        result
       });
     })
     .catch((error) => {
