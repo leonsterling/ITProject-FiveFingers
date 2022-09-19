@@ -13,6 +13,7 @@ import FullView from "./pages/FullView/FullView";
 import ListView from "./pages/ListView/ListView.js"
 import EditPage from "./pages/EditPage/EditPage";
 import PartialView from "./pages/Dashboard/PartialView";
+import CardPicture from "./pages/Dashboard/CardPicture";
 
 // Cookies for checking if the user is currently logged in
 const cookies = new Cookies();
@@ -59,6 +60,10 @@ root.render(
           </Route>
 
           <Route element={<PartialView />} path="partialview" exact>
+            {" "}
+          </Route>
+
+          <Route element={<CardPicture />} path="cardpicture" exact>
             {" "}
           </Route>
        

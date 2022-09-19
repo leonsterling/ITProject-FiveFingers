@@ -1,0 +1,89 @@
+main {
+    grid-area: main;
+    overflow-y: auto;
+}
+
+.main-container {
+    height: 100vh;
+}
+
+.main-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    flex: 1;
+    gap: 30px;
+    margin: 20px 0;
+
+}
+
+.section-cards {
+    display: block;
+    position: relative;
+}
+
+.feed-cards {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 6px;
+}
+
+.card-container {
+    padding: 6px;
+    flex-basis: 0%;
+    flex-shrink: 1;
+    display: block;
+}
+
+.card {
+    min-width: 0;
+    margin: 20px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 25px;
+    border-radius: 5px;
+    background: #ffffff;
+    box-shadow: 5px 5px 13px #ededed, -5px -5px 13px #ffffff;
+}
+
+.card > img {
+    height: 200px;
+    object-fit: contain;
+    width: 100%;
+}
+
+a.link-line {
+    color: black;
+    text-decoration: none;
+}
+
+.card-title {
+    display: flex;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+.card-extended {
+    padding-bottom: 700px;
+    background: blue;
+    
+}
+
+article {
+    display: block;
+
+}
+
+@media only screen and (max-width: 855px) {
+    .main-container {
+        padding: 20px 4rem;
+    }
+    .main-cards {
+        grid-template-columns: 1fr;
+        margin-bottom: 0;
+    }
+
+}

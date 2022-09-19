@@ -42,7 +42,7 @@ export default function Categories ( { data, index, handleChange } ) {
               handleChange(e);
           }}
         />
-      )
+      ) 
   });
 
   // The base CSS class for the dropdown component

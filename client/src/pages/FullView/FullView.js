@@ -32,7 +32,7 @@ function FullView() {
   console.log(ArtefactID);
   const configuration = {
     method: "get",
-    url: `https://sterlingfamilyartefacts.herokuapp.com/${_id}`,
+    url: `http://localhost:5100/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },

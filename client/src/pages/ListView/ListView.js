@@ -14,7 +14,7 @@ const ListView = () => {
 
   const configuration = {
     method: "get",
-    url: `https://sterlingfamilyartefacts.herokuapp.com/data`,
+    url: `http://localhost:5100/data`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },

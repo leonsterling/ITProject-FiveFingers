@@ -76,7 +76,7 @@ const RecordForm = () => {
       // set configurations
       const configuration = {
         method: "post",
-        url: "https://sterlingfamilyartefacts.herokuapp.com/add-artefact",
+        url: "http://localhost:5100/add-artefact",
         data: {
           record
         },

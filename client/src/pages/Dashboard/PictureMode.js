@@ -21,7 +21,7 @@ const PictureMode = () => {
   async function handleDashboard() {
     const configuration = {
       method: "get",
-      url: "https://sterlingfamilyartefacts.herokuapp.com/data",
+      url: "http://localhost:5100/data",
       headers: {
         Authorization: `Bearer ${token}`, // authorized route with jwt token
       },
@@ -68,6 +68,7 @@ const PictureMode = () => {
   if (userData) {
     pictures = userData.map(
       ({ artefactName, artefactImg, description, artefactDate, _id }) => (
+
         <article 
           className="card-container"
           onClick={() => openFunction(_id)}

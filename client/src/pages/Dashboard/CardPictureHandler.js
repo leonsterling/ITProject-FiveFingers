@@ -5,7 +5,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-async function getObject (requestURI) {
+async function getPicture (requestURI) {
     const configuration = {
       method: "get",
       headers: {
@@ -24,6 +24,7 @@ async function getObject (requestURI) {
     return null;
 }
 
-export { getObject };
 
- 
+
+
+export { getPicture };
