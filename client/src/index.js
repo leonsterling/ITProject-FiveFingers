@@ -10,7 +10,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import RecordPage from "./pages/Record/RecordPage";
 import Cookies from "universal-cookie";
 import FullView from "./pages/FullView/FullView";
-import ListView from "./pages/ListView/ListView.js";
+import ListView from "./pages/ListView/ListView.js"
 import EditPage from "./pages/EditPage/EditPage";
 import PartialView from "./pages/Dashboard/PartialView";
 import Skewer from "./components/Skewer";
@@ -45,13 +45,17 @@ root.render(
           <Route element={<ListView/>} path="/list-view" exact>
             {" "}
           </Route>
-          <Route element={<FullView />} path="/full-view/:_id" exact>
+          <Route element={<FullView />} path="/:_id" exact>
             {" "}
           </Route>
           <Route element={<RecordPage />} path="/add-artefact" exact>
             {" "}
           </Route>
-          <Route element={<EditPage />} path="/edit-artefact/:_id" exact>
+          <Route element={<FullView />} path="/:_id" exact>
+            {" "}
+          </Route>
+
+          <Route element={<EditPage />} path="/:_id/edit" exact>
             {" "}
           </Route>
 
