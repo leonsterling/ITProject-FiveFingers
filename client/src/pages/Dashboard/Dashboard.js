@@ -68,6 +68,9 @@ const Dashboard = () => {
 
   return (
     <>
+    
+    <div className='container'>
+    <div className="nav-container">
     <Navbar />
     <div className="dashboard-header">
         <h2>My Artefacts</h2>
@@ -106,6 +109,8 @@ const Dashboard = () => {
           handleDashboard={isSearched ? handleSearch: handleDashboard}
         />
     }
+    </div>
+    </div>
     </>
   );
 

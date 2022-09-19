@@ -12,6 +12,7 @@ import Cookies from "universal-cookie";
 import FullView from "./pages/FullView/FullView";
 import ListView from "./pages/ListView/ListView.js";
 import EditPage from "./pages/EditPage/EditPage";
+import Skewer from "./components/Skewer";
 
 // Cookies for checking if the user is currently logged in
 const cookies = new Cookies();
@@ -52,7 +53,11 @@ root.render(
           <Route element={<EditPage />} path="/edit-artefact/:_id" exact>
             {" "}
           </Route>
-       
+
+          <Route element={<Skewer />} path="skewer" exact>
+            {" "}
+          </Route>
+          
        </Route>
       </Routes>
     </BrowserRouter>

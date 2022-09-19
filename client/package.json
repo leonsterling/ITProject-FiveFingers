@@ -1,47 +1,47 @@
 {
-  "name": "client",
+  "name": "itproject",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
-    "@iconify/react": "^4.0.0",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.10.2",
+    "@mui/material": "^5.10.2",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "concurrently": "^7.4.0",
+    "fslightbox": "^3.3.1",
     "fslightbox-react": "^1.6.2-2",
+    "lightbox": "^0.5.0",
+    "lightbox.js-react": "^0.0.8",
     "nodemon": "^2.0.20",
     "react": "^18.2.0",
     "react-awesome-lightbox": "^1.8.1",
     "react-dom": "^18.2.0",
     "react-file-base64": "^1.0.3",
-    "react-router-dom": "^6.4.0",
-    "react-scripts": "5.0.1",
+    "react-image-lightbox": "^5.1.4",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
     "sass": "^1.54.9",
     "universal-cookie": "^4.0.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
     ]
   },
   "browserslist": {
@@ -57,18 +57,18 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.5.12",
-    "@storybook/addon-essentials": "^6.5.12",
-    "@storybook/addon-interactions": "^6.5.12",
-    "@storybook/addon-links": "^6.5.12",
-    "@storybook/builder-webpack5": "^6.5.12",
-    "@storybook/manager-webpack5": "^6.5.12",
-    "@storybook/node-logger": "^6.5.12",
-    "@storybook/preset-create-react-app": "^4.1.2",
-    "@storybook/react": "^6.5.12",
+    "@babel/core": "^7.19.0",
+    "@iconify/react": "^3.2.2",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/builder-webpack5": "^6.5.10",
+    "@storybook/manager-webpack5": "^6.5.10",
+    "@storybook/react": "^6.5.10",
+    "@storybook/test-runner": "^0.7.2",
     "@storybook/testing-library": "^0.0.13",
-    "babel-plugin-named-exports-order": "^0.0.2",
-    "prop-types": "^15.8.1",
-    "webpack": "^5.74.0"
+    "babel-loader": "^8.2.5",
+    "jest": "^27.5.1"
   }
 }

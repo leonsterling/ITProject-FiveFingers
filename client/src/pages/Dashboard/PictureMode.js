@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 // Required stylesheet
-import "./PictureMode.css";
+import "./PictureMode.scss";
 import PartialView from "./PartialView";
 
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+import Skewer from "../../components/Skewer";
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
 const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
+
+  const [currID, setCurrID] = useState("");
 
   useEffect(() => {
     handleDashboard()
@@ -25,12 +28,22 @@ const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
   const [open, setOpen] = useState(false);
 
   function openFunction (id) {
+    // Change the state of the visibility to true
+    console.log({currID});
+    console.log({id});
+
+    if (currID.length !== 0) {
+      setOpen({
+        [currID]: !open[currID],
+      });
+    }
     setOpen({
-      ...open,
       [id]: !open[id],
     });
+    setCurrID(id);
   }
 
+ 
   let pictures = null;
   if (userData) {
     console.log({userData});

@@ -3,7 +3,7 @@ const expect = require('chai').expect;
 const dotenv = require('dotenv');
 dotenv.config();
 
-const app = require('../server.js')
+const app = require('../server')
 const {User, Category, Associated, Artefact} = require('../models/user')
 
 // existing valid user in database

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Icon } from '@iconify/react';
 import { Link } from "react-router-dom";
-
+import Skewer from "../../components/Skewer";
 // Required stylesheet
 import "react-awesome-lightbox/build/style.css";
 import "./PartialView.scss";
