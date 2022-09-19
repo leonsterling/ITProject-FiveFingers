@@ -5,10 +5,8 @@ import Cookies from "universal-cookie";
 
 // obtain token from cookie
 const cookies = new Cookies();
-const token = cookies.get("TOKEN");
 
 const MobileNav = ({ mobileNavOpen, closeMobileNav}) => {
-    
     // logout function
     const logout = () => {
         // cookie removed
@@ -16,8 +14,7 @@ const MobileNav = ({ mobileNavOpen, closeMobileNav}) => {
         // user redirected to login page
         window.location.href = "/";
     };
-    
-    
+
     return (
         <div className={mobileNavOpen ? "mobilenav-responsive" : ""} id="mobilenav">
             <div className="mobilenav-exit">
@@ -26,14 +23,14 @@ const MobileNav = ({ mobileNavOpen, closeMobileNav}) => {
 
             <div className="mobilenav-content">
                 <Link className="mobilenav-link" to={`/dashboard`}>
-                    <a>Dashboard</a>
+                    Dashboard
                 </Link>
                 <Link className="mobilenav-link" to={`/add-artefact`}>
-                    <a>Add Artefact</a>
+                    Add Artefact
                 </Link>
                 <div className="mobilenav-link">
-                
-                    <a onClick={() => logout()}>Sign Out</a>
+                    <i><Icon icon="icon-park-outline:logout" /></i>
+                    <span onClick={() => logout()}>Sign Out</span>
                 </div>
             </div>
             

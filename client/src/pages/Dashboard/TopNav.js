@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 //import { Icon } from '@iconify/react';
 import Cookies from "universal-cookie";
@@ -21,6 +21,21 @@ const TopNav = ({mobileNavOpen, openMobileNav}) => {
         window.location.href = "/";
     };
 
+    let DashboardButton = window.location.href.endsWith('/dashboard') ? (
+        <div className="topnav-button">
+            <button className='dashboard' onClick={() => window.location.reload()}>
+                Dashboard
+            </button>
+        </div>
+        
+    ): /* else */ (
+        <Link className="topnav-button" to={`/dashboard`}>
+            <button className='dashboard'>
+                Dashboard
+            </button>
+        </Link>
+    )
+
     return (
         <nav className="topnav">
             <div className="topnav-left">
@@ -29,11 +44,7 @@ const TopNav = ({mobileNavOpen, openMobileNav}) => {
             </div>
             <div className="topnav-right">
 
-                <Link className="topnav-button" to={`/dashboard`}>
-                    <button className='dashboard'>
-                        Dashboard
-                    </button>
-                </Link>
+                {DashboardButton}
 
                 <Link className="topnav-button" to={`/add-artefact`}>
                     <button className='add-artefact'>

@@ -1,15 +1,16 @@
 // Added to prevent specificity issues
 .record-page form .data-entry-fields .data-entry-fields--text-insert
 .category {
-    z-index: 4;
     .category__dropdown {
       margin-top: -13px;
       position: absolute;
+      z-index: 5;
     }
 
     .category-input {
         display: flex;
         justify-content: space-between;
+        z-index: 4;
 
         .initial {
             color: #717171;
@@ -17,6 +18,14 @@
 
         span {
             padding-top: 5px;
+        }
+
+        input {
+            margin: 0;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            outline: none;
         }
     }
 

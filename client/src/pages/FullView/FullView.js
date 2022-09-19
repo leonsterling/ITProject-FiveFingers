@@ -7,8 +7,8 @@ import FsLightbox from "fslightbox-react";
 
 import axios from "axios";
 import Cookies from "universal-cookie";
-import "./FullView.css";
-// import {Larry} from ./larry.jpg;
+import "./FullView.scss";
+import Navbar from '../Dashboard/Navbar';
 
 // Import Authentication and Cookies
 const cookies = new Cookies();
@@ -21,18 +21,14 @@ function FullView() {
 
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
-
-  const navigate = useNavigate();
-
+  console.log({_id});
+  
   // State to update the recordData of the artefact
   const [recordData, setRecordData] = useState(null);
 
-  let ArtefactID = null;
-  ArtefactID = JSON.stringify({ _id }._id);
-  console.log(ArtefactID);
   const configuration = {
     method: "get",
-    url: `http://localhost:5100/${_id}`,
+    url: `http://localhost:5100/get-artefact/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
@@ -71,35 +67,37 @@ function FullView() {
     recordCategory = null;
 
   if (recordData) {
-    recordName = recordData.artefactName;
-    recordImg = recordData.artefactImg.imgURL;
-    recordDescription = recordData.description;
-    recordMemories = recordData.memories;
-    recordLocation = recordData.location;
-    recordPerson = recordData.associated.person;
-    recordCategory = recordData.category.category_name;
+    recordName = recordData.result.artefactName;
+    recordImg = recordData.result.artefactImg.imgURL;
+    recordDescription = recordData.result.description;
+    recordMemories = recordData.result.memories;
+    recordLocation = recordData.result.location;
+    recordPerson = recordData.result.associated.person;
+    recordCategory = recordData.result.category.category_name;
   }
 
   return (
-        <div>
-          <div className="header-fv">Full View</div>
-          <div className="img-container">
-            <img
-              className="cropped-ofp"
-              src={recordImg}
-              alt={recordName}
-              onClick={() => setToggler(!toggler)}
-            />
-            <p className="artefact-name">{recordName}</p>
-            <p className="artefact-tags">TestTag</p>
-            <FsLightbox toggler={toggler} sources={[recordImg]} />
-          </div>
-          <div>
-            <div>{recordDescription}</div>
-            <div>{recordCategory}</div>
-            <div>{recordPerson}</div>
-          </div>
+    <>
+      <Navbar />
+      <div className='full-view'>
+        <img
+          className="cropped-ofp"
+          src={recordImg}
+          alt={recordName}
+          onClick={() => setToggler(!toggler)}
+        />
+        <div className="data-container">
+          <p className="artefact-name">{recordName}</p>
+          <p className="artefact-tags">TestTag</p>
+          <FsLightbox toggler={toggler} sources={[recordImg]} />
         </div>
+        <div>
+          <div>{recordDescription}</div>
+          <div>{recordCategory}</div>
+          <div>{recordPerson}</div>
+        </div>
+      </div>
+    </>
   );
 }
 
