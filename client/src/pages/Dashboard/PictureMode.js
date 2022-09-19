@@ -1,40 +1,16 @@
-
-
-import React, { useEffect, useState, useCallback } from "react";
-// Required component
-import Lightbox from "react-awesome-lightbox";
+import React, { useEffect, useState } from "react";
 // Required stylesheet
-import "react-awesome-lightbox/build/style.css";
-import "./PictureMode.scss";
+import "./PictureMode.css";
 import PartialView from "./PartialView";
 
 import axios from "axios";
-import Cookies from "universal-cookie";
-import Skewer from "../../components/Skewer";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-const PictureMode = () => {
-  const [userData, setUserData] = useState(null);
-  async function handleDashboard() {
-    const configuration = {
-      method: "get",
-      url: "http://localhost:5100/data",
-      headers: {
-        Authorization: `Bearer ${token}`, // authorized route with jwt token
-      },
-    };
-
-    // make the API call
-    const response = await axios(configuration);
-    console.log(response);
-    if (!response) {
-    } else {
-      return response;
-    }
-  }
+const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
 
   useEffect(() => {
     handleDashboard()
@@ -47,31 +23,19 @@ const PictureMode = () => {
   }, []);
 
   const [open, setOpen] = useState(false);
-  const [currID, setCurrID] = useState("");
+
   function openFunction (id) {
-    // Change the state of the visibility to true
-    console.log({currID});
-    console.log({id});
-
-    if (currID.length !== 0) {
-      setOpen({
-        [currID]: !open[currID],
-      });
-    }
-
     setOpen({
+      ...open,
       [id]: !open[id],
     });
-
-
-    setCurrID(id);
   }
-//          style={{ padding: open[_id] ? '0 0 480px 0' : '0 0 0 0' }}
+
   let pictures = null;
   if (userData) {
+    console.log({userData});
     pictures = userData.map(
       ({ artefactName, artefactImg, description, artefactDate, _id }) => (
-
         <article 
           className="card-container"
           onClick={() => openFunction(_id)}
@@ -79,8 +43,12 @@ const PictureMode = () => {
         >
           <div>
             <div className="card">
-              <img src={artefactImg.imgURL} />
-              <div className="card-title">{artefactName}</div>
+              <img src={artefactImg.imgURL} alt=''/>
+              <div className="card-title">
+                <Link to={`/full-view/${_id}`} >
+                  <p>{artefactName}</p>
+                </Link>
+              </div>
             </div>
 
             <div style={{ display: open[_id] ? 'block' : 'none' }}>

@@ -1,24 +1,18 @@
-import React, { useEffect, useState, useCallback } from "react";
-// Required component
-import Lightbox from "react-awesome-lightbox";
+import React from "react";
+
+import { Icon } from '@iconify/react';
+import { Link } from "react-router-dom";
+
 // Required stylesheet
 import "react-awesome-lightbox/build/style.css";
 import "./PartialView.scss";
-//import { Icon } from '@iconify/react';
-import Skewer from "../../components/Skewer";
-import axios from "axios";
-import Cookies from "universal-cookie";
-
-import { Link } from "react-router-dom";
-// obtain token from cookie
-const cookies = new Cookies();
-const token = cookies.get("TOKEN");
 
 const PartialView = ({ title, image, desc, date, _id }) => {
   return (
         <figure className="partial-view">
             <div className="image-side">
-                <img className="image-partial-view" src={image.imgURL}/>
+                <img className="image-partial-view"
+                  src={image.imgURL} alt='the partial view of the component'/>
             </div>
             <div className="info-side">
                 <div className="info-title">
@@ -33,8 +27,10 @@ const PartialView = ({ title, image, desc, date, _id }) => {
                     <p>{date}</p>
                 </div>
                 <div className="info-more">
-                    <Link to={`/${_id}`} className="link-line">
-                        <p>Click to Display Full View</p>
+                    <Link to={`/full-view/${_id}`} className="link-line">
+                        <p>Click to Display Full View
+                        <Icon className="redirect-icon" icon="bi:box-arrow-in-down-right" flip="vertical"/>
+                        </p>
                     </Link>
                 </div>
             </div>
@@ -45,8 +41,6 @@ const PartialView = ({ title, image, desc, date, _id }) => {
 export default PartialView;
 
 /*
-                        <Icon className="redirect-icon" icon="bi:box-arrow-in-down-right" flip="vertical"/>
-
     <div className="partial-view">
         <p>testing for content</p>
         <div className="image-side">

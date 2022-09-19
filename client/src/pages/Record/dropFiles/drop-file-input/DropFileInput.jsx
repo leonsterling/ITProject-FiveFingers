@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./drop-file-input.css";
 import { ImageConfig } from "../config/ImageConfig.js";
-//import { Icon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 
 const DropFileInput = (props) => {
   const wrapperRef = useRef(null);
@@ -45,7 +45,7 @@ const DropFileInput = (props) => {
         onDrop={onDrop}
       >
         <div className="drop-file-input__label">
-          {/*<Icon icon="bx:image" color="#c5c5c5" width="3em"/>*/}
+          <Icon icon="bx:image" color="#c5c5c5" width="3em"/>
           <p>Drop your images here, or</p>
           <p>click to browse.</p>
         </div>

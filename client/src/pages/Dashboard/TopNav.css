@@ -57,6 +57,10 @@
     color: #d9d9d9;
 }
 
+.spacer {
+    margin-bottom: 75px;
+}
+
 .logout-icon-button {
     margin-right: 5px;
 }

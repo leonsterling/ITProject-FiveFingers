@@ -1,6 +1,6 @@
-import React, { useEffect, useState} from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
-//import { Icon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import Cookies from "universal-cookie";
 
 // CSS imports
@@ -10,7 +10,6 @@ import logo from "../assets/LS-Logo.png";
 // obtain token from cookie
 const cookies = new Cookies();
 
-//<Icon className='logout-icon-button' icon="icon-park-outline:logout" />
 const TopNav = ({mobileNavOpen, openMobileNav}) => {
     
     // logout function
@@ -21,6 +20,21 @@ const TopNav = ({mobileNavOpen, openMobileNav}) => {
         window.location.href = "/";
     };
 
+    let DashboardButton = window.location.href.endsWith('/dashboard') ? (
+        <div className="topnav-button">
+            <button className='dashboard' onClick={() => window.location.reload()}>
+                Dashboard
+            </button>
+        </div>
+        
+    ): /* else */ (
+        <Link className="topnav-button" to={`/dashboard`}>
+            <button className='dashboard'>
+                Dashboard
+            </button>
+        </Link>
+    )
+
     return (
         <nav className="topnav">
             <div className="topnav-left">
@@ -29,11 +43,7 @@ const TopNav = ({mobileNavOpen, openMobileNav}) => {
             </div>
             <div className="topnav-right">
 
-                <Link className="topnav-button" to={`/dashboard`}>
-                    <button className='dashboard'>
-                        Dashboard
-                    </button>
-                </Link>
+                {DashboardButton}
 
                 <Link className="topnav-button" to={`/add-artefact`}>
                     <button className='add-artefact'>
@@ -42,18 +52,17 @@ const TopNav = ({mobileNavOpen, openMobileNav}) => {
                 </Link>
                 <div className="topnav-button" onClick={() => logout()}>
                     <button className='logout'>
-
+                        <Icon className='logout-icon-button' icon="icon-park-outline:logout" />
                         Sign Out
                     </button>
                 </div>
             </div>
 
             <div className="nav-icon" onClick={() => openMobileNav()}>
-
+                <Icon className="nav-icon-button" icon="charm:menu-hamburger"/>
             </div>
         </nav>
     );
 };
-//                <Icon className="nav-icon-button" icon="charm:menu-hamburger"/>
 
 export default TopNav;
