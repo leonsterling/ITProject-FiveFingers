@@ -67,20 +67,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 69vw;
 }
 
 .dashboard-header .dashboard-header__right-area input {
     border: orange;
 }
 
-.dashboard-header .pre-search input {
+.dashboard-header .pre-search form {
     width: 0;
     height: 0;
     display: none;
 }
 
-.dashboard-header .search-icon:hover input,
-.dashboard-header .post-search input,
+.dashboard-header .search-icon:hover form,
+.dashboard-header .post-search form,
 .dashboard-header .post-search .search-icon
 {
     width: 38.5vw;
