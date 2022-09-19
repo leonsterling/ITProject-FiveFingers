@@ -19,12 +19,11 @@ const MobileNav = ({ mobileNavOpen, closeMobileNav}) => {
     
     
     return (
-        <div className={mobileNavOpen ? "mobilenav mobilenav-responsive" : "mobilenav"}>
-            <div className="mobilenav-exit">
+        <div className={mobileNavOpen ? "mobilenav mobilenav-responsive" : "mobilenav"} data-testid="mobile-nav">
+            <div className="mobilenav-exit" onClick={() => closeMobileNav()} data-testid="mobile-exit">
                 <Icon 
                     icon="akar-icons:cross"
                     id="exitNavIcon" 
-                    onClick={() => closeMobileNav()}
                 />
             </div>
 
