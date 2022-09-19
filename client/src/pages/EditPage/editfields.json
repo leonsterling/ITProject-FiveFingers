@@ -13,7 +13,7 @@
             "label" : "Category",
             "placeholder" : "Part of...",
             "type" : "text",
-            "component" : "component",
+            "component" : "input",
             "required": true
         },
         {
@@ -29,7 +29,7 @@
             "label" : "Memories",
             "placeholder" : "What you best remember",
             "type" : "text",
-            "component" : "input",
+            "component" : "textarea",
             "required": false
         },
         {

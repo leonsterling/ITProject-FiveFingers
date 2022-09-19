@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import TextUpdateField from "./TextUpdateField.js";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import Navbar from "../Dashboard/Navbar.js";
 
 // Import Nav Bar
 import TopNav from '../Dashboard/TopNav';
@@ -20,15 +21,6 @@ const feedbackMessages = {
 };
 
 const EditPage = () => {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
- 
-  const openMobileNav = () => {
-    setMobileNavOpen(true);
-  };
-
-  const closeMobileNav = () => {
-    setMobileNavOpen(false);
-  };
   
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
 
@@ -48,6 +40,8 @@ const EditPage = () => {
     description: "",
     artefactImg: "",
     memories: "",
+    category:"",
+    associated:""
   };
 
   async function updateArtefact(e) {
@@ -119,14 +113,13 @@ const EditPage = () => {
     console.log(record);
   }
 
-  console.log({ record });
-
+  console.log({record});
+  console.log("===========================================");
+  console.log(record.category.category_name);
+  console.log("===========================================");
   return (
     <>
-      <div className="container">
-        <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
-        <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
-      </div>
+      <TopNav />
 
       <div className="record-page">
 
@@ -135,8 +128,8 @@ const EditPage = () => {
           <h2>Edit Artefact</h2>
           <div className="data-entry-fields">
             {/* TEXT DATA*/}
-            <TextUpdateField handleChange={handleChange} initialData={record} />
-
+            <TextUpdateField handleChange={handleChange} initialData={record} cat ={record.category.category_name} per = {record.associated.person} />
+            
             {/* Image Display */}
             <div className="data-entry-fields--image-upload">
               <label className='data-entry-fields--image-upload--description'>Artefact image</label>
@@ -173,5 +166,6 @@ const EditPage = () => {
     return data.artefactName !== "" && data.artefactImg !== "";
   }
 };
+
 
 export default EditPage;
