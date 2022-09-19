@@ -23,31 +23,25 @@ const Dashboard = () => {
 
   let [isSearched, setIsSearched] = useState(false)
 
-  let searchContent;
-  if (searchClicked) {
-      searchContent = (
-          <>
-          <Icon icon='akar-icons:search'/>
-          <form
-            onSubmit={(e) =>{
-                setIsSearched(true)
-                changeCallback(e, setGetArtefactCallback, handleSearch)
-            }
-            }
-          >
-            <input type='text'
-              className=''
-              onClick={() => console.log("Hello world")}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </form>
-             
-          </>
-      )
-  }
-  else {
-      searchContent = <Icon icon='akar-icons:search'/>
-  }
+  let searchContent = (
+    <>
+    <Icon icon='akar-icons:search'/>
+    <form
+      onSubmit={(e) =>{
+          setIsSearched(true)
+          changeCallback(e, setGetArtefactCallback, handleSearch)
+      }
+      }
+    >
+      <input type='text'
+        className=''
+        onClick={() => console.log("Hello world")}
+        onChange={(e) => setSearchText(e.target.value)}
+      />
+    </form>
+       
+    </>
+  );
 
   async function handleSearch () {
     const configuration = {
@@ -79,7 +73,10 @@ const Dashboard = () => {
     <div className="dashboard-header">
         <h2>My Artefacts</h2>
 
-        <div className='dashboard-header__right-area'>
+        <div className={isSearched ? 
+              'dashboard-header__right-area post-search':
+              'dashboard-header__right-area pre-search'
+        }>
           <div className='search-icon extended'
                onClick={() => setSearchClick(true)}
           >

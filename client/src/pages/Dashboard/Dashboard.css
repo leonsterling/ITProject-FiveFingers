@@ -1,7 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 
-/* overall styling */
+:root {
+    --search-expand-time: 4s;
+}
 
+/* overall styling */
 * {
     margin: 0;
     padding: 0;
@@ -66,23 +69,43 @@ body {
     justify-content: space-between;
 }
 
+.dashboard-header .dashboard-header__right-area input {
+    border: orange;
+}
+
+.dashboard-header .pre-search input {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+.dashboard-header .dashboard-header__right-area:hover input,
+.dashboard-header .post-search input,
+.dashboard-header .post-search .search-icon
+{
+    width: 38.5vw;
+    height: unset;
+    display: flex;
+    margin-left: 6px;
+}
+
 .dashboard-header__right-area .search-icon {
   scale: 1.5;
   border: 1px solid lightgray;
   padding: 4px;
   border-radius: 4px;
   margin-right: 18px;
-  transition: 400ms;
   width: 19px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.dashboard-header .post-search .search-icon,
 .dashboard-header__right-area .search-icon:hover, .extended {
     background-color: white;
     width: 41vw;
-    margin-right: 11.5vw;
+    margin-right: 11.75vw;
     justify-content: flex-start;
     padding-left: 12px;
     box-shadow: 0px 2px 3px hsla(198deg, 100%, 9%, 10%);
