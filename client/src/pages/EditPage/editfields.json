@@ -29,7 +29,7 @@
             "label" : "Memories",
             "placeholder" : "What you best remember",
             "type" : "text",
-            "component" : "textarea",
+            "component" : "input",
             "required": false
         },
         {
@@ -37,7 +37,7 @@
             "label" : "People associated with",
             "placeholder" : "The people you share this memory with",
             "type" : "text",
-            "component" : "component",
+            "component" : "input",
             "required": false
         },
         {

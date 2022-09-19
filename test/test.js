@@ -1,29 +1,15 @@
 const request = require("supertest");
 const expect = require('chai').expect;
+
 const dotenv = require('dotenv');
 dotenv.config();
-
 const app = require('../server.js')
-const {User, Category, Associated, Artefact} = require('../models/user')
 
-// existing valid user in database
-const validUser = {
-  username: "vincent",
-  password: "kurniawan"
+const tempUser = {
+  username: process.env.USER_TEST,
+  password: process.env.USER_TEST_PASSWORD,
 };
 
-// dummy user non-existing in database
-const invalidUser = {
-  username: "kurniawan",
-  password: "vincent"
-}
-
-const validQuery = "Postcard"
-const invalidQuery = "Jakarta"
-
-const validId = "6325c0d2c579241489ad0bd0"
-
-// JWT token for authenticated routes
 let tempToken;
 
 before(function (done) {
@@ -31,14 +17,11 @@ before(function (done) {
   setTimeout(done, 2000);
 });
 
-/* login test */
-describe("log-in functionality", () => {
-
-  // valid user
-  it("should accept correct credentials, and log-in successfully", (done) => {
+describe("login users", () => {
+  it("should accept correct credentials", (done) => {
     request(app)
       .post("/login")
-      .send(validUser)
+      .send(tempUser)
       .expect(200)
       .then((res) => {
         expect(res.body.message).to.be.eql("Login Successful");
@@ -48,71 +31,56 @@ describe("log-in functionality", () => {
       .catch((err) => done(err));
   });
 
-  // invalid username
-  it("shouldn't accept non-exisiting username", (done) => {
-    request(app)
-      .post("/login")
-      .send(invalidUser)
-      .expect(500)
-      .then((res) => {
-        expect(res.body.message).to.be.eql("Login Unsuccessful");
-        done();
-      })
-      .catch((err) => done(err));
-  });
-
-  // invalid password
   it("shouldn't accept invalid password", (done) => {
+    tempUser.password = process.env.USER_TEST_PASSWORD + "asdf";
     request(app)
       .post("/login")
-      .send(invalidUser)
-      .expect(500)
+      .send(tempUser)
+      .expect(400)
       .then((res) => {
-        expect(res.body.message).to.be.eql("Login Unsuccessful");
+        expect(res.body.message).to.be.eql("Error in loggin in");
         done();
       })
       .catch((err) => done(err));
   });
-})
 
-/* search test */
-describe("search functionality", () => {
-
-  // valid search query 
-  it("should retrieve artefacts that matches the query", (done) => {
+  it("shouldn't accept non-exisiting username", (done) => {
+    tempUser.username = process.env.USER_TEST + "asdf";
     request(app)
-      .get(`/search-artefacts/${validQuery}`)
-      .expect(200)
-      .set({Authorization: tempToken})
+      .post("/login")
+      .send(tempUser)
+      .expect(404)
       .then((res) => {
-        const searched = res.body.artefactRecords
-        expect(res.body.message).to.be.eql("Search query success with " + searched.length + " result");
+        expect(res.body.message).to.be.eql("User doesn't exist");
         done();
       })
       .catch((err) => done(err));
   });
-
-  // invalid search query 
-  it("should retrieve artefacts that doesn't match the query", (done) => {
+  /*
+  it("should log out users with valid token", (done) => {
     request(app)
-      .get(`/search-artefacts/${invalidQuery}`)
+      .delete("/logout")
+      .set({
+        Authorization: tempToken,
+      })
       .expect(200)
-      .set({Authorization: tempToken})
       .then((res) => {
-        expect(res.body.message).to.be.eql("Search query success with 0 results");
+        expect(res.body.message).to.be.eql("Logout successful");
         done();
       })
       .catch((err) => done(err));
   });
-})
+  */
+});
 
-/* retrieve all artefacts test */
-describe("get artefacts functionality", () => {
-  it("should retrieve all artefacts", (done) => {
+describe("dashboard", () => {
+  it("should retrieve artefacts", (done) => {
     request(app)
       .get("/data")
-      .expect(200)
-      .set({Authorization: tempToken})
+      .expect(201)
+      .set({
+        Authorization: tempToken,
+      })
       .then((res) => {
         expect(res.body.message).to.be.eql("Successful in getting artefacts");
         done();
@@ -121,13 +89,14 @@ describe("get artefacts functionality", () => {
   });
 });
 
-/* retrieve all categories */
-describe("get categories functionality", () => {
-  it("should retrieve all categories", (done) => {
+describe("categories", () => {
+  it("should retrieve categories", (done) => {
     request(app)
-      .get("/get-categories")
+      .get("/add-artefact/categories")
       .expect(200)
-      .set({Authorization: tempToken})
+      .set({
+        Authorization: tempToken,
+      })
       .then((res) => {
         expect(res.body.message).to.be.eql("Categories recieved successfully");
         done();
@@ -136,13 +105,14 @@ describe("get categories functionality", () => {
   });
 });
 
-/* retrieve all associataed */
 describe("associated", () => {
-  it("should retrieve all associated", (done) => {
+  it("should retrieve associated", (done) => {
     request(app)
-      .get("/get-associated")
+      .get("/add-artefact/associated")
       .expect(200)
-      .set({Authorization: tempToken})
+      .set({
+        Authorization: tempToken,
+      })
       .then((res) => {
         expect(res.body.message).to.be.eql("Associated recieved successfully");
         done();
@@ -150,51 +120,3 @@ describe("associated", () => {
       .catch((err) => done(err));
   });
 });
-
-/* retrieve 1 artefact */
-describe("associated", () => {
-  it("should retrieve 1 artefact", (done) => {
-    request(app)
-      .get(`/get-artefact/${validId}`)
-      .expect(200)
-      .set({Authorization: tempToken})
-      .then((res) => {
-        expect(res.body.message).to.be.eql("Artefact retrieved successfully");
-        done();
-      })
-      .catch((err) => done(err));
-  });
-});
-
-/*
-// add an artefact
-describe("associated", () => {
-  it("should retrieve all associated", (done) => {
-    request(app)
-      .post("/add-artefact")
-      .send(validUser)
-      .expect(200)
-      .set({Authorization: tempToken})
-      .then((res) => {
-        expect(res.body.message).to.be.eql("Artefact registered successfully");
-        done();
-      })
-      .catch((err) => done(err));
-  });
-});
-
-// edit an artefact
-describe("associated", () => {
-  it("should retrieve all associated", (done) => {
-    request(app)
-      .patch(`/edit-artefact/${validId}`)
-      .expect(200)
-      .set({Authorization: tempToken})
-      .then((res) => {
-        expect(res.body.message).to.be.eql("Edit artefact successfully");
-        done();
-      })
-      .catch((err) => done(err));
-  });
-});
-*/

@@ -19,10 +19,13 @@
 
     & * {
         position: relative;
+
+        // Required for categories to work
+        z-index: 1;
     }
 
     form {
-        padding: 0 42px;
+        padding: 70px 42px;
         display: flex;
         flex-direction: column;
         width: 80vw;
