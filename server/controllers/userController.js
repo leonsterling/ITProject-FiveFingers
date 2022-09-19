@@ -1,50 +1,45 @@
 // libraries and mongoose models imported
-const { User, Artefact, Category, Associated} = require("../models/user");
+const { User, Artefact, Category, Associated } = require("../models/user");
 const bcrypt = require("bcrypt");
-const SALT_FACTOR = 10
+const SALT_FACTOR = 10;
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
 // search function
-const searchBar = async (req,res) => {
-
-  const query = req.params.query
-  const exact =  "\""+query+"\""
-  const text = "\"ssl certificate\""
-  console.log(text)
-  console.log(exact)
+const searchBar = async (req, res) => {
+  const query = req.params.query;
   Artefact.aggregate([
     {
       $search: {
-        "index": "artefacts_search_index",
-        "text": {
-          "path": ["associated.person", "category.category_name"],
-          "query": exact
-        }
+        index: "artefacts_search_index",
+        text: {
+          path: ["associated.person", "category.category_name"],
+          query: query,
+        },
+      },
+    },
+  ])
+    .then((artefactRecords) => {
+      if (artefactRecords.length == 0) {
+        res.status(201).send({
+          message: "Search query success with 0 results",
+          artefactRecords,
+        });
+      } else {
+        res.status(201).send({
+          message:
+            "Search query success with " + artefactRecords.length + " result",
+          artefactRecords,
+        });
       }
-    }, 
-  ]).then((artefactRecords) => {
-    
-    if (artefactRecords.length == 0) {
-      res.status(201).send({
-        message: "Search query success with 0 results",
-        artefactRecords,
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error upon searching",
+        error,
       });
-    }
-    else {
-      res.status(201).send({
-        message: "Search query success with "+ artefactRecords.length +" result",
-        artefactRecords,
-      });
-    }
-  })
-  .catch((error) => {
-    res.status(500).send({
-      message: "Error upon searching",
-      error,
     });
-  });
-}
+};
 
 // Display All CRUD Data
 const allData = (req, res) => {
@@ -61,15 +56,13 @@ const allData = (req, res) => {
         artefactRecords,
       });
     })
-  .catch((error) => {
-    res.status(500).send({
-      message: "Error upon getting artefacts",
-      error,
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error upon getting artefacts",
+        error,
+      });
     });
-  })
-
 };
-
 
 // gets users dashboard once successfully logged in
 const getDashboard = async (req, res) => {
@@ -78,64 +71,152 @@ const getDashboard = async (req, res) => {
   });
 };
 
-
 // Get the particular Artefact detail
 const artefact_details = async (req, res) => {
   console.log(req.params.id);
-  try{
+  try {
     const record = await Artefact.findById(req.params.id);
     res.status(200).json(record);
-  }catch (error){
+  } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
-const getCategories = (req,res) => {
+const getCategories = (req, res) => {
   Category.find()
-    .then((result)=> {
+    .then((result) => {
       res.status(200).json({
         categories: result,
-        message: "Categories recieved successfully"
+        message: "Categories recieved successfully",
       });
     })
-    .catch((error)=> {
-      res.status(404).json({ 
+    .catch((error) => {
+      res.status(404).json({
         message: "Error in getting categories",
-        error
+        error,
       });
-    })
-}
+    });
+};
 
-const getAssociated = (req,res) => {
+const getAssociated = (req, res) => {
   Associated.find()
-    .then((result)=> {
+    .then((result) => {
       res.status(200).json({
         associated: result,
-        message: "Associated recieved successfully"
+        message: "Associated recieved successfully",
       });
     })
-    .catch((error)=> {
-      res.status(404).json({ 
+    .catch((error) => {
+      res.status(404).json({
         message: "Error in getting categories",
-        error
+        error,
       });
-    })
-}
+    });
+};
 
 // Update CRUD Detail by Id
 const editArtefact = (req, res) => {
-  console.log(req.params.id);
-	Artefact.findByIdAndUpdate(req.params.id,req.body['record'])
-		.then(function () {
-      console.log("it worked")
-			res.json("Artefact Edited");
-		})
-		.catch(function (err) {
-			res.status(422).send("Artefact Failed to be edited.");
-		});
+
+  Artefact.findByIdAndUpdate(
+    { _id: req.params.id },
+    {
+      artefactName: req.body.record.artefactName,
+      description: req.body.record.description,
+      memories: req.body.record.memories,
+      location: req.body.record.location,
+    }
+  ).then((result1) => {
+    Category.findOne({ category_name: req.body.record.category })
+      .then((result2) => {
+        if (result2) {
+          Artefact.updateOne(
+            { _id: result1._id },
+            {
+              $set: { category: result2 },
+            },
+            function (err, doc) {
+              if (err) {
+              } else {
+              }
+            }
+          );
+        } else {
+          const cat = new Category({
+            category_name: req.body.record.category,
+          });
+
+          Artefact.updateOne(
+            { _id: result1._id },
+            {
+              $set: { category: cat },
+            },
+            function (err, doc) {
+              if (err) {
+              } else {
+              }
+            }
+          );
+          cat.save();
+        }
+      })
+      .catch((error) => {});
+
+    Associated.findOne({ person: req.body.record.associated }).then(
+      (result3) => {
+        if (result3) {
+          Artefact.updateOne(
+            { _id: result1._id },
+            {
+              $set: { associated: result3 },
+            },
+            function (err, doc) {
+              if (err) {
+              } else {
+              }
+            }
+          );
+        } else {
+          const ass = new Associated({
+            person: req.body.record.associated,
+          });
+
+          Artefact.updateOne(
+            { _id: result1._id },
+            {
+              $set: { associated: ass },
+            },
+            function (err, doc) {
+              if (err) {
+              } else {
+              }
+            }
+          );
+          ass.save();
+        }
+      }
+    )
+    .catch((error)=> {
+      res.status(404).send({
+        message: "Error in edit 1",
+        error,
+      })
+    });
+      
+    res.status(201).send({
+      message: "Artefact registered successfully",
+      result1,
+    });
+  })
+    .catch((error)=> {
+      res.status(404).send({
+        message: "Error in edit 2",
+        error,
+      })
+    });
+
+
+
 };
-
-
 
 // register new users (will be removed)
 const registerUser = async (req, res) => {
@@ -160,10 +241,13 @@ const registerUser = async (req, res) => {
 
 // Create new Artefact Record
 const registerArtefact = async (req, res) => {
-  const image_data = await cloudinary.uploader.upload(req.body.record.artefactImg, {
-    upload_preset: "sterling_family_account",
-  });
-  
+  const image_data = await cloudinary.uploader.upload(
+    req.body.record.artefactImg,
+    {
+      upload_preset: "sterling_family_account",
+    }
+  );
+
   const artefact = new Artefact({
     artefactName: req.body.record.artefactName,
     description: req.body.record.description,
@@ -176,116 +260,119 @@ const registerArtefact = async (req, res) => {
     "artefactImg.publicID": image_data.public_id,
   });
 
-  await artefact.save().then((result1) => {
-    Category.findOne({category_name: req.body.record.category})
-    .then((result2)=>{
-      if (result2) {
-          Artefact.updateOne({_id: result1._id}, {
-            $set: {category: result2}
-          }, function(err, doc) {
-            if (err) {
-              
-            } else {
-                
-            }
-        }
-        )
-      }
-      else {
-        const cat = new Category ({
-          category_name: req.body.record.category
-        })
-
-        Artefact.updateOne({_id: result1._id}, {
-          $set: {category: cat}
-        },function(err, doc) {
-          if (err) {
-            
+  await artefact
+    .save()
+    .then((result1) => {
+      Category.findOne({ category_name: req.body.record.category })
+        .then((result2) => {
+          if (result2) {
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { category: result2 },
+              },
+              function (err, doc) {
+                if (err) {
+                } else {
+                }
+              }
+            );
           } else {
-              
+            const cat = new Category({
+              category_name: req.body.record.category,
+            });
+
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { category: cat },
+              },
+              function (err, doc) {
+                if (err) {
+                } else {
+                }
+              }
+            );
+            cat.save();
           }
-      })
-        cat.save()
-      }
-    })
-    .catch((error)=> {
-      
-    })
-
-    Associated.findOne({person: req.body.record.associated})
-    .then((result3)=>{
-      if (result3) {
-          Artefact.updateOne({_id: result1._id}, {
-            $set: {associated: result3}
-          }, function(err, doc) {
-            if (err) {
-              
-            } else {
-                
-            }
         })
-      }
-      else {
-        const ass = new Associated ({
-          person: req.body.record.associated
-        })
+        .catch((error) => {});
 
-        Artefact.updateOne({_id: result1._id}, {
-          $set: {associated: ass}
-        }, function(err, doc) {
-          if (err) {
-            
+      Associated.findOne({ person: req.body.record.associated })
+        .then((result3) => {
+          if (result3) {
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { associated: result3 },
+              },
+              function (err, doc) {
+                if (err) {
+                } else {
+                }
+              }
+            );
           } else {
-              
+            const ass = new Associated({
+              person: req.body.record.associated,
+            });
+
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { associated: ass },
+              },
+              function (err, doc) {
+                if (err) {
+                } else {
+                }
+              }
+            );
+            ass.save();
           }
-      })
-        ass.save()
-      }
+        })
+        .catch((error) => {});
+
+      res.status(201).send({
+        message: "Artefact registered successfully",
+        result1,
+      });
     })
-    .catch((error)=> {
-      
-    })
-
-
-    res.status(201).send({
-      message: "Artefact registered successfully",
-      result1,
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error upon registering artefact",
+        error,
+      });
     });
-  }).catch((error) => {
-    res.status(500).send({
-      message: "Error upon registering artefact",
-      error,
-    });
-  })
-
 };
 
-const deleteArtefact = async(req, res) => {
+const deleteArtefact = async (req, res) => {
+  const artefact_id = req.params.id;
+  const artefact_record = await Artefact.findOne({ _id: artefact_id });
 
-  const artefact_id = req.params.id
-  const artefact_record = await Artefact.findOne({_id: artefact_id})
-
-  await Artefact.deleteOne({_id: artefact_id})
-    .then( (result) => {
-      console.log(result)
-      console.log(artefact_record)
-      cloudinary.uploader.destroy(artefact_record.artefactImg.publicID, function (error, result) {
-        res.status(201).send({
-          message: "Artefact deleted successfully",
-          result,
-          artefact_record
-        });
-      })
+  await Artefact.deleteOne({ _id: artefact_id })
+    .then((result) => {
+      console.log(result);
+      console.log(artefact_record);
+      cloudinary.uploader.destroy(
+        artefact_record.artefactImg.publicID,
+        function (error, result) {
+          res.status(201).send({
+            message: "Artefact deleted successfully",
+            result,
+            artefact_record,
+          });
+        }
+      );
     })
-    .catch( (error) => {
-      console.log(error)
+    .catch((error) => {
+      console.log(error);
       res.status(500).send({
         message: "Error upon deleting artefact",
         result,
       });
-    })
-}
-
+    });
+};
 
 // gets POST request, attempt to log-in user
 const loginUser = (req, res) => {
@@ -335,64 +422,58 @@ const loginUser = (req, res) => {
     });
 };
 
-const changePassword = async (req,res) => {
-  
-      // hash the password using bcrypt before saving to mongodb
-      const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR)
-        User.findOneAndUpdate(
-            {username: req.body.username},
-            {password: hashed_pass},
-            function(err, doc) {
-                if (err) {
-                  res.status(500).send({
-                    message: "Error upon changing password",
-                    err,
-                  })
-                } else {
-                  res.status(201).send({
-                    message: "Password changed successfully",
-                    hashed_pass,
-                  })    
-                }
-            }
-        )
-}
+const changePassword = async (req, res) => {
+  // hash the password using bcrypt before saving to mongodb
+  const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR);
+  User.findOneAndUpdate(
+    { username: req.body.username },
+    { password: hashed_pass },
+    function (err, doc) {
+      if (err) {
+        res.status(500).send({
+          message: "Error upon changing password",
+          err,
+        });
+      } else {
+        res.status(201).send({
+          message: "Password changed successfully",
+          hashed_pass,
+        });
+      }
+    }
+  );
+};
 
 // Function to update patient's password
-const updatePass = async (req,res) =>{
-
+const updatePass = async (req, res) => {
   try {
-      
-      const errors = validationResult(req)
+    const errors = validationResult(req);
 
-      if (!errors.isEmpty()) {
-          const errorsFound = validationResult(req).array()
-          req.flash('errors', errorsFound);
-          return res.redirect('/patient/change-password')
+    if (!errors.isEmpty()) {
+      const errorsFound = validationResult(req).array();
+      req.flash("errors", errorsFound);
+      return res.redirect("/patient/change-password");
+    }
+
+    // hash the password using bcrypt before saving to mongodb
+    const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR);
+    Patient.findOneAndUpdate(
+      { _id: req.user._id },
+      { password: hashed_pass },
+      function (err, doc) {
+        if (err) {
+          return res.redirect("/patient/404");
+        } else {
+        }
       }
+    );
 
-      // hash the password using bcrypt before saving to mongodb
-      const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR)
-      Patient.findOneAndUpdate(
-          { _id: req.user._id},
-          {password: hashed_pass},
-          function(err, doc) {
-              if (err) {
-                  return res.redirect('/patient/404')
-              } else {
-                    
-              }
-          }
-      )
-  
-      return res.redirect('/patient/dashboard')
-      
-
-  } catch(err) {
-      // error detected, renders patient error page
-      return res.redirect('/patient/404')
+    return res.redirect("/patient/dashboard");
+  } catch (err) {
+    // error detected, renders patient error page
+    return res.redirect("/patient/404");
   }
-}
+};
 
 // exports objects containing functions imported by router
 module.exports = {
@@ -407,5 +488,5 @@ module.exports = {
   searchBar,
   changePassword,
   getCategories,
-  getAssociated
+  getAssociated,
 };

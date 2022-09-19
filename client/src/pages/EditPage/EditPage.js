@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import TextUpdateField from "./TextUpdateField.js";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import Navbar from "../Dashboard/Navbar.js";
 
 // Import Nav Bar
 import TopNav from '../Dashboard/TopNav';
@@ -20,15 +21,6 @@ const feedbackMessages = {
 };
 
 const EditPage = () => {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
- 
-  const openMobileNav = () => {
-    setMobileNavOpen(true);
-  };
-
-  const closeMobileNav = () => {
-    setMobileNavOpen(false);
-  };
   
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
 
@@ -48,47 +40,45 @@ const EditPage = () => {
     description: "",
     artefactImg: "",
     memories: "",
+    category:"",
+    associated:""
   };
 
+  async function updateArtefact(e) {
+    // set configurations
+    const configuration = {
+      method: "patch",
+      url: `http://localhost:5100/edit-artefact/${_id}`,
+      data: {
+        record,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`, // authorized route with jwt token
+      },
+    };
+
+    // make the API call
+    axios(configuration)
+      .then((result) => {
+        window.location.href = "/dashboard";
+      })
+      .catch((error) => {
+        error = new Error();
+        console.log(error);
+      });
+  }
   // NOT DONE YET
   function handleSubmit(e) {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
-
+    console.log("here")
     if (!isValidInput(record)) {
       setFeedback(feedbackMessages.invalid);
       return;
     }
-
-    setFeedback(feedbackMessages.valid);
-    async function updateArtefact(e) {
-
-      console.log("HELLO")
-      // set configurations
-      const configuration = {
-        method: "patch",
-        url: `http://localhost:5100/edit-artefact/${_id}`,
-        data: {
-          record,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`, // authorized route with jwt token
-        },
-      };
-      console.log(`/${_id}`)
-
-      // make the API call
-      axios(configuration)
-        .then((result) => {
-          window.location.href = "/dashboard";
-        })
-        .catch((error) => {
-          error = new Error();
-          console.log(error);
-        });
-    }
-
     updateArtefact();
+    setFeedback(feedbackMessages.valid);
+   
   }
 
   // React hook to change the state of record
@@ -123,14 +113,13 @@ const EditPage = () => {
     console.log(record);
   }
 
-  console.log({ record });
-
+  console.log({record});
+  console.log("===========================================");
+  console.log(record.category.category_name);
+  console.log("===========================================");
   return (
     <>
-      <div className="container">
-        <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
-        <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
-      </div>
+      <TopNav />
 
       <div className="record-page">
 
@@ -139,8 +128,8 @@ const EditPage = () => {
           <h2>Edit Artefact</h2>
           <div className="data-entry-fields">
             {/* TEXT DATA*/}
-            <TextUpdateField handleChange={handleChange} initialData={record} />
-
+            <TextUpdateField handleChange={handleChange} initialData={record} cat ={record.category.category_name} per = {record.associated.person} />
+            
             {/* Image Display */}
             <div className="data-entry-fields--image-upload">
               <label className='data-entry-fields--image-upload--description'>Artefact image</label>
@@ -155,13 +144,16 @@ const EditPage = () => {
 
           {/* This is the cancel button it just redirects to dashboard */}
           {/*<p>{feedback}</p>*/}
-          <div className="response-button" id="button">
+
+          <div className="response-button" id="button" >
+            {/*
             <Link to={`/dashboard`}>
               <button className="response-button__cancel" type="submit">
                 Cancel
               </button>
             </Link>
-            <button className="response-button__submit" type="submit">
+          */}
+            <button className="response-button__submit" type="submit" >
               Save
             </button>
           </div>
@@ -174,5 +166,6 @@ const EditPage = () => {
     return data.artefactName !== "" && data.artefactImg !== "";
   }
 };
+
 
 export default EditPage;

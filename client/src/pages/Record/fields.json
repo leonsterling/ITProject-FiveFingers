@@ -28,7 +28,7 @@
             "label" : "Memories",
             "placeholder" : "What you best remember",
             "type" : "text",
-            "component" : "input",
+            "component" : "textarea",
             "required": false
         },
         {
