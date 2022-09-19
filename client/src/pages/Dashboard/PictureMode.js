@@ -47,22 +47,25 @@ const PictureMode = () => {
   }, []);
 
   const [open, setOpen] = useState(false);
-
+  const [currID, setCurrID] = useState("");
   function openFunction (id) {
+    // Change the state of the visibility to true
+    console.log({currID});
+    console.log({id});
+
+    if (currID.length !== 0) {
+      setOpen({
+        [currID]: !open[currID],
+      });
+    }
+
     setOpen({
-      ...open,
       [id]: !open[id],
     });
+
+
+    setCurrID(id);
   }
-
-  const [clicked, setClicked] = useState(new Array(3).fill(false));
-  function openClick (event, id) {
-    let result = [...clicked];
-    result= result.map(x => false); // reset previous click
-    result[id] = true;
-    setClicked(result);
- }  
-
 //          style={{ padding: open[_id] ? '0 0 480px 0' : '0 0 0 0' }}
   let pictures = null;
   if (userData) {

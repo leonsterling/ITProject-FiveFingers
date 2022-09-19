@@ -29,8 +29,8 @@ const Dashboard = () => {
   const [isToggled, setIsToggled] = useState(false);
 
   return (
-    <>
-    <div className="container">
+    <div className='container'>
+    <div className="nav-container">
       <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
       <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
     </div>
@@ -39,7 +39,7 @@ const Dashboard = () => {
         <ViewToggle className="viewToggle" isToggled={isToggled} onToggle={()=>setIsToggled(!isToggled)}/>
     </div>
     {isToggled? <ListView/> : <PictureMode/>}
-    </>
+    </div>
   );
 
 

@@ -3,7 +3,7 @@
     height: 424px;
     position: absolute;
     top: auto;
-    width: 100vh;
+    width: calc(100% - 32px);
     z-index: 1;
     background: #333333;
     align-items: center;
@@ -11,8 +11,7 @@
     padding: 16px;
     margin-block-start: 1em;
     margin-block-end: 1em;
-    margin-inline-start: 20px;
-    margin-inline-end: 40px;
+    left: 0;
 
     .image-side {
         display: flex;
