@@ -1,11 +1,14 @@
 // Import the necessary libraries
-import React, { useState } from "react";
+import React, { useState, useEffect, Component } from "react";
+import DropFileInput from "./dropFiles/drop-file-input/DropFileInput.jsx";
 import TextInsertField from './TextInsertField.js';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FileBase from 'react-file-base64';
 import axios from "axios";
 import Cookies from "universal-cookie";
-import Navbar from '../Dashboard/Navbar';
+import TopNav from "../Dashboard/TopNav.js";
+import MobileNav from "../Dashboard/MobileNav.js";
 
 // CSS imports
 import "./RecordPage.scss";
@@ -23,7 +26,25 @@ const feedbackMessages = {
 // Record form to add a new Artefact
 const RecordForm = () => {
   // Initialize the navigate function
+  const navigate = useNavigate();
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
+
+  // To toggle the top navigatino
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const openMobileNav = () => {
+    setMobileNavOpen(true);
+  }
+
+  const closeMobileNav = () => {
+    setMobileNavOpen(false);
+  }
+
+  // Change the artefactFiles list if a new file is added or removed
+  const onFileChange = (files) => {
+    console.log(files);
+    setRecord((record.artefactFiles = files));
+  };
 
   // The JSON object that is being constantly updated and sent
   const initialState = {
@@ -87,6 +108,16 @@ const RecordForm = () => {
     setRecord({ ...record, [event.target.name]: event.target.value });
   }
 
+  const [sideNavOpen, setSideNavOpen] = useState(false);
+
+  const openSideNav = () => {
+    setSideNavOpen(true);
+  };
+
+  const closeSideNav = () => {
+    setSideNavOpen(false);
+  };
+
   let imageDisplay = record.artefactImg === '' ?
       <UploadPending
          setRecord={setRecord}
@@ -99,7 +130,10 @@ const RecordForm = () => {
   // Return an HTML of the Record Page
   return (
     <>
-      <Navbar />
+      <div className="container">
+        <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
+        <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
+      </div>
       <div className="record-page">
 
         {/* The form that the user to send to database */}
@@ -153,7 +187,7 @@ function UploadDone ({record, setRecord}) {
         <label className='data-entry-fields--image-upload--description'>Selected Image</label>
         <label>
           <div className='data-entry-fields--image-upload--upload-complete'>
-            <img src={record.artefactImg} alt=''/>
+            <img src={record.artefactImg} />
           </div>
         </label>
         <label className='data-entry-fields--image-upload--restart'>

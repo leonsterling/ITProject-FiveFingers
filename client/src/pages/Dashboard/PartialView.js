@@ -1,8 +1,6 @@
-import React from "react";
-
-import { Icon } from '@iconify/react';
-import { Link } from "react-router-dom";
-
+import React, { useEffect, useState, useCallback } from "react";
+// Required component
+import Lightbox from "react-awesome-lightbox";
 // Required stylesheet
 import "react-awesome-lightbox/build/style.css";
 import "./PartialView.scss";
@@ -20,8 +18,7 @@ const PartialView = ({ title, image, desc, date, _id }) => {
   return (
         <figure className="partial-view">
             <div className="image-side">
-                <img className="image-partial-view"
-                  src={image.imgURL} alt='the partial view of the component'/>
+                <img className="image-partial-view" src={image.imgURL}/>
             </div>
             <div className="info-side">
                 <div className="info-title">

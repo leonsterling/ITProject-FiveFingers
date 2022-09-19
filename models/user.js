@@ -1,5 +1,5 @@
 const mongoose = require('mongoose') // import mongoose
-const bcrypt = require('bcrypt') // import bycrypt
+const bcrypt = require('bcryptjs') // import bycrypt
 
 // schema for category
 const categorySchema = new mongoose.Schema({
