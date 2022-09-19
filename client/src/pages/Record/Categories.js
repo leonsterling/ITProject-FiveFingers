@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Icon } from '@iconify/react';
-import axios from 'axios';
+import { Icon } from "@iconify/react";
+import axios from "axios";
 import Cookies from "universal-cookie";
 
 // Sass import
-import './categories.scss';
+import "./categories.scss";
 
-export default function Categories ( { data, index, handleChange } ) {
-  let [label, setLabel] = useState("Choose a category");
+export default function Categories({ data, index, handleChange }) {
+  let [label, setLabel] = useState("");
   let [categoryList, setCategoryList] = useState(null);
+  let [filteredList, setFilteredList] = useState(null);
 
   let [isRetrieved, setRetrieved] = useState(false);
 
@@ -19,124 +20,140 @@ export default function Categories ( { data, index, handleChange } ) {
   // Assign a button to every category we get
   let options;
   if (categoryList !== null) {
-      options = categoryList.map( (data, index) => {
-          return (
-            <input key={index}
-              className="category__option"
-              type="button"
-              value={data}
-              onClick={() => {
-                  setVisibility(false);
-                  setLabel(data);
+    let filteredArray 
+    if (label !== null) {
+        // Change the filtered list based on the label
+        filteredArray = filterCategoryList(categoryList, label);
+    }
+    else {
+        filteredArray = categoryList;
+    }
+    options = filteredArray.map((data, index) => {
+      return (
+        <input
+          key={index}
+          className="category__option"
+          type="button"
+          value={data}
+          onClick={() => {
+            setVisibility(false);
+            setLabel(data);
 
-                  // Mimicks the event-handler
-                  let e = {
-                      target : {
-                          name : "category",
-                          value : data,
-                      }
-                  }
-                  handleChange(e);
-              }}
-            />
-          )
-      });
+            // Mimicks the event-handler
+            console.log(data.name);
+            let e = {
+              target: {
+                name: `${data.name}`,
+                value: data,
+              },
+            };
+            handleChange(e);
+          }}
+        />
+      );
+    });
   }
 
   // The base CSS class for the dropdown component
-  const dropdownBaseClass = 'input-like category__dropdown ';
+  const dropdownBaseClass = "input-like category__dropdown ";
 
   // Uses CSS to make it visible based on whether it should be visible or not
-  let dropdownClass = dropdownBaseClass + (isVisible ? 'visible' : 'hidden');
+  let dropdownClass = dropdownBaseClass + (isVisible ? "visible" : "hidden");
 
   useEffect(() => {
-      if (!isRetrieved) {
-          let uri = data.label === 'Category' ? 'categories' : 'associated';
-          let parsefn = data.label === 'Category' ? cleanCategories : cleanAssociated;
-          getObject(uri, setCategoryList, parsefn);
-          setRetrieved(true);
-      }
+    if (!isRetrieved) {
+      let uri =
+        data.label === "Category" ? "categories" : "associated";
+
+      let data_container =
+        data.label === "Category" ? "category_name" : "person";
+
+      getObject(uri, setCategoryList, data_container);
+      setRetrieved(true);
+    }
   });
 
   return (
     <>
-    <li key={index} className='category'>
-      <label>{data.label}</label>
-      <CategoryInput
-        isVisible={isVisible}
-        setVisibility={setVisibility}
-        handleChange={handleChange}
-        label={label}
-      />
+      <li key={index} className="category">
+        <label>{data.label}</label>
+        <CategoryInput
+          isVisible={isVisible}
+          setVisibility={setVisibility}
+          handleChange={handleChange}
+          label={label}
+          setLabel={setLabel}
+          data={data}
+        />
 
-      {/* The dropdown component */}
-      <div className={dropdownClass}>
-        {options}
+        {/* The dropdown component */}
+        <div className={dropdownClass}>
+          {options}
 
-        {/* Add a final button to add a category */}
-        <AddCategory />
-        <CancelCategory setVisibility={setVisibility}/>
-      </div>
-    </li>
-    <FocusState isVisible={isVisible} setVisibility={setVisibility} />
+          <CancelCategory setVisibility={setVisibility} />
+        </div>
+      </li>
+      <FocusState isVisible={isVisible} setVisibility={setVisibility} />
     </>
   );
 }
 
-function CategoryInput ( { isVisible, setVisibility, handleChange, label } ) {
-    let icon = isVisible ? 'codicon:chevron-up' : 'codicon:chevron-down';
-    let labelClass = (label === "Choose a category") ?
-        'initial':
-        '';
-    return (
-      <div
-        className='input-like category-input'
-        onClick={() => setVisibility(!isVisible)}
-      >
-        <span className={labelClass}> {label} </span>
-        <Icon icon={icon}/>
-      </div>
-    );
-}
-
-function AddCategory () {
-    return (
+function CategoryInput({
+  isVisible,
+  setVisibility,
+  handleChange,
+  label,
+  setLabel,
+  data
+}) {
+  let icon = isVisible ? "codicon:chevron-up" : "codicon:chevron-down";
+  let labelClass = label === "Choose a category" ? "initial" : "";
+  return (
+    <div
+      className="input-like category-input"
+      onClick={() => setVisibility(!isVisible)}
+    >
       <input
-        className="category__add"
-        type="button"
-        value={"Add category"}
-        onClick={() => console.log(`GoodBye`)}
-      />
-    )
+        type="text"
+      placeholder={"Enter a " + (data.name === 'category' ?
+          'category':
+          'person'
+      )}
+      value={label}
+      onChange={(e) => {
+        setLabel(e.target.value);
+        e.target.name = data.name;
+        e.target.value = e.target.value.trim();
+        console.log(e.target.name);
+        console.log(e.target.value);
+        handleChange(e);
+      }}/>
+      <Icon icon={icon} />
+    </div>
+  );
 }
 
-function CancelCategory ( { setVisibility } ) {
-    return (
-      <input
-        className="category__cancel"
-        type="button"
-        value={"Cancel"}
-        onClick={() => setVisibility(false)}
-      />
-    )
+function CancelCategory({ setVisibility }) {
+  return (
+    <input
+      className="category__cancel"
+      type="button"
+      value={"Cancel"}
+      onClick={() => setVisibility(false)}
+    />
+  );
 }
 
-function FocusState ( { isVisible, setVisibility } ) {
-    let currState = isVisible ? 'focused visible' : 'focused hidden';
-    return (
-        <div
-          className={currState}
-          onClick={() => setVisibility(false)}
-        >
-        </div>
-    )
+function FocusState({ isVisible, setVisibility }) {
+  let currState = isVisible ? "focused visible" : "focused hidden";
+  return <div className={currState} onClick={() => setVisibility(false)}></div>;
 }
 
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-async function getObject (requestURI, setCategoryList, parsefn) {
+async function getObject(requestURI, setCategoryList, data_container) {
   const configuration = {
     method: "get",
     headers: {
@@ -145,38 +162,35 @@ async function getObject (requestURI, setCategoryList, parsefn) {
     url: `http://localhost:5100/add-artefact/${requestURI}`,
   };
 
-  
-  await axios(configuration).then((res) => {
-      let data = parsefn(res.data[requestURI]);
-      console.log(res.data[requestURI]);
+  await axios(configuration)
+    .then((res) => {
+      let data = cleanCategories(res.data[requestURI], data_container);
+      // console.log(res.data[requestURI]);
       setCategoryList(data);
-  }).catch((err) => {
-    console.log("fail login");
-    console.log(err);
-  });
-
+    })
+    .catch((err) => {
+      console.log("fail login");
+      console.log(err);
+    });
 }
 
-function cleanCategories(array) {
-    let finlist = [];
-    for (let i = 0; i < array.length; i++) {
-        let category = array[i].category_name;
-        if (category === '' || category === ' ')
-            continue;
-        finlist.push(category);
+function cleanCategories(array, data_container) {
+  let finlist = [];
+  for (let i = 0; i < array.length; i++) {
+    let category = array[i][data_container];
+    if (category === "" || category === " ") continue;
+    finlist.push(category);
+  }
+  return finlist;
+}
+
+function filterCategoryList(array, label) {
+  let finlist = [];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].startsWith(label)) {
+        finlist.push(array[i]);
     }
+  }
     return finlist;
 }
-
-function cleanAssociated(array) {
-    let finlist = [];
-    for (let i = 0; i < array.length; i++) {
-        let category = array[i].person;
-        if (category === '' || category === ' ')
-            continue;
-        finlist.push(category);
-    }
-    return finlist;
-}
-
 

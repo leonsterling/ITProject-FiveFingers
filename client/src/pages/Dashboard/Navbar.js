@@ -15,7 +15,7 @@ export default function Navbar () {
 
   return (
     <>
-    <div className="container">
+    <div className="nav-bar">
       <TopNav mobileNavOpen={mobileNavOpen} openMobileNav={openMobileNav} />
       <MobileNav mobileNavOpen={mobileNavOpen} closeMobileNav={closeMobileNav} />
     </div>

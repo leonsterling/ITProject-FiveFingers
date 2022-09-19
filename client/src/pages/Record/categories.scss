@@ -19,6 +19,14 @@
         span {
             padding-top: 5px;
         }
+
+        input {
+            margin: 0;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            outline: none;
+        }
     }
 
     .category__option, .category__cancel {

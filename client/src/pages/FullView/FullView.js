@@ -7,7 +7,8 @@ import FsLightbox from "fslightbox-react";
 
 import axios from "axios";
 import Cookies from "universal-cookie";
-import "./FullView.css";
+import "./FullView.scss";
+import Navbar from '../Dashboard/Navbar';
 
 // Import Authentication and Cookies
 const cookies = new Cookies();
@@ -76,25 +77,27 @@ function FullView() {
   }
 
   return (
-        <div>
-          <div className="header-fv">Full View</div>
-          <div className="img-container">
-            <img
-              className="cropped-ofp"
-              src={recordImg}
-              alt={recordName}
-              onClick={() => setToggler(!toggler)}
-            />
-            <p className="artefact-name">{recordName}</p>
-            <p className="artefact-tags">TestTag</p>
-            <FsLightbox toggler={toggler} sources={[recordImg]} />
-          </div>
-          <div>
-            <div>{recordDescription}</div>
-            <div>{recordCategory}</div>
-            <div>{recordPerson}</div>
-          </div>
+    <>
+      <Navbar />
+      <div className='full-view'>
+        <img
+          className="cropped-ofp"
+          src={recordImg}
+          alt={recordName}
+          onClick={() => setToggler(!toggler)}
+        />
+        <div className="data-container">
+          <p className="artefact-name">{recordName}</p>
+          <p className="artefact-tags">TestTag</p>
+          <FsLightbox toggler={toggler} sources={[recordImg]} />
         </div>
+        <div>
+          <div>{recordDescription}</div>
+          <div>{recordCategory}</div>
+          <div>{recordPerson}</div>
+        </div>
+      </div>
+    </>
   );
 }
 
