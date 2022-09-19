@@ -8,7 +8,6 @@ import FsLightbox from "fslightbox-react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import "./FullView.css";
-import { Larry } from "./larry.jpg";
 
 // Import Authentication and Cookies
 const cookies = new Cookies();
