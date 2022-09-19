@@ -21,17 +21,12 @@ function FullView() {
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
 
-  const navigate = useNavigate();
-
   // State to update the recordData of the artefact
   const [recordData, setRecordData] = useState(null);
 
-  let ArtefactID = null;
-  ArtefactID = JSON.stringify({ _id }._id);
-  console.log(ArtefactID);
   const configuration = {
     method: "get",
-    url: `http://localhost:5100/${_id}`,
+    url: `http://localhost:5100/get-artefact/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },

@@ -12,7 +12,7 @@ const userController = require('../controllers/userController')
 // GET routes
 userRouter.get('/dashboard', jwtAuth, userController.getDashboard)
 userRouter.get("/data", jwtAuth, userController.allData);
-userRouter.get("/:id", userController.artefact_details);
+userRouter.get('/get-artefact/:id', userController.artefact_details);
 userRouter.get('/search-artefacts/:query', jwtAuth, userController.searchBar)
 
 userRouter.get('/add-artefact/categories', jwtAuth, userController.getCategories)
@@ -27,7 +27,7 @@ userRouter.post('/change-password', userController.changePassword)
 userRouter.post('/add-artefact', jwtAuth, upload.single("artefact-image"), userController.registerArtefact),
 
 //PATCH route to edit artefact
-userRouter.patch("/:id", userController.editArtefact);
+userRouter.patch('/edit-artefact/:id', userController.editArtefact);
 
 // DELETE route
 userRouter.delete('/delete-artefact/:id', jwtAuth, userController.deleteArtefact)

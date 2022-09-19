@@ -34,6 +34,7 @@ const EditPage = () => {
 
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
+  console.log({_id})
 
   const dummyData = {
     artefactName: "Rose",
@@ -64,7 +65,7 @@ const EditPage = () => {
       // set configurations
       const configuration = {
         method: "patch",
-        url: `http://localhost:5100/${_id}`,
+        url: `http://localhost:5100/edit-artefact/${_id}`,
         data: {
           record,
         },
@@ -93,7 +94,7 @@ const EditPage = () => {
   // Hook to get the data
   const configuration = {
     method: "get",
-    url: `http://localhost:5100/${_id}`,
+    url: `http://localhost:5100/get-artefact/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },

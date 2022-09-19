@@ -27,7 +27,7 @@ const PartialView = ({ title, image, desc, date, _id }) => {
                     <p>{date}</p>
                 </div>
                 <div className="info-more">
-                    <Link to={`/${_id}`} className="link-line">
+                    <Link to={`/full-view/${_id}`} className="link-line">
                         <p>Click to Display Full View
                         <Icon className="redirect-icon" icon="bi:box-arrow-in-down-right" flip="vertical"/>
                         </p>

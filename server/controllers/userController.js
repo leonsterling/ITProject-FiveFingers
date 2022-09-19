@@ -81,11 +81,9 @@ const getDashboard = async (req, res) => {
 
 // Get the particular Artefact detail
 const artefact_details = async (req, res) => {
-  console.log("artefact details");
-  console.log("ID IS:"+ (JSON.stringify(req.url)));
-  //console.log("ID IS:"+ JSON.stringify(req.parse,null,4));
+
   try{
-    const record = await Artefact.findById((req.url).substring(1));
+    const record = await Artefact.findById(req.params.id);
     res.status(200).json(record);
   }catch (error){
     res.status(404).json({ message: error.message });
@@ -126,10 +124,7 @@ const getAssociated = (req,res) => {
 
 // Update CRUD Detail by Id
 const editArtefact = (req, res) => {
-  console.log("IDFORCRUD")
-  console.log(JSON.stringify(req.params.id));
-  console.log("BODYFORCRUD")
-  console.log(JSON.stringify(req.body['record']));
+  
 	Artefact.findByIdAndUpdate(req.params.id,req.body['record'])
 		.then(function () {
       console.log("it worked")
@@ -262,34 +257,7 @@ const registerArtefact = async (req, res) => {
       error,
     });
   })
-  
 
-  /*
-  User.updateOne(
-    { _id: req.user.userId },
-    { $push: { artefactList: artefact } },
-    function (err, doc) {
-      if (err) {
-        res.status(500).send({
-          message: "Error upon registering artefact",
-          err,
-        });
-      } else {
-        artefact.save().then((result) => {
-          res.status(201).send({
-            message: "Artefact registered successfully",
-            result,
-          });
-        }).catch((error) => {
-          res.status(500).send({
-            message: "Error upon registering artefact",
-            error,
-          });
-        });
-      }
-    }
-  );
-  */
 };
 
 const deleteArtefact = async(req, res) => {
