@@ -62,6 +62,8 @@ const EditPage = () => {
 
     setFeedback(feedbackMessages.valid);
     async function updateArtefact(e) {
+
+      console.log("HELLO")
       // set configurations
       const configuration = {
         method: "patch",
@@ -73,6 +75,7 @@ const EditPage = () => {
           Authorization: `Bearer ${token}`, // authorized route with jwt token
         },
       };
+      console.log(`/${_id}`)
 
       // make the API call
       axios(configuration)
@@ -101,6 +104,7 @@ const EditPage = () => {
   };
 
   useEffect(function () {
+    console.log("HELLO");
     async function updatePage() {
       try {
         const response = await axios(configuration);

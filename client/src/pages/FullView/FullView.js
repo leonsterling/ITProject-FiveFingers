@@ -20,7 +20,8 @@ function FullView() {
 
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
-
+  console.log({_id});
+  
   // State to update the recordData of the artefact
   const [recordData, setRecordData] = useState(null);
 

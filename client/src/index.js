@@ -49,7 +49,7 @@ root.render(
           <Route element={<RecordPage />} path="/add-artefact" exact>
             {" "}
           </Route>
-          <Route element={<EditPage />} path="/edit-artefact/:id" exact>
+          <Route element={<EditPage />} path="/edit-artefact/:_id" exact>
             {" "}
           </Route>
        

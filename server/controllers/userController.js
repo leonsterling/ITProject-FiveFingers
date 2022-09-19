@@ -81,7 +81,7 @@ const getDashboard = async (req, res) => {
 
 // Get the particular Artefact detail
 const artefact_details = async (req, res) => {
-
+  console.log(req.params.id);
   try{
     const record = await Artefact.findById(req.params.id);
     res.status(200).json(record);
@@ -124,7 +124,7 @@ const getAssociated = (req,res) => {
 
 // Update CRUD Detail by Id
 const editArtefact = (req, res) => {
-  
+  console.log(req.params.id);
 	Artefact.findByIdAndUpdate(req.params.id,req.body['record'])
 		.then(function () {
       console.log("it worked")
