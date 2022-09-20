@@ -469,7 +469,6 @@ const registerUser = async (req, res) => {
 module.exports = {
   allData,
   registerArtefact,
-  registerUser,
   loginUser,
   editArtefact,
   deleteArtefact,
@@ -478,4 +477,7 @@ module.exports = {
   changePassword,
   getCategories,
   getAssociated,
+
+  // helper function, not part of requirement
+  registerUser,
 };
