@@ -1,6 +1,5 @@
 main {
     grid-area: main;
-    overflow-y: auto;
 }
 
 .main-container {
@@ -27,6 +26,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     margin: 0 6px;
+    justify-content: center;
 }
 
 .card-container {
@@ -39,7 +39,7 @@ main {
 .card {
     min-width: 0;
     margin: 20px;
-    width: 8em;
+    width: 12em;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

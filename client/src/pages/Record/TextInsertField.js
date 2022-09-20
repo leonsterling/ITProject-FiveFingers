@@ -57,7 +57,7 @@ function TextArea ( { data, index, handleChange } ) {
         <label>{data.label}</label>
         <textarea
           className="descriptionArea"
-          name="description"
+          name={data.name}
           id="description"
           type="text"
           rows="6"

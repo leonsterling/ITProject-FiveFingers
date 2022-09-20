@@ -42,7 +42,6 @@ const Dashboard = () => {
       >
         <input
           type="text"
-          className=""
           onClick={() => console.log("Hello world")}
           onChange={(e) => setSearchText(e.target.value)}
         />
@@ -96,7 +95,8 @@ const Dashboard = () => {
       <div className="container">
         <div className="nav-container">
           <Navbar />
-          <div className="dashboard-header">
+        </div>
+        <div className="dashboard-header">
             <h2>My Artefacts</h2>
 
             <div
@@ -137,7 +137,6 @@ const Dashboard = () => {
               handleDashboard={isSearched ? handleSearch : handleDashboard}
             />
           )}
-        </div>
       </div>
     </>
   );

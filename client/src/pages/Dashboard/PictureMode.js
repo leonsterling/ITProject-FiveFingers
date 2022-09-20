@@ -58,9 +58,7 @@ const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
             <div className="card">
               <img src={artefactImg.imgURL} alt=''/>
               <div className="card-title">
-                <Link to={`/full-view/${_id}`} >
-                  <p>{artefactName}</p>
-                </Link>
+                  {artefactName}
               </div>
             </div>
 
