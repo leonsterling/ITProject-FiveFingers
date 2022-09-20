@@ -22,6 +22,7 @@ const validQuery = "Postcard"
 const invalidQuery = "Jakarta"
 
 const validId = "6325c0d2c579241489ad0bd0"
+const invalidId = "0123456789"
 
 // JWT token for authenticated routes
 let tempToken;
@@ -160,6 +161,21 @@ describe("associated", () => {
       .set({Authorization: tempToken})
       .then((res) => {
         expect(res.body.message).to.be.eql("Artefact retrieved successfully");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});
+
+/* retrieve a non-existing artefact */
+describe("associated", () => {
+  it("should not retrieve a non-existing artefact", (done) => {
+    request(app)
+      .get(`/get-artefact/${invalidId}`)
+      .expect(500)
+      .set({Authorization: tempToken})
+      .then((res) => {
+        expect(res.body.message).to.be.eql("Artefact retrieved unsuccessfully");
         done();
       })
       .catch((err) => done(err));

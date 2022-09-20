@@ -450,7 +450,7 @@ const registerUser = async (req, res) => {
   await user
     .save()
     .then((result) => {
-      res.status(201).send({
+      res.status(200).send({
         message: "User Created Successfully",
         result,
       });
