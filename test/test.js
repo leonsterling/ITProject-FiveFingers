@@ -33,8 +33,20 @@ const invalidQuery = "Jakarta"
 // existing artefactID
 const validId = "6329b34997977604196719bd"
 
-// dummy valid ID
+// dummy invalid ID
 const invalidId = "0123456789"
+
+/*
+// dummy artefact Data
+const record = {
+  artefactName: "dummyName",
+  description: "dummyDescription",
+  memories: "dummyMemories",
+  associated: "Joseph Sterling",
+  category: "Photo",
+  location: "dummyLocation"
+}
+*/
 
 /* MOCK DATA */
 
@@ -143,7 +155,7 @@ describe("get all categories functionality", () => {
   });
 });
 
-/* retrieve all associataed */
+/* retrieve all associated */
 describe("get all associated functionality", () => {
   it("should retrieve all associated", (done) => {
     request(app)
@@ -184,3 +196,21 @@ describe("get 1 particular artefact funtionality", () => {
       .catch((err) => done(err));
   });
 });
+
+/*
+// edit an artefact
+describe("edit an artefact functionality", () => {
+  it("should edit an artefact", (done) => {
+    request(app)
+      .patch(`/edit-artefact/${validId}`)
+      .set({Authorization: tempToken})
+      .send(record)
+      .expect(HTPP_SUCCESS)
+      .then((res) => {
+        expect(res.body.message).to.be.eql("Edit artefact successfully");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});
+*/

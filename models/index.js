@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost', {
   
 // Log to console once the database is open
   db.once('open', async () => {
-  console.log(`Mongo is connected!\nStarted on ${db.host}:${db.port}`)
+  // console.log(`Mongo is connected! Started on ${db.host}:${db.port}`)
 })
 
 // imports "User" mongoose model
