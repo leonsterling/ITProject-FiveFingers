@@ -70,13 +70,13 @@ const searchBar = async (req, res) => {
     .then((artefactRecords) => {
       if (artefactRecords.length == 0) {
         res.status(200).send({
-          message: "Search query success with 0 results",
+          message: "Search query success with 0 artefacts",
           artefactRecords,
         });
       } else {
         res.status(200).send({
           message:
-            "Search query success with " + artefactRecords.length + " result",
+            "Search query success with " + artefactRecords.length + " artefacts",
           artefactRecords,
         });
       }

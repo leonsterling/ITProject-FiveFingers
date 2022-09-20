@@ -21,7 +21,7 @@ const invalidUser = {
 const validQuery = "Postcard"
 const invalidQuery = "Jakarta"
 
-const validId = "6325c0d2c579241489ad0bd0"
+const validId = "6329b34997977604196719bd"
 const invalidId = "0123456789"
 
 // JWT token for authenticated routes
@@ -87,7 +87,7 @@ describe("search functionality", () => {
       .set({Authorization: tempToken})
       .then((res) => {
         const searched = res.body.artefactRecords
-        expect(res.body.message).to.be.eql("Search query success with " + searched.length + " result");
+        expect(res.body.message).to.be.eql("Search query success with " + searched.length + " artefacts");
         done();
       })
       .catch((err) => done(err));
@@ -100,7 +100,7 @@ describe("search functionality", () => {
       .expect(200)
       .set({Authorization: tempToken})
       .then((res) => {
-        expect(res.body.message).to.be.eql("Search query success with 0 results");
+        expect(res.body.message).to.be.eql("Search query success with 0 artefacts");
         done();
       })
       .catch((err) => done(err));
