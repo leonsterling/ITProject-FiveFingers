@@ -45,6 +45,8 @@ const RecordForm = () => {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
 
+    console.log(record);
+
     if (!isValidInput(record)) {
         setFeedback(feedbackMessages.invalid);
         return;

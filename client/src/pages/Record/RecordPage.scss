@@ -35,6 +35,7 @@
             font-family: Monsterrat-bold;
             color: hsl(180deg, 7%, 49%);
             margin-bottom: 30px;
+            padding-top: 35px;
         }
 
         .data-entry-fields {
@@ -72,7 +73,7 @@
                     font-size: 0.95em;
                     width: 35vw;
                     box-shadow: var(--shadow);
-                    background-color: #f8f8f8;
+                    background-color: hsl(198, 7%, 97%);
 
                     &:focus {
                         outline: 2px solid var(--accent-color);

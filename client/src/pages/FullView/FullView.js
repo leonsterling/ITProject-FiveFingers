@@ -21,7 +21,6 @@ function FullView() {
 
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
-  console.log({_id});
   
   // State to update the recordData of the artefact
   const [recordData, setRecordData] = useState(null);
@@ -34,13 +33,11 @@ function FullView() {
     },
   };
 
-  console.log("URL =" + configuration.url);
 
   // Get Function to retirev the artefact data
   async function getRecord() {
     const response = await axios(configuration);
 
-    //console.log(recordData);
     if (!response) {
     } else {
       return response;
@@ -50,7 +47,7 @@ function FullView() {
   useEffect(function () {
     getRecord()
       .then((response) => {
-        setRecordData(response.data);
+        setRecordData(response.data.result);
       })
       .catch((e) => {
         console.log(e.message);
@@ -67,38 +64,93 @@ function FullView() {
     recordCategory = null;
 
   if (recordData) {
-    recordName = recordData.result.artefactName;
-    recordImg = recordData.result.artefactImg.imgURL;
-    recordDescription = recordData.result.description;
-    recordMemories = recordData.result.memories;
-    recordLocation = recordData.result.location;
-    recordPerson = recordData.result.associated.person;
-    recordCategory = recordData.result.category.category_name;
+    recordName = recordData.artefactName;
+    recordImg = recordData.artefactImg.imgURL;
+    recordDescription = recordData.description;
+    recordMemories = recordData.memories;
+    recordLocation = recordData.location;
+    recordPerson = recordData.associated.person;
+    recordCategory = recordData.category.category_name;
   }
+
 
   return (
     <>
       <Navbar />
       <div className='full-view'>
-        <img
-          className="cropped-ofp"
-          src={recordImg}
-          alt={recordName}
-          onClick={() => setToggler(!toggler)}
-        />
-        <div className="data-container">
-          <p className="artefact-name">{recordName}</p>
-          <p className="artefact-tags">TestTag</p>
-          <FsLightbox toggler={toggler} sources={[recordImg]} />
+        <div className="artefact-image">
+          <img
+            src={recordImg}
+            alt={recordName}
+          />
+          <div
+            className='inner-shadow'
+            onClick={() => setToggler(!toggler)}
+          >
+            <h1 className="artefact-name">{recordName}</h1>
+            <div className='location'>{recordLocation}</div>
+          </div>
         </div>
-        <div>
-          <div>{recordDescription}</div>
-          <div>{recordCategory}</div>
-          <div>{recordPerson}</div>
+        <div className="data-container">
+          <div className="quick-information">
+            <PersonAssociated data={recordPerson} />
+            <div className='separator'>|</div>
+            <Tag  data={recordCategory}/>
+          </div>
+          <div className='detailed'>
+            <RecordDescription data={recordDescription} />
+            <div></div>
+            <Memories data={recordMemories} />
+          </div>
         </div>
       </div>
+      <FsLightbox toggler={toggler} sources={[recordImg]} />
     </>
   );
+}
+
+function PersonAssociated ( { data } ) {
+    return (
+        <div className='associated'>With <b>{data}</b></div>
+    )
+}
+
+function Tag ( { data } ) {
+    return (
+        <div className='category'><b>{data}</b></div>
+    )
+}
+
+function RecordDescription ( { data } ) {
+    let dataClass = 'detailed--data';
+    if (data === undefined || data === '') {
+        data = 'No description added, but always worth remembering';
+        dataClass += ' undefined';
+    }
+    return (
+        <>
+        <div className='data-field'>
+          <h2 className='detailed--header'>Description</h2>
+          <div className={dataClass}>{data}</div>
+        </div>
+        </>
+    )
+}
+
+function Memories ( { data } ) {
+    let dataClass = 'detailed--data';
+    if (data === undefined || data === '') {
+        data = 'No memories recorded, but always worth sharing';
+        dataClass += ' undefined';
+    }
+    return (
+        <>
+        <div className='data-field'>
+          <h2 className='detailed--header'>Memories</h2>
+          <div className={dataClass}>{data}</div>
+        </div>
+        </>
+    )
 }
 
 export default FullView;
