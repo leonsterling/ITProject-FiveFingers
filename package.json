@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc --reporter=html mocha --recursive --exit --timeout 10000",
-    "start": "nodemon server.js",
-    "server": "npm start",
-    "client": "npm start --prefix ./client",
-    "dev": "concurrently \"npm run client \" \"npm run server\""
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "server": "node server.js",
+    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run\""
   },
   "author": "",
   "license": "ISC",
