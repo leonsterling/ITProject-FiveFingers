@@ -161,9 +161,9 @@ async function getObject(requestURI, setCategoryList, data_container) {
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
-    url: `http://localhost:5100/${requestURI}`,
+    url: `https://sterlingfamilyartefacts.herokuapp.com/${requestURI}`,
   };
-  console.log(`http://localhost:5100/${requestURI}`)
+  console.log(`https://sterlingfamilyartefacts.herokuapp.com/${requestURI}`)
   await axios(configuration)
     .then((res) => {
       console.log(res.data)

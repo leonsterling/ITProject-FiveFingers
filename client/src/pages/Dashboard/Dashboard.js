@@ -52,7 +52,7 @@ const Dashboard = () => {
   async function handleSearch() {
     const configuration = {
       method: "get",
-      url: `http://localhost:5100/search-artefacts/${searchText}`,
+      url: `https://sterlingfamilyartefacts.herokuapp.com/search-artefacts/${searchText}`,
       headers: {
         Authorization: `Bearer ${token}`, // authorized route with jwt token
       },
@@ -75,7 +75,7 @@ const Dashboard = () => {
   async function handleDashboard() {
     const configuration = {
       method: "get",
-      url: "http://localhost:5100/data",
+      url: "https://sterlingfamilyartefacts.herokuapp.com/data",
       headers: {
         Authorization: `Bearer ${token}`, // authorized route with jwt token
       },
