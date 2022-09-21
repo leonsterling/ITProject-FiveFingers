@@ -5,7 +5,7 @@ const SALT_FACTOR = 10;
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
-const LIMIT = 4
+const LIMIT = 4;
 
 // login function
 const loginUser = (req, res) => {
@@ -78,7 +78,9 @@ const searchBar = async (req, res) => {
       } else {
         res.status(200).send({
           message:
-            "Search query success with " + artefactRecords.length + " artefacts",
+            "Search query success with " +
+            artefactRecords.length +
+            " artefacts",
           artefactRecords,
         });
       }
@@ -109,37 +111,53 @@ const allData = (req, res) => {
 };
 
 // get data based on page
-const getPage = async(req,res) => {
-  const pageNum = req.params.page
-  const totalArtefact = await Artefact.countDocuments()
-  const totalPages = Math.floor(totalArtefact / LIMIT)
+const getPage = async (req, res) => {
+  const pageNum = req.params.page;
+  const totalArtefact = await Artefact.countDocuments();
+  let totalPages = Math.floor(totalArtefact / LIMIT);
+  let remainder = totalArtefact % LIMIT
 
-  let idx = (pageNum - 1) * LIMIT
- 
-  const dataInPage = await Artefact.find()
+  if (totalPages == 0) {
+    totalPages = 1
+  }
+
+  if (remainder != 0) {
+    totalPages += 1
+  }
+
+  let idx = (pageNum - 1) * LIMIT;
+
+  await Artefact.find()
     .skip(idx)
     .limit(LIMIT)
-  
-  const dataPerPage = dataInPage.length
-  
-  if (dataPerPage > 0) {
-    res.status(200).send({
-      message: `Successfully retrieved page ${pageNum}`,
-      dataPerPage,
-      dataInPage,
-      totalPages
-    })
-  }
+    .then((dataInPage) => {
+      const dataPerPage = dataInPage.length;
 
-  else {
-    res.status(200).send({
-      message: 'You ran out of artefacts!',
-      dataPerPage,
-      dataInPage,
-      totalPages
+      if (dataPerPage > 0) {
+        res.status(200).send({
+          message: `Successfully retrieved page ${pageNum}`,
+          dataPerPage,
+          dataInPage,
+          totalPages,
+          totalArtefact
+        });
+      } else {
+        res.status(200).send({
+          message: "You ran out of artefacts!",
+          dataPerPage,
+          dataInPage,
+          totalPages,
+          totalArtefact
+        });
+      }
     })
-  }
-}
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error occured in getting pages",
+        error,
+      });
+    });
+};
 
 // get categories function
 const getCategories = (req, res) => {
@@ -147,7 +165,7 @@ const getCategories = (req, res) => {
     .then((result) => {
       res.status(200).send({
         message: "Categories recieved successfully",
-        result
+        result,
       });
     })
     .catch((error) => {
@@ -164,7 +182,7 @@ const getAssociated = (req, res) => {
     .then((result) => {
       res.status(200).send({
         message: "Associated recieved successfully",
-        result
+        result,
       });
     })
     .catch((error) => {
@@ -194,7 +212,7 @@ const artefact_details = async (req, res) => {
 
 // Create new Artefact Record
 const registerArtefact = async (req, res) => {
-  console.log(req.body.record.artefactImg)
+  console.log(req.body.record.artefactImg);
   const image_data = await cloudinary.uploader.upload(
     req.body.record.artefactImg,
     {
@@ -510,7 +528,7 @@ module.exports = {
   getCategories,
   getAssociated,
 
-  // not automatic testing yet 
+  // not automatic testing yet
   getPage,
   registerArtefact,
   editArtefact,
