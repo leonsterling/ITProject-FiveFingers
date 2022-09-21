@@ -59,7 +59,7 @@ const searchBar = async (req, res) => {
   Artefact.aggregate([
     {
       $search: {
-        index: "artefacts_search_index",
+        index: "associated_category_index",
         text: {
           path: ["associated.person", "category.category_name"],
           query: query,
