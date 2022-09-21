@@ -5,6 +5,8 @@ const SALT_FACTOR = 10;
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
+const LIMIT = 4
+
 // login function
 const loginUser = (req, res) => {
   User.findOne({ username: req.body.username })
@@ -105,6 +107,39 @@ const allData = (req, res) => {
       });
     });
 };
+
+// get data based on page
+const getPage = async(req,res) => {
+  const pageNum = req.params.page
+  const totalArtefact = await Artefact.countDocuments()
+  const totalPages = Math.floor(totalArtefact / LIMIT)
+
+  let idx = (pageNum - 1) * LIMIT
+ 
+  const dataInPage = await Artefact.find()
+    .skip(idx)
+    .limit(LIMIT)
+  
+  const dataPerPage = dataInPage.length
+  
+  if (dataPerPage > 0) {
+    res.status(200).send({
+      message: `Successfully retrieved page ${pageNum}`,
+      dataPerPage,
+      dataInPage,
+      totalPages
+    })
+  }
+
+  else {
+    res.status(200).send({
+      message: 'You ran out of artefacts!',
+      dataPerPage,
+      dataInPage,
+      totalPages
+    })
+  }
+}
 
 // get categories function
 const getCategories = (req, res) => {
@@ -469,15 +504,18 @@ const registerUser = async (req, res) => {
 // exports objects containing functions imported by router
 module.exports = {
   allData,
-  registerArtefact,
   loginUser,
-  editArtefact,
-  deleteArtefact,
   artefact_details,
   searchBar,
-  changePassword,
   getCategories,
   getAssociated,
+
+  // not automatic testing yet 
+  getPage,
+  registerArtefact,
+  editArtefact,
+  deleteArtefact,
+  changePassword,
 
   // helper function, not part of requirement
   registerUser,

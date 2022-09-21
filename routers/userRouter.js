@@ -17,6 +17,9 @@ userRouter.get('/search-artefacts/:query', jwtAuth, userController.searchBar)
 userRouter.get('/get-categories', jwtAuth, userController.getCategories)
 userRouter.get('/get-associated', jwtAuth, userController.getAssociated)
 
+// testing pagination
+userRouter.get('/data/:page', jwtAuth, userController.getPage)
+
 // POST routes for Login activities
 userRouter.post('/register', userController.registerUser)
 userRouter.post('/login', userController.loginUser)
