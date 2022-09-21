@@ -16,6 +16,7 @@
 .record-page {
     display: flex;
     height: 100vh;
+    justify-content: center;
 
     & * {
         position: relative;
@@ -26,9 +27,8 @@
         display: flex;
         flex-direction: column;
         width: 80vw;
-        margin: auto;
 
-        & > h1 {
+        & > h2 {
             font-size: 20px;
             font-variant-caps: all-small-caps;
             letter-spacing: 0.05em;
