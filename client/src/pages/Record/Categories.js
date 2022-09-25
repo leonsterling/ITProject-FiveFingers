@@ -1,26 +1,44 @@
+/**
+ * @fileoverview Implementation of the Add-artefact page
+ * Uses:
+ * - React for rendering HTML
+ * - Axios for getting information from the serverside
+ * - Universal Cookie for handling browser cookies and validating logins
+ * - Iconify for adding icons
+ */
+
+// Imports of packages
 import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
-// Sass import
+// Style-based imports
 import "./categories.scss";
 
-export default function Categories({ data, index, handleChange }) {
-  let [label, setLabel] = useState("");
-  let [categoryList, setCategoryList] = useState(null);
-  let [filteredList, setFilteredList] = useState(null);
+// obtain token from cookie
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
 
-  let [isRetrieved, setRetrieved] = useState(false);
+/**
+ * The Categories feature that the client requested. Allows the user to add,
+ * filter, and save their own custom categories
+ * @return {React.Component}
+ */
+function Categories({ data, index, handleChange }) {
+  let /** string */ [label, setLabel] = useState("");
+  let /** Array<string> */ [categoryList, setCategoryList] = useState(null);
+
+  let /** boolean */ [isRetrieved, setRetrieved] = useState(false);
 
   // Changes based on what the user clicks - whether its outside the
   // categories button, the cancel button or the button itself
-  let [isVisible, setVisibility] = useState(false);
+  let /** boolean */ [isVisible, setVisibility] = useState(false);
 
   // Assign a button to every category we get
-  let options;
+  let /** ?Array<React.Component> */ options;
   if (categoryList !== null) {
-    let filteredArray 
+    let /** Array<string> */ filteredArray 
     if (label !== null) {
         // Change the filtered list based on the label
         filteredArray = filterCategoryList(categoryList, label);
@@ -57,17 +75,17 @@ export default function Categories({ data, index, handleChange }) {
   }
 
   // The base CSS class for the dropdown component
-  const dropdownBaseClass = "input-like category__dropdown ";
+  const /** string */ dropdownBaseClass = "input-like category__dropdown ";
 
   // Uses CSS to make it visible based on whether it should be visible or not
-  let dropdownClass = dropdownBaseClass + (isVisible ? "visible" : "hidden");
+  let /** string */ dropdownClass = dropdownBaseClass + (isVisible ? "visible" : "hidden");
 
   useEffect(() => {
     if (!isRetrieved) {
-      let uri =
+      let /** string */ uri =
         data.label === "Category" ? "get-categories" : "get-associated";
 
-      let data_container =
+      let /** string */ data_container =
         data.label === "Category" ? "category_name" : "person";
 
       getObject(uri, setCategoryList, data_container);
@@ -100,6 +118,10 @@ export default function Categories({ data, index, handleChange }) {
   );
 }
 
+/**
+ * The text input where the user enters their categories
+ * @return {React.Component}
+ */
 function CategoryInput({
   isVisible,
   setVisibility,
@@ -108,8 +130,10 @@ function CategoryInput({
   setLabel,
   data
 }) {
-  let icon = isVisible ? "codicon:chevron-up" : "codicon:chevron-down";
-  let labelClass = label === "Choose a category" ? "initial" : "";
+  let /** string */ icon = isVisible ?
+        "codicon:chevron-up":
+        "codicon:chevron-down";
+  let /** string */ labelClass = label === "Choose a category" ? "initial" : "";
   return (
     <div
       className="input-like category-input"
@@ -135,6 +159,11 @@ function CategoryInput({
   );
 }
 
+/**
+ * The Cancel button that shows up in the popup menu, after the user clicks
+ * on the text-input field
+ * @return {React.Component}
+ */
 function CancelCategory({ setVisibility }) {
   return (
     <input
@@ -146,15 +175,28 @@ function CancelCategory({ setVisibility }) {
   );
 }
 
+/**
+ * An invisible div that allows the user to click anywhere outside the
+ * category component to remove the categories popup
+ * @return {React.Component}
+ */
 function FocusState({ isVisible, setVisibility }) {
-  let currState = isVisible ? "focused visible" : "focused hidden";
+  let /** string */ currState = isVisible ? "focused visible" : "focused hidden";
   return <div className={currState} onClick={() => setVisibility(false)}></div>;
 }
 
-// obtain token from cookie
-const cookies = new Cookies();
-const token = cookies.get("TOKEN");
-
+/**
+ * Gets the repective categoryList from the server, based on the requestURI
+ * and sets the category list accordingly
+ * @param {string} requestURI        the URI that decides whether its a
+ *                                   `Category` type or a `Person Associated`
+ *                                   type
+ * @param {callback} setCategoryList the callback that changes the
+ *                                   category list based on the retrieved data
+ * @param {string} data_container    the key value that the client-side would
+ *                                   have to hash-index in order to get the
+ *                                   data
+ */
 async function getObject(requestURI, setCategoryList, data_container) {
   const configuration = {
     method: "get",
@@ -176,6 +218,12 @@ async function getObject(requestURI, setCategoryList, data_container) {
     });
 }
 
+/**
+ * Grabs the data from the categories, removes unwanted values (like empty
+ * strings) and returns a cleaned-up list
+ * @return {Array<string>} a list of strings that contain the relevant
+ *                         categories
+ */
 function cleanCategories(array, data_container) {
   let finlist = [];
   for (let i = 0; i < array.length; i++) {
@@ -186,6 +234,12 @@ function cleanCategories(array, data_container) {
   return finlist;
 }
 
+/**
+ * Grabs the data from the categories, only keeps values corresponding to the
+ * inputted label and returns a filtered list
+ * @return {Array<string>} a list of strings that contain the relevant
+ *                         categories
+ */
 function filterCategoryList(array, label) {
   let finlist = [];
   for (let i = 0; i < array.length; i++) {
@@ -196,3 +250,4 @@ function filterCategoryList(array, label) {
     return finlist;
 }
 
+export default Categories;

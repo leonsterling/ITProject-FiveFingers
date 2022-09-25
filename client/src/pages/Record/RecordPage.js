@@ -1,34 +1,64 @@
-// Import the necessary libraries
+/**
+ * @fileoverview Implementation of the Add-artefact page
+ * Uses:
+ * - React for rendering HTML
+ * - Axios for getting information from the serverside
+ * - FileBase for getting images from the user
+ * - React Router for handling client-side routes
+ * - Universal Cookie for handling browser cookies and validating logins
+ */
+
+// Imports of packages
 import React, { useState } from "react";
-import TextInsertField from './TextInsertField.js';
 import { Link } from "react-router-dom";
 import FileBase from 'react-file-base64';
 import axios from "axios";
 import Cookies from "universal-cookie";
+
+// Imports of local components
+import TextInsertField from './TextInsertField.js';
 import Navbar from '../Dashboard/Navbar';
 
-// CSS imports
+// Style-based imports
 import "./RecordPage.scss";
 
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
+// Feedback states for notifying the user with what is going on when they
+// choose to add an artefact
+/** {{initial: string, invalid: string, valid: string}} */
 const feedbackMessages = {
     initial: '',
     invalid: 'The artefact must have a valid name and a picture uploaded',
     valid:   'Adding your artefact'
 }
 
-// Record form to add a new Artefact
-const RecordForm = () => {
-  const checkKeyDown = (e) => {
+/**
+ * The component that contains the form data, stores the added information
+ * validates it, and then uploads it to the database
+ * @return {React.Component}
+ */
+function RecordForm () {
+  // Prevent the 'Enter' key from cancelling the artefact submission
+  const /** callback */ checkKeyDown = (e) => {
     if (e.code === 'Enter') e.preventDefault();
   };
+
   // Initialize the navigate function
-  const [feedback, setFeedback] = useState(feedbackMessages.initial);
+  const /** string */ [feedback, setFeedback] = useState(feedbackMessages.initial);
 
   // The JSON object that is being constantly updated and sent
+  /** ?{{
+    * artefactName: string,
+    * artefactDate: string,
+    * location: string,
+    * description: string,
+    * category: string,
+    * associated: string,
+    * artefactImg: string,
+    *  }} */
   const initialState = {
     artefactName: " ",
     artefactDate: "",
@@ -42,20 +72,38 @@ const RecordForm = () => {
   // React hook to change the state of record
   const [record, setRecord] = useState(initialState);
 
-  // NOT DONE YET
+  /**
+   * Obtains the entered data, checks if it is valid, and if it is, uploads it
+   * to the database
+   */
   function handleSubmit(e) {
 
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
 
+    // Prevents the user from submitting any invalid input
     if (!isValidInput(record)) {
         setFeedback(feedbackMessages.invalid);
         return;
     }
 
     setFeedback(feedbackMessages.valid);
+   /**
+    * Sends the validated data to the MongoDB database
+    * @param e The javascript event
+    */
     async function recordArtefact (e) {
       // set configurations
+      /** {{
+       *     method: string,
+       *     url: string,
+       *     data: {{
+       *        record: object
+       *     }}
+       *     headers: {{
+       *        Authorization: string
+       *     }}
+       *  }} */
       const configuration = {
         method: "post",
         url: "http://localhost:5100/add-artefact",
@@ -82,15 +130,14 @@ const RecordForm = () => {
     recordArtefact()
   }
 
-  // Change the state of the record object based on user input
+  /**
+   * Change the state of the record object based on user input
+   */
   function handleChange(event) {
-    let name = event.target.name;
-    let value = event.target.value;
-    console.log({name, value});
     setRecord({ ...record, [event.target.name]: event.target.value });
   }
 
-  let imageDisplay = record.artefactImg === '' ?
+  let /** React.Component */ imageDisplay = record.artefactImg === '' ?
       <UploadPending
          setRecord={setRecord}
          record={record}
@@ -134,10 +181,28 @@ const RecordForm = () => {
   );
 };
 
+/**
+ * Checks if the entered data has the two required fields
+ * @param data The data that is being submitted
+  /** ?{{
+    * artefactName: string,
+    * artefactDate: string,
+    * location: string,
+    * description: string,
+    * category: string,
+    * associated: string,
+    * artefactImg: string,
+    *  }}
+  */
 function isValidInput(data) {
     return (data.artefactName !== '' && data.artefactImg !== '');
 }
 
+/**
+ * The component initially shown when the page is first entered. Provides
+ * a big button to add an image
+ * @return {React.Component}
+ */
 function UploadPending ({setRecord, record}) {
     return (
         <>
@@ -150,6 +215,12 @@ function UploadPending ({setRecord, record}) {
     );
 }
 
+/**
+ * The component that comes up after an image has been added after the first
+ * time. Showcases the previous image and also provides an option to upload a
+ * different image
+ * @return {React.Component}
+ */
 function UploadDone ({record, setRecord}) {
     return (
       <>
