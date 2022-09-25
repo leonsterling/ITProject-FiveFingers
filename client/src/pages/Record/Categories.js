@@ -38,13 +38,12 @@ function Categories({ data, index, handleChange }) {
   // Assign a button to every category we get
   let /** ?Array<React.Component> */ options;
   if (categoryList !== null) {
-    let /** Array<string> */ filteredArray 
+    let /** Array<string> */ filteredArray;
     if (label !== null) {
-        // Change the filtered list based on the label
-        filteredArray = filterCategoryList(categoryList, label);
-    }
-    else {
-        filteredArray = categoryList;
+      // Change the filtered list based on the label
+      filteredArray = filterCategoryList(categoryList, label);
+    } else {
+      filteredArray = categoryList;
     }
     options = filteredArray.map((categoryData, index) => {
       return (
@@ -78,15 +77,16 @@ function Categories({ data, index, handleChange }) {
   const /** string */ dropdownBaseClass = "input-like category__dropdown ";
 
   // Uses CSS to make it visible based on whether it should be visible or not
-  let /** string */ dropdownClass = dropdownBaseClass + (isVisible ? "visible" : "hidden");
+  let /** string */ dropdownClass =
+      dropdownBaseClass + (isVisible ? "visible" : "hidden");
 
   useEffect(() => {
     if (!isRetrieved) {
       let /** string */ uri =
-        data.label === "Category" ? "get-categories" : "get-associated";
+          data.label === "Category" ? "get-categories" : "get-associated";
 
       let /** string */ data_container =
-        data.label === "Category" ? "category_name" : "person";
+          data.label === "Category" ? "category_name" : "person";
 
       getObject(uri, setCategoryList, data_container);
       setRetrieved(true);
@@ -128,12 +128,13 @@ function CategoryInput({
   handleChange,
   label,
   setLabel,
-  data
+  data,
 }) {
-  let /** string */ icon = isVisible ?
-        "codicon:chevron-up":
-        "codicon:chevron-down";
-  let /** string */ labelClass = label === "Choose a category" ? "initial" : "";
+  let /** string */ icon = isVisible
+      ? "codicon:chevron-up"
+      : "codicon:chevron-down";
+  let /** string */ labelClass =
+    label === "Choose a category" ? "initial" : "";
   return (
     <div
       className="input-like category-input"
@@ -141,19 +142,19 @@ function CategoryInput({
     >
       <input
         type="text"
-      placeholder={"Enter a " + (data.name === 'category' ?
-          'category':
-          'person'
-      )}
-      value={label}
-      onChange={(e) => {
-        setLabel(e.target.value);
-        e.target.name = data.name;
-        e.target.value = e.target.value.trim();
-        console.log(e.target.name);
-        console.log(e.target.value);
-        handleChange(e);
-      }}/>
+        placeholder={
+          "Enter a " + (data.name === "category" ? "category" : "person")
+        }
+        value={label}
+        onChange={(e) => {
+          setLabel(e.target.value);
+          e.target.name = data.name;
+          e.target.value = e.target.value.trim();
+          console.log(e.target.name);
+          console.log(e.target.value);
+          handleChange(e);
+        }}
+      />
       <Icon icon={icon} />
     </div>
   );
@@ -181,8 +182,13 @@ function CancelCategory({ setVisibility }) {
  * @return {React.Component}
  */
 function FocusState({ isVisible, setVisibility }) {
-  let /** string */ currState = isVisible ? "focused visible" : "focused hidden";
-  return <div className={currState} onClick={() => setVisibility(false)}></div>;
+  let /** string */ currState = isVisible
+      ? "focused visible"
+      : "focused hidden";
+  return <div
+           className={currState}
+           onClick={() => setVisibility(false)}>
+         </div>;
 }
 
 /**
@@ -205,11 +211,11 @@ async function getObject(requestURI, setCategoryList, data_container) {
     },
     url: `http://localhost:5100/${requestURI}`,
   };
-  console.log(`http://localhost:5100/${requestURI}`)
+  console.log(`http://localhost:5100/${requestURI}`);
   await axios(configuration)
     .then((res) => {
-      console.log(res.data)
-      let data = cleanCategories(res.data.result,  data_container);
+      console.log(res.data);
+      let data = cleanCategories(res.data.result, data_container);
       // console.log(res.data[requestURI]);
       setCategoryList(data);
     })
@@ -244,10 +250,10 @@ function filterCategoryList(array, label) {
   let finlist = [];
   for (let i = 0; i < array.length; i++) {
     if (array[i].startsWith(label)) {
-        finlist.push(array[i]);
+      finlist.push(array[i]);
     }
   }
-    return finlist;
+  return finlist;
 }
 
 export default Categories;
