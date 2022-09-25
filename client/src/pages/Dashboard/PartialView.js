@@ -1,13 +1,30 @@
-import React from "react";
+/**
+ * @fileoverview The Partial View Component in the Dashboard. Shows
+ *               slightly-more information of an artefact that was just
+ *               clicked/tapped
+ * Uses:
+ * - React for rendering HTML
+ * - Iconify for adding icons
+ * - React Router for handling client-side routes
+ */
 
+// Imports of packages
+import React from "react";
 import { Icon } from '@iconify/react';
 import { Link } from "react-router-dom";
+
+// Imports of local components
 import Skewer from "../../components/Skewer";
-// Required stylesheet
-import "react-awesome-lightbox/build/style.css";
+
+// Style-based imports
 import "./PartialView.scss";
 
-const PartialView = ({ title, image, desc, date, _id }) => {
+/**
+ * The partial view takes in all the required information as props from its
+ * parent component and displays them in a figure HTML tag
+ * @return {React.Component}
+ */
+function PartialView ({ title, image, desc, date, _id }) {
   return (
         <figure className="partial-view">
             <div className="image-side">
@@ -39,48 +56,3 @@ const PartialView = ({ title, image, desc, date, _id }) => {
 };
 
 export default PartialView;
-
-/*
-    <div className="partial-view">
-        <p>testing for content</p>
-        <div className="image-side">
-            <img className="image-partial-view" src={openPartial.artefactImg.imgURL}/>
-        </div>
-        <div className="info-side">
-            <p>{openPartial.artefactName}</p>
-            <p>{openPartial.description}</p>
-            <p>{openPartial.artefactDate}</p>
-        </div>
-    </div>
-
-           <div className="dd-wrapper">
-        <div 
-            className="dd-header" 
-            role="button" 
-            onKeyPress={() => toggle(!open)} 
-            onClick={() => toggle(!open)}
-        >
-            <div className="dd-header__title">
-                <p className="dd-header__title--bold">{title}</p>
-            </div>
-            <div className="dd-header__action">
-                <p>{open ? 'Close' : 'Open'}</p>
-            </div>
-        </div>
-    </div>
-const itemsInput = [
-    {
-      id: 1,
-      value: 'Pulp Fiction',
-    },
-    {
-      id: 2,
-      value: 'The Prestige',
-    },
-    {
-      id: 3,
-      value: 'Blade Runner 2049',
-    },
-  ];
-
-*/

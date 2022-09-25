@@ -1,20 +1,44 @@
-import React, { useEffect, useState } from "react";
-// Required stylesheet
-import "./PictureMode.scss";
-import PartialView from "./PartialView";
+/**
+ * @fileoverview The Picture-Mode component in the Dashboard page, showcasing:
+ *               - all the pictures contained in each artefact
+ *               - the option to expand each picture to a partial view (its
+ *                 own component)
+ * Uses:
+ * - React for rendering HTML
+ * - Axios for getting information from the serverside
+ * - Universal Cookie for handling browser cookies and validating logins
+ */
 
+// Imports of packages
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+
+// Imports of local components
+import PartialView from "./PartialView";
 import Skewer from "../../components/Skewer";
+
+// Style-based imports
+import "./PictureMode.scss";
+
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
+/**
+ * The Picture mode component, which does 2 things
+ * - stores the ID of the currently expanded picture and
+ * - renders each userData atom into its own pictorial component
+ * @return {React.Component}
+ */
+function PictureMode ( { userData, setUserData, handleDashboard } ) {
+  const /** string */ [currID, setCurrID] = useState("");
 
-  const [currID, setCurrID] = useState("");
-
+  /**
+   * After rendering the basic component (without data), it calls the pre-set
+   * callback function to fetch and set the data accordingly
+   */
   useEffect(() => {
     handleDashboard()
       .then((res) => {
@@ -25,13 +49,14 @@ const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
       });
   }, []);
 
-  const [open, setOpen] = useState(false);
+  const /** boolean */ [open, setOpen] = useState(false);
 
+  /**
+   * Opens and closes the clicked/tapped artefact image to show its respective
+   * partial view (see `PartialView.js` for more about partial view)
+   */
   function openFunction (id) {
     // Change the state of the visibility to true
-    console.log({currID});
-    console.log({id});
-
     if (currID.length !== 0) {
       setOpen({
         [currID]: !open[currID],
@@ -42,9 +67,8 @@ const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
     });
     setCurrID(id);
   }
-
  
-  let pictures = null;
+  let /** ?Array<React.Compoent> */ pictures = null;
   if (userData) {
     console.log({userData});
     pictures = userData.map(

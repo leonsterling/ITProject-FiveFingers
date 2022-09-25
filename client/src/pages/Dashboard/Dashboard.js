@@ -26,6 +26,11 @@ import "./Dashboard.css";
 const cookies = new Cookies();
 const /** ?string */ token = cookies.get("TOKEN");
 
+/**
+ * The Dashboard page. Retrieves the artefacts that have been stored in
+ * the database and shows it to the user
+ * @return {React.Component}
+ */
 const Dashboard = () => {
   const /** boolean */ [isToggled, setIsToggled] = useState(false);
   let /** ?string */ [userData, setUserData] = useState(null);
@@ -60,8 +65,7 @@ const Dashboard = () => {
   );
 
   /**
-   * Obtains the search data
-   * @return {React.Component}
+   * Obtains the search data and changes the dashboard components accordingly
    */
   async function handleSearch() {
     const configuration = {
@@ -80,13 +84,12 @@ const Dashboard = () => {
       .catch((e) => {
         console.log(e.message);
       });
-    // if (!response) {
-    // // Do nothing
-    // } else {
-    // return response;
-    // };
   }
 
+  /**
+   * Obtains the default Dashboard data and changes the
+   * dashboard components accordingly
+   */
   async function handleDashboard() {
     const configuration = {
       method: "get",
@@ -97,9 +100,10 @@ const Dashboard = () => {
     };
 
     // make the API call
-    const response = await axios(configuration);
+    const /** ?Promise */ response = await axios(configuration);
     console.log(response);
     if (!response) {
+      // Do nothing
     } else {
       return response;
     }
@@ -156,6 +160,11 @@ const Dashboard = () => {
   );
 };
 
+
+/**
+ * Changes the callback that chooses whether the default dashboard results or
+ * the search results should show
+ */
 function changeCallback(e, setter, callback) {
   e.preventDefault();
   setter(callback);

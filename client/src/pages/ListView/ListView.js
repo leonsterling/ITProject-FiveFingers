@@ -1,16 +1,35 @@
+/**
+ * @fileoverview The List view shows the artefacts
+ * Uses:
+ * - React for rendering HTML
+ * - Iconify for adding icons
+ * - Axios for getting information from the serverside
+ * - Universal Cookie for handling browser cookies and validating logins
+ */
+
+// Imports of packages
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 
+// Style-based imports
 import "./ListView.css";
 
 // Import Authentication and Cookies
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-const ListView = ({ userData, setUserData, handleDashboard }) => {
-
+/**
+ * The List View component. Handles data based on whether the top-level
+ * component chooses to search or display the default artefacts
+ * @return {React.Component}
+ */
+function ListView ({ userData, setUserData, handleDashboard }) {
+  /**
+   * After rendering the basic component (without data), it calls the pre-set
+   * callback function to fetch and set the data accordingly
+   */
   useEffect(() => {
     handleDashboard()
       .then((res) => {
@@ -21,7 +40,7 @@ const ListView = ({ userData, setUserData, handleDashboard }) => {
       });
   }, []);
 
-  let row = null;
+  let /** ?Array<React.Compoent> */ row = null;
   if (userData) {
     row = userData.map(
       ({ _id, artefactName, description, associated, category }) => (

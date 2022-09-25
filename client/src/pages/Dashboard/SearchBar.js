@@ -1,8 +1,24 @@
-import "./SearchBar.css"
+/**
+ * @fileoverview The searchbar, used to search for artefacts in the Dashboard
+ * Uses:
+ * - React for rendering HTML
+ * - Iconify for adding icons
+ * - React Router for handling client-side routes
+ */
+
+// Imports of packages
+import React from 'react';
 import { Link } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import React from 'react';
-const SearchBar = () => {
+
+// Style-based imports
+import "./SearchBar.css"
+
+/**
+ * The Searchbar component. Uses a form to grab the search data.
+ * @return {React.Component}
+ */
+function SearchBar () {
     return (
         <body>
         <div className="search-bar">

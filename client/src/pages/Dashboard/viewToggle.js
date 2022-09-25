@@ -1,8 +1,18 @@
+/**
+ * @fileoverview The toggle component that switches between the
+ *               Picture-mode view (see `PictureMode.js` for more about the
+ *               picture-mode view) and the List-mode view (see `ListView.js`
+ *               for more about the list view)
+ * Uses:
+ * - React for rendering HTML
+ * - Iconify for adding icons
+ */
+
 import React from 'react';
 import { Icon } from '@iconify/react';
 import "./viewToggle.css";
 
-const viewToggle = ({isToggled, onToggle}) => {
+function viewToggle ({isToggled, onToggle}) {
     return (
         <label className="viewToggle">
             <input type="checkbox" checked = {isToggled} onChange = {onToggle}/>

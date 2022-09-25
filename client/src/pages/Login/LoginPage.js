@@ -20,7 +20,7 @@ import "./login.css";
  * the splash animation and login form, and mobile version
  * @return {React.Component}
  */
-export default function LoginPage() {
+function LoginPage() {
   return (
     <div className="login-page">
       <LoginSplash />
@@ -50,3 +50,5 @@ function SterlingBrand() {
     </div>
   );
 }
+
+export default LoginPage;
