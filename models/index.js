@@ -5,8 +5,8 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
    
-// connefct server to mongoDB database
-mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost', {
+// connect server to mongoDB database
+mongoose.connect(process.env.MONGO_URL || 'mongodb://127.0.0.1', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   dbName: "Artefacts"
