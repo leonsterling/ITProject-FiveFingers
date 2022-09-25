@@ -16,7 +16,7 @@ import FsLightbox from "fslightbox-react";
 import axios from "axios";
 
 // Imports of local components
-import Navbar from '../Dashboard/Navbar';
+import Navbar from "../Dashboard/Navbar";
 
 // Style-based imports
 import "./FullView.scss";
@@ -32,7 +32,7 @@ function FullView() {
 
   // id constant to send request based on the specific artefact id
   const /** string */ { _id } = useParams();
-  
+
   // State to update the recordData of the artefact
   /** ?{{
    *     _id: string,
@@ -69,7 +69,6 @@ function FullView() {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
   };
-
 
   /**
    * Get Function to retrieve the artefact data
@@ -120,27 +119,21 @@ function FullView() {
   return (
     <>
       <Navbar />
-      <div className='full-view'>
+      <div className="full-view">
         <div className="artefact-image">
-          <img
-            src={recordImg}
-            alt={recordName}
-          />
-          <div
-            className='inner-shadow'
-            onClick={() => setToggler(!toggler)}
-          >
+          <img src={recordImg} alt={recordName} />
+          <div className="inner-shadow" onClick={() => setToggler(!toggler)}>
             <h1 className="artefact-name">{recordName}</h1>
-            <div className='location'>{recordLocation}</div>
+            <div className="location">{recordLocation}</div>
           </div>
         </div>
         <div className="data-container">
           <div className="quick-information">
             <PersonAssociated data={recordPerson} />
-            <div className='separator'>|</div>
-            <Tag  data={recordCategory}/>
+            <div className="separator">|</div>
+            <Tag data={recordCategory} />
           </div>
-          <div className='detailed'>
+          <div className="detailed">
             <RecordDescription data={recordDescription} />
             <div></div>
             <Memories data={recordMemories} />
@@ -156,10 +149,12 @@ function FullView() {
  * The component that shows who this artefact is associated with
  * @return {React.Component}
  */
-function PersonAssociated ( { data } ) {
-    return (
-        <div className='associated'>With <b>{data}</b></div>
-    )
+function PersonAssociated({ data }) {
+  return (
+    <div className="associated">
+      With <b>{data}</b>
+    </div>
+  );
 }
 
 /**
@@ -167,46 +162,48 @@ function PersonAssociated ( { data } ) {
  * with
  * @return {React.Component}
  */
-function Tag ( { data } ) {
-    return (
-        <div className='category'><b>{data}</b></div>
-    )
+function Tag({ data }) {
+  return (
+    <div className="category">
+      <b>{data}</b>
+    </div>
+  );
 }
 
-function RecordDescription ( { data } ) {
-    let dataClass = 'detailed--data';
-    if (data === undefined || data === '') {
-        data = 'No description added, but always worth remembering';
-        dataClass += ' undefined';
-    }
-    return (
-        <>
-        <div className='data-field'>
-          <h2 className='detailed--header'>Description</h2>
-          <div className={dataClass}>{data}</div>
-        </div>
-        </>
-    )
+function RecordDescription({ data }) {
+  let dataClass = "detailed--data";
+  if (data === undefined || data === "") {
+    data = "No description added, but always worth remembering";
+    dataClass += " undefined";
+  }
+  return (
+    <>
+      <div className="data-field">
+        <h2 className="detailed--header">Description</h2>
+        <div className={dataClass}>{data}</div>
+      </div>
+    </>
+  );
 }
 
 /**
  * The component that shows the memories this artefact contains
  * @return {React.Component}
  */
-function Memories ( { data } ) {
-    let dataClass = 'detailed--data';
-    if (data === undefined || data === '') {
-        data = 'No memories recorded, but always worth sharing';
-        dataClass += ' undefined';
-    }
-    return (
-        <>
-        <div className='data-field'>
-          <h2 className='detailed--header'>Memories</h2>
-          <div className={dataClass}>{data}</div>
-        </div>
-        </>
-    )
+function Memories({ data }) {
+  let dataClass = "detailed--data";
+  if (data === undefined || data === "") {
+    data = "No memories recorded, but always worth sharing";
+    dataClass += " undefined";
+  }
+  return (
+    <>
+      <div className="data-field">
+        <h2 className="detailed--header">Memories</h2>
+        <div className={dataClass}>{data}</div>
+      </div>
+    </>
+  );
 }
 
 export default FullView;
