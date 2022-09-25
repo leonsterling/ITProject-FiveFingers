@@ -25,6 +25,11 @@ import "./FullView.scss";
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
+/**
+ * The component that gets all the data of a single artefact and then renders
+ * it for the user to view
+ * @return {React.Component}
+ */
 function FullView() {
   // if toggler is updated when lightbox is closed it will open it
   // if toggler is updated when lightbox is opened it will close it
