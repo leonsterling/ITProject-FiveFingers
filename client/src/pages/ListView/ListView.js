@@ -3,58 +3,34 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 
+import "./ListView.css";
+
 // Import Authentication and Cookies
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-const ListView = () => {
-  const [rowList, setList] = useState([]);
+const ListView = ({ userData, setUserData, handleDashboard }) => {
 
-  const configuration = {
-    method: "get",
-    url: `http://localhost:5100/data`,
-    headers: {
-      Authorization: `Bearer ${token}`, // authorized route with jwt token
-    },
-  };
-
-  useEffect(function () {
-    async function getCruds() {
-      try {
-        const response = await axios(configuration);
-        //console.log(JSON.stringify(response.data));
-        setList(response.data);
-      } catch (error) {
-        console.log("error", error);
-      }
-    }
-    getCruds();
+  useEffect(() => {
+    handleDashboard()
+      .then((res) => {
+        setUserData(res.data.artefactRecords);
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
   }, []);
 
   let row = null;
-  if (rowList) {
-    row = rowList.map(
+  if (userData) {
+    row = userData.map(
       ({ _id, artefactName, description, associated, category }) => (
-        <tr key={_id}>
-          <td>{artefactName}</td>
-          <td>{description.substring(0, 10)}</td>
-          <td>{associated}</td>
-          <td>{category}</td>
-          <td>
-            <Link to={`/${_id}`} >
-              View
-            </Link>
-          </td>
-          <td>
-            <Link to={`/${_id}/edit`} >
-              Edit
-            </Link>
-          </td>
-          <td>
-            <Link to={`/${_id}`} >
-              Delete
-            </Link>
-          </td>
+        <tr className='table-body' key={_id}>
+          <td className='table-cell' id="name-cell">{artefactName}</td>
+          <td className='table-cell' id="desc-cell">{description.substring(0, 60)}</td>
+          <td className='table-cell' id="category-cell">{category.category_name}</td>
+          <td className='table-cell' id="person-cell">{associated.person}</td>
+          <td className='table-cell' id="kebab-menu"></td>
         </tr>
       )
     );
@@ -62,29 +38,24 @@ const ListView = () => {
 
   return (
     <>
-      <div>
-        <div>
-          <h2>List View</h2>
-          <hr />
+      <main>
+        <div className = 'list-view-container'>
+          <div className = 'list-table'>
+            <table className = 'artefact-list'>
+              <thead>
+                <tr>
+                  <th className="name-table">Artefact Name</th>
+                  <th className="desc-table">Description</th>
+                  <th className="category-table">Category</th>
+                  <th className="person-table">Person Assocciated</th>
+                  <th className="kebab-menu"></th>
+                </tr>
+              </thead>
+              <tbody>{row}</tbody>
+            </table>
+          </div>
         </div>
-
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>ArtefactName</th>
-                <th>Description</th>
-                <th>Person</th>
-                <th>Category</th>
-                <th>View</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>{row}</tbody>
-          </table>
-        </div>
-      </div>
+      </main>
     </>
   );
 };

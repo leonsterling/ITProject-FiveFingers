@@ -7,62 +7,52 @@ import FsLightbox from "fslightbox-react";
 
 import axios from "axios";
 import Cookies from "universal-cookie";
-import "./FullView.css";
+import "./FullView.scss";
+import Navbar from '../Dashboard/Navbar';
 
 // Import Authentication and Cookies
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
-
-
 function FullView() {
-
   // if toggler is updated when lightbox is closed it will open it
   // if toggler is updated when lightbox is opened it will close it
   const [toggler, setToggler] = useState(false);
 
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
-
-  const navigate = useNavigate();
-
+  
   // State to update the recordData of the artefact
   const [recordData, setRecordData] = useState(null);
 
-
-  let ArtefactID = null;
-  ArtefactID = JSON.stringify({_id}._id);
-  console.log(ArtefactID)
   const configuration = {
     method: "get",
-    url: `http://localhost:5100/${_id}`,
+    url: `https://sterlingfamilyartefacts.herokuapp.com/get-artefact/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
   };
 
-  console.log("URL ="+configuration.url);
 
   // Get Function to retirev the artefact data
   async function getRecord() {
     const response = await axios(configuration);
-    
-    //console.log(recordData);
+
     if (!response) {
     } else {
       return response;
     }
   }
 
-  useEffect(function() {
+  useEffect(function () {
     getRecord()
       .then((response) => {
-        setRecordData(response.data);
+        setRecordData(response.data.result);
       })
       .catch((e) => {
         console.log(e.message);
       });
-  },[]);
+  }, []);
 
   // Store the artefact data in a list of variable
   let recordName,
@@ -79,32 +69,88 @@ function FullView() {
     recordDescription = recordData.description;
     recordMemories = recordData.memories;
     recordLocation = recordData.location;
-    recordPerson = recordData.associated;
-    recordCategory = recordData.category;
+    recordPerson = recordData.associated.person;
+    recordCategory = recordData.category.category_name;
   }
+
 
   return (
     <>
-      <body>
-        <div className = "header-fv">Full View</div>
-        <div className="img-container">
-          <img className="cropped-ofp" src={recordImg} alt={recordName}  onClick={() => setToggler(!toggler)}/>
-          <p className="artefact-name">{recordName}</p>
-          <p className="artefact-tags">TestTag</p>
-          <FsLightbox toggler={toggler} sources={[recordImg]} />
+      <Navbar />
+      <div className='full-view'>
+        <div className="artefact-image">
+          <img
+            src={recordImg}
+            alt={recordName}
+          />
+          <div
+            className='inner-shadow'
+            onClick={() => setToggler(!toggler)}
+          >
+            <h1 className="artefact-name">{recordName}</h1>
+            <div className='location'>{recordLocation}</div>
+          </div>
         </div>
-
-        <div>
-            <div>
-                {recordDescription}
-            </div>
-            <div>
-                {recordCategory}
-            </div>
+        <div className="data-container">
+          <div className="quick-information">
+            <PersonAssociated data={recordPerson} />
+            <div className='separator'>|</div>
+            <Tag  data={recordCategory}/>
+          </div>
+          <div className='detailed'>
+            <RecordDescription data={recordDescription} />
+            <div></div>
+            <Memories data={recordMemories} />
+          </div>
         </div>
-      </body>
+      </div>
+      <FsLightbox toggler={toggler} sources={[recordImg]} />
     </>
   );
+}
+
+function PersonAssociated ( { data } ) {
+    return (
+        <div className='associated'>With <b>{data}</b></div>
+    )
+}
+
+function Tag ( { data } ) {
+    return (
+        <div className='category'><b>{data}</b></div>
+    )
+}
+
+function RecordDescription ( { data } ) {
+    let dataClass = 'detailed--data';
+    if (data === undefined || data === '') {
+        data = 'No description added, but always worth remembering';
+        dataClass += ' undefined';
+    }
+    return (
+        <>
+        <div className='data-field'>
+          <h2 className='detailed--header'>Description</h2>
+          <div className={dataClass}>{data}</div>
+        </div>
+        </>
+    )
+}
+
+function Memories ( { data } ) {
+    let dataClass = 'detailed--data';
+    if (data === undefined || data === '') {
+        data = 'No memories recorded, but always worth sharing';
+        dataClass += ' undefined';
+    }
+    return (
+        <>
+        <div className='data-field'>
+          <h2 className='detailed--header'>Memories</h2>
+          <div className={dataClass}>{data}</div>
+        </div>
+        </>
+    )
 }
 
 export default FullView;

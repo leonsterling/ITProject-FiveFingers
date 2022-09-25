@@ -12,9 +12,8 @@
             "name" : "category",
             "label" : "Category",
             "placeholder" : "Part of...",
-            "type" : "text",
-            "component" : "input",
-            "required": true
+            "component" : "category",
+            "required": false
         },
         {
             "name" : "description",
@@ -29,7 +28,7 @@
             "label" : "Memories",
             "placeholder" : "What you best remember",
             "type" : "text",
-            "component" : "input",
+            "component" : "textarea",
             "required": false
         },
         {
@@ -37,7 +36,7 @@
             "label" : "People associated with",
             "placeholder" : "The people you share this memory with",
             "type" : "text",
-            "component" : "input",
+            "component" : "category",
             "required": false
         },
         {
@@ -47,14 +46,8 @@
             "type" : "text",
             "component" : "input",
             "required": false
-        },
-        {
-            "name" : "artefactDate",
-            "label" : "Date of Artefact",
-            "type" : "date",
-            "component" : "input",
-            "required": false
         }
+
     ]
 }
 

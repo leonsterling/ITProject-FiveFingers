@@ -1,43 +1,150 @@
-import React, { useEffect, useState} from 'react';
-import { Link } from "react-router-dom";
-import TopNav from './TopNav';
-import SideNav from './SideNav';
-import PictureMode from './PictureMode';
+import React, { useState } from "react";
+import ViewToggle from "./viewToggle";
+import PictureMode from "./PictureMode";
+import ListView from "../ListView/ListView";
+import Navbar from "./Navbar";
+import { Icon } from "@iconify/react";
 import axios from "axios";
-import Cookies from "universal-cookie";
 
 // CSS imports
 import "./Dashboard.css";
+
+import Cookies from "universal-cookie";
 // obtain token from cookie
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
 
+const Dashboard = () => {
+  const [isToggled, setIsToggled] = useState(false);
+  let [userData, setUserData] = useState(null);
+  let [searchClicked, setSearchClick] = useState(false);
+  let [searchText, setSearchText] = useState("");
+  let [getArtefactCallback, setGetArtefactCallback] = useState(handleDashboard);
 
-const Dashboard = () => { 
-  
+  let [isSearched, setIsSearched] = useState(false);
 
+  let searchContent = (
+    <>
+      <Icon icon="akar-icons:search" />
+      <form
+        onSubmit={(e) => {
+          if (searchText === "") {
+            setIsSearched(false);
+            handleDashboard();
+          } else {
+            setIsSearched(true);
+            changeCallback(e, setGetArtefactCallback, handleSearch);
+          }
+          
+          console.log(isSearched);
+          console.log(searchText);
+        }}
+      >
+        <input
+          type="text"
+          onClick={() => console.log("Hello world")}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+      </form>
+    </>
+  );
 
-  const [sideNavOpen, setSideNavOpen] = useState(false);
- 
-  const openSideNav = () => {
-    setSideNavOpen(true);
+  async function handleSearch() {
+    const configuration = {
+      method: "get",
+      url: `https://sterlingfamilyartefacts.herokuapp.com/search-artefacts/${searchText}`,
+      headers: {
+        Authorization: `Bearer ${token}`, // authorized route with jwt token
+      },
+    };
+
+    await axios(configuration)
+      .then((res) => {
+        setUserData(res.data.artefactRecords);
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+    // if (!response) {
+    // // Do nothing
+    // } else {
+    // return response;
+    // };
   }
 
-  const closeSideNav = () => {
-    setSideNavOpen(false);
+  async function handleDashboard() {
+    const configuration = {
+      method: "get",
+      url: "https://sterlingfamilyartefacts.herokuapp.com/data",
+      headers: {
+        Authorization: `Bearer ${token}`, // authorized route with jwt token
+      },
+    };
+
+    // make the API call
+    const response = await axios(configuration);
+    console.log(response);
+    if (!response) {
+    } else {
+      return response;
+    }
   }
 
   return (
-    <div className="container">
-      <TopNav sideNavOpen={sideNavOpen} openSideNav={openSideNav} />
-      <PictureMode/>
-      <SideNav sideNavOpen={sideNavOpen} closeSideNav={closeSideNav} />
-    </div>
+    <>
+      <div className="container">
+        <div className="nav-container">
+          <Navbar />
+        </div>
+        <div className="dashboard-header">
+            <h2>My Artefacts</h2>
+
+            <div
+              className={
+                isSearched
+                  ? "dashboard-header__right-area post-search"
+                  : "dashboard-header__right-area pre-search"
+              }
+            >
+              <div
+                className={
+                  isSearched
+                    ? "search-icon post-search"
+                    : "search-icon pre-search"
+                }
+                onClick={() => setSearchClick(true)}
+              >
+                {searchContent}
+              </div>
+
+              <ViewToggle
+                className="viewToggle"
+                isToggled={isToggled}
+                onToggle={() => setIsToggled(!isToggled)}
+              />
+            </div>
+          </div>
+          {isToggled ? (
+            <ListView
+              userData={userData}
+              setUserData={setUserData}
+              handleDashboard={isSearched ? handleSearch : handleDashboard}
+            />
+          ) : (
+            <PictureMode
+              userData={userData}
+              setUserData={setUserData}
+              handleDashboard={isSearched ? handleSearch : handleDashboard}
+            />
+          )}
+      </div>
+    </>
   );
-
-
 };
 
-
+function changeCallback(e, setter, callback) {
+  e.preventDefault();
+  setter(callback);
+}
 
 export default Dashboard;
