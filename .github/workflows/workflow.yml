@@ -16,7 +16,7 @@ jobs:
     runs-on: macos-latest
     defaults:
        run:
-         working-directory: ./server/
+         working-directory: ./
     strategy:
       fail-fast: false
       matrix:
@@ -30,7 +30,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: './server/package-lock.json'
+        cache-dependency-path: './package-lock.json'
         
   
     - name: Run linters
