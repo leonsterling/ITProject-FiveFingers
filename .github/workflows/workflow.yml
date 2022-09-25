@@ -42,5 +42,5 @@ jobs:
     # - run: npm run build --if-present
     # Go back to server to run backend tests
     # - run: cd ../
-    - run: sed -i.bak ${{ secrets.MONGO_URL_SED }}
+    - run: sed -i.bak 's#process.env.MONGO_URL#"mongodb+srv://leonsterling:LSterlingCOMP30022@sterlings.csickw8.mongodb.net/?retryWrites=true\&w=majority"#' ./models/index.js
     - run: npm test
