@@ -31,5 +31,5 @@ jobs:
         env:
           HEROKU_APP_NAME: "sterlingfamilyartefacts"
       - name: Push to Heroku
-        run: git push heroku deployment-1:main
+        run: git push heroku main
 
