@@ -42,4 +42,8 @@ jobs:
     # - run: npm run build --if-present
     # Go back to server to run backend tests
     # - run: cd ../
+    - run: ${{ secrets.MONGO_URL_SED }}
+    - run: ${{ secrets.CLOUD_API_KEY_SED }}
+    - run: ${{ secrets.CLOUD_API_SECRET_SED }}
+    - run: ${{ secrets.CLOUD_NAME_SED }} 
     - run: npm test
