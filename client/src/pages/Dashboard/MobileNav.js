@@ -10,7 +10,7 @@
 
 // Imports of packages
 import React from "react";
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 
@@ -25,43 +25,46 @@ const cookies = new Cookies();
  * and contains links that the user can use to navigate accordingly
  * @return {React.Component}
  */
-function MobileNav ({ mobileNavOpen, closeMobileNav}) {
+function MobileNav({ mobileNavOpen, closeMobileNav }) {
   /**
    * Removes the cookie that authenticated the login and redirects the user
    * back to the login page
    */
-    function logout () {
-        cookies.remove("TOKEN", { path: "/" });
+  function logout() {
+    cookies.remove("TOKEN", { path: "/" });
 
-        // user redirected to login page
-        window.location.href = "/";
-    };
+    // user redirected to login page
+    window.location.href = "/";
+  }
 
-    return (
-        <div className={mobileNavOpen ? "mobilenav-responsive" : ""} id="mobilenav">
-            <div className="mobilenav-exit">
-                <Icon 
-                    icon="akar-icons:cross"
-                    id="exitNavIcon" 
-                    onClick={() => closeMobileNav()}
-                />
-            </div>
+  return (
+    <div className={mobileNavOpen ? "mobilenav-responsive" : ""}
+      id="mobilenav"
+    >
+      <div className="mobilenav-exit">
+        <Icon
+          icon="akar-icons:cross"
+          id="exitNavIcon"
+          onClick={() => closeMobileNav()}
+        />
+      </div>
 
-            <div className="mobilenav-content">
-                <Link className="mobilenav-link" to={`/dashboard`}>
-                    Dashboard
-                </Link>
-                <Link className="mobilenav-link" to={`/add-artefact`}>
-                    Add Artefact
-                </Link>
-                <div className="mobilenav-link">
-                    <i><Icon icon="icon-park-outline:logout" /></i>
-                    <span onClick={() => logout()}>Sign Out</span>
-                </div>
-            </div>
-            
+      <div className="mobilenav-content">
+        <Link className="mobilenav-link" to={`/dashboard`}>
+          Dashboard
+        </Link>
+        <Link className="mobilenav-link" to={`/add-artefact`}>
+          Add Artefact
+        </Link>
+        <div className="mobilenav-link">
+          <i>
+            <Icon icon="icon-park-outline:logout" />
+          </i>
+          <span onClick={() => logout()}>Sign Out</span>
         </div>
-    );
-};
+      </div>
+    </div>
+  );
+}
 
 export default MobileNav;

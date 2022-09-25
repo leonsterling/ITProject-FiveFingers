@@ -32,7 +32,7 @@ const token = cookies.get("TOKEN");
  * - renders each userData atom into its own pictorial component
  * @return {React.Component}
  */
-function PictureMode ( { userData, setUserData, handleDashboard } ) {
+function PictureMode({ userData, setUserData, handleDashboard }) {
   const /** string */ [currID, setCurrID] = useState("");
 
   /**
@@ -55,7 +55,7 @@ function PictureMode ( { userData, setUserData, handleDashboard } ) {
    * Opens and closes the clicked/tapped artefact image to show its respective
    * partial view (see `PartialView.js` for more about partial view)
    */
-  function openFunction (id) {
+  function openFunction(id) {
     // Change the state of the visibility to true
     if (currID.length !== 0) {
       setOpen({
@@ -67,33 +67,37 @@ function PictureMode ( { userData, setUserData, handleDashboard } ) {
     });
     setCurrID(id);
   }
- 
+
   let /** ?Array<React.Compoent> */ pictures = null;
   if (userData) {
-    console.log({userData});
+    console.log({ userData });
     pictures = userData.map(
       ({ artefactName, artefactImg, description, artefactDate, _id }) => (
-        <article key={_id}
+        <article
+          key={_id}
           className="card-container"
           onClick={() => openFunction(_id)}
-          style={{ padding: open[_id] ? '0 0 480px 0' : '0 0 0 0' }}
+          style={{ padding: open[_id] ? "0 0 480px 0" : "0 0 0 0" }}
         >
           <div>
             <div className="card">
-              <img src={artefactImg.imgURL} alt=''/>
-              <div className="card-title">
-                  {artefactName}
-              </div>
+              <img src={artefactImg.imgURL} alt="" />
+              <div className="card-title">{artefactName}</div>
             </div>
 
-            <div style={{ display: open[_id] ? 'block' : 'none' }}>
-            <PartialView title={artefactName} image={artefactImg} desc={description} date={artefactDate} _id={_id} />
+            <div style={{ display: open[_id] ? "block" : "none" }}>
+              <PartialView
+                title={artefactName}
+                image={artefactImg}
+                desc={description}
+                date={artefactDate}
+                _id={_id}
+              />
             </div>
           </div>
         </article>
       )
     );
-    
   }
 
   return (
@@ -101,14 +105,12 @@ function PictureMode ( { userData, setUserData, handleDashboard } ) {
       <div className="main-container">
         <div className="main-cards">
           <div className="section-cards">
-            <div className="feed-cards">
-              {pictures}
-            </div>
+            <div className="feed-cards">{pictures}</div>
           </div>
         </div>
       </div>
     </main>
   );
-};
+}
 
 export default PictureMode;

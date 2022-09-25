@@ -36,33 +36,33 @@ const Dashboard = () => {
   let /** ?string */ [userData, setUserData] = useState(null);
   let /** string */ [searchText, setSearchText] = useState("");
   let /** callback */ [getArtefactCallback, setGetArtefactCallback] =
-    useState(handleDashboard);
+      useState(handleDashboard);
 
   let /** boolean */ [isSearched, setIsSearched] = useState(false);
 
   let /** React.Component */ searchContent = (
-    <>
-      <Icon icon="akar-icons:search" />
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (searchText === "") {
-            setIsSearched(false);
-            handleDashboard();
-          } else {
-            setIsSearched(true);
-            changeCallback(e, setGetArtefactCallback, handleSearch);
-          }
-        }}
-      >
-        <input
-          type="text"
-          onClick={() => console.log("Hello world")}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-      </form>
-    </>
-  );
+      <>
+        <Icon icon="akar-icons:search" />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (searchText === "") {
+              setIsSearched(false);
+              handleDashboard();
+            } else {
+              setIsSearched(true);
+              changeCallback(e, setGetArtefactCallback, handleSearch);
+            }
+          }}
+        >
+          <input
+            type="text"
+            onClick={() => console.log("Hello world")}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </form>
+      </>
+    );
 
   /**
    * Obtains the search data and changes the dashboard components accordingly
@@ -116,50 +116,49 @@ const Dashboard = () => {
           <Navbar />
         </div>
         <div className="dashboard-header">
-            <h2>My Artefacts</h2>
+          <h2>My Artefacts</h2>
 
+          <div
+            className={
+              isSearched
+                ? "dashboard-header__right-area post-search"
+                : "dashboard-header__right-area pre-search"
+            }
+          >
             <div
               className={
                 isSearched
-                  ? "dashboard-header__right-area post-search"
-                  : "dashboard-header__right-area pre-search"
+                  ? "search-icon post-search"
+                  : "search-icon pre-search"
               }
             >
-              <div
-                className={
-                  isSearched
-                    ? "search-icon post-search"
-                    : "search-icon pre-search"
-                }
-              >
-                {searchContent}
-              </div>
-
-              <ViewToggle
-                className="viewToggle"
-                isToggled={isToggled}
-                onToggle={() => setIsToggled(!isToggled)}
-              />
+              {searchContent}
             </div>
+
+            <ViewToggle
+              className="viewToggle"
+              isToggled={isToggled}
+              onToggle={() => setIsToggled(!isToggled)}
+            />
           </div>
-          {isToggled ? (
-            <ListView
-              userData={userData}
-              setUserData={setUserData}
-              handleDashboard={isSearched ? handleSearch : handleDashboard}
-            />
-          ) : (
-            <PictureMode
-              userData={userData}
-              setUserData={setUserData}
-              handleDashboard={isSearched ? handleSearch : handleDashboard}
-            />
-          )}
+        </div>
+        {isToggled ? (
+          <ListView
+            userData={userData}
+            setUserData={setUserData}
+            handleDashboard={isSearched ? handleSearch : handleDashboard}
+          />
+        ) : (
+          <PictureMode
+            userData={userData}
+            setUserData={setUserData}
+            handleDashboard={isSearched ? handleSearch : handleDashboard}
+          />
+        )}
       </div>
     </>
   );
 };
-
 
 /**
  * Changes the callback that chooses whether the default dashboard results or
