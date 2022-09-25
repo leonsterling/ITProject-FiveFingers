@@ -49,7 +49,7 @@ const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
     console.log({userData});
     pictures = userData.map(
       ({ artefactName, artefactImg, description, artefactDate, _id }) => (
-        <article 
+        <article key={_id}
           className="card-container"
           onClick={() => openFunction(_id)}
           style={{ padding: open[_id] ? '0 0 480px 0' : '0 0 0 0' }}

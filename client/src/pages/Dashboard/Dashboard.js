@@ -1,33 +1,46 @@
+/**
+ * @fileoverview Implementation of the dashboard page
+ * Uses:
+ * - React for rendering HTML
+ * - Iconify for adding icons
+ * - Axios for getting information from the serverside
+ * - Universal Cookie for handling browser cookies and validating logins
+ */
+
+// Imports of packages
 import React, { useState } from "react";
+import { Icon } from "@iconify/react";
+import axios from "axios";
+import Cookies from "universal-cookie";
+
+// Imports of local components
 import ViewToggle from "./viewToggle";
 import PictureMode from "./PictureMode";
 import ListView from "../ListView/ListView";
 import Navbar from "./Navbar";
-import { Icon } from "@iconify/react";
-import axios from "axios";
 
-// CSS imports
+// Style-based imports
 import "./Dashboard.css";
 
-import Cookies from "universal-cookie";
 // obtain token from cookie
 const cookies = new Cookies();
-const token = cookies.get("TOKEN");
+const /** ?string */ token = cookies.get("TOKEN");
 
 const Dashboard = () => {
-  const [isToggled, setIsToggled] = useState(false);
-  let [userData, setUserData] = useState(null);
-  let [searchClicked, setSearchClick] = useState(false);
-  let [searchText, setSearchText] = useState("");
-  let [getArtefactCallback, setGetArtefactCallback] = useState(handleDashboard);
+  const /** boolean */ [isToggled, setIsToggled] = useState(false);
+  let /** ?string */ [userData, setUserData] = useState(null);
+  let /** string */ [searchText, setSearchText] = useState("");
+  let /** callback */ [getArtefactCallback, setGetArtefactCallback] =
+    useState(handleDashboard);
 
-  let [isSearched, setIsSearched] = useState(false);
+  let /** boolean */ [isSearched, setIsSearched] = useState(false);
 
-  let searchContent = (
+  let /** React.Component */ searchContent = (
     <>
       <Icon icon="akar-icons:search" />
       <form
         onSubmit={(e) => {
+          e.preventDefault();
           if (searchText === "") {
             setIsSearched(false);
             handleDashboard();
@@ -35,9 +48,6 @@ const Dashboard = () => {
             setIsSearched(true);
             changeCallback(e, setGetArtefactCallback, handleSearch);
           }
-          
-          console.log(isSearched);
-          console.log(searchText);
         }}
       >
         <input
@@ -49,6 +59,10 @@ const Dashboard = () => {
     </>
   );
 
+  /**
+   * Obtains the search data
+   * @return {React.Component}
+   */
   async function handleSearch() {
     const configuration = {
       method: "get",
@@ -60,6 +74,7 @@ const Dashboard = () => {
 
     await axios(configuration)
       .then((res) => {
+        console.log(res.data);
         setUserData(res.data.artefactRecords);
       })
       .catch((e) => {
@@ -112,7 +127,6 @@ const Dashboard = () => {
                     ? "search-icon post-search"
                     : "search-icon pre-search"
                 }
-                onClick={() => setSearchClick(true)}
               >
                 {searchContent}
               </div>
