@@ -1,19 +1,16 @@
+// import libraries
 const request = require("supertest");
-const expect = require('chai').expect;
-const dotenv = require('dotenv');
+const expect = require("chai").expect;
+const dotenv = require("dotenv");
+const app = require("../server");
 dotenv.config();
 
-const app = require('../server')
-const {User, Category, Associated, Artefact} = require('../models/user');
-const { createRequire } = require("module");
-
-const HTPP_SUCCESS = 200
-const HTTP_SERVER_ERROR = 500
+// constants
+const HTPP_SUCCESS = 200;
+const HTTP_SERVER_ERROR = 500;
 
 // JWT token for authenticated routes
 let tempToken;
-
-let dummyID
 
 /* MOCK DATA */
 
@@ -30,57 +27,61 @@ const invalidUser = {
   password: "vincent",
 };
 
-// dummy category and associated
+// dummy category and associated existing in database
 const validCategory = "Postcard";
 const validAssociated = "Vik";
 
-// dummy invalid category and associated
-const invalidCategory = "Non-existing-category"
-const invalidAssociated = "Non-existing-associated"
+// dummy invalid category and associated non-existing in database
+const invalidCategory = "Non-existing-category";
+const invalidAssociated = "Non-existing-associated";
 
-const validQuery = validCategory
-const invalidQuery = invalidCategory
+// dummy query based on existing category and associated
+const validQuery = validCategory;
+const invalidQuery = invalidCategory;
 
-// existing artefactID
+// existing artefactID in database
 const validId = "6330486ea4430795bb15ae0c";
 
 // dummy invalid ID
 const invalidId = "0123456789";
 
-// dummy image 
-const img = `${__dirname}/test_image.jpeg`
-console.log(img)
+// variable for dummy artefact record
+let dummyID;
 
-// dummy artefact 
+// dummy image for dummy artefact
+const img = `${__dirname}/test_image.jpeg`;
+
+// dummy artefact with existing category and associated
 const record = {
   record: {
-    artefactName: "name2",
-      description: "description2",
-      memories: "memories2",
-      location: "location2",
-      associated: validAssociated,
-      category: validCategory,
-      artefactImg: img
-  }
-}
+    artefactName: "name",
+    description: "description",
+    memories: "memories",
+    location: "location",
+    associated: validAssociated,
+    category: validCategory,
+    artefactImg: img,
+  },
+};
 
+// dummy artefact details for edit check with existing category and associated
 const editRecord = {
   record: {
-    artefactName: "name3",
-      description: "description3",
-      memories: "memories3",
-      location: "location3",
-      associated: validAssociated,
-      category: validCategory
-  }
-}
+    artefactName: "nameEdit",
+    description: "descriptionEdit",
+    memories: "memoriesEdit",
+    location: "locationEdit",
+    associated: validAssociated,
+    category: validCategory,
+  },
+};
+
 /* MOCK DATA */
 
 /* login test */
-describe("log-in functionality", () => {
-
+describe("Log In Integration Test", () => {
   // valid user
-  it("should accept correct credentials, and log-in successfully", (done) => {
+  it("Should accept correct credentials, and log-in successfully", (done) => {
     request(app)
       .post("/login")
       .send(validUser)
@@ -94,7 +95,7 @@ describe("log-in functionality", () => {
   });
 
   // invalid username
-  it("shouldn't accept non-exisiting username", (done) => {
+  it("Shouldn't accept non-exisiting username", (done) => {
     request(app)
       .post("/login")
       .send(invalidUser)
@@ -107,7 +108,7 @@ describe("log-in functionality", () => {
   });
 
   // invalid password
-  it("shouldn't accept invalid password", (done) => {
+  it("Shouldn't accept invalid password", (done) => {
     request(app)
       .post("/login")
       .send(invalidUser)
@@ -118,46 +119,49 @@ describe("log-in functionality", () => {
       })
       .catch((err) => done(err));
   });
-})
+});
 
 /* search test */
-describe("search functionality", () => {
-
-  // valid search query 
-  it("should retrieve artefacts that matches the query", (done) => {
+describe("Basic Search Integration Test", () => {
+  // valid search query
+  it("Should retrieve artefacts that matches the query", (done) => {
     request(app)
       .get(`/search-artefacts/${validQuery}`)
       .expect(HTPP_SUCCESS)
-      .set({Authorization: tempToken})
+      .set({ Authorization: tempToken })
       .then((res) => {
-        const searched = res.body.artefactRecords
-        expect(res.body.message).to.be.eql("Search query success with " + searched.length + " artefacts");
+        const searched = res.body.artefactRecords;
+        expect(res.body.message).to.be.eql(
+          "Search query success with " + searched.length + " artefacts"
+        );
         done();
       })
       .catch((err) => done(err));
   });
 
-  // invalid search query 
-  it("should retrieve no artefacts that mathes an invalid query", (done) => {
+  // invalid search query
+  it("Should retrieve no artefacts that matches an invalid query", (done) => {
     request(app)
       .get(`/search-artefacts/${invalidQuery}`)
       .expect(HTPP_SUCCESS)
-      .set({Authorization: tempToken})
+      .set({ Authorization: tempToken })
       .then((res) => {
-        expect(res.body.message).to.be.eql("Search query success with 0 artefacts");
+        expect(res.body.message).to.be.eql(
+          "Search query success with 0 artefacts"
+        );
         done();
       })
       .catch((err) => done(err));
   });
-})
+});
 
 /* retrieve all artefacts test */
-describe("get all artefacts functionality", () => {
-  it("should retrieve all artefacts", (done) => {
+describe("Get All Artefacts Integration Test", () => {
+  it("Should retrieve all artefacts", (done) => {
     request(app)
       .get("/data")
       .expect(HTPP_SUCCESS)
-      .set({Authorization: tempToken})
+      .set({ Authorization: tempToken })
       .then((res) => {
         expect(res.body.message).to.be.eql("Successful in getting artefacts");
         done();
@@ -167,12 +171,12 @@ describe("get all artefacts functionality", () => {
 });
 
 /* retrieve all categories */
-describe("get all categories functionality", () => {
-  it("should retrieve all categories", (done) => {
+describe("Get All Categories Integration Test", () => {
+  it("Should retrieve all categories", (done) => {
     request(app)
       .get("/get-categories")
       .expect(HTPP_SUCCESS)
-      .set({Authorization: tempToken})
+      .set({ Authorization: tempToken })
       .then((res) => {
         expect(res.body.message).to.be.eql("Categories recieved successfully");
         done();
@@ -182,12 +186,12 @@ describe("get all categories functionality", () => {
 });
 
 /* retrieve all associated */
-describe("get all associated functionality", () => {
-  it("should retrieve all associated", (done) => {
+describe("Get All Associated Integration Test", () => {
+  it("Should retrieve all associated", (done) => {
     request(app)
       .get("/get-associated")
       .expect(HTPP_SUCCESS)
-      .set({Authorization: tempToken})
+      .set({ Authorization: tempToken })
       .then((res) => {
         expect(res.body.message).to.be.eql("Associated recieved successfully");
         done();
@@ -197,12 +201,12 @@ describe("get all associated functionality", () => {
 });
 
 /* retrieve 1 artefact */
-describe("get 1 particular artefact funtionality", () => {
-  it("should retrieve 1 artefact", (done) => {
+describe("Get 1 Artefact Integration Test", () => {
+  it("Should retrieve 1 artefact", (done) => {
     request(app)
       .get(`/get-artefact/${validId}`)
       .expect(HTPP_SUCCESS)
-      .set({Authorization: tempToken})
+      .set({ Authorization: tempToken })
       .then((res) => {
         expect(res.body.message).to.be.eql("Artefact retrieved successfully");
         done();
@@ -210,11 +214,11 @@ describe("get 1 particular artefact funtionality", () => {
       .catch((err) => done(err));
   });
 
-  it("should not retrieve a non-existing artefact", (done) => {
+  it("Should not retrieve a non-existing artefact", (done) => {
     request(app)
       .get(`/get-artefact/${invalidId}`)
       .expect(HTTP_SERVER_ERROR)
-      .set({Authorization: tempToken})
+      .set({ Authorization: tempToken })
       .then((res) => {
         expect(res.body.message).to.be.eql("Artefact retrieved unsuccessfully");
         done();
@@ -223,17 +227,16 @@ describe("get 1 particular artefact funtionality", () => {
   });
 });
 
-
 // Add an artefact
-describe("Add an artefact functionality", () => {
-  it("should add an artefact", (done) => {
+describe("Add Artefact Integration Test", () => {
+  it("Should add an artefact", (done) => {
     request(app)
       .post(`/add-artefact`)
-      .set({Authorization: tempToken})
+      .set({ Authorization: tempToken })
       .send(record)
       .expect(HTPP_SUCCESS)
       .then((res) => {
-        dummyID = res.body.result1._id
+        dummyID = res.body.result1._id;
         expect(res.body.message).to.be.eql("Artefact registered successfully");
         done();
       })
@@ -242,12 +245,12 @@ describe("Add an artefact functionality", () => {
 });
 
 // Edit an artefact
-describe("Edit an artefact functionality", () => {
-  it("should edit an artefact", (done) => {
+describe("Edit Artefact Integration Test", () => {
+  it("Should edit an artefact", (done) => {
     request(app)
       .patch(`/edit-artefact/${dummyID}`)
-      .query({id: validId})
-      .set({Authorization: tempToken})
+      .query({ id: validId })
+      .set({ Authorization: tempToken })
       .send(editRecord)
       .expect(HTPP_SUCCESS)
       .then((res) => {
@@ -259,12 +262,12 @@ describe("Edit an artefact functionality", () => {
 });
 
 // Delete an artefact
-describe("Delete an artefact functionality", () => {
-  it("should delete an artefact", (done) => {
+describe("Delete Artefact Integration Test", () => {
+  it("Should delete an artefact", (done) => {
     request(app)
       .delete(`/delete-artefact/${dummyID}`)
-      .query({id: validId})
-      .set({Authorization: tempToken})
+      .query({ id: validId })
+      .set({ Authorization: tempToken })
       .expect(HTPP_SUCCESS)
       .then((res) => {
         expect(res.body.message).to.be.eql("Artefact deleted successfully");
@@ -275,8 +278,8 @@ describe("Delete an artefact functionality", () => {
 });
 
 // Change password
-describe("Change Password functionality", () => {
-  it("should update the user's password", (done) => {
+describe("Change Password Integration Test", () => {
+  it("Should update the user's password", (done) => {
     request(app)
       .post(`/change-password`)
       .send(validUser)
