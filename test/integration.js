@@ -4,7 +4,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = require('../server')
-const {User, Category, Associated, Artefact} = require('../models/user')
+const {User, Category, Associated, Artefact} = require('../models/user');
+const { createRequire } = require("module");
 
 const HTPP_SUCCESS = 200
 const HTTP_SERVER_ERROR = 500
@@ -12,42 +13,67 @@ const HTTP_SERVER_ERROR = 500
 // JWT token for authenticated routes
 let tempToken;
 
+let dummyID
+
 /* MOCK DATA */
 
 // existing valid user in database
 const validUser = {
   username: "vincent",
-  password: "kurniawan"
+  password: "kurniawan",
+  hashPassword: "$2a$10$HoV8ohBfPxbi2qRn5GYZ7.mTMUVlMVe2dvBmGmV7qmIeb.0UDpnMe",
 };
 
 // dummy user non-existing in database
 const invalidUser = {
   username: "kurniawan",
-  password: "vincent"
-}
+  password: "vincent",
+};
 
-// dummy categories 
-const validQuery = "Postcard"
-const invalidQuery = "Jakarta"
+// dummy category and associated
+const validCategory = "Postcard";
+const validAssociated = "Vik";
+
+// dummy invalid category and associated
+const invalidCategory = "Non-existing-category"
+const invalidAssociated = "Non-existing-associated"
+
+const validQuery = validCategory
+const invalidQuery = invalidCategory
 
 // existing artefactID
-const validId = "6329b34997977604196719bd"
+const validId = "6330486ea4430795bb15ae0c";
 
 // dummy invalid ID
-const invalidId = "0123456789"
+const invalidId = "0123456789";
 
-/*
-// dummy artefact Data
+// dummy image 
+const img = `${__dirname}/test_image.jpeg`
+console.log(img)
+
+// dummy artefact 
 const record = {
-  artefactName: "dummyName",
-  description: "dummyDescription",
-  memories: "dummyMemories",
-  associated: "Joseph Sterling",
-  category: "Photo",
-  location: "dummyLocation"
+  record: {
+    artefactName: "name2",
+      description: "description2",
+      memories: "memories2",
+      location: "location2",
+      associated: validAssociated,
+      category: validCategory,
+      artefactImg: img
+  }
 }
-*/
 
+const editRecord = {
+  record: {
+    artefactName: "name3",
+      description: "description3",
+      memories: "memories3",
+      location: "location3",
+      associated: validAssociated,
+      category: validCategory
+  }
+}
 /* MOCK DATA */
 
 /* login test */
@@ -197,14 +223,32 @@ describe("get 1 particular artefact funtionality", () => {
   });
 });
 
-/*
-// edit an artefact
-describe("edit an artefact functionality", () => {
-  it("should edit an artefact", (done) => {
+
+// Add an artefact
+describe("Add an artefact functionality", () => {
+  it("should add an artefact", (done) => {
     request(app)
-      .patch(`/edit-artefact/${validId}`)
+      .post(`/add-artefact`)
       .set({Authorization: tempToken})
       .send(record)
+      .expect(HTPP_SUCCESS)
+      .then((res) => {
+        dummyID = res.body.result1._id
+        expect(res.body.message).to.be.eql("Artefact registered successfully");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});
+
+// Edit an artefact
+describe("Edit an artefact functionality", () => {
+  it("should edit an artefact", (done) => {
+    request(app)
+      .patch(`/edit-artefact/${dummyID}`)
+      .query({id: validId})
+      .set({Authorization: tempToken})
+      .send(editRecord)
       .expect(HTPP_SUCCESS)
       .then((res) => {
         expect(res.body.message).to.be.eql("Edit artefact successfully");
@@ -213,4 +257,34 @@ describe("edit an artefact functionality", () => {
       .catch((err) => done(err));
   });
 });
-*/
+
+// Delete an artefact
+describe("Delete an artefact functionality", () => {
+  it("should delete an artefact", (done) => {
+    request(app)
+      .delete(`/delete-artefact/${dummyID}`)
+      .query({id: validId})
+      .set({Authorization: tempToken})
+      .expect(HTPP_SUCCESS)
+      .then((res) => {
+        expect(res.body.message).to.be.eql("Artefact deleted successfully");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});
+
+// Change password
+describe("Change Password functionality", () => {
+  it("should update the user's password", (done) => {
+    request(app)
+      .post(`/change-password`)
+      .send(validUser)
+      .expect(HTPP_SUCCESS)
+      .then((res) => {
+        expect(res.body.message).to.be.eql("Password changed successfully");
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});

@@ -5,6 +5,8 @@ const SALT_FACTOR = 10;
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
+const img = `${__dirname}/test/test_image.jpeg`
+
 const LIMIT = 4;
 
 // login function
@@ -29,6 +31,7 @@ const loginUser = (req, res) => {
             "RANDOM-TOKEN",
             { expiresIn: "24h" }
           );
+
           res.status(200).send({
             message: "Login Successful",
             username: user.username,
@@ -193,7 +196,7 @@ const getAssociated = (req, res) => {
     });
 };
 
-// get an artefact functiono
+// get an artefact function
 const artefact_details = async (req, res) => {
   Artefact.findById(req.params.id)
     .then((result) => {
@@ -212,7 +215,7 @@ const artefact_details = async (req, res) => {
 
 // Create new Artefact Record
 const registerArtefact = async (req, res) => {
-  console.log(req.body.record.artefactImg);
+  
   const image_data = await cloudinary.uploader.upload(
     req.body.record.artefactImg,
     {
@@ -228,10 +231,10 @@ const registerArtefact = async (req, res) => {
     category: null,
     location: req.body.record.location,
     "artefactImg.imgURL": image_data.url,
-    "artefactImg.publicID": image_data.public_id,
+    "artefactImg.publicID": image_data.public_id
   });
 
-  await artefact
+  artefact
     .save()
     .then((result1) => {
       Category.findOne({ category_name: req.body.record.category })
@@ -423,12 +426,10 @@ const deleteArtefact = async (req, res) => {
 
   await Artefact.deleteOne({ _id: artefact_id })
     .then((result) => {
-      console.log(result);
-      console.log(artefact_record);
       cloudinary.uploader.destroy(
         artefact_record.artefactImg.publicID,
         function (error, result) {
-          res.status(201).send({
+          res.status(200).send({
             message: "Artefact deleted successfully",
             result,
             artefact_record,
@@ -458,7 +459,7 @@ const changePassword = async (req, res) => {
           err,
         });
       } else {
-        res.status(201).send({
+        res.status(200).send({
           message: "Password changed successfully",
           hashed_pass,
         });
@@ -467,36 +468,6 @@ const changePassword = async (req, res) => {
   );
 };
 
-// Function to update patient's password
-const updatePass = async (req, res) => {
-  try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      const errorsFound = validationResult(req).array();
-      req.flash("errors", errorsFound);
-      return res.redirect("/patient/change-password");
-    }
-
-    // hash the password using bcrypt before saving to mongodb
-    const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR);
-    Patient.findOneAndUpdate(
-      { _id: req.user._id },
-      { password: hashed_pass },
-      function (err, doc) {
-        if (err) {
-          return res.redirect("/patient/404");
-        } else {
-        }
-      }
-    );
-
-    return res.redirect("/patient/dashboard");
-  } catch (err) {
-    // error detected, renders patient error page
-    return res.redirect("/patient/404");
-  }
-};
 
 // register new users (will be removed)
 const registerUser = async (req, res) => {
