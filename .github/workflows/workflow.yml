@@ -38,5 +38,8 @@ jobs:
       with:
         prettier: false
     - run: npm i
-    - run: npm run build --if-present
+    # testing to run backend tests only
+    # - run: npm run build --if-present
+    # Go back to server to run backend tests
+    # - run: cd ../
     - run: npm test
