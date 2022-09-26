@@ -64,13 +64,15 @@
   stroke-width: 0.6;
 }
 
-.login-page form ul .input-field span .password-toggle {
+.login-page form ul .input-field span {
   margin-right: 5px;
   font-size: 19px;
+  cursor: pointer;
 }
 
 .login-page form li.forget-password-link {
-  float: right;
+  text-align: end;
+  width: 100%;
 }
 
 .login-page form li.forget-password-link:hover {

@@ -3,6 +3,7 @@ import './login.css';
 import axios from 'axios';
 import Cookies from "universal-cookie";
 import { Icon } from '@iconify/react';
+import usePasswordToggle from './PasswordToggle';
 
 // Cookies for checking if the user is currently logged in
 const cookies = new Cookies();
@@ -75,6 +76,8 @@ export default function LoginForm () {
     let inputClass;
     inputClass = 'input-field ' + loginState.currState
     let feedbackMessage = feedbackMapper[loginState.currState];
+
+    const [PasswordInputType, ToggleIcon] = usePasswordToggle();
          
     return (
           <form action='/login' method='post' onSubmit={(e) => handleLogin(e)}>
@@ -96,11 +99,11 @@ export default function LoginForm () {
                 <li className={inputClass}>
                     <span><Icon icon='codicon:lock-small'/></span>
                     <input
-                        type='password'
+                        type={PasswordInputType}
                         id='password'
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <span><Icon className="password-toggle" icon="bi:eye-slash-fill" /></span>
+                    <span className="password-toggle">{ToggleIcon}</span>
                 </li>
                 <li className='forget-password-link'>
                     <h5>Forgot password?</h5>

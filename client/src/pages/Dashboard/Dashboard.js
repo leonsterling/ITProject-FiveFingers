@@ -34,7 +34,8 @@ const Dashboard = () => {
       }
     >
       <input type='text'
-        className=''
+        className='search-field'
+        placeholder='Search by category or person associated'
         onClick={() => console.log("Hello world")}
         onChange={(e) => setSearchText(e.target.value)}
       />
