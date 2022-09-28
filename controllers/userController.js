@@ -1,11 +1,33 @@
-// libraries and mongoose models imported
-const { User, Artefact, Category, Associated } = require("../models/user");
+/**
+ * @fileoverview Uses the parsed request, transforms it into logic based on the
+ *               provided request (and any additional required data) and sends
+ *               an appropriate response, based on what the client requested
+ * Dependencies
+ * - BCrypt to implement encrypted security
+ * - JSON Web Token to send URL-safe claims between the server and client-side
+ *   code
+ * - Cloudinary to handle image files
+ */
+
+/* Imports of packages */
 const bcrypt = require("bcrypt");
-const SALT_FACTOR = 10;
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
-// login function
+/* Imports of local modules */
+const { User, Artefact, Category, Associated } = require("../models/user");
+
+/* Main implementation */
+const SALT_FACTOR = 10;
+
+/**
+ * Authenticates the provided information with the database information to
+ * ensure a secure login. First checks if a username exists, and then checks
+ * if the passwords match with the respective username. Responds with a
+ * dictionary, confirming whether the login was valid or not.
+ * @param {Request} req
+ * @param {Response} res
+ */
 const loginUser = (req, res) => {
   User.findOne({ username: req.body.username })
     .then((user) => {
@@ -53,7 +75,14 @@ const loginUser = (req, res) => {
     });
 };
 
-// search function
+/**
+ * Handles searching for the appropriate artefacts based on the search query.
+ * Checks throughout all artefacts if the search query matches with any
+ * associated person or category name, and then sends a response of
+ * artefacts based on whatever search results it matched with
+ * @param {Request} req
+ * @param {Response} res
+ */
 const searchBar = async (req, res) => {
   const query = req.params.query;
   Artefact.aggregate([
@@ -76,7 +105,9 @@ const searchBar = async (req, res) => {
       } else {
         res.status(200).send({
           message:
-            "Search query success with " + artefactRecords.length + " artefacts",
+            "Search query success with " +
+            artefactRecords.length +
+            " artefacts",
           artefactRecords,
         });
       }
@@ -89,7 +120,12 @@ const searchBar = async (req, res) => {
     });
 };
 
-// get artefacts function
+/**
+ * Retrieves all the stored artefacts in the database and sends a response
+ * containing an array of these artefacts.
+ * @param {Request} req
+ * @param {Response} res
+ */
 const allData = (req, res) => {
   Artefact.find()
     .then((artefactRecords) => {
@@ -106,13 +142,17 @@ const allData = (req, res) => {
     });
 };
 
-// get categories function
+/**
+ * Sends a response containing a list of all Category objects
+ * @param {Request} req
+ * @param {Response} res
+ */
 const getCategories = (req, res) => {
   Category.find()
     .then((result) => {
       res.status(200).send({
         message: "Categories recieved successfully",
-        result
+        result,
       });
     })
     .catch((error) => {
@@ -123,13 +163,17 @@ const getCategories = (req, res) => {
     });
 };
 
-// get associated function
+/**
+ * Sends a response containing a list of all PersonAssociated objects
+ * @param {Request} req
+ * @param {Response} res
+ */
 const getAssociated = (req, res) => {
   Associated.find()
     .then((result) => {
       res.status(200).send({
         message: "Associated recieved successfully",
-        result
+        result,
       });
     })
     .catch((error) => {
@@ -140,7 +184,12 @@ const getAssociated = (req, res) => {
     });
 };
 
-// get an artefact functiono
+/**
+ * Sends a response containing a single artefact, based on the artefact ID
+ * provided on the request data
+ * @param {Request} req
+ * @param {Response} res
+ */
 const artefact_details = async (req, res) => {
   Artefact.findById(req.params.id)
     .then((result) => {
@@ -157,9 +206,13 @@ const artefact_details = async (req, res) => {
     });
 };
 
-// Create new Artefact Record
+/**
+ * Registers a new artefact, based on the provided and filtered request data
+ * @param {Request} req
+ * @param {Response} res
+ */
 const registerArtefact = async (req, res) => {
-  console.log(req.body.record.artefactImg)
+  console.log(req.body.record.artefactImg);
   const image_data = await cloudinary.uploader.upload(
     req.body.record.artefactImg,
     {
@@ -264,7 +317,13 @@ const registerArtefact = async (req, res) => {
     });
 };
 
-// edit artefact function
+/**
+ * Sends a response containing a single artefact, based on the artefact ID
+ * provided on the request data. Used to provide the user with the feature to
+ * edit a currently-existing artefact
+ * @param {Request} req
+ * @param {Response} res
+ */
 const editArtefact = (req, res) => {
   Artefact.findByIdAndUpdate(
     { _id: req.params.id },
@@ -364,6 +423,11 @@ const editArtefact = (req, res) => {
     });
 };
 
+/**
+ * Deletes a currently-existing artefact
+ * @param {Request} req
+ * @param {Response} res
+ */
 const deleteArtefact = async (req, res) => {
   const artefact_id = req.params.id;
   const artefact_record = await Artefact.findOne({ _id: artefact_id });
@@ -392,6 +456,11 @@ const deleteArtefact = async (req, res) => {
     });
 };
 
+/**
+ * Changes the password of the user safely through encryption
+ * @param {Request} req
+ * @param {Response} res
+ */
 const changePassword = async (req, res) => {
   // hash the password using bcrypt before saving to mongodb
   const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR);
@@ -414,7 +483,12 @@ const changePassword = async (req, res) => {
   );
 };
 
-// Function to update patient's password
+/**
+ * Backup method to update passwords for responding to a new implementation
+ * with agility
+ * @param {Request} req
+ * @param {Response} res
+ */
 const updatePass = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -445,7 +519,11 @@ const updatePass = async (req, res) => {
   }
 };
 
-// register new users (will be removed)
+/**
+ * register new users (will be removed)
+ * @param {Request} req
+ * @param {Response} res
+ */
 const registerUser = async (req, res) => {
   const user = new User(req.body);
   await user
