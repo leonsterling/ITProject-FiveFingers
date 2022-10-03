@@ -83,11 +83,12 @@
             }
 
             .feedback {
-                text-align: end;
+                text-align: start;
                 letter-spacing: -0.02em;
                 font-family: Monsterrat-bold;
                 font-size: 14.5px;
                 font-weight: lighter;
+                line-height: 1.2;
             }
         }
 
@@ -132,6 +133,12 @@
             &:hover {
                 background-color: var(--accent-color-darker);
                 box-shadow: 0px 6px 11px -6px black;
+            }
+
+            &[disabled=''] {
+                // background-color: var(--color--primary__300);
+                cursor: not-allowed;
+                filter: saturate(0);
             }
         }
     }
