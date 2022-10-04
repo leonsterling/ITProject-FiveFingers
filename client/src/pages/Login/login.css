@@ -2,19 +2,14 @@
   display: flex;
   justify-content: space-between;
 }
-
 .login-page h1 {
   font-family: Monsterrat-bold;
   margin: 0;
 }
-
 .login-page h2 {
   font-size: 16px;
   font-weight: lighter;
-  margin-top: 15px;
-  margin-bottom: 30px;
 }
-
 .login-page .login-form {
   background-color: white;
   box-shadow: -6px 0 11px -9px black;
@@ -28,11 +23,9 @@
   height: 100vh;
   width: 40vw;
 }
-
 .login-page .login-form .sterling-brand {
   display: none;
 }
-
 .login-page form ul {
   list-style: none;
   line-height: 2.25;
@@ -40,51 +33,31 @@
   /* We need a way to make the form elements take the full
    * width of the container */
 }
-
 .login-page form ul li > * {
   width: 100%;
 }
-
 .login-page form ul .input-field {
   display: flex;
   margin-bottom: 25px;
   position: relative;
 }
-
 .login-page form ul .input-field span {
   flex-basis: 0;
   height: 21px;
   font-size: 21px;
-  margin: 5px 0;
+  margin-top: 2px;
   display: flex;
 }
-
 .login-page form ul .input-field span svg {
   stroke: gray;
   stroke-width: 0.6;
 }
-
-.login-page form ul .input-field span .password-toggle {
-  margin-right: 5px;
-  font-size: 19px;
-}
-
-.login-page form li.forget-password-link {
-  float: right;
-}
-
-.login-page form li.forget-password-link:hover {
-  color: #787878;
-  cursor: pointer;
-}
-
 .login-page form ul label {
   font-size: 14px;
   font-family: Monsterrat-bold;
   margin-left: 5px;
   font-weight: lighter;
 }
-
 .login-page form ul label:after {
   content: "*";
   --light-red: #f97878;
@@ -92,39 +65,33 @@
   font-size: 12px;
   font-weight: lighter;
 }
-
 .login-page form ul .feedback {
-  text-align: end;
+  text-align: start;
   letter-spacing: -0.02em;
   font-family: Monsterrat-bold;
   font-size: 14.5px;
   font-weight: lighter;
+  line-height: 1.2;
 }
-
 .login-page form input {
   border: none;
   outline: none;
   margin-bottom: 5px;
   padding-left: 8px;
 }
-
 .login-page form .login-initial {
   border-bottom: 3px solid #808080;
 }
-
 .login-page form .login-invalid {
   border-bottom: 3px solid red;
   animation: 400ms shake;
 }
-
 .login-page form .login-valid {
   border-bottom: 3px solid green;
 }
-
 .login-page form label {
   font-weight: bold;
 }
-
 .login-page form button {
   font-family: Monsterrat-bold;
   font-size: 15px;
@@ -137,11 +104,13 @@
   margin-top: 4vh;
   transition: 250ms;
 }
-
 .login-page form button:hover {
   background-color: var(--accent-color-darker);
   box-shadow: 0px 6px 11px -6px black;
-  cursor: pointer;
+}
+.login-page form button[disabled=""] {
+  cursor: not-allowed;
+  filter: saturate(0);
 }
 
 @keyframes shake {
@@ -155,12 +124,12 @@
     left: 1vw;
   }
 }
-
 @media only screen and (max-width: 722px) {
   .login-page .login-form {
     width: 100vw;
+    justify-content: start;
+    padding-top: 6vh;
   }
-
   .login-page .login-form .sterling-brand {
     display: flex;
     flex-direction: column;
@@ -170,15 +139,12 @@
     font-size: 21px;
     margin-bottom: 4vh;
   }
-
   .login-page .login-form .sterling-brand img {
     width: 30vw;
     background: linear-gradient(90deg, var(--accent-color-darker) 0%, var(--accent-color) 100%);
     border-radius: 10px;
     box-shadow: 0px 3px 5px hsla(0deg, 0%, 0%, 0.6);
-    margin-bottom: 20px;
   }
-
   .login-page .login-form .sterling-brand span {
     margin-top: 1.75vh;
     text-align: center;

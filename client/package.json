@@ -30,6 +30,7 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
+    "react-test-renderer": "^18.2.0",
     "sass": "^1.54.9",
     "save": "^2.5.0",
     "universal-cookie": "^4.0.4",
@@ -73,7 +74,6 @@
     "@storybook/test-runner": "^0.7.2",
     "@storybook/testing-library": "^0.0.13",
     "babel-loader": "^8.2.5",
-    "jest": "^27.5.1",
-    "prettier": "^2.7.1"
+    "jest": "^27.5.1"
   }
 }
