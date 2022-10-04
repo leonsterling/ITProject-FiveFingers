@@ -5,8 +5,8 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const /** ?string */ token = cookies.get("TOKEN");
 
-const HOST = "https://sterlingfamilyartefacts.herokuapp.com/";
-const PORT = '';
+const HOST = "http://localhost";
+const PORT = 5100;
 
 /* ------------------------------------------------------------
  * At ${HOST}:${PORT}/login
@@ -20,7 +20,7 @@ const PORT = '';
 export async function getLoginPromise (username, password) {
   return setupPromise(/* configuration = */ {
     method: "post",
-    url: `${HOST}:${PORT}/login`,
+    url: `${HOST}/login`,
     data: {
       username,
       password,
