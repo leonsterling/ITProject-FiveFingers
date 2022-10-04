@@ -184,10 +184,6 @@ const searchAssociated = (req,res) => {
     });
 }
 
-const searchFuzzy = (req,res) => {
-
-}
-
 // get all artefacts function for route: '/data'
 const allData = (req, res) => {
   Artefact.find()
@@ -264,6 +260,8 @@ const registerArtefact = async (req, res) => {
     req.body.record.artefactImg,
     {
       upload_preset: "sterling_family_account",
+      allowed_formats: ['jpeg', 'jpg', 'png'], 
+      format: 'jpg'
     }
   );
 
@@ -692,5 +690,4 @@ module.exports = {
   // new search functions
   searchCategory,
   searchAssociated,
-  searchFuzzy
 };

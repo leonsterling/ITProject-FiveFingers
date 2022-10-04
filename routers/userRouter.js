@@ -19,7 +19,6 @@ userRouter.get('/get-associated', jwtAuth, userController.getAssociated)
 // New search routes
 userRouter.get('/search-category/:query', jwtAuth, userController.searchCategory)
 userRouter.get('/search-associated/:query', jwtAuth, userController.searchAssociated)
-userRouter.get('/search-fuzzy/:query', jwtAuth, userController.searchFuzzy)
 
 // POST routes for login
 userRouter.post('/register', userController.registerUser)
