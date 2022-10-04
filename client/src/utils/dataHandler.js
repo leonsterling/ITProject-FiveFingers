@@ -5,8 +5,8 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const /** ?string */ token = cookies.get("TOKEN");
 
-const HOST = "http://localhost";
-const PORT = 5100;
+const HOST = "https://sterlingfamilyartefacts.herokuapp.com/";
+const PORT = '';
 
 /* ------------------------------------------------------------
  * At ${HOST}:${PORT}/login
