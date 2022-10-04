@@ -5,22 +5,35 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 const /** ?string */ token = cookies.get("TOKEN");
 
-const HOST = "http://localhost";
-const PORT = 5100;
+/* Uncomment/comment-out whichever variables are needed for
+ * different modes */
+/* ------------------------------------------------------------
+ * For dev-mode
+ * ------------------------------------------------------------ */
+// const HOST = "http://localhost";
+// const PORT = 5100;
+// const URL = `${HOST}${PORT}`;
 
 /* ------------------------------------------------------------
- * At ${HOST}:${PORT}/login
+ * For deployment-mode
+ * ------------------------------------------------------------ */
+const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
+
+/* ------------------------------------------------------------
+ * At ${URL}/login
  * ------------------------------------------------------------ */
 /**
- * Requests the server-side to check the provided credentials and responds
- * in the client-side accordingly
- * @param username the username provided by the user in the loginpage
- * @param password the password provided by the user in the loginpage
+ * Requests the server-side to check the provided credentials
+ * and responds in the client-side accordingly
+ * @param username the username provided by the user in the
+ *                 loginpage
+ * @param password the password provided by the user in the
+ *                 loginpage
  */
 export async function getLoginPromise (username, password) {
   return setupPromise(/* configuration = */ {
     method: "post",
-    url: `${HOST}:${PORT}/login`,
+    url: `${URL}/login`,
     data: {
       username,
       password,
@@ -29,14 +42,15 @@ export async function getLoginPromise (username, password) {
 }
 
 /* ------------------------------------------------------------
- * At ${HOST}:${PORT}/dashboard
+ * At ${URL}/dashboard
  * ------------------------------------------------------------ */
 export async function getInitDashboardPromise () {
   return setupPromise(/* configuration = */ {
       method: "get",
-      url: `${HOST}:${PORT}/data`,
+      url: `${URL}/data`,
       headers: {
-        Authorization: `Bearer ${token}`, // authorized route with jwt token
+        // authorized route with jwt token
+        Authorization: `Bearer ${token}`, 
       },
     });
 }
@@ -44,25 +58,27 @@ export async function getInitDashboardPromise () {
 export async function getSearchPromise (searchText) {
   return setupPromise(/* configuration = */ {
       method: "get",
-      url: `${HOST}:${PORT}/search-artefacts/${searchText}`,
+      url: `${URL}/search-artefacts/${searchText}`,
       headers: {
-        Authorization: `Bearer ${token}`, // authorized route with jwt token
+        // authorized route with jwt token
+        Authorization: `Bearer ${token}`,
       },
     });
 }
 
 /* ------------------------------------------------------------
- * At ${HOST}:${PORT}/add-artefact
+ * At ${URL}/add-artefact
  * ------------------------------------------------------------ */
 export async function postArtefact (record) {
   return setupPromise(/* configuration = */ {
     method: "post",
-    url: `${HOST}:${PORT}/add-artefact`,
+    url: `${URL}/add-artefact`,
     data: {
       record,
     },
     headers: {
-      Authorization: `Bearer ${token}`, // authorized route with jwt token
+      // authorized route with jwt token
+      Authorization: `Bearer ${token}`,
     },
   });
 }
@@ -71,9 +87,10 @@ export async function getCategoryPromise (requestURI) {
   return setupPromise(/* configuration = */ {
     method: "get",
     headers: {
-      Authorization: `Bearer ${token}`, // authorized route with jwt token
+      // authorized route with jwt token
+      Authorization: `Bearer ${token}`,
     },
-    url: `${HOST}:${PORT}/${requestURI}`,
+    url: `${URL}/${requestURI}`,
   });
 }
 
