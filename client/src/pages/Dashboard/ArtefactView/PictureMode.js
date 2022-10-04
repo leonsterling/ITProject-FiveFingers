@@ -10,21 +10,14 @@
  */
 
 // Imports of packages
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import Cookies from "universal-cookie";
+import React, { useState } from "react";
 
 // Imports of local components
 import PartialView from "./PartialView";
-import Skewer from "../../components/Skewer";
+import Skewer from "../../../components/Skewer";
 
 // Style-based imports
 import "./PictureMode.scss";
-
-// obtain token from cookie
-const cookies = new Cookies();
-const token = cookies.get("TOKEN");
 
 /**
  * The Picture mode component, which does 2 things
@@ -34,20 +27,6 @@ const token = cookies.get("TOKEN");
  */
 function PictureMode({ userData, setUserData, handleDashboard }) {
   const /** string */ [currID, setCurrID] = useState("");
-
-  /**
-   * After rendering the basic component (without data), it calls the pre-set
-   * callback function to fetch and set the data accordingly
-   */
-  useEffect(() => {
-    handleDashboard()
-      .then((res) => {
-        setUserData(res.data.artefactRecords);
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
-  }, []);
 
   const /** boolean */ [open, setOpen] = useState(false);
 
@@ -70,7 +49,6 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
 
   let /** ?Array<React.Compoent> */ pictures = null;
   if (userData) {
-    console.log({ userData });
     pictures = userData.map(
       ({ artefactName, artefactImg, description, artefactDate, _id }) => (
         <article

@@ -10,13 +10,13 @@
 
 // Imports of packages
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
 import FsLightbox from "fslightbox-react";
 import axios from "axios";
 
 // Imports of local components
-import Navbar from "../Dashboard/Navbar";
+import Navbar from "../../components/Navbar.js";
 
 // Style-based imports
 import "./FullView.scss";

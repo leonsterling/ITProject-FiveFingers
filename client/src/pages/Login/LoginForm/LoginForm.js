@@ -3,19 +3,22 @@
  *               valid authentication
  * Uses:
  * - React for rendering HTML
- * - Axios for getting information from the serverside
  * - Universal Cookie for handling browser cookies and validating logins
- * - Iconify for adding icons
  */
 
 // Imports of packages
 import React, { useState } from "react";
-import axios from "axios";
 import Cookies from "universal-cookie";
-import { Icon } from "@iconify/react";
+
+// Imports of local components
+import Enquiries from "./Enquiries";
+import TextInteractions from "./TextInteractions";
+
+// Imports of local utils
+import { getLoginPromise } from "../../../utils/dataHandler";
 
 // Style-based imports
-import "./login.css";
+import "../login.css";
 
 // Cookies for checking if the user is currently logged in
 const cookies = new Cookies();
@@ -50,6 +53,7 @@ export default function LoginForm() {
 
   const /** string */ [username, setUserName] = useState("");
   const /** string */ [password, setPassword] = useState("");
+  const /** string */ [isDisabled, setIsDisabled] = useState(false);
 
   /**
    * Requests the server-side to check the provided credentials and responds
@@ -57,28 +61,12 @@ export default function LoginForm() {
    * @param e The javascript event
    */
   async function handleLogin(e) {
-    /** {{
-     *     method: string,
-     *     url: string,
-     *     data: {{
-     *        username: string,
-     *        password: string
-     *     }}
-     *  }} */
-    const configuration = {
-      method: "post",
-      url: "http://localhost:5100/login",
-      data: {
-        username,
-        password,
-      },
-    };
-
     // prevent the form from refreshing the whole page
     e.preventDefault();
 
-    // make the API call
-    await axios(configuration)
+    setIsDisabled(true);
+
+    await getLoginPromise(username, password)
       .then((res) => {
         // set the cookie upon successful login
         cookies.set("TOKEN", res.data.token, {
@@ -91,6 +79,7 @@ export default function LoginForm() {
         });
       })
       .catch((err) => {
+        console.log(isDisabled);
         // Login returned an invalid input
         console.log("fail login");
         inputClass = states.invalid;
@@ -99,6 +88,7 @@ export default function LoginForm() {
           isValid: false,
         });
         console.log(err);
+        setIsDisabled(false);
       });
   }
 
@@ -113,43 +103,16 @@ export default function LoginForm() {
   return (
     <form action="/login" method="post" onSubmit={(e) => handleLogin(e)}>
       <ul>
+        <Enquiries
+          inputClass={inputClass}
+          setUserName={setUserName}
+          setPassword={setPassword}
+        />
+        <TextInteractions feedbackMessage={feedbackMessage} />
         <li>
-          <label> Username </label>
-        </li>
-        <li className={inputClass}>
-          <span>
-            <Icon icon="codicon:mail" />
-          </span>
-          <input
-            type="text"
-            id="userName"
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </li>
-        <li>
-          <label> Password </label>
-        </li>
-        <li className={inputClass}>
-          <span>
-            <Icon icon="codicon:lock-small" />
-          </span>
-          <input
-            type="password"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <span>
-            <Icon className="password-toggle" icon="bi:eye-slash-fill" />
-          </span>
-        </li>
-        <li className="forget-password-link">
-          <h5>Forgot password?</h5>
-        </li>
-        <li>
-          <p className="feedback">{feedbackMessage}</p>
-        </li>
-        <li>
-          <button type="submit">Sign In</button>
+          <button type="submit" disabled={isDisabled}>
+            Sign In
+          </button>
         </li>
       </ul>
     </form>

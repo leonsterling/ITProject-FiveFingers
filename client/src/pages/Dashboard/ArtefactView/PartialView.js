@@ -14,7 +14,7 @@ import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
 // Imports of local components
-import Skewer from "../../components/Skewer";
+import Skewer from "../../../components/Skewer";
 
 // Style-based imports
 import "./PartialView.scss";

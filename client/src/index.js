@@ -21,7 +21,7 @@ import AuthRoutes from "./components/AuthRoutes.js";
 import Dashboard from "./pages/Dashboard/Dashboard.js";
 import RecordPage from "./pages/Record/RecordPage.js";
 import FullView from "./pages/FullView/FullView.js";
-import ListView from "./pages/ListView/ListView.js";
+import ListView from "./pages/Dashboard/ArtefactView/ListView.js";
 import EditPage from "./pages/EditPage/EditPage.js";
 import Skewer from "./components/Skewer.js";
 
@@ -51,17 +51,13 @@ root.render(
           <Route element={<Dashboard />} path="/dashboard" exact></Route>
           <Route element={<ListView />} path="/list-view" exact></Route>
           <Route element={<FullView />} path="/full-view/:_id" exact>
-            {" "}
           </Route>
           <Route element={<RecordPage />} path="/add-artefact" exact>
-            {" "}
           </Route>
           <Route element={<EditPage />} path="/edit-artefact/:_id" exact>
-            {" "}
           </Route>
 
           <Route element={<Skewer />} path="skewer" exact>
-            {" "}
           </Route>
         </Route>
       </Routes>

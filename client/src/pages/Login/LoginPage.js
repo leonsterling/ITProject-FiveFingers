@@ -9,7 +9,7 @@
 import React from "react";
 
 // Imports of local components
-import LoginForm from "./LoginForm";
+import LoginForm from "./LoginForm/LoginForm";
 import LoginSplash from "./LoginSplash";
 
 // Style-based imports
@@ -45,7 +45,7 @@ function SterlingBrand() {
 
   return (
     <div className="sterling-brand">
-      <img src={picture} />
+      <img src={picture} alt=""/>
       <span>Sterling Family Artefacts</span>
     </div>
   );

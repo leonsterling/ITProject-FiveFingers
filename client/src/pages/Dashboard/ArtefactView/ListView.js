@@ -7,39 +7,15 @@
  * - Universal Cookie for handling browser cookies and validating logins
  */
 
-// Imports of packages
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Cookies from "universal-cookie";
-import { Link } from "react-router-dom";
-
 // Style-based imports
 import "./ListView.css";
-
-// Import Authentication and Cookies
-const cookies = new Cookies();
-const token = cookies.get("TOKEN");
 
 /**
  * The List View component. Handles data based on whether the top-level
  * component chooses to search or display the default artefacts
  * @return {React.Component}
  */
-function ListView ({ userData, setUserData, handleDashboard }) {
-  /**
-   * After rendering the basic component (without data), it calls the pre-set
-   * callback function to fetch and set the data accordingly
-   */
-  useEffect(() => {
-    handleDashboard()
-      .then((res) => {
-        setUserData(res.data.artefactRecords);
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
-  }, []);
-
+function ListView ({ userData, handleDashboard }) {
   let /** ?Array<React.Compoent> */ row = null;
   if (userData) {
     row = userData.map(

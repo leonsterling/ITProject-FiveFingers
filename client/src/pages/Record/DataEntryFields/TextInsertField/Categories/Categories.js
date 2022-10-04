@@ -10,15 +10,12 @@
 // Imports of packages
 import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
-import axios from "axios";
-import Cookies from "universal-cookie";
+
+// Imports of local utils
+import { getCategoryPromise } from "../../../../../utils/dataHandler.js";
 
 // Style-based imports
 import "./categories.scss";
-
-// obtain token from cookie
-const cookies = new Cookies();
-const token = cookies.get("TOKEN");
 
 /**
  * The Categories feature that the client requested. Allows the user to add,
@@ -91,7 +88,7 @@ function Categories({ data, index, handleChange }) {
       getObject(uri, setCategoryList, data_container);
       setRetrieved(true);
     }
-  });
+  }, [isRetrieved, data.label]);
 
   return (
     <>
@@ -133,8 +130,6 @@ function CategoryInput({
   let /** string */ icon = isVisible
       ? "codicon:chevron-up"
       : "codicon:chevron-down";
-  let /** string */ labelClass =
-    label === "Choose a category" ? "initial" : "";
   return (
     <div
       className="input-like category-input"
@@ -185,10 +180,7 @@ function FocusState({ isVisible, setVisibility }) {
   let /** string */ currState = isVisible
       ? "focused visible"
       : "focused hidden";
-  return <div
-           className={currState}
-           onClick={() => setVisibility(false)}>
-         </div>;
+  return <div className={currState} onClick={() => setVisibility(false)}></div>;
 }
 
 /**
@@ -204,19 +196,9 @@ function FocusState({ isVisible, setVisibility }) {
  *                                   data
  */
 async function getObject(requestURI, setCategoryList, data_container) {
-  const configuration = {
-    method: "get",
-    headers: {
-      Authorization: `Bearer ${token}`, // authorized route with jwt token
-    },
-    url: `http://localhost:5100/${requestURI}`,
-  };
-  console.log(`http://localhost:5100/${requestURI}`);
-  await axios(configuration)
+  await getCategoryPromise(requestURI)
     .then((res) => {
-      console.log(res.data);
       let data = cleanCategories(res.data.result, data_container);
-      // console.log(res.data[requestURI]);
       setCategoryList(data);
     })
     .catch((err) => {
