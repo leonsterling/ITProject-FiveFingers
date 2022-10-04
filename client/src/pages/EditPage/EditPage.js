@@ -17,6 +17,7 @@ const feedbackMessages = {
 };
 
 const EditPage = () => {
+  
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
 
   // id constant to send request based on the specific artefact id
@@ -68,6 +69,7 @@ const EditPage = () => {
     }
     updateArtefact();
     setFeedback(feedbackMessages.valid);
+   
   }
 
   // React hook to change the state of record
@@ -87,7 +89,6 @@ const EditPage = () => {
     async function updatePage() {
       try {
         const response = await axios(configuration);
-
         setRecord(response.data.result);
         console.log(JSON.stringify(response.data.re));
       } catch (error) {
@@ -113,6 +114,7 @@ const EditPage = () => {
       <Navbar />
 
       <div className="record-page">
+
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
           <h2>Edit Artefact</h2>
@@ -163,5 +165,6 @@ const EditPage = () => {
     return data.artefactName !== "" && data.artefactImg !== "";
   }
 };
+
 
 export default EditPage;

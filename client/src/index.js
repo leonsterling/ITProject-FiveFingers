@@ -52,6 +52,12 @@ root.render(
           <Route element={<ListView />} path="/list-view" exact></Route>
           <Route element={<FullView />} path="/full-view/:_id" exact>
           </Route>
+          <Route element={<ListView/>} path="/list-view" exact>
+            {" "}
+          </Route>
+          <Route element={<FullView />} path="/full-view/:_id" exact>
+            {" "}
+          </Route>
           <Route element={<RecordPage />} path="/add-artefact" exact>
           </Route>
           <Route element={<EditPage />} path="/edit-artefact/:_id" exact>

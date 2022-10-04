@@ -107,6 +107,9 @@ function RecordForm() {
    * Change the state of the record object based on user input
    */
   function handleChange(event) {
+    let name = event.target.name;
+    let value = event.target.value;
+    console.log({name, value});
     setRecord({ ...record, [event.target.name]: event.target.value });
   }
 

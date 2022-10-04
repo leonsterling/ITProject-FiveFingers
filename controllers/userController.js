@@ -103,6 +103,7 @@ const searchBar = async (req, res) => {
           artefactRecords,
         });
       } else {
+        // 1 or more artefacts matches the query
         res.status(200).send({
           message:
             "Search query success with " +
@@ -231,12 +232,15 @@ const registerArtefact = async (req, res) => {
     "artefactImg.publicID": image_data.public_id,
   });
 
-  await artefact
+  // store artefact in database
+  artefact
     .save()
     .then((result1) => {
+      // checks if category exists in database
       Category.findOne({ category_name: req.body.record.category })
         .then((result2) => {
           if (result2) {
+            // stores the existing category object in the artefact record
             Artefact.updateOne(
               { _id: result1._id },
               {
@@ -249,29 +253,44 @@ const registerArtefact = async (req, res) => {
               }
             );
           } else {
-            const cat = new Category({
+            // creates a new Category record
+            const newCategory = new Category({
               category_name: req.body.record.category,
             });
 
+            // updates category of artefact
             Artefact.updateOne(
               { _id: result1._id },
               {
-                $set: { category: cat },
+                $set: { category: newCategory },
               },
               function (err, doc) {
                 if (err) {
+                  res.status(500).send({
+                    message: "Error upon registering artefact",
+                    err,
+                  });
                 } else {
                 }
               }
             );
-            cat.save();
+
+            // stores new category in database
+            newCategory.save();
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          res.status(500).send({
+            message: "Error upon registering artefact",
+            err,
+          });
+        });
 
+      // checks if associated exists on database
       Associated.findOne({ person: req.body.record.associated })
         .then((result3) => {
           if (result3) {
+            // stores the existing associated object in the artefact record
             Artefact.updateOne(
               { _id: result1._id },
               {
@@ -279,30 +298,47 @@ const registerArtefact = async (req, res) => {
               },
               function (err, doc) {
                 if (err) {
+                  res.status(500).send({
+                    message: "Error upon registering artefact",
+                    err,
+                  });
                 } else {
                 }
               }
             );
           } else {
-            const ass = new Associated({
+            // create a new Associated record
+            const newAssociated = new Associated({
               person: req.body.record.associated,
             });
 
+            // updates associated of artefact
             Artefact.updateOne(
               { _id: result1._id },
               {
-                $set: { associated: ass },
+                $set: { associated: newAssociated },
               },
               function (err, doc) {
                 if (err) {
+                  res.status(500).send({
+                    message: "Error upon registering artefact",
+                    err,
+                  });
                 } else {
                 }
               }
             );
-            ass.save();
+
+            // stores new associated in database
+            newAssociated.save();
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          res.status(500).send({
+            message: "Error upon registering artefact",
+            err,
+          });
+        });
 
       res.status(200).send({
         message: "Artefact registered successfully",
@@ -335,9 +371,11 @@ const editArtefact = (req, res) => {
     }
   )
     .then((result1) => {
+      // checks if category exists in database
       Category.findOne({ category_name: req.body.record.category })
         .then((result2) => {
           if (result2) {
+            // stores the existing category object in the artefact record
             Artefact.updateOne(
               { _id: result1._id },
               {
@@ -345,34 +383,53 @@ const editArtefact = (req, res) => {
               },
               function (err, doc) {
                 if (err) {
+                  res.status(500).send({
+                    message: "Error upon registering artefact",
+                    err,
+                  });
                 } else {
                 }
               }
             );
           } else {
-            const cat = new Category({
+            // creates a new Category record
+            const newCategory = new Category({
               category_name: req.body.record.category,
             });
 
+            // updates category of artefact
             Artefact.updateOne(
               { _id: result1._id },
               {
-                $set: { category: cat },
+                $set: { category: newCategory },
               },
               function (err, doc) {
                 if (err) {
+                  res.status(500).send({
+                    message: "Error upon registering artefact",
+                    err,
+                  });
                 } else {
                 }
               }
             );
-            cat.save();
+
+            // stores new category in database
+            newCategory.save();
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          res.status(500).send({
+            message: "Error upon edit artefact",
+            err,
+          });
+        });
 
+      // checks if associated exists on database
       Associated.findOne({ person: req.body.record.associated })
         .then((result3) => {
           if (result3) {
+            // stores the existing associated object in the artefact record
             Artefact.updateOne(
               { _id: result1._id },
               {
@@ -380,33 +437,45 @@ const editArtefact = (req, res) => {
               },
               function (err, doc) {
                 if (err) {
+                  res.status(500).send({
+                    message: "Error upon edit artefact",
+                    err,
+                  });
                 } else {
                 }
               }
             );
           } else {
-            const ass = new Associated({
+            // create a new Associated record
+            const newAssociated = new Associated({
               person: req.body.record.associated,
             });
 
+            // updates associated of artefact
             Artefact.updateOne(
               { _id: result1._id },
               {
-                $set: { associated: ass },
+                $set: { associated: newAssociated },
               },
               function (err, doc) {
                 if (err) {
+                  res.status(500).send({
+                    message: "Error upon edit artefact",
+                    err,
+                  });
                 } else {
                 }
               }
             );
-            ass.save();
+
+            // stores new associated in database
+            newAssociated.save();
           }
         })
         .catch((error) => {
           res.status(500).send({
-            message: "Error in edit",
-            error,
+            message: "Error upon edit artefact",
+            err,
           });
         });
 
@@ -417,7 +486,7 @@ const editArtefact = (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "Error in edit",
+        message: "Error upon edit artefact",
         error,
       });
     });
@@ -432,14 +501,14 @@ const deleteArtefact = async (req, res) => {
   const artefact_id = req.params.id;
   const artefact_record = await Artefact.findOne({ _id: artefact_id });
 
-  await Artefact.deleteOne({ _id: artefact_id })
-    .then((result) => {
-      console.log(result);
-      console.log(artefact_record);
+  // deletes artefact with the corresponding MongoDB record ID
+  Artefact.deleteOne({ _id: artefact_id })
+    .then(() => {
+      // removes artefact image stored in Cloudinary
       cloudinary.uploader.destroy(
         artefact_record.artefactImg.publicID,
         function (error, result) {
-          res.status(201).send({
+          res.status(200).send({
             message: "Artefact deleted successfully",
             result,
             artefact_record,
@@ -474,56 +543,16 @@ const changePassword = async (req, res) => {
           err,
         });
       } else {
-        res.status(201).send({
+        res.status(200).send({
           message: "Password changed successfully",
-          hashed_pass,
         });
       }
     }
   );
 };
 
-/**
- * Backup method to update passwords for responding to a new implementation
- * with agility
- * @param {Request} req
- * @param {Response} res
- */
-const updatePass = async (req, res) => {
-  try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      const errorsFound = validationResult(req).array();
-      req.flash("errors", errorsFound);
-      return res.redirect("/patient/change-password");
-    }
-
-    // hash the password using bcrypt before saving to mongodb
-    const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR);
-    Patient.findOneAndUpdate(
-      { _id: req.user._id },
-      { password: hashed_pass },
-      function (err, doc) {
-        if (err) {
-          return res.redirect("/patient/404");
-        } else {
-        }
-      }
-    );
-
-    return res.redirect("/patient/dashboard");
-  } catch (err) {
-    // error detected, renders patient error page
-    return res.redirect("/patient/404");
-  }
-};
-
-/**
- * register new users (will be removed)
- * @param {Request} req
- * @param {Response} res
- */
+// register new users
+// (HELPER FUNCTION, WILL BE REMOVED)
 const registerUser = async (req, res) => {
   const user = new User(req.body);
   await user
@@ -544,18 +573,75 @@ const registerUser = async (req, res) => {
   console.log(user);
 };
 
+// get data based on page for route: '/data/:page'
+// (NO AUTOMATIC TESTING YET)
+const getPage = async (req, res) => {
+  // current page
+  const pageNum = req.params.page;
+
+  // total count of all artefacts
+  const totalArtefact = await Artefact.countDocuments();
+
+  let totalPages = Math.floor(totalArtefact / LIMIT);
+  let remainder = totalArtefact % LIMIT;
+
+  if (totalPages == 0) {
+    totalPages = 1;
+  }
+
+  if (remainder != 0) {
+    totalPages += 1;
+  }
+
+  let idx = (pageNum - 1) * LIMIT;
+
+  await Artefact.find()
+    .skip(idx)
+    .limit(LIMIT)
+    .then((dataInPage) => {
+      const dataPerPage = dataInPage.length;
+
+      if (dataPerPage > 0) {
+        res.status(200).send({
+          message: `Successfully retrieved page ${pageNum}`,
+          dataPerPage,
+          dataInPage,
+          totalPages,
+          totalArtefact,
+        });
+      } else {
+        res.status(200).send({
+          message: "You ran out of artefacts!",
+          dataPerPage,
+          dataInPage,
+          totalPages,
+          totalArtefact,
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error occured in getting pages",
+        error,
+      });
+    });
+};
+
 // exports objects containing functions imported by router
 module.exports = {
   allData,
-  registerArtefact,
   loginUser,
-  editArtefact,
-  deleteArtefact,
   artefact_details,
   searchBar,
-  changePassword,
   getCategories,
   getAssociated,
+  registerArtefact,
+  editArtefact,
+  deleteArtefact,
+  changePassword,
+
+  // no automatic testing yet
+  getPage,
 
   // helper function, not part of requirement
   registerUser,

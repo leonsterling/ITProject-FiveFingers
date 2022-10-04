@@ -121,6 +121,7 @@ function FullView() {
     recordCategory = recordData.category.category_name;
   }
 
+
   return (
     <>
       <Navbar />

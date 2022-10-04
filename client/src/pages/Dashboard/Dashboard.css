@@ -85,7 +85,6 @@ body {
 
 .dashboard-header .dashboard-header__right-area input {
     border: none;
-    /* width: 255px; */
     outline: none;
     position: relative;
     z-index: 20;
