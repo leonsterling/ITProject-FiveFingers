@@ -3,17 +3,19 @@
  *               valid authentication
  * Uses:
  * - React for rendering HTML
- * - Axios for getting information from the serverside
  * - Universal Cookie for handling browser cookies and validating logins
- * - Iconify for adding icons
  */
 
 // Imports of packages
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
-import {getLoginPromise} from "../../../utils/dataHandler";
 
-import Enquiries from './Enquiries';
+// Imports of local components
+import Enquiries from "./Enquiries";
+import TextInteractions from "./TextInteractions";
+
+// Imports of local utils
+import { getLoginPromise } from "../../../utils/dataHandler";
 
 // Style-based imports
 import "../login.css";
@@ -101,21 +103,18 @@ export default function LoginForm() {
   return (
     <form action="/login" method="post" onSubmit={(e) => handleLogin(e)}>
       <ul>
-        <Enquiries inputClass={inputClass}
+        <Enquiries
+          inputClass={inputClass}
           setUserName={setUserName}
           setPassword={setPassword}
         />
+        <TextInteractions feedbackMessage={feedbackMessage} />
         <li>
-          <p className="feedback">{feedbackMessage}</p>
-        </li>
-        <li className="forget-password-link">
-          <h5>Forgot password?</h5>
-        </li>
-        <li>
-          <button type="submit" disabled={isDisabled}>Sign In</button>
+          <button type="submit" disabled={isDisabled}>
+            Sign In
+          </button>
         </li>
       </ul>
     </form>
   );
 }
-

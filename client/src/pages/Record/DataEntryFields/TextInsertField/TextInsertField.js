@@ -9,7 +9,7 @@
 import React from "react";
 
 // Imports of local components
-import Categories from "./Categories";
+import Categories from "./Categories/Categories.js";
 
 /**
  * The component that contains all the text-input field data, based on the
@@ -39,11 +39,7 @@ function TextInsertField({ handleChange }) {
 
           case "textarea":
             component = (
-              <TextArea
-                data={data}
-                index={index}
-                handleChange={handleChange}
-              />
+              <TextArea data={data} index={index} handleChange={handleChange} />
             );
             break;
 

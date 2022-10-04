@@ -21,7 +21,7 @@ import AuthRoutes from "./components/AuthRoutes.js";
 import Dashboard from "./pages/Dashboard/Dashboard.js";
 import RecordPage from "./pages/Record/RecordPage.js";
 import FullView from "./pages/FullView/FullView.js";
-import ListView from "./pages/ListView/ListView.js";
+import ListView from "./pages/Dashboard/ArtefactView/ListView.js";
 import EditPage from "./pages/EditPage/EditPage.js";
 import Skewer from "./components/Skewer.js";
 

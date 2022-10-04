@@ -63,7 +63,7 @@ body {
     width: 100vw;
     top: 0;
     height: 80px;
-    z-index: 3;
+    z-index: 10;
 }
 
 .dashboard-header {
@@ -85,7 +85,7 @@ body {
 
 .dashboard-header .dashboard-header__right-area input {
     border: none;
-    width: 255px;
+    /* width: 255px; */
     outline: none;
     position: relative;
     z-index: 20;
@@ -155,5 +155,4 @@ body {
     .dashboard-header .viewToggle {
         display: none;
     }
-
 }

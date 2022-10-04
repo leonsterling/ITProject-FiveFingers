@@ -10,21 +10,17 @@
 
 // Imports of packages
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import FileBase from "react-file-base64";
-import axios from "axios";
-import Cookies from "universal-cookie";
 
 // Imports of local components
-import TextInsertField from "./TextInsertField.js";
-import Navbar from "../Dashboard/Navbar";
+import Navbar from "../../components/Navbar";
+import DataEntryFields from "./DataEntryFields/DataEntryFields";
+import RecordButtons from "./RecordButtons/RecordButtons";
+
+// Imports of local utils
+import { postArtefact } from "../../utils/dataHandler";
 
 // Style-based imports
 import "./RecordPage.scss";
-
-// obtain token from cookie
-const cookies = new Cookies();
-const token = cookies.get("TOKEN");
 
 // Feedback states for notifying the user with what is going on when they
 // choose to add an artefact
@@ -95,34 +91,11 @@ function RecordForm() {
      */
     async function recordArtefact(e) {
       // set configurations
-      /** {{
-       *     method: string,
-       *     url: string,
-       *     data: {{
-       *        record: object
-       *     }}
-       *     headers: {{
-       *        Authorization: string
-       *     }}
-       *  }} */
-      const configuration = {
-        method: "post",
-        url: "http://localhost:5100/add-artefact",
-        data: {
-          record,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`, // authorized route with jwt token
-        },
-      };
-
-      // make the API call
-      axios(configuration)
+      postArtefact(record)
         .then((result) => {
           window.location.href = "/dashboard";
         })
         .catch((error) => {
-          error = new Error();
           console.log(error);
         });
     }
@@ -137,12 +110,6 @@ function RecordForm() {
     setRecord({ ...record, [event.target.name]: event.target.value });
   }
 
-  let /** React.Component */ imageDisplay =
-      record.artefactImg === "" ? (
-        <UploadPending setRecord={setRecord} record={record} />
-      ) : (
-        <UploadDone setRecord={setRecord} record={record} />
-      );
   // Return an HTML of the Record Page
   return (
     <>
@@ -154,26 +121,15 @@ function RecordForm() {
           onKeyDown={(e) => checkKeyDown(e)}
         >
           <h1>Add Artefact</h1>
-          <div className="data-entry-fields">
-            <TextInsertField handleChange={handleChange} />
-            {/* Upload Images */}
-            <div className="data-entry-fields--image-upload">
-              {imageDisplay}
-            </div>
-          </div>
+          <DataEntryFields
+            handleChange={handleChange}
+            record={record}
+            setRecord={setRecord}
+          />
 
           {/* This is the cancel button it just redirects to dashboard */}
           <p className="feedback">{feedback}</p>
-          <div className="response-button" id="button">
-            <Link to={`/dashboard`}>
-              <button className="response-button__cancel" type="submit">
-                Cancel
-              </button>
-            </Link>
-            <button className="response-button__submit" type="submit">
-              Submit
-            </button>
-          </div>
+          <RecordButtons />
         </form>
       </div>
     </>
@@ -195,67 +151,6 @@ function RecordForm() {
   */
 function isValidInput(data) {
   return data.artefactName !== "" && data.artefactImg !== "";
-}
-
-/**
- * The component initially shown when the page is first entered. Provides
- * a big button to add an image
- * @return {React.Component}
- */
-function UploadPending({ setRecord, record }) {
-  return (
-    <>
-      <label className="data-entry-fields--image-upload--description">
-        Upload Image
-      </label>
-      <label className="data-entry-fields--image-upload--upload-button">
-        <FileBase
-          type="file"
-          name="artefactImg"
-          multiple={false}
-          onDone={({ base64 }) =>
-            setRecord({ ...record, artefactImg: base64 })
-          }
-        />
-        Drop your images here, or select <span>click to browse</span>
-      </label>
-    </>
-  );
-}
-
-/**
- * The component that comes up after an image has been added after the first
- * time. Showcases the previous image and also provides an option to upload a
- * different image
- * @return {React.Component}
- */
-function UploadDone({ record, setRecord }) {
-  return (
-    <>
-      <label className="data-entry-fields--image-upload--description">
-        Selected Image
-      </label>
-      <label>
-        <div className="data-entry-fields--image-upload--upload-complete">
-          <img src={record.artefactImg} alt="" />
-        </div>
-      </label>
-      <label className="data-entry-fields--image-upload--restart">
-        Not satisfied?
-        <label>
-          Upload again
-          <FileBase
-            type="file"
-            name="artefactImg"
-            multiple={false}
-            onDone={({ base64 }) =>
-              setRecord({ ...record, artefactImg: base64 })
-            }
-          />
-        </label>
-      </label>
-    </>
-  );
 }
 
 export default RecordForm;

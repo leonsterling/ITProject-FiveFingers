@@ -1,8 +1,23 @@
+/**
+ * @fileoverview The component responsible for asking the user to provide
+ *               their respective login information for the form to handle
+ * Uses:
+ * - React for rendering HTML
+ * - Iconify for adding icons
+ */
+
+// Imports of packages
 import { Icon } from "@iconify/react";
 
-function Enquiries ( { inputClass, setUserName, setPassword } ) {
-    return (
-      <>
+/**
+ * Asks the user to provide their respective login information for the form
+ * to handle, changing the stored information of the username and password of
+ * the parent component
+ * @return {React.Component}
+ */
+function Enquiries({ inputClass, setUserName, setPassword }) {
+  return (
+    <>
       <li>
         <label> Username </label>
       </li>
@@ -32,9 +47,8 @@ function Enquiries ( { inputClass, setUserName, setPassword } ) {
           <Icon className="password-toggle" icon="bi:eye-slash-fill" />
         </span>
       </li>
-      </>
-    )
+    </>
+  );
 }
 
 export default Enquiries;
-
