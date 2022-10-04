@@ -67,8 +67,12 @@ const searchBar = async (req, res) => {
       $search: {
         index: "associated_category_index",
         text: {
-          path: ["associated.person", "category.category_name"],
+          path: ["associated.person", "category.category_name", "artefactName", "description"],
           query: req.params.query,
+          fuzzy: {
+            maxEdits: 2,
+            maxExpansions: 250,
+          }
         },
       },
     },
@@ -98,6 +102,91 @@ const searchBar = async (req, res) => {
       });
     });
 };
+
+const searchCategory = (req,res) => {
+
+  const query = req.params.query
+
+  Artefact.aggregate([
+    {
+      $search: {
+        index: "category_index",
+        text: {
+          path: ["category.category_name"],
+          query: query,
+        },
+      },
+    },
+  ])
+    .then((artefactRecords) => {
+      if (artefactRecords.length == 0) {
+        // no artefact matchd the query
+        res.status(200).send({
+          message: "Search query success with 0 artefacts",
+          artefactRecords,
+        });
+      } else {
+        // 1 or more artefacts matches the query
+        res.status(200).send({
+          message:
+            "Category query success with " +
+            artefactRecords.length +
+            " artefacts",
+          artefactRecords,
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error upon searching",
+        error,
+      });
+    });
+}
+
+const searchAssociated = (req,res) => {
+  const query = req.params.query
+
+  Artefact.aggregate([
+    {
+      $search: {
+        index: "associated_index",
+        text: {
+          path: ["associated.person"],
+          query: query,
+        },
+      },
+    },
+  ])
+    .then((artefactRecords) => {
+      if (artefactRecords.length == 0) {
+        // no artefact matchd the query
+        res.status(200).send({
+          message: "Search query success with 0 artefacts ",
+          artefactRecords,
+        });
+      } else {
+        // 1 or more artefacts matches the query
+        res.status(200).send({
+          message:
+            "Associated query success with " +
+            artefactRecords.length +
+            " artefacts",
+          artefactRecords,
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error upon searching",
+        error,
+      });
+    });
+}
+
+const searchFuzzy = (req,res) => {
+
+}
 
 // get all artefacts function for route: '/data'
 const allData = (req, res) => {
@@ -547,6 +636,7 @@ const getPage = async (req, res) => {
   let idx = (pageNum - 1) * LIMIT;
 
   await Artefact.find()
+    .sort( { _id: -1 } )
     .skip(idx)
     .limit(LIMIT)
     .then((dataInPage) => {
@@ -578,6 +668,8 @@ const getPage = async (req, res) => {
     });
 };
 
+
+
 // exports objects containing functions imported by router
 module.exports = {
   allData,
@@ -596,4 +688,9 @@ module.exports = {
 
   // helper function, not part of requirement
   registerUser,
+
+  // new search functions
+  searchCategory,
+  searchAssociated,
+  searchFuzzy
 };
