@@ -7,7 +7,7 @@
     "test": "nyc --reporter=html mocha --recursive --exit --timeout 10000",
     "build": "cd client && npm i --force && npm run build",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "server": "node server.js",
+    "server": "nodemon server.js",
     "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run\"",
     "client": "npm start --prefix ./client",

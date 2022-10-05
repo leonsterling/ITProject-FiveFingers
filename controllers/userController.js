@@ -10,6 +10,33 @@ const { User, Artefact, Category, Associated } = require("../models/user");
 const SALT_FACTOR = 10;
 const LIMIT = 4;
 
+// helper functions
+const associatedFunc = (query, idx) =>
+  Artefact.aggregate([
+    {
+      $search: {
+        index: "associated_index",
+        text: {
+          path: ["associated.person"],
+          query: query,
+        },
+      },
+    }
+  ]);
+
+const categoryFunc = (query, idx) =>
+  Artefact.aggregate([
+    {
+      $search: {
+        index: "category_index",
+        text: {
+          path: ["category.category_name"],
+          query: query,
+        },
+      },
+    }
+  ]);
+
 // login function for route: '/login'
 const loginUser = (req, res) => {
   // trieds to find an existing user with the username
@@ -58,8 +85,9 @@ const loginUser = (req, res) => {
     });
 };
 
+
 // basic search function for route: '/search-artefacts/:query'
-const searchBar = async (req, res) => {
+const searchFuzzy = async (req, res) => {
   // tries to find artefacts that matches the query
   // search index is based on <category> and <associated> fields
   Artefact.aggregate([
@@ -67,12 +95,17 @@ const searchBar = async (req, res) => {
       $search: {
         index: "associated_category_index",
         text: {
-          path: ["associated.person", "category.category_name", "artefactName", "description"],
+          path: [
+            "associated.person",
+            "category.category_name",
+            "artefactName",
+            "description",
+          ],
           query: req.params.query,
           fuzzy: {
             maxEdits: 2,
             maxExpansions: 250,
-          }
+          },
         },
       },
     },
@@ -103,37 +136,55 @@ const searchBar = async (req, res) => {
     });
 };
 
-const searchCategory = (req,res) => {
+const searchCategory = (req, res) => {
+  const query = req.params.query;
+  const pageNum = req.params.page;
 
-  const query = req.params.query
-
-  Artefact.aggregate([
-    {
-      $search: {
-        index: "category_index",
-        text: {
-          path: ["category.category_name"],
-          query: query,
-        },
-      },
-    },
-  ])
+  let idx = (pageNum - 1) * LIMIT;
+  cateogryFunc(query)
     .then((artefactRecords) => {
-      if (artefactRecords.length == 0) {
+      // console.log(artefactRecords)
+      const totalSearched = artefactRecords.length;
+      if (totalSearched == 0) {
         // no artefact matchd the query
         res.status(200).send({
-          message: "Search query success with 0 artefacts",
-          artefactRecords,
+          message: "Search query success with 0 artefacts ",
+          totalSearched,
         });
       } else {
+        /*
         // 1 or more artefacts matches the query
         res.status(200).send({
           message:
-            "Category query success with " +
+            "Associated query success with " +
             artefactRecords.length +
             " artefacts",
           artefactRecords,
         });
+        */
+        categoryFunc(query)
+        .sort({_id: -1})
+        .skip(idx)
+        .limit(LIMIT)
+          .then((searched) => {
+            const totalArtefact = searched.length;
+            let totalPages = Math.ceil(totalSearched / LIMIT);
+
+            res.status(200).send({
+              message: `Successfully retrieved page ${pageNum}`,
+              dataPerPage: LIMIT,
+              dataInPage: totalArtefact,
+              totalPages,
+              totalSearched,
+              searched,
+            });
+          })
+          .catch((error) => {
+            res.status(500).send({
+              message: "Error upon searching",
+              error,
+            });
+          });
       }
     })
     .catch((error) => {
@@ -142,11 +193,13 @@ const searchCategory = (req,res) => {
         error,
       });
     });
-}
+};
 
-const searchAssociated = (req,res) => {
-  const query = req.params.query
+const searchAssociated = (req, res) => {
+  const query = req.params.query;
+  const pageNum = req.params.page;
 
+  let idx = (pageNum - 1) * LIMIT;
   Artefact.aggregate([
     {
       $search: {
@@ -159,13 +212,16 @@ const searchAssociated = (req,res) => {
     },
   ])
     .then((artefactRecords) => {
-      if (artefactRecords.length == 0) {
+      // console.log(artefactRecords)
+      const totalSearched = artefactRecords.length;
+      if (totalSearched == 0) {
         // no artefact matchd the query
         res.status(200).send({
           message: "Search query success with 0 artefacts ",
-          artefactRecords,
+          totalSearched,
         });
       } else {
+        /*
         // 1 or more artefacts matches the query
         res.status(200).send({
           message:
@@ -174,6 +230,30 @@ const searchAssociated = (req,res) => {
             " artefacts",
           artefactRecords,
         });
+        */
+        associatedFunc(query, idx)
+        .sort({_id: -1})
+        .skip(idx)
+        .limit(LIMIT)
+          .then((searched) => {
+            const totalArtefact = searched.length;
+            let totalPages = Math.ceil(totalSearched / LIMIT);
+
+            res.status(200).send({
+              message: `Successfully retrieved page ${pageNum}`,
+              dataPerPage: LIMIT,
+              dataInPage: totalArtefact,
+              totalPages,
+              totalSearched,
+              searched,
+            });
+          })
+          .catch((error) => {
+            res.status(500).send({
+              message: "Error upon searching",
+              error,
+            });
+          });
       }
     })
     .catch((error) => {
@@ -182,7 +262,7 @@ const searchAssociated = (req,res) => {
         error,
       });
     });
-}
+};
 
 // get all artefacts function for route: '/data'
 const allData = (req, res) => {
@@ -260,8 +340,8 @@ const registerArtefact = async (req, res) => {
     req.body.record.artefactImg,
     {
       upload_preset: "sterling_family_account",
-      allowed_formats: ['jpeg', 'jpg', 'png'], 
-      format: 'jpg'
+      allowed_formats: ["jpeg", "jpg", "png"],
+      format: "jpg",
     }
   );
 
@@ -620,21 +700,13 @@ const getPage = async (req, res) => {
   // total count of all artefacts
   const totalArtefact = await Artefact.countDocuments();
 
-  let totalPages = Math.floor(totalArtefact / LIMIT);
-  let remainder = totalArtefact % LIMIT;
+  let totalPages = Math.ceil(totalArtefact / LIMIT)
 
-  if (totalPages == 0) {
-    totalPages = 1;
-  }
-
-  if (remainder != 0) {
-    totalPages += 1;
-  }
 
   let idx = (pageNum - 1) * LIMIT;
 
   await Artefact.find()
-    .sort( { _id: -1 } )
+    .sort({ _id: -1 })
     .skip(idx)
     .limit(LIMIT)
     .then((dataInPage) => {
@@ -666,14 +738,11 @@ const getPage = async (req, res) => {
     });
 };
 
-
-
 // exports objects containing functions imported by router
 module.exports = {
   allData,
   loginUser,
   artefact_details,
-  searchBar,
   getCategories,
   getAssociated,
   registerArtefact,
@@ -690,4 +759,5 @@ module.exports = {
   // new search functions
   searchCategory,
   searchAssociated,
+  searchFuzzy
 };
