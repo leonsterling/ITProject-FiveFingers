@@ -19,6 +19,9 @@ import ArtefactView from "./ArtefactView/ArtefactView";
 import {
   getInitDashboardPromise,
   getSearchPromise,
+  getSearchCategoryPromise,
+  getPagePromise,
+  getSearchAssociatedPromise
 } from "../../utils/dataHandler";
 
 // Style-based imports
@@ -46,6 +49,36 @@ function Dashboard() {
     setGetArtefactCallback,
     handleSearch,
   };
+
+  getSearchCategoryPromise("Photo")
+  .then((res) => {
+    console.group("Category")
+    console.log(res.data);
+    console.groupEnd()
+  })
+  .catch((e) => {
+    console.log(e.message);
+  });
+
+  getSearchAssociatedPromise("Vik")
+  .then((res) => {
+    console.group("Associated")
+    console.log(res.data);
+    console.groupEnd()
+  })
+  .catch((e) => {
+    console.log(e.message);
+  });
+
+  getPagePromise(1)
+  .then((res) => {
+    console.group("Pagination")
+    console.log(res.data);
+    console.groupEnd()
+  })
+  .catch((e) => {
+    console.log(e.message);
+  });
 
   return (
     <div className="container">
