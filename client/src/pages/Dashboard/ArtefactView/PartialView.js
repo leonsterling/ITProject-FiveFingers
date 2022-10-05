@@ -37,6 +37,7 @@ function PartialView({ title, image, desc, date, _id }) {
       <div className="info-side">
         <div className="info-title">
           <p>{title}</p>
+          <Skewer _id={_id} />
         </div>
         <div className="info-dec">
           <p>Description:</p>

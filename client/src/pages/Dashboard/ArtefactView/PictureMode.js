@@ -30,6 +30,9 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
 
   const /** boolean */ [open, setOpen] = useState(false);
 
+  const /** string */ [hoverID, setHoverID] = useState("");
+  const /** boolean */ [hover, setHover] = useState(false);
+
   /**
    * Opens and closes the clicked/tapped artefact image to show its respective
    * partial view (see `PartialView.js` for more about partial view)
@@ -47,6 +50,19 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
     setCurrID(id);
   }
 
+  function hoverFunction(id) {
+    // Change the state of the visibility to true
+    if (hoverID.length !== 0) {
+      setHover({
+        [hoverID]: !hover[hoverID],
+      });
+    }
+    setHover({
+      [id]: !hover[id],
+    });
+    setHoverID(id);
+  }
+
   let /** ?Array<React.Compoent> */ pictures = null;
   if (userData) {
     pictures = userData.map(
@@ -55,13 +71,29 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
           key={_id}
           className="card-container"
           onClick={() => openFunction(_id)}
+          onMouseEnter={() => hoverFunction(_id)}
+          onMouseLeave={() => hoverFunction(_id)}
           style={{ padding: open[_id] ? "0 0 480px 0" : "0 0 0 0" }}
         >
+          
+
+        
           <div>
-            <div className="card">
-              <img src={artefactImg.imgURL} alt="" />
-              <div className="card-title">{artefactName}</div>
+            <div className="card-wrapper">
+              <div 
+                className="card-hover"
+                style={{ display: hover[_id] ? "block" : "none" }}
+                >
+                  <Skewer _id={_id} />
+              </div>
+
+              <div className="card">
+                <img src={artefactImg.imgURL} alt="" />
+                <div className="card-title">{artefactName}</div>
+              </div>
+
             </div>
+
 
             <div style={{ display: open[_id] ? "block" : "none" }}>
               <PartialView

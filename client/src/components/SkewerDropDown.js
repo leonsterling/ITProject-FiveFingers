@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import "./Skewer.scss";
 
 
-
-const SkewerDropDown = (_id) => {
+const SkewerDropDown = ({_id}) => {
 
     return (
         <div className='shadow'>
             <div className='text-left'>
                 <div>
-                    <Link to={`edit-artefact/${_id}`} className="link-line">
+                    <Link to={`/edit-artefact/${_id}`} className="link-line">
                         Edit
                     </Link>
                 </div>
                 <div>
-                    <Link to={`delete/${_id}`} className="link-line">
+                    <Link to={`/delete/${_id}`} className="link-line">
                         Delete
                     </Link>
                 </div>
                 <div>
-                    <Link to={`full-view/${_id}`} className="link-line">
+                    <Link to={`/full-view/${_id}`} className="link-line">
                         View Full Details
                     </Link>
                 </div>

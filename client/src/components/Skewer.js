@@ -4,9 +4,9 @@ import { useRef } from 'react';
 import SkewerButton from "./SkewerButton";
 import SkewerDropDown from "./SkewerDropDown";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import "./Skewer.scss";
 
-
-const Skewer = (_id) => {
+const Skewer = ({_id}) => {
     const [open, setOpen] = useState(false);
     const drop = useRef(null);
 
@@ -26,28 +26,6 @@ const Skewer = (_id) => {
     return (
         <>
                 <div 
-            className="skewer-component"
-            ref={drop}
-            style={{position: "relative", margin: "16px"}}
-            >        
-            <SkewerButton onClick={() => setOpen(!open)}/>
-            {open &&
-                <SkewerDropDown _id={_id}/>
-            }
-        </div>
-
-        <div 
-            className="skewer-component"
-            ref={drop}
-            style={{position: "relative", margin: "16px"}}
-            >        
-            <SkewerButton onClick={() => setOpen(!open)}/>
-            {open &&
-                <SkewerDropDown _id={_id}/>
-            }
-        </div>
-
-        <div 
             className="skewer-component"
             ref={drop}
             style={{position: "relative", margin: "16px"}}

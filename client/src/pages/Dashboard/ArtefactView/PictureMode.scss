@@ -34,7 +34,27 @@ main {
     flex-basis: 0%;
     flex-shrink: 1;
     display: block;
+    display:table;
 }
+
+.card-wrapper {
+}
+
+.card-hover {
+    min-width: 0;
+    margin: 20px;
+    width: 12em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 25px;
+    border-radius: 5px;
+
+    position: absolute;
+    background: hsla(240, 9%, 23%, 0.7);
+
+}
+
 
 .card {
     min-width: 0;
