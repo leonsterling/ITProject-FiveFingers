@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import DashboardHeader from "./DashboardHeader/DashboardHeader";
 import ArtefactView from "./ArtefactView/ArtefactView";
+import PageNumHandler from "./PageNumHandler/PageNumHandler";
 
 // Imports of local utils
 import {
@@ -39,6 +40,9 @@ function Dashboard() {
   let /** callback */ setGetArtefactCallback = useState(handleDashboard)[1];
 
   let /** boolean */ [isSearched, setIsSearched] = useState(false);
+
+  let /** boolean */ [numPages, setNumPages] = useState(0);
+  let /** boolean */ [currPageNum, setCurrPageNum] = useState(1);
 
   let searchParams = {
     searchText,
@@ -70,7 +74,7 @@ function Dashboard() {
     console.log(e.message);
   });
 
-  getPagePromise(1)
+  getPagePromise(currPageNum)
   .then((res) => {
     console.group("Pagination")
     console.log(res.data);
@@ -95,8 +99,16 @@ function Dashboard() {
         userData={userData}
         setUserData={setUserData}
         handleSearch={handleSearch}
-        handleDashboard={handleDashboard}
         isSearched={isSearched}
+        getPagePromise={getPagePromise}
+        currPageNum={currPageNum}
+        setNumPages={setNumPages}
+      />
+      <PageNumHandler
+        numPages={numPages}
+        currPageNum={currPageNum}
+        setCurrPageNum={setCurrPageNum}
+        setUserData={setUserData}
       />
     </div>
   );

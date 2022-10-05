@@ -2,23 +2,30 @@ import { useEffect } from "react";
 import PictureMode from "./PictureMode";
 import ListView from "./ListView";
 
+// Imports of local utils
+import {
+  getPagePromise,
+} from "../../../utils/dataHandler";
+
 function ArtefactView({
   isToggled,
   isSearched,
   searchText,
   userData,
   setUserData,
-  handleDashboard,
+  currPageNum,
+  setNumPages,
 }) {
   /**
    * After rendering the basic component (without data), it calls the pre-set
    * callback function to fetch and set the data accordingly
    */
   useEffect(() => {
-    handleDashboard()
+    getPagePromise(currPageNum)
       .then((res) => {
         console.log(res.data);
-        setUserData(res.data.artefactRecords);
+        setUserData(res.data.dataInPage);
+        setNumPages(res.data.totalPages);
       })
       .catch((e) => {
         console.log(e.message);
@@ -29,7 +36,6 @@ function ArtefactView({
     <ListView
       userData={userData}
       setUserData={setUserData}
-      handleDashboard={handleDashboard}
     />
   ) : (
     <PictureMode userData={userData} setUserData={setUserData} />
