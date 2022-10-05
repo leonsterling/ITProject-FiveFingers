@@ -17,8 +17,8 @@ const /** ?string */ token = cookies.get("TOKEN");
 /* ------------------------------------------------------------
  * For deployment-mode
  * ------------------------------------------------------------ */
-const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
-
+//const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
+const URL = `http://localhost:5100`
 /* ------------------------------------------------------------
  * At ${URL}/login
  * ------------------------------------------------------------ */
