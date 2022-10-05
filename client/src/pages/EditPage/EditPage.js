@@ -1,14 +1,10 @@
 // Import the necessary libraries
-import React, { useState, useEffect, Component } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import TextUpdateField from "./TextUpdateField.js";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import TextUpdateField from "./TextUpdateField";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import Navbar from "../Dashboard/Navbar.js";
-
-// Import Nav Bar
-import TopNav from '../Dashboard/TopNav';
-import MobileNav from '../Dashboard/MobileNav';
+import Navbar from "../../components/Navbar";
 
 // obtain token from cookie
 const cookies = new Cookies();
@@ -26,12 +22,7 @@ const EditPage = () => {
 
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
-  console.log({_id})
-
-  const dummyData = {
-    artefactName: "Rose",
-    location: "Japan",
-  };
+  console.log({ _id });
 
   const initialState = {
     artefactName: "",
@@ -40,15 +31,15 @@ const EditPage = () => {
     description: "",
     artefactImg: "",
     memories: "",
-    category:"",
-    associated:""
+    category: "",
+    associated: "",
   };
 
   async function updateArtefact(e) {
     // set configurations
     const configuration = {
       method: "patch",
-      url: `https://sterlingfamilyartefacts.herokuapp.com/edit-artefact/${_id}`,
+      url: `http://localhost:5100/edit-artefact/${_id}`,
       data: {
         record,
       },
@@ -71,7 +62,7 @@ const EditPage = () => {
   function handleSubmit(e) {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
-    console.log("here")
+    console.log("here");
     if (!isValidInput(record)) {
       setFeedback(feedbackMessages.invalid);
       return;
@@ -87,7 +78,7 @@ const EditPage = () => {
   // Hook to get the data
   const configuration = {
     method: "get",
-    url: `https://sterlingfamilyartefacts.herokuapp.com/get-artefact/${_id}`,
+    url: `http://localhost:5100/get-artefact/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
@@ -98,7 +89,6 @@ const EditPage = () => {
     async function updatePage() {
       try {
         const response = await axios(configuration);
-        
         setRecord(response.data.result);
         console.log(JSON.stringify(response.data.re));
       } catch (error) {
@@ -114,13 +104,14 @@ const EditPage = () => {
     console.log(record);
   }
 
-  console.log({record});
+  console.log({ record });
   console.log("===========================================");
   console.log(record.category.category_name);
   console.log("===========================================");
+
   return (
     <>
-      <TopNav />
+      <Navbar />
 
       <div className="record-page">
 
@@ -129,12 +120,19 @@ const EditPage = () => {
           <h2>Edit Artefact</h2>
           <div className="data-entry-fields">
             {/* TEXT DATA*/}
-            <TextUpdateField handleChange={handleChange} initialData={record} cat ={record.category.category_name} per = {record.associated.person} />
-            
+            <TextUpdateField
+              handleChange={handleChange}
+              initialData={record}
+              cat={record.category.category_name}
+              per={record.associated.person}
+            />
+
             {/* Image Display */}
             <div className="data-entry-fields--image-upload">
-              <label className='data-entry-fields--image-upload--description'>Artefact image</label>
-              <div className='data-entry-fields--image-upload--upload-complete'>
+              <label className="data-entry-fields--image-upload--description">
+                Artefact image
+              </label>
+              <div className="data-entry-fields--image-upload--upload-complete">
                 <img
                   src={record.artefactImg.imgURL}
                   alt="No Images have been Uploaded Yet"
@@ -146,7 +144,7 @@ const EditPage = () => {
           {/* This is the cancel button it just redirects to dashboard */}
           {/*<p>{feedback}</p>*/}
 
-          <div className="response-button" id="button" >
+          <div className="response-button" id="button">
             {/*
             <Link to={`/dashboard`}>
               <button className="response-button__cancel" type="submit">
@@ -154,7 +152,7 @@ const EditPage = () => {
               </button>
             </Link>
           */}
-            <button className="response-button__submit" type="submit" >
+            <button className="response-button__submit" type="submit">
               Save
             </button>
           </div>
