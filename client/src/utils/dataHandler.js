@@ -95,6 +95,19 @@ export async function getCategoryPromise (requestURI) {
 }
 
 /* ------------------------------------------------------------
+ * At ${URL}/full-view
+ * ------------------------------------------------------------ */
+export async function getFullViewPromise (id) {
+  return setupPromise(/* configuration = */ {
+    method: "get",
+    url: `${URL}/get-artefact/${id}`,
+    headers: {
+      Authorization: `Bearer ${token}`, // authorized route with jwt token
+    },
+  });
+}
+
+/* ------------------------------------------------------------
  * Helper function
  * ------------------------------------------------------------ */
 async function setupPromise (configuration) {
