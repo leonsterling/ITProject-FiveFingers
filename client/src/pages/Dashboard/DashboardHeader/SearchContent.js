@@ -11,15 +11,22 @@ function SearchContent({
   setIsSearched,
   handleDashboard,
   setNumPages,
-  currSelected,
-  setCurrSelected,
+  currRendered,
+  setCurrRendered,
+  setCurrPageNum,
 }) {
 
+  let [ currSelected, setCurrSelected ] = useState("Category");
   let allButtons = buttonChoices.map( (value, _) => {
-    console.log({currSelected})
+    console.log({currRendered})
     let chosenClass = value === currSelected ? 'active' : 'inactive';
     return (
-      <button className={chosenClass} onClick={() => setCurrSelected(value)}>{value}</button>
+      <button className={chosenClass} onClick={() => {
+        setCurrSelected(value);
+      }}
+      >
+        {value}
+      </button>
     )
   });
 
@@ -29,12 +36,12 @@ function SearchContent({
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          setCurrRendered(currSelected);
           let currPromise;
           if (searchText === "") {
-            setIsSearched(false);
             currPromise = handleDashboard();
           } else {
-            setIsSearched(true);
+            setCurrPageNum(1);
             switch (currSelected) {
               case "Category":
                 currPromise = getSearchCategoryPromise(searchText, 1);

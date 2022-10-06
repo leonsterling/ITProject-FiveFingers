@@ -44,7 +44,7 @@ function Dashboard() {
   let /** number */ [numPages, setNumPages] = useState(0);
   let /** number */ [currPageNum, setCurrPageNum] = useState(1);
 
-  let /** string */ [ currSelected, setCurrSelected ] = useState("Dashboard")
+  let /** string */ [ currRendered, setCurrRendered ] = useState("Dashboard");
 
   let searchParams = {
     searchText,
@@ -55,8 +55,9 @@ function Dashboard() {
     setGetArtefactCallback,
     handleSearch,
     setNumPages,
-    currSelected,
-    setCurrSelected,
+    setCurrPageNum,
+    currRendered,
+    setCurrRendered,
   };
 
   getSearchCategoryPromise("k-pop", 1)
@@ -105,7 +106,7 @@ function Dashboard() {
         currPageNum={currPageNum}
         setCurrPageNum={setCurrPageNum}
         setUserData={setUserData}
-        currSelected={currSelected}
+        currRendered={currRendered}
         searchText={searchText}
       />
     </div>

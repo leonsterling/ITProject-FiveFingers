@@ -9,9 +9,9 @@ import {
 
 import {} from "../../../utils/dataHandler";
 
-function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, setUserData, currSelected, searchText } ) {
+function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, setUserData, currRendered, searchText } ) {
     let allButtons = [];
-    console.log({currSelected});
+    console.log({currRendered});
 
     console.log("NumPages", numPages);
 
@@ -25,7 +25,7 @@ function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, s
       allButtons.push(
           <button
             className={className}
-            onClick={() => handleClick(i, currPageNum, setCurrPageNum, setUserData, currSelected, searchText, setNumPages)}
+            onClick={() => handleClick(i, currPageNum, setCurrPageNum, setUserData, currRendered, searchText, setNumPages)}
           >
             {i}
           </button>
@@ -39,7 +39,7 @@ function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, s
     )
 }
 
-function handleClick (currButtonNum, currPageNum, setCurrPageNum, setUserData, currSelected, searchText, setNumPages) {
+function handleClick (currButtonNum, currPageNum, setCurrPageNum, setUserData, currRendered, searchText, setNumPages) {
     if (currButtonNum === currPageNum) {
         console.log("If guard's fault");
         console.log( { currButtonNum } );
@@ -48,7 +48,7 @@ function handleClick (currButtonNum, currPageNum, setCurrPageNum, setUserData, c
     setCurrPageNum(currButtonNum);
 
     let currPromise;
-    switch (currSelected) {
+    switch (currRendered) {
       case "Dashboard":
         getPagePromise(currButtonNum)
           .then((res) => {
@@ -60,7 +60,7 @@ function handleClick (currButtonNum, currPageNum, setCurrPageNum, setUserData, c
           });
         break;
       default:
-        switch (currSelected) {
+        switch (currRendered) {
           case "Category":
             currPromise = getSearchCategoryPromise(searchText, currButtonNum);
             break;
