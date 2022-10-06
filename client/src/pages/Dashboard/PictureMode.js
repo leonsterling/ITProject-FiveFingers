@@ -56,7 +56,7 @@ const PictureMode = ( { userData, setUserData, handleDashboard } ) => {
         >
           <div>
             <div className="card">
-              <img src={artefactImg.imgURL} alt=''/>
+              <img src={artefactImg.imgURL.toString('base64')} alt=''/>
               <div className="card-title">
                   {artefactName}
               </div>

@@ -1,10 +1,8 @@
 // libraries imported
 const express = require('express') 
 const jwtAuth = require('../utils/jwt') 
-const imageUpload = require('../utils/imageUpload')
 const multer = require('multer')
-
-let upload = multer()
+const upload = multer()
 
 // create userRouter object
 const userRouter = express.Router()
@@ -41,7 +39,7 @@ userRouter.delete('/delete-artefact/:id', jwtAuth, userController.deleteArtefact
 userRouter.get('/data/:page', jwtAuth, userController.getPage)
 
 // testing local image upload (NOT AUTOMATIC TESTING YET)
-userRouter.post('/upload-image', jwtAuth, upload.array(), userController.uploadImage)
+userRouter.post('/upload-image', jwtAuth, upload.single('image'), userController.uploadImage)
 
 // export Router object
 module.exports = userRouter

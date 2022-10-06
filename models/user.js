@@ -23,8 +23,12 @@ const artefactSchema = new mongoose.Schema({
     location: {type: String},
     artefactDate :{type: Date},
     artefactImg : {
+        // imgURL: {type: Buffer},
         imgURL: {type: String},
-        publicID: {type: String}  
+        data: {type: String, default: "data:"},
+        type: {type: String},
+        format: {type: String, default: ";base64,"},
+        path: {type: String}
     }
  });
 

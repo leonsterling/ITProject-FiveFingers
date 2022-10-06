@@ -94,7 +94,7 @@ const searchFuzzy = async (req, res) => {
   Artefact.aggregate([
     {
       $search: {
-        index: "associated_category_index",
+        index: "fuzzy_index",
         text: {
           path: [
             "associated.person",
@@ -745,15 +745,28 @@ const uploadImage = (req,res) => {
   );
   */
 
-  let image_data = {
-    url: "",
-    public_id: ""
-  }
   console.log(req.body)
+  // console.log('writing file...', base64Data);
+  const path = `/../images/${Date.now()}_${req.body.nameImg}`
+  const pathFile = __dirname + path
   
-  image_data.url = `images/${req.body.nameImg}`
-  image_data.public_id = '1'
-  
+  // console.log(pathFile)
+  fs.writeFile(pathFile, req.body.artefactImg.split(',')[1], {encoding: 'base64'}, function(err) {
+    if (err) console.log(err) 
+    else {
+      
+    }
+      /*
+      else {
+        fs.unlink(pathFile, function(err) {
+          if (err) console.log(err)
+          else {
+
+          }
+        })
+      }
+      */
+    })
 
   // create a new 'Artefact' record
   const artefact = new Artefact({
@@ -763,18 +776,12 @@ const uploadImage = (req,res) => {
     associated: null,
     category: null,
     location: req.body.location,
-    "artefactImg.imgURL": image_data.url,
-    "artefactImg.publicID": image_data.public_id,
+    "artefactImg.imgURL": req.body.artefactImg,
+    "artefactImg.type" : req.body.typeImg,
+    "artefactImg.path" : path
   });
 
-  const img = req.body.artefactImg
-  let base64Data = img.split(';base64,').pop();
-  // console.log('writing file...', base64Data);
-  const pathFile = __dirname + `/../images/${req.body.nameImg}`
-  console.log(pathFile)
-  fs.writeFile(pathFile, base64Data, {encoding:'base64'}, function(err) {
-      if (err) console.log(err);
-  });
+  
   // store artefact in database
   artefact
     .save()
