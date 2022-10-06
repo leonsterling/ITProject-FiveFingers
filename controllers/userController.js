@@ -8,7 +8,7 @@ const { User, Artefact, Category, Associated } = require("../models/user");
 
 // constants
 const SALT_FACTOR = 10;
-const LIMIT = 20;
+const LIMIT = 4;
 
 // helper functions
 const associatedFunc = (query, idx) =>
@@ -141,7 +141,7 @@ const searchCategory = (req, res) => {
   const pageNum = req.params.page;
 
   let idx = (pageNum - 1) * LIMIT;
-  cateogryFunc(query)
+  categoryFunc(query)
     .then((artefactRecords) => {
       // console.log(artefactRecords)
       const totalSearched = artefactRecords.length;
@@ -172,10 +172,7 @@ const searchCategory = (req, res) => {
 
             res.status(200).send({
               message: `Successfully retrieved page ${pageNum}`,
-              dataPerPage: LIMIT,
-              dataInPage: totalArtefact,
               totalPages,
-              totalSearched,
               searched,
             });
           })
@@ -241,10 +238,7 @@ const searchAssociated = (req, res) => {
 
             res.status(200).send({
               message: `Successfully retrieved page ${pageNum}`,
-              dataPerPage: LIMIT,
-              dataInPage: totalArtefact,
               totalPages,
-              totalSearched,
               searched,
             });
           })
