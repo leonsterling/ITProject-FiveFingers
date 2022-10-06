@@ -107,9 +107,18 @@ export async function getSearchAssociatedPromise (searchText, pageNum) {
 export async function postArtefact (record) {
   return setupPromise(/* configuration = */ {
     method: "post",
-    url: `${URL}/add-artefact`,
+    url: `${URL}/upload-image`,
     data: {
-      record,
+      artefactName: record.artefactName,
+      description: record.description,
+      memories: record.memories,
+      associated: record.associated,
+      category: record.category,
+      location: record.location,
+      artefactImg: record.artefactImg,
+      nameImg: record.nameImg,
+      typeImg: record.typeImg,
+      sizeImg: record.sizeImg
     },
     headers: {
       // authorized route with jwt token

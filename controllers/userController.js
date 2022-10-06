@@ -2,6 +2,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
+const fs = require ('fs')
 
 // import mongoose models
 const { User, Artefact, Category, Associated } = require("../models/user");
@@ -732,6 +733,174 @@ const getPage = async (req, res) => {
     });
 };
 
+const uploadImage = (req,res) => {
+  /*
+  const image_data = await cloudinary.uploader.upload(
+    req.body.record.artefactImg,
+    {
+      upload_preset: "sterling_family_account",
+      allowed_formats: ["jpeg", "jpg", "png"],
+      format: "jpg",
+    }
+  );
+  */
+
+  let image_data = {
+    url: "",
+    public_id: ""
+  }
+  console.log(req.body)
+  
+  image_data.url = `images/${req.body.nameImg}`
+  image_data.public_id = '1'
+  
+
+  // create a new 'Artefact' record
+  const artefact = new Artefact({
+    artefactName: req.body.artefactName,
+    description: req.body.description,
+    memories: req.body.memories,
+    associated: null,
+    category: null,
+    location: req.body.location,
+    "artefactImg.imgURL": image_data.url,
+    "artefactImg.publicID": image_data.public_id,
+  });
+
+  const img = req.body.artefactImg
+  let base64Data = img.split(';base64,').pop();
+  // console.log('writing file...', base64Data);
+  const pathFile = __dirname + `/../images/${req.body.nameImg}`
+  console.log(pathFile)
+  fs.writeFile(pathFile, base64Data, {encoding:'base64'}, function(err) {
+      if (err) console.log(err);
+  });
+  // store artefact in database
+  artefact
+    .save()
+    .then((result1) => {
+      // checks if category exists in database
+      Category.findOne({ category_name: req.body.category })
+        .then((result2) => {
+          if (result2) {
+            // stores the existing category object in the artefact record
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { category: result2 },
+              },
+              function (err, doc) {
+                if (err) {
+                  res.status(500).send({
+                    message: "Error upon registering artefact",
+                    err,
+                  });
+                } else {
+                }
+              }
+            );
+          } else {
+            // creates a new Category record
+            const newCategory = new Category({
+              category_name: req.body.category,
+            });
+
+            // updates category of artefact
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { category: newCategory },
+              },
+              function (err, doc) {
+                if (err) {
+                  res.status(500).send({
+                    message: "Error upon registering artefact",
+                    err,
+                  });
+                } else {
+                }
+              }
+            );
+
+            // stores new category in database
+            newCategory.save();
+          }
+        })
+        .catch((error) => {
+          res.status(500).send({
+            message: "Error upon registering artefact",
+            err,
+          });
+        });
+
+      // checks if associated exists on database
+      Associated.findOne({ person: req.body.associated })
+        .then((result3) => {
+          if (result3) {
+            // stores the existing associated object in the artefact record
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { associated: result3 },
+              },
+              function (err, doc) {
+                if (err) {
+                  res.status(500).send({
+                    message: "Error upon registering artefact",
+                    err,
+                  });
+                } else {
+                }
+              }
+            );
+          } else {
+            // create a new Associated record
+            const newAssociated = new Associated({
+              person: req.body.associated,
+            });
+
+            // updates associated of artefact
+            Artefact.updateOne(
+              { _id: result1._id },
+              {
+                $set: { associated: newAssociated },
+              },
+              function (err, doc) {
+                if (err) {
+                  res.status(500).send({
+                    message: "Error upon registering artefact",
+                    err,
+                  });
+                } else {
+                }
+              }
+            );
+
+            // stores new associated in database
+            newAssociated.save();
+          }
+        })
+        .catch((error) => {
+          res.status(500).send({
+            message: "Error upon registering artefact",
+            err,
+          });
+        });
+
+      res.status(200).send({
+        message: "Artefact registered successfully",
+        result1,
+      });
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: "Error upon registering artefact",
+        error,
+      });
+    });
+
+}
+
 // exports objects containing functions imported by router
 module.exports = {
   allData,
@@ -746,6 +915,7 @@ module.exports = {
 
   // no automatic testing yet
   getPage,
+  uploadImage,
 
   // helper function, not part of requirement
   registerUser,

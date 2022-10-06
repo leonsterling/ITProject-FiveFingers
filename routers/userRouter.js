@@ -1,7 +1,10 @@
 // libraries imported
 const express = require('express') 
 const jwtAuth = require('../utils/jwt') 
-const upload = require('../utils/multer')
+const imageUpload = require('../utils/imageUpload')
+const multer = require('multer')
+
+let upload = multer()
 
 // create userRouter object
 const userRouter = express.Router()
@@ -36,6 +39,9 @@ userRouter.delete('/delete-artefact/:id', jwtAuth, userController.deleteArtefact
 
 // testing pagination (NO AUTOMATIC TESTING YET)
 userRouter.get('/data/:page', jwtAuth, userController.getPage)
+
+// testing local image upload (NOT AUTOMATIC TESTING YET)
+userRouter.post('/upload-image', jwtAuth, upload.array(), userController.uploadImage)
 
 // export Router object
 module.exports = userRouter

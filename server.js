@@ -1,7 +1,8 @@
 // imports libraries and frameworks used for the project
 const express = require('express'),
       bodyParser = require('body-parser'),
-      cors = require('cors')
+      cors = require('cors'),
+      path = require("path");
 
 // app runs on express.js
 const app = express()
@@ -26,7 +27,7 @@ app.use((req,res,next)=>{
 
 // app uses bodyParser to parse JSON objects from HTTP requests
 app.use(bodyParser.json({limit: '25mb'}));
-app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '25mb', extended: false }));
 
 app.use(express.json())
 
@@ -38,9 +39,6 @@ app.use('/', userRouter)
 app.listen(process.env.PORT || 5100, () => {
     console.log('Server is alive!')
 })
-
-// Accessing the path module
-const path = require("path");
 
 // Step 1:
 app.use(express.static(path.resolve(__dirname, "./client/build")));
