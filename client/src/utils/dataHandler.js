@@ -79,10 +79,10 @@ export async function getSearchPromise (searchText) {
     });
 }
 
-export async function getSearchCategoryPromise (searchText) {
+export async function getSearchCategoryPromise (searchText, pageNum) {
   return setupPromise(/* configuration = */ {
       method: "get",
-      url: `${URL}/search-category/${searchText}`,
+      url: `${URL}/search-category/${searchText}/${pageNum}`,
       headers: {
         // authorized route with jwt token
         Authorization: `Bearer ${token}`,
@@ -90,10 +90,10 @@ export async function getSearchCategoryPromise (searchText) {
     });
 }
 
-export async function getSearchAssociatedPromise (searchText) {
+export async function getSearchAssociatedPromise (searchText, pageNum) {
   return setupPromise(/* configuration = */ {
       method: "get",
-      url: `${URL}/search-associated/${searchText}`,
+      url: `${URL}/search-associated/${searchText}/${pageNum}`,
       headers: {
         // authorized route with jwt token
         Authorization: `Bearer ${token}`,

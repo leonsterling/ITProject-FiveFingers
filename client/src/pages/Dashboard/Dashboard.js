@@ -41,8 +41,10 @@ function Dashboard() {
 
   let /** boolean */ [isSearched, setIsSearched] = useState(false);
 
-  let /** boolean */ [numPages, setNumPages] = useState(0);
-  let /** boolean */ [currPageNum, setCurrPageNum] = useState(1);
+  let /** number */ [numPages, setNumPages] = useState(0);
+  let /** number */ [currPageNum, setCurrPageNum] = useState(1);
+
+  let /** string */ [ currSelected, setCurrSelected ] = useState("Dashboard")
 
   let searchParams = {
     searchText,
@@ -52,9 +54,12 @@ function Dashboard() {
     handleDashboard,
     setGetArtefactCallback,
     handleSearch,
+    setNumPages,
+    currSelected,
+    setCurrSelected,
   };
 
-  getSearchCategoryPromise("Photo")
+  getSearchCategoryPromise("k-pop", 1)
   .then((res) => {
     console.group("Category")
     console.log(res.data);
@@ -64,19 +69,9 @@ function Dashboard() {
     console.log(e.message);
   });
 
-  getSearchAssociatedPromise("Vik")
+  getSearchAssociatedPromise("Mina", 1)
   .then((res) => {
     console.group("Associated")
-    console.log(res.data);
-    console.groupEnd()
-  })
-  .catch((e) => {
-    console.log(e.message);
-  });
-
-  getPagePromise(currPageNum)
-  .then((res) => {
-    console.group("Pagination")
     console.log(res.data);
     console.groupEnd()
   })
@@ -106,9 +101,12 @@ function Dashboard() {
       />
       <PageNumHandler
         numPages={numPages}
+        setNumPages={setNumPages}
         currPageNum={currPageNum}
         setCurrPageNum={setCurrPageNum}
         setUserData={setUserData}
+        currSelected={currSelected}
+        searchText={searchText}
       />
     </div>
   );

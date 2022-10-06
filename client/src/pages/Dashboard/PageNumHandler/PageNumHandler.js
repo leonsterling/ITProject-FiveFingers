@@ -3,11 +3,15 @@ import './PageNumHandler.scss';
 // Imports of local utils
 import {
   getPagePromise,
+  getSearchCategoryPromise,
+  getSearchAssociatedPromise,
 } from "../../../utils/dataHandler";
 
+import {} from "../../../utils/dataHandler";
 
-function PageNumHandler( { numPages, currPageNum, setCurrPageNum, setUserData } ) {
+function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, setUserData, currSelected, searchText } ) {
     let allButtons = [];
+    console.log({currSelected});
 
     console.log("NumPages", numPages);
 
@@ -21,7 +25,7 @@ function PageNumHandler( { numPages, currPageNum, setCurrPageNum, setUserData } 
       allButtons.push(
           <button
             className={className}
-            onClick={() => handleClick(i, currPageNum, setCurrPageNum, setUserData)}
+            onClick={() => handleClick(i, currPageNum, setCurrPageNum, setUserData, currSelected, searchText, setNumPages)}
           >
             {i}
           </button>
@@ -35,21 +39,49 @@ function PageNumHandler( { numPages, currPageNum, setCurrPageNum, setUserData } 
     )
 }
 
-function handleClick (currButtonNum, currPageNum, setCurrPageNum, setUserData) {
+function handleClick (currButtonNum, currPageNum, setCurrPageNum, setUserData, currSelected, searchText, setNumPages) {
     if (currButtonNum === currPageNum) {
         console.log("If guard's fault");
         console.log( { currButtonNum } );
         return;
     }
     setCurrPageNum(currButtonNum);
-    getPagePromise(currButtonNum)
-      .then((res) => {
-        console.log(res.data);
-        setUserData(res.data.dataInPage);
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
+
+    let currPromise;
+    switch (currSelected) {
+      case "Dashboard":
+        getPagePromise(currButtonNum)
+          .then((res) => {
+            console.log(res.data);
+            setUserData(res.data.dataInPage);
+          })
+          .catch((e) => {
+            console.log(e.message);
+          });
+        break;
+      default:
+        switch (currSelected) {
+          case "Category":
+            currPromise = getSearchCategoryPromise(searchText, currButtonNum);
+            break;
+          case "Associated":
+            currPromise = getSearchAssociatedPromise(searchText, currButtonNum);
+            break;
+          default:
+            break;
+        }
+        currPromise
+          .then((res) => {
+            console.log(res.data)
+            console.log({ searchText });
+            setUserData(res.data.searched);
+            setNumPages(res.data.totalPages);
+          })
+          .catch((e) => {
+            console.log(e.message);
+          });
+        break;
+    }
 }
 
 export default PageNumHandler;
