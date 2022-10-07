@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
-const fs = require ('fs')
+const fs = require("fs");
 
 // import mongoose models
 const { User, Artefact, Category, Associated } = require("../models/user");
@@ -22,7 +22,7 @@ const associatedFunc = (query, idx) =>
           query: query,
         },
       },
-    }
+    },
   ]);
 
 const categoryFunc = (query, idx) =>
@@ -35,7 +35,7 @@ const categoryFunc = (query, idx) =>
           query: query,
         },
       },
-    }
+    },
   ]);
 
 // login function for route: '/login'
@@ -85,7 +85,6 @@ const loginUser = (req, res) => {
       });
     });
 };
-
 
 // basic search function for route: '/search-artefacts/:query'
 const searchFuzzy = async (req, res) => {
@@ -164,9 +163,9 @@ const searchCategory = (req, res) => {
         });
         */
         categoryFunc(query)
-        .sort({_id: -1})
-        .skip(idx)
-        .limit(LIMIT)
+          .sort({ _id: -1 })
+          .skip(idx)
+          .limit(LIMIT)
           .then((searched) => {
             const totalArtefact = searched.length;
             let totalPages = Math.ceil(totalSearched / LIMIT);
@@ -230,9 +229,9 @@ const searchAssociated = (req, res) => {
         });
         */
         associatedFunc(query, idx)
-        .sort({_id: -1})
-        .skip(idx)
-        .limit(LIMIT)
+          .sort({ _id: -1 })
+          .skip(idx)
+          .limit(LIMIT)
           .then((searched) => {
             const totalArtefact = searched.length;
             let totalPages = Math.ceil(totalSearched / LIMIT);
@@ -619,6 +618,7 @@ const deleteArtefact = async (req, res) => {
   // deletes artefact with the corresponding MongoDB record ID
   Artefact.deleteOne({ _id: artefact_id })
     .then(() => {
+      /*
       // removes artefact image stored in Cloudinary
       cloudinary.uploader.destroy(
         artefact_record.artefactImg.publicID,
@@ -630,6 +630,19 @@ const deleteArtefact = async (req, res) => {
           });
         }
       );
+      */
+      const pathFile = __dirname + artefact_record.artefactImg.path;
+
+      fs.unlink(pathFile, function(err) {
+        if (err) console.log(err)
+        else {
+        }
+      })
+
+      res.status(200).send({
+        message: "Delete artefact successfully"
+      });
+
     })
     .catch((error) => {
       console.log(error);
@@ -695,8 +708,7 @@ const getPage = async (req, res) => {
   // total count of all artefacts
   const totalArtefact = await Artefact.countDocuments();
 
-  let totalPages = Math.ceil(totalArtefact / LIMIT)
-
+  let totalPages = Math.ceil(totalArtefact / LIMIT);
 
   let idx = (pageNum - 1) * LIMIT;
 
@@ -733,7 +745,7 @@ const getPage = async (req, res) => {
     });
 };
 
-const uploadImage = (req,res) => {
+const uploadImage = (req, res) => {
   /*
   const image_data = await cloudinary.uploader.upload(
     req.body.record.artefactImg,
@@ -745,17 +757,20 @@ const uploadImage = (req,res) => {
   );
   */
 
-  console.log(req.body)
+  console.log(req.body);
   // console.log('writing file...', base64Data);
-  const path = `/../images/${Date.now()}_${req.body.nameImg}`
-  const pathFile = __dirname + path
-  
+  const path = `/../images/${Date.now()}_${req.body.nameImg}`;
+  const pathFile = __dirname + path;
+
   // console.log(pathFile)
-  fs.writeFile(pathFile, req.body.artefactImg.split(',')[1], {encoding: 'base64'}, function(err) {
-    if (err) console.log(err) 
-    else {
-      
-    }
+  fs.writeFile(
+    pathFile,
+    req.body.artefactImg.split(",")[1],
+    { encoding: "base64" },
+    function (err) {
+      if (err) console.log(err);
+      else {
+      }
       /*
       else {
         fs.unlink(pathFile, function(err) {
@@ -766,7 +781,8 @@ const uploadImage = (req,res) => {
         })
       }
       */
-    })
+    }
+  );
 
   // create a new 'Artefact' record
   const artefact = new Artefact({
@@ -777,11 +793,10 @@ const uploadImage = (req,res) => {
     category: null,
     location: req.body.location,
     "artefactImg.imgURL": req.body.artefactImg,
-    "artefactImg.type" : req.body.typeImg,
-    "artefactImg.path" : path
+    "artefactImg.type": req.body.typeImg,
+    "artefactImg.path": path,
   });
 
-  
   // store artefact in database
   artefact
     .save()
@@ -905,8 +920,7 @@ const uploadImage = (req,res) => {
         error,
       });
     });
-
-}
+};
 
 // exports objects containing functions imported by router
 module.exports = {
@@ -930,5 +944,5 @@ module.exports = {
   // new search functions
   searchCategory,
   searchAssociated,
-  searchFuzzy
+  searchFuzzy,
 };
