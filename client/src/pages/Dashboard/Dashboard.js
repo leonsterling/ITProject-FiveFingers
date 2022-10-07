@@ -60,26 +60,6 @@ function Dashboard() {
     setCurrRendered,
   };
 
-  getSearchCategoryPromise("k-pop", 1)
-  .then((res) => {
-    console.group("Category")
-    console.log(res.data);
-    console.groupEnd()
-  })
-  .catch((e) => {
-    console.log(e.message);
-  });
-
-  getSearchAssociatedPromise("Mina", 1)
-  .then((res) => {
-    console.group("Associated")
-    console.log(res.data);
-    console.groupEnd()
-  })
-  .catch((e) => {
-    console.log(e.message);
-  });
-
   return (
     <div className="container">
       <Navbar />
