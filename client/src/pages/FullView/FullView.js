@@ -18,6 +18,11 @@ import axios from "axios";
 // Imports of local components
 import Navbar from "../../components/Navbar.js";
 
+// Imports of local utils
+import {
+    getFullViewPromise
+} from "../../utils/dataHandler";
+
 // Style-based imports
 import "./FullView.scss";
 
@@ -36,11 +41,11 @@ function FullView() {
   const /** boolean */ [toggler, setToggler] = useState(false);
 
   // id constant to send request based on the specific artefact id
-  const /** string */ { _id } = useParams();
+  const /** string */ { id } = useParams();
 
   // State to update the recordData of the artefact
   /** ?{{
-   *     _id: string,
+   *     id: string,
    *     artefactName: string,
    *     description: string,
    *     memories: string,
@@ -50,11 +55,11 @@ function FullView() {
    *        publicID: string
    *     }},
    *     associated: {{
-   *        _id: string,
+   *        id: string,
    *        person: string
    *     }},
    *     category: {{
-   *        _id: string,
+   *        id: string,
    *        category_name: string
    *     }}
    *  }} */
@@ -69,7 +74,7 @@ function FullView() {
    *  }} */
   const configuration = {
     method: "get",
-    url: `http://localhost:5100/get-artefact/${_id}`,
+    url: `http://localhost:5100/get-artefact/${id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
@@ -92,8 +97,12 @@ function FullView() {
    * `getRecord` function to fetch and set the data accordingly
    */
   useEffect(function () {
-    getRecord()
+    let currUrl = window.location.href.split('/');
+    let currId = currUrl[currUrl.indexOf("full-view") + 1];
+    console.log("Id:", currId);
+    getFullViewPromise(currId)
       .then((response) => {
+        console.log(response.data);
         setRecordData(response.data.result);
       })
       .catch((e) => {

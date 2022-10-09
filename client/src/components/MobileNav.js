@@ -37,6 +37,22 @@ function MobileNav({ mobileNavOpen, closeMobileNav }) {
     window.location.href = "/";
   }
 
+  let /** React.Component */ DashboardButton = window.location.href.includes(
+      "/dashboard"
+    ) ? (
+      <span
+        className="mobilenav-link"
+        onClick={() => window.location.reload()}
+      >
+        Dashboard
+      </span>
+    ) : (
+      /* else */ 
+      <Link className="mobilenav-link" to={`/dashboard`}>
+        Dashboard
+      </Link>
+    );
+
   return (
     <div className={mobileNavOpen ? "mobilenav-responsive" : ""}
       id="mobilenav"
@@ -50,9 +66,7 @@ function MobileNav({ mobileNavOpen, closeMobileNav }) {
       </div>
 
       <div className="mobilenav-content">
-        <Link className="mobilenav-link" to={`/dashboard`}>
-          Dashboard
-        </Link>
+        {DashboardButton}
         <Link className="mobilenav-link" to={`/add-artefact`}>
           Add Artefact
         </Link>

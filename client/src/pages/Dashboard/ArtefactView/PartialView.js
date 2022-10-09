@@ -35,21 +35,22 @@ function PartialView({ title, image, desc, date, _id }) {
         />
       </div>
       <div className="info-side">
-        <div className="info-title">
-          <p>{title}</p>
-        </div>
-        <div className="info-dec">
-          <p>Description:</p>
-          <br></br>
-          <p>{desc}</p>
-        </div>
-        <div className="info-date">
-          <p>{date}</p>
+        <div className='text-info'>
+          <div className="info-title">
+            <h2>{title}</h2>
+          </div>
+          <div className="info-atom">
+            <span className='header'>Description:</span>
+            <p>{desc}</p>
+          </div>
+          <div className="info-atom">
+            <p>{date}</p>
+          </div>
         </div>
         <div className="info-more">
           <Link to={`/full-view/${_id}`} className="link-line">
             <p>
-              Click to Display Full View
+              Click to view full description
               <Icon
                 className="redirect-icon"
                 icon="bi:box-arrow-in-down-right"

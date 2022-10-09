@@ -18,7 +18,6 @@ function SearchContent({
 
   let [ currSelected, setCurrSelected ] = useState("Category");
   let allButtons = buttonChoices.map( (value, _) => {
-    console.log({currRendered})
     let chosenClass = value === currSelected ? 'active' : 'inactive';
     return (
       <button className={chosenClass} onClick={() => {

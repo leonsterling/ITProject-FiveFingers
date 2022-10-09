@@ -66,7 +66,7 @@ export default function LoginForm() {
 
     setIsDisabled(true);
 
-    await getLoginPromise(username, password)
+    getLoginPromise(username, password)
       .then((res) => {
         // set the cookie upon successful login
         cookies.set("TOKEN", res.data.token, {
