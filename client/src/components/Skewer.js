@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 import SkewerButton from "./SkewerButton";
 import SkewerDropDown from "./SkewerDropDown";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const Skewer = (_id) => {
