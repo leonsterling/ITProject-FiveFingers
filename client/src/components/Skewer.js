@@ -28,7 +28,6 @@ const Skewer = ({_id}) => {
                 <div 
             className="skewer-component"
             ref={drop}
-            style={{position: "relative", margin: "16px"}}
             >        
             <SkewerButton onClick={() => setOpen(!open)}/>
             {open &&

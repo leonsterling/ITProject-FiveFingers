@@ -8,7 +8,7 @@ const SkewerButton = ({ onClick }) => {
 
     return (
         <button className='skewer-button' onClick={onClick}>
-            <Icon icon="bi:three-dots" rotate={1} />
+            <Icon icon="bi:three-dots"/>
         </button>
         
     );
