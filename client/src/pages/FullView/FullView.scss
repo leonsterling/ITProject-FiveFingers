@@ -7,11 +7,11 @@
         width: calc(80vw + 68px);
         height: 50vh;
         box-shadow: var(--shadow);
+        border-radius: 14px;
     }
 
     .artefact-image img, .artefact-image .inner-shadow {
         position: absolute;
-        border-radius: 14px;
     }
 
     .artefact-image{
