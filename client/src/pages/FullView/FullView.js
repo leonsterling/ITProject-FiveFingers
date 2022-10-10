@@ -167,7 +167,7 @@ function FullView() {
 function PersonAssociated({ data }) {
   return (
     <div className="associated">
-      With <b>{data}</b>
+      Associated with <b>{data}</b>
     </div>
   );
 }
