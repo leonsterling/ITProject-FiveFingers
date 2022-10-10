@@ -104,7 +104,7 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
                 desc={description}
                 date={artefactDate}
                 _id={_id}
-                clickState={open[_id]}
+                openFunction={openFunction}
               />
             </div>
           </div>
