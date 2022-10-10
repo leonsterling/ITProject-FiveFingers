@@ -70,7 +70,6 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
         <article
           key={_id}
           className="card-container"
-          onClick={() => openFunction(_id)}
           onMouseEnter={() => hoverFunction(_id)}
           onMouseLeave={() => hoverFunction(_id)}
           style={{ padding: open[_id] ? "0 0 480px 0" : "0 0 0 0" }}
@@ -88,7 +87,10 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
               </div>
 
               <div className="card">
-                <img src={artefactImg.imgURL} alt="" />
+                <img 
+                src={artefactImg.imgURL} 
+                alt="" 
+                onClick={() => openFunction(_id)}/>
                 <div className="card-title">{artefactName}</div>
               </div>
 
@@ -102,6 +104,7 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
                 desc={description}
                 date={artefactDate}
                 _id={_id}
+                clickState={open[_id]}
               />
             </div>
           </div>

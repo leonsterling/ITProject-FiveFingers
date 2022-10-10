@@ -44,14 +44,12 @@ main {
     min-width: 0;
     margin: 0px 0px 0px 20px;
     width: 12em;
-    height: 14.35em;
+    height: fit-content;
     flex-direction: column;
     justify-content: space-around;
     padding: 25px;
     border-radius: 5px;
-
     position: absolute;
-    background: hsla(240, 9%, 23%, 0.7);
 
 }
 
@@ -73,6 +71,7 @@ main {
     height: 200px;
     object-fit: contain;
     width: 100%;
+    cursor: pointer;
 }
 
 a.link-line {
