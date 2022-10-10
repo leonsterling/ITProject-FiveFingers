@@ -53,8 +53,6 @@ function Categories({ data, index, handleChange }) {
             setVisibility(false);
             setLabel(categoryData);
 
-            console.log(categoryData);
-
             // Mimicks the event-handler
             console.log(data.name);
             let e = {
@@ -143,6 +141,7 @@ function CategoryInput({
         value={label}
         onChange={(e) => {
           setLabel(e.target.value);
+          setVisibility(true);
           e.target.name = data.name;
           e.target.value = e.target.value.trim();
           console.log(e.target.name);
