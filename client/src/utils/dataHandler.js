@@ -10,7 +10,7 @@ const /** ?string */ token = cookies.get("TOKEN");
 /* ------------------------------------------------------------
  * For dev-mode
  * ------------------------------------------------------------ */
-const HOST = "http://192.168.243.90";
+const HOST = "http://localhost";
 const PORT = 5100;
 const URL = `${HOST}:${PORT}`;
 
