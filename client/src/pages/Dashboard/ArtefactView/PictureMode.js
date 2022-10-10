@@ -25,10 +25,8 @@ import "./PictureMode.scss";
  * - renders each userData atom into its own pictorial component
  * @return {React.Component}
  */
-function PictureMode({ userData, setUserData, handleDashboard }) {
+function PictureMode({ userData, setUserData, handleDashboard, open, setOpen }) {
   const /** string */ [currID, setCurrID] = useState("");
-
-  const /** boolean */ [open, setOpen] = useState(false);
 
   /**
    * Opens and closes the clicked/tapped artefact image to show its respective

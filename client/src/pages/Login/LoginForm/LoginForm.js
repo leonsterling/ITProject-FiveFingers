@@ -66,6 +66,11 @@ export default function LoginForm() {
 
     setIsDisabled(true);
 
+    setLoginState({
+      isValid: false,
+      currState: states.initial,
+    });
+
     getLoginPromise(username, password)
       .then((res) => {
         // set the cookie upon successful login

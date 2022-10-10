@@ -9,7 +9,7 @@ import {
 
 import {} from "../../../utils/dataHandler";
 
-function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, setUserData, currRendered, searchText } ) {
+function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, setUserData, currRendered, searchText, setOpen } ) {
     let allButtons = [];
     console.log({currRendered});
 
@@ -25,7 +25,7 @@ function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, s
       allButtons.push(
           <button
             className={className}
-            onClick={() => handleClick(i, currPageNum, setCurrPageNum, setUserData, currRendered, searchText, setNumPages)}
+            onClick={() => handleClick(i, currPageNum, setCurrPageNum, setUserData, currRendered, searchText, setNumPages, setOpen)}
           >
             {i}
           </button>
@@ -39,7 +39,7 @@ function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, s
     )
 }
 
-function handleClick (currButtonNum, currPageNum, setCurrPageNum, setUserData, currRendered, searchText, setNumPages) {
+function handleClick (currButtonNum, currPageNum, setCurrPageNum, setUserData, currRendered, searchText, setNumPages, setOpen) {
     if (currButtonNum === currPageNum) {
         console.log("If guard's fault");
         console.log( { currButtonNum } );
@@ -52,7 +52,7 @@ function handleClick (currButtonNum, currPageNum, setCurrPageNum, setUserData, c
       case "Dashboard":
         getPagePromise(currButtonNum)
           .then((res) => {
-            console.log(res.data);
+            setOpen(false);
             setUserData(res.data.dataInPage);
           })
           .catch((e) => {

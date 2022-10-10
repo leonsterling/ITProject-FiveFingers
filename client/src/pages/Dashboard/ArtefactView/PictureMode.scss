@@ -54,10 +54,6 @@ main {
     height: 200px;
     object-fit: contain;
     width: 100%;
-
-    /* Overwrites the previous one,
-     * so that we can switch and compare in dev tools */
-    object-fit: cover;
 }
 
 a.link-line {

@@ -47,6 +47,8 @@ function RecordForm() {
       feedbackMessages.initial
     );
 
+  let [submitActive, setSubmitActive] = useState(true);
+
   // The JSON object that is being constantly updated and sent
   /** ?{{
    * artefactName: string,
@@ -77,10 +79,12 @@ function RecordForm() {
   function handleSubmit(e) {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
+    setSubmitActive(false);
 
     // Prevents the user from submitting any invalid input
     if (!isValidInput(record)) {
       setFeedback(feedbackMessages.invalid);
+      setSubmitActive(true);
       return;
     }
 
@@ -132,7 +136,7 @@ function RecordForm() {
 
           {/* This is the cancel button it just redirects to dashboard */}
           <p className="feedback">{feedback}</p>
-          <RecordButtons />
+          <RecordButtons submitActive={submitActive}/>
         </form>
       </div>
     </>

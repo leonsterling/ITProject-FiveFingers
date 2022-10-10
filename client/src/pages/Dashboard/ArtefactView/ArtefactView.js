@@ -15,6 +15,8 @@ function ArtefactView({
   setUserData,
   currPageNum,
   setNumPages,
+  open,
+  setOpen,
 }) {
   /**
    * After rendering the basic component (without data), it calls the pre-set
@@ -38,7 +40,12 @@ function ArtefactView({
       setUserData={setUserData}
     />
   ) : (
-    <PictureMode userData={userData} setUserData={setUserData} />
+    <PictureMode
+      userData={userData}
+      setUserData={setUserData}
+      open={open}
+      setOpen={setOpen}
+    />
   );
   return component;
 }

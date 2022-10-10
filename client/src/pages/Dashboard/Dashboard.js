@@ -46,6 +46,8 @@ function Dashboard() {
 
   let /** string */ [ currRendered, setCurrRendered ] = useState("Dashboard");
 
+  let /** string */ [open, setOpen] = useState(false);
+
   let searchParams = {
     searchText,
     setSearchText,
@@ -99,6 +101,8 @@ function Dashboard() {
         getPagePromise={getPagePromise}
         currPageNum={currPageNum}
         setNumPages={setNumPages}
+        open={open}
+        setOpen={setOpen}
       />
       <PageNumHandler
         numPages={numPages}
@@ -108,6 +112,7 @@ function Dashboard() {
         setUserData={setUserData}
         currRendered={currRendered}
         searchText={searchText}
+        setOpen={setOpen}
       />
     </div>
   );

@@ -5,6 +5,9 @@
       margin-top: -13px;
       position: absolute;
       z-index: 5;
+      height: 145px;
+      overflow-y: auto;
+      overflow-x: clip;
     }
 
     .category-input {
