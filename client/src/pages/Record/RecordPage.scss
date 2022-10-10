@@ -1,7 +1,7 @@
 :root {
     --shadow:
-        -4px -3px 4px hsla(0, 0%, 100%, 0.6),
-        inset 1px 1px 4px hsla(198, 100%, 70%, 0.1),
+        -4px -3px 4px hsla(0, 0%, 100%, 0.0),
+        inset 1px 1px 4px hsla(198, 100%, 70%, 0.0),
         0px 9px 9px -7px hsla(198, 0%, 25%, 0.07),
         0px 4px 9px hsla(198, 100%, 60%, 0.1);
     --shadow-click: inset -4px -3px 4px hsla(0, 0%, 100%, 1),
@@ -65,7 +65,7 @@
 
                 input, textarea, .input-like {
                     font-family: Monsterrat;
-                    border: 1px solid #fdfdfd;
+                    border: 1px solid #eceaea;
                     border-radius: 7px;
                     margin-top: 0.75em;
                     margin-bottom: 25px;
@@ -281,8 +281,9 @@
                 }
 
                 .data-entry-fields--image-upload {
-                    width: $outer-width;
+                    width: 100%;
                     padding-left: 0;
+                    align-items: center;
 
                     .data-entry-fields--image-upload--description {
                         margin-right: 0;
