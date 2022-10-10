@@ -33,7 +33,7 @@ const Skewer = ({_id}) => {
             >        
             <SkewerButton onClick={() => setOpenSkewer(!openSkewer)} />
             {openSkewer &&
-                <SkewerDropDown _id={_id}/>
+                <SkewerDropDown _id={_id} />
             }
         </div>
         </>

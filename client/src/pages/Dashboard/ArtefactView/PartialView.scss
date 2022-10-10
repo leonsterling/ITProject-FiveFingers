@@ -41,6 +41,7 @@
         height: 400px;
         flex: 1;
         margin-left: 20px;
+        margin-right: 20px;
         box-sizing: border-box;
 
         .info-title {
@@ -84,7 +85,7 @@
 
     .skewer-partial {
         height: 100%;
-        padding: 20px 20px 0px 0px;
+        padding: 30px 30px 0px 0px;
         position: absolute;
         box-sizing: border-box;
         right: 0;
