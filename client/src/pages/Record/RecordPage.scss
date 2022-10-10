@@ -180,7 +180,7 @@
                 color: white;
                 font-size: 1.2em;
                 padding: 0.7em;
-                width: 9em;
+                width: max-content;
                 border: 0;
                 border-radius: 20px;
                 box-shadow: var(--shadow);
@@ -198,10 +198,10 @@
             }
 
             .response-button__cancel {
-                background-color: #f9f9f9;
+                background-color: hsl(190deg, 0%, 97%);
                 color: var(--color--primary__500);
                 box-shadow: var(--shadow);
-                border: 1px solid hsla(198, 31%, 88%, 0.2);
+                border: 1px solid hsla(198deg, 31%, 71%, 0.2);
 
                 &:active {
                     box-shadow: var(--shadow-click);
@@ -253,16 +253,22 @@
 @media only screen and (max-width: 978px) {
     .record-page {
         form {
+            width: 100%;
+            box-sizing: border-box;
             $outer-width: 80vw;
             .data-entry-fields {
                 flex-direction: column;
-                width: $outer-width;
-                align-items: flex-start;
+                width: 100%;
+                align-items: center;
                 margin-bottom: 0;
+                padding: 0;
 
                 $inner-width: 60vw;
                 .data-entry-fields--text-insert {
-                    width: $inner-width;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
 
                     li {
                         display: flex;
@@ -284,9 +290,10 @@
                     }
 
                     .data-entry-fields--image-upload--upload-button {
-                        width: 51.6vw;
+                        width: 97%;
                         margin: auto;
-                        margin-right: 11.5vw;
+                        box-sizing: border-box;
+                        text-align: center;
                     }
 
                     .data-entry-fields--image-upload--upload-complete {
@@ -299,8 +306,13 @@
             }
 
             .response-button {
-                width: 69vw;
+                width: 100%;
                 margin: auto;
+                padding: 0;
+
+                a {
+                    width: 100;
+                }
             }
 
             .feedback {
