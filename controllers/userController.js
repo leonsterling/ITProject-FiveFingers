@@ -147,7 +147,7 @@ const searchAssociated = (req, res) => {
           totalSearched,
         });
       } else {
-        categoryFunc(query)
+        associatedFunc(query)
           .sort({ _id: -1 })
           .skip(idx)
           .limit(LIMIT)
