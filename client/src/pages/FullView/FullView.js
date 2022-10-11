@@ -18,6 +18,7 @@ import { Icon } from '@iconify/react';
 
 // Imports of local components
 import Navbar from "../../components/Navbar.js";
+import Skewer from "../../components/Skewer";
 
 // Style-based imports
 import "./FullView.scss";
@@ -134,6 +135,9 @@ function FullView() {
             <div className="location">{recordLocation}</div>
             <div className="light-box-toggle" onClick={() => setToggler(!toggler)}>
               <Icon icon="icon-park-outline:full-screen-play" color="white" />
+            </div>
+            <div className="skewer-full">
+              <Skewer _id={_id} />
             </div>
           </div>
         </div>
