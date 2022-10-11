@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
 import FsLightbox from "fslightbox-react";
 import axios from "axios";
+import { Icon } from '@iconify/react';
 
 // Imports of local components
 import Navbar from "../../components/Navbar.js";
@@ -128,9 +129,12 @@ function FullView() {
       <div className="full-view">
         <div className="artefact-image">
           <img src={recordImg} alt={recordName} />
-          <div className="inner-shadow" onClick={() => setToggler(!toggler)}>
+          <div className="inner-shadow">
             <h1 className="artefact-name">{recordName}</h1>
             <div className="location">{recordLocation}</div>
+            <div className="light-box-toggle" onClick={() => setToggler(!toggler)}>
+              <Icon icon="icon-park-outline:full-screen-play" color="white" />
+            </div>
           </div>
         </div>
         <div className="data-container">

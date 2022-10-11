@@ -72,7 +72,7 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
           className="card-container"
           onMouseEnter={() => hoverFunction(_id)}
           onMouseLeave={() => hoverFunction(_id)}
-          style={{ padding: open[_id] ? "0 0 480px 0" : "0 0 0 0" }}
+          style={{ padding: open[_id] ? "0 0 650px 0" : "0 0 0 0" }}
         >
           
 

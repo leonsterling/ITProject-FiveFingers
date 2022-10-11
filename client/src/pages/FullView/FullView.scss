@@ -16,6 +16,7 @@
 
     .artefact-image{
         margin-top: 20px;
+        border-radius: 14px;
 
         img {
             object-fit: cover;
@@ -23,7 +24,7 @@
         
         .inner-shadow {
             box-shadow: inset 0 -12.5vh 150px #00000091;
-            cursor: pointer;
+            box-sizing: border-box;
 
             .artefact-name, .location {
                 position: absolute;
@@ -31,19 +32,38 @@
             }
 
             .artefact-name {
-                bottom: 34px;
+                bottom: 50px;
                 color: white;
                 text-shadow: 1px 1px 40px rgba(0, 0, 0, 0.61);
                 letter-spacing: -0.035em;
                 font-size: 26px;
                 font-family: Monsterrat-bold;
                 font-weight: lighter;
+                width: 60%;
             }
 
             .location {
-                bottom: 12px;
+                bottom: 27.5px;
                 color: lightgray;
-                padding-left: 4px;
+            }
+
+            .light-box-toggle {
+                background: rgba(0, 0, 0, 0.7);
+                width: 40px;
+                height: 40px;
+                border-radius: 5px;
+                text-align: center;
+                margin: 25px;
+                right: 0;
+                bottom: 0;
+                position: absolute;
+                box-shadow: inset 0 -12.5vh 150px #00000091;
+                cursor: pointer;
+                
+                svg {
+                    font-size: 25px;
+                    height:100%;
+                }
             }
         }
     }
