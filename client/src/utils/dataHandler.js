@@ -22,6 +22,7 @@ const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
 
 /* ------------------------------------------------------------
  * At ${URL}/login
+ *
  * ------------------------------------------------------------ */
 /**
  * Requests the server-side to check the provided credentials
