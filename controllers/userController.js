@@ -361,6 +361,7 @@ const registerArtefact = async (req, res) => {
  * @param {Response} res
  */
 const editArtefact = (req, res) => {
+  console.log(req);
   Artefact.findByIdAndUpdate(
     { _id: req.params.id },
     {
