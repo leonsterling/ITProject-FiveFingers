@@ -47,6 +47,8 @@ function RecordForm() {
   const /** string */ [feedback, setFeedback] = useState(
       feedbackMessages.initial
     );
+
+  let [submitActive, setSubmitActive] = useState(true);
   
   // Initialize the loader  
   const /** boolean */ [toggleLoad, setToggleLoad] = useState(false);
@@ -81,10 +83,12 @@ function RecordForm() {
   function handleSubmit(e) {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
+    setSubmitActive(false);
 
     // Prevents the user from submitting any invalid input
     if (!isValidInput(record)) {
       setFeedback(feedbackMessages.invalid);
+      setSubmitActive(true);
       return;
     }
 
@@ -142,7 +146,7 @@ function RecordForm() {
 
           {/* This is the cancel button it just redirects to dashboard */}
           <p className="feedback">{feedback}</p>
-          <RecordButtons />
+          <RecordButtons submitActive={submitActive}/>
         </form>
       </div>
     </>

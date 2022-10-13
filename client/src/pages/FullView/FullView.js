@@ -14,6 +14,11 @@ import { useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
 import FsLightbox from "fslightbox-react";
 import axios from "axios";
+
+// Imports of local utils
+import {
+    getFullViewPromise
+} from "../../utils/dataHandler";
 import { Icon } from '@iconify/react';
 
 // Imports of local components
@@ -94,8 +99,12 @@ function FullView() {
    * `getRecord` function to fetch and set the data accordingly
    */
   useEffect(function () {
-    getRecord()
+    let currUrl = window.location.href.split('/');
+    let currId = currUrl[currUrl.indexOf("full-view") + 1];
+    console.log("Id:", currId);
+    getFullViewPromise(currId)
       .then((response) => {
+        console.log(response.data);
         setRecordData(response.data.result);
       })
       .catch((e) => {
@@ -169,7 +178,7 @@ function FullView() {
 function PersonAssociated({ data }) {
   return (
     <div className="associated">
-      With <b>{data}</b>
+      Associated with <b>{data}</b>
     </div>
   );
 }

@@ -24,7 +24,6 @@ import FullView from "./pages/FullView/FullView.js";
 import ListView from "./pages/Dashboard/ArtefactView/ListView.js";
 import EditPage from "./pages/EditPage/EditPage.js";
 import Skewer from "./components/Skewer.js";
-import Hover from  "./components/Hover.js";
 
 // Style-based imports
 import "./index.css";
@@ -66,10 +65,6 @@ root.render(
 
           <Route element={<Skewer />} path="skewer" exact>
           </Route>
-          
-          <Route element={<Hover />} path="hover" exact>
-          </Route>
-
         </Route>
       </Routes>
     </BrowserRouter>

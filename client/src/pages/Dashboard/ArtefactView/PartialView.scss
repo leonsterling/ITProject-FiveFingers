@@ -125,9 +125,19 @@
             }
             
         }
-    
-    
     }
-    
 }
 
+@media only screen and (max-width: 855px) {
+    .partial-view {
+        .image-side {
+            width: 45vw;
+
+            img {
+                width: 45vw;
+                object-fit: cover;
+            }
+        }
+    }
+
+}

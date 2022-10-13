@@ -9,7 +9,7 @@ function UploadPending({ setRecord, record }) {
   return (
     <>
       <label className="data-entry-fields--image-upload--description">
-        Upload Image *
+        Upload Image
       </label>
       <label className="data-entry-fields--image-upload--upload-button">
         <FileBase

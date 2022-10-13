@@ -3,9 +3,7 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 import SkewerButton from "./SkewerButton";
 import SkewerDropDown from "./SkewerDropDown";
-import "../pages/Dashboard/PartialView";
 import "./Skewer.scss";
-import PartialView from '../pages/Dashboard/PartialView';
 
 const Skewer = ({_id}) => {
     const [openSkewer, setOpenSkewer] = useState(false);
