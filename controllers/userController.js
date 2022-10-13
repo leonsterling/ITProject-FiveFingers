@@ -33,10 +33,11 @@ const associatedFunc = (query, idx) =>
     {
       $search: {
         index: "associated_index",
-        text: {
+        phrase: {
           path: ["associated.person"],
-          query: query,
+          query: query
         },
+        
       },
     }
   ]);
@@ -46,7 +47,7 @@ const categoryFunc = (query, idx) =>
     {
       $search: {
         index: "category_index",
-        text: {
+        phrase: {
           path: ["category.category_name"],
           query: query,
         },
