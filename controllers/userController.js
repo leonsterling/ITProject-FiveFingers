@@ -13,18 +13,23 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
+const fs = require("fs");
 
 /* Imports of local modules */
-const { User, Artefact, Category, Associated } = require("../models/user");
+const { User, Artefact, Category, Associated, Artefact_Local } = require("../models/user");
 
 /* Main implementation */
 const SALT_FACTOR = 10;
 
 const LIMIT = 4
 
+const HOST = "http://localhost";
+const PORT = 5100;
+const URL = `${HOST}:${PORT}`;
+
 // helper functions
 const associatedFunc = (query, idx) =>
-  Artefact.aggregate([
+  Artefact_Local.aggregate([
     {
       $search: {
         index: "associated_index",
@@ -37,7 +42,7 @@ const associatedFunc = (query, idx) =>
   ]);
 
 const categoryFunc = (query, idx) =>
-  Artefact.aggregate([
+  Artefact_Local.aggregate([
     {
       $search: {
         index: "category_index",
@@ -102,7 +107,7 @@ const loginUser = (req, res) => {
 const searchFuzzy = async (req, res) => {
   // tries to find artefacts that matches the query
   // search index is based on <category> and <associated> fields
-  Artefact.aggregate([
+  Artefact_Local.aggregate([
     {
       $search: {
         index: "associated_category_index",
@@ -208,7 +213,7 @@ const searchAssociated = (req, res) => {
   const pageNum = req.params.page;
 
   let idx = (pageNum - 1) * LIMIT;
-  Artefact.aggregate([
+  Artefact_Local.aggregate([
     {
       $search: {
         index: "associated_index",
@@ -271,7 +276,7 @@ const searchAssociated = (req, res) => {
 
 // get all artefacts function for route: '/data'
 const allData = (req, res) => {
-  Artefact.find()
+  Artefact_Local.find()
     .then((artefactRecords) => {
       res.status(200).send({
         message: "Successful in getting artefacts",
@@ -335,7 +340,7 @@ const getAssociated = (req, res) => {
  * @param {Response} res
  */
 const artefact_details = async (req, res) => {
-  Artefact.findById(req.params.id)
+  Artefact_Local.findById(req.params.id)
     .then((result) => {
       res.status(200).send({
         message: "Artefact retrieved successfully",
@@ -357,6 +362,7 @@ const artefact_details = async (req, res) => {
  */
 const registerArtefact = async (req, res) => {
 
+  /*
   const image_data = await cloudinary.uploader.upload(
     req.body.record.artefactImg,
     {
@@ -365,6 +371,7 @@ const registerArtefact = async (req, res) => {
       format: "jpg",
     }
   );
+  
 
   const artefact = new Artefact({
     artefactName: req.body.record.artefactName,
@@ -376,6 +383,45 @@ const registerArtefact = async (req, res) => {
     "artefactImg.imgURL": image_data.url,
     "artefactImg.publicID": image_data.public_id,
   });
+  */
+  const dateNow = Date.now()
+  const path = `/../storage/${dateNow}_${req.body.record.nameImg}`;
+  const pathImg = `${URL}/getImage/${dateNow}_${req.body.record.nameImg}`
+  const pathFile = __dirname + path;
+
+   // console.log(pathFile)
+   fs.writeFile(
+    pathFile,
+    req.body.record.artefactImg.split(",")[1],
+    { encoding: "base64" },
+    function (err) {
+      if (err) console.log(err);
+      else {
+      }
+      /*
+      else {
+        fs.unlink(pathFile, function(err) {
+          if (err) console.log(err)
+          else {
+          }
+        })
+      }
+      */
+    })
+
+  const artefact = new Artefact_Local({
+    artefactName: req.body.record.artefactName,
+    description: req.body.record.description,
+    memories: req.body.record.memories,
+    associated: null,
+    category: null,
+    location: req.body.record.location,
+    "artefactImg.imgURL": pathImg,
+    "artefactImg.imgName": req.body.record.nameImg,
+    "artefactImg.imgType" : req.body.record.typeImg,
+    "artefactImg.imgSize": req.body.record.sizeImg,
+    // "artefactImg.path": pathImg
+  })
 
   // store artefact in database
   artefact
@@ -386,7 +432,7 @@ const registerArtefact = async (req, res) => {
         .then((result2) => {
           if (result2) {
             // stores the existing category object in the artefact record
-            Artefact.updateOne(
+            Artefact_Local.updateOne(
               { _id: result1._id },
               {
                 $set: { category: result2 },
@@ -404,7 +450,7 @@ const registerArtefact = async (req, res) => {
             });
 
             // updates category of artefact
-            Artefact.updateOne(
+            Artefact_Local.updateOne(
               { _id: result1._id },
               {
                 $set: { category: newCategory },
@@ -436,7 +482,7 @@ const registerArtefact = async (req, res) => {
         .then((result3) => {
           if (result3) {
             // stores the existing associated object in the artefact record
-            Artefact.updateOne(
+            Artefact_Local.updateOne(
               { _id: result1._id },
               {
                 $set: { associated: result3 },
@@ -458,7 +504,7 @@ const registerArtefact = async (req, res) => {
             });
 
             // updates associated of artefact
-            Artefact.updateOne(
+            Artefact_Local.updateOne(
               { _id: result1._id },
               {
                 $set: { associated: newAssociated },
@@ -507,7 +553,7 @@ const registerArtefact = async (req, res) => {
  */
 const editArtefact = (req, res) => {
 
-  Artefact.findByIdAndUpdate(
+  Artefact_Local.findByIdAndUpdate(
     { _id: req.params.id },
     {
       artefactName: req.body.record.artefactName,
@@ -522,7 +568,7 @@ const editArtefact = (req, res) => {
         .then((result2) => {
           if (result2) {
             // stores the existing category object in the artefact record
-            Artefact.updateOne(
+            Artefact_Local.updateOne(
               { _id: result1._id },
               {
                 $set: { category: result2 },
@@ -544,7 +590,7 @@ const editArtefact = (req, res) => {
             });
 
             // updates category of artefact
-            Artefact.updateOne(
+            Artefact_Local.updateOne(
               { _id: result1._id },
               {
                 $set: { category: newCategory },
@@ -576,7 +622,7 @@ const editArtefact = (req, res) => {
         .then((result3) => {
           if (result3) {
             // stores the existing associated object in the artefact record
-            Artefact.updateOne(
+            Artefact_Local.updateOne(
               { _id: result1._id },
               {
                 $set: { associated: result3 },
@@ -598,7 +644,7 @@ const editArtefact = (req, res) => {
             });
 
             // updates associated of artefact
-            Artefact.updateOne(
+            Artefact_Local.updateOne(
               { _id: result1._id },
               {
                 $set: { associated: newAssociated },
@@ -645,10 +691,10 @@ const editArtefact = (req, res) => {
  */
 const deleteArtefact = async (req, res) => {
   const artefact_id = req.params.id;
-  const artefact_record = await Artefact.findOne({ _id: artefact_id });
+  const artefact_record = await Artefact_Local.findOne({ _id: artefact_id });
 
   // deletes artefact with the corresponding MongoDB record ID
-  Artefact.deleteOne({ _id: artefact_id })
+  Artefact_Local.deleteOne({ _id: artefact_id })
     .then(() => {
       // removes artefact image stored in Cloudinary
       cloudinary.uploader.destroy(
@@ -726,14 +772,14 @@ const getPage = async (req, res) => {
   const pageNum = req.params.page;
 
   // total count of all artefacts
-  const totalArtefact = await Artefact.countDocuments();
+  const totalArtefact = await Artefact_Local.countDocuments();
 
   let totalPages = Math.ceil(totalArtefact / LIMIT)
 
 
   let idx = (pageNum - 1) * LIMIT;
 
-  await Artefact.find()
+  await Artefact_Local.find()
     .sort({ _id: -1 })
     .skip(idx)
     .limit(LIMIT)

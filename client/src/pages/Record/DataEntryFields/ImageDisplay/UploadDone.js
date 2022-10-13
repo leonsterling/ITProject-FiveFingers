@@ -25,9 +25,12 @@ function UploadDone({ record, setRecord }) {
             type="file"
             name="artefactImg"
             multiple={false}
-            onDone={({ base64 }) =>
-              setRecord({ ...record, artefactImg: base64 })
-            }
+            onDone={({ base64, name, size, type}) => 
+            setRecord({ ...record, 
+              artefactImg: base64,
+              nameImg: name,
+              sizeImg: size,
+              typeImg: type })}
           />
         </label>
       </label>
