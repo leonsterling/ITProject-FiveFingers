@@ -37,7 +37,7 @@ main {
 }
 
 .desc-table {
-    width: 40%;
+    width: 30%;
 }
 
 .person-table, .category-table {
@@ -45,8 +45,10 @@ main {
 }
 
 .kebab-menu {
-    width: 5%;
+    width: 15%;
+    box-sizing: border-box;
 }
+
 
 .table-cell {
     white-space: nowrap;

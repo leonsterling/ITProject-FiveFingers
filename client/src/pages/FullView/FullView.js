@@ -9,16 +9,18 @@
  */
 
 // Imports of packages
-import React, { useState, useEffect } from "react";
-import Cookies from "universal-cookie";
+import React, { useState, useEffect,  } from "react";
+import {useParams} from 'react-router-dom'
 import FsLightbox from "fslightbox-react";
+
+import { Icon } from '@iconify/react';
 
 // Imports of local components
 import Navbar from "../../components/Navbar.js";
+import Skewer from "../../components/Skewer";
 
 // Imports of local utils
 import { getFullViewPromise } from '../../utils/dataHandler';
-
 // Style-based imports
 import "./FullView.scss";
 
@@ -31,6 +33,8 @@ function FullView() {
   // if toggler is updated when lightbox is closed it will open it
   // if toggler is updated when lightbox is opened it will close it
   const /** boolean */ [toggler, setToggler] = useState(false);
+
+  const {_id} = useParams()
 
   // State to update the recordData of the artefact
   /** ?{{
@@ -59,10 +63,12 @@ function FullView() {
    * `getRecord` function to fetch and set the data accordingly
    */
   useEffect(function () {
-    let id = window.location.href.split('/').pop();
-    console.log(id);
-    getFullViewPromise(id)
+    let currUrl = window.location.href.split('/');
+    let currId = currUrl[currUrl.indexOf("full-view") + 1];
+    console.log("Id:", currId);
+    getFullViewPromise(currId)
       .then((response) => {
+        console.log(response.data);
         setRecordData(response.data.result);
       })
       .catch((e) => {
@@ -95,11 +101,20 @@ function FullView() {
     <>
       <Navbar />
       <div className="full-view">
+        <div className="full-view-header">
+          <h2>View Artefact</h2>
+        </div>
         <div className="artefact-image">
           <img src={recordImg} alt={recordName} />
-          <div className="inner-shadow" onClick={() => setToggler(!toggler)}>
+          <div className="inner-shadow">
             <h1 className="artefact-name">{recordName}</h1>
             <div className="location">{recordLocation}</div>
+            <div className="light-box-toggle" onClick={() => setToggler(!toggler)}>
+              <Icon icon="icon-park-outline:full-screen-play" color="white" />
+            </div>
+            <div className="skewer-full">
+              <Skewer _id={_id} />
+            </div>
           </div>
         </div>
         <div className="data-container">
@@ -127,7 +142,7 @@ function FullView() {
 function PersonAssociated({ data }) {
   return (
     <div className="associated">
-      With <b>{data}</b>
+      Associated with <b>{data}</b>
     </div>
   );
 }

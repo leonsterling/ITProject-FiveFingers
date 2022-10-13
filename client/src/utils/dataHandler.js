@@ -18,7 +18,8 @@ const /** ?string */ token = cookies.get("TOKEN");
 /* ------------------------------------------------------------
  * For deployment-mode
  * ------------------------------------------------------------ */
-//const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
+
+// const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
 
 /* ------------------------------------------------------------
  * At ${URL}/login
@@ -56,10 +57,43 @@ export async function getInitDashboardPromise () {
     });
 }
 
+export async function getPagePromise (pageNum) {
+  return setupPromise(/* configuration = */ {
+      method: "get",
+      url: `${URL}/data/${pageNum}`,
+      headers: {
+        // authorized route with jwt token
+        Authorization: `Bearer ${token}`, 
+      },
+    });
+}
+
 export async function getSearchPromise (searchText) {
   return setupPromise(/* configuration = */ {
       method: "get",
       url: `${URL}/search-artefacts/${searchText}`,
+      headers: {
+        // authorized route with jwt token
+        Authorization: `Bearer ${token}`,
+      },
+    });
+}
+
+export async function getSearchCategoryPromise (searchText, pageNum) {
+  return setupPromise(/* configuration = */ {
+      method: "get",
+      url: `${URL}/search-category/${searchText}/${pageNum}`,
+      headers: {
+        // authorized route with jwt token
+        Authorization: `Bearer ${token}`,
+      },
+    });
+}
+
+export async function getSearchAssociatedPromise (searchText, pageNum) {
+  return setupPromise(/* configuration = */ {
+      method: "get",
+      url: `${URL}/search-associated/${searchText}/${pageNum}`,
       headers: {
         // authorized route with jwt token
         Authorization: `Bearer ${token}`,
