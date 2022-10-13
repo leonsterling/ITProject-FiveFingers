@@ -1,29 +1,35 @@
-
 name: Deployment Flow
 
 on:
   push:
     branches: ["main"]
 
+# .github/workflows/custom-deploy.yml
 jobs:
-  
-  deploy:
-    name: Deploy to Heroku
-    runs-on: macos-latest
-    steps: 
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+  custom-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          cache-dependency-path: './server/package-lock.json'
-      
-      #Obviously it won't work yet
-      - name: Add remote origin
-        run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-      
-      - run: git filter-branch -- --all
-      
-      - name: Deploy backend to heroku
-        run: git push heroku HEAD:master -f
+          fetch-depth: 0
+      - name: Heroku login credentials
+        run: |
+          cat > ~/.netrc <<EOF
+            machine api.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_KEY
+            machine git.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_KEY
+          EOF
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_EMAIL: "leoniangelaaa29@gmail.com"
+      - name: Add Heroku remote
+        run: heroku git:remote --app $HEROKU_APP_NAME
+        env:
+          HEROKU_APP_NAME: "sterlingfamilyartefacts"
+      - name: Push to Heroku
+        run: git push heroku main
+

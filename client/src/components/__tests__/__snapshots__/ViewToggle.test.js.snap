@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`viewToggle slider renders correctly 1`] = `
+<label
+  className="viewToggle"
+  data-testid="viewToggle"
+>
+  <input
+    data-testid="check-viewToggle"
+    type="checkbox"
+  />
+  <span
+    className="slider"
+    data-testid="slider-viewToggle"
+  >
+    <span />
+    <span />
+  </span>
+</label>
+`;

@@ -1,0 +1,248 @@
+:root {
+  --shadow: -4px -3px 4px hsla(0, 0%, 100%, 1),
+            inset 1px 1px 4px hsla(198, 100%, 70%, 0.1),
+            0px 2px 4px hsla(198, 100%, 0%, 0.1),
+            0px 4px 9px hsla(198, 100%, 60%, 0.1);
+  --shadow-click: inset -4px -3px 4px hsla(0, 0%, 100%, 1),
+                  1px 1px 4px hsla(198, 100%, 70%, 0.1),
+                  inset 0px 2px 4px hsla(198, 100%, 0%, 0.1),
+                  inset 0px 4px 9px hsla(198, 100%, 60%, 0.1);
+  --color--primary__900: hsl(190deg, 100%, 15%);
+  --color--primary__900: hsl(190deg, 100%, 15%);
+  --color--primary__500: hsl(190deg, 31%, 50%);
+  --color--primary__700: hsl(190.6deg, 23.3%, 32.3%);
+}
+
+.record-page form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 75px;
+  padding: 40px 3rem 0px 3rem;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.record-page h2 {
+  margin-bottom: 32px;
+}
+
+.record-page form .data-entry-fields {
+  display: flex;
+  justify-content: center;
+}
+
+.record-page form .data-entry-fields .data-entry-fields--text-insert {
+  list-style: none;
+}
+
+.record-page form .data-entry-fields .data-entry-fields--text-insert li {
+  line-height: 0.35;
+  margin-bottom: 15px;
+}
+
+.record-page form .data-entry-fields .data-entry-fields--text-insert label, .record-page form .data-entry-fields .data-entry-fields--text-insert input {
+  display:block;
+}
+
+.record-page form .data-entry-fields .data-entry-fields--text-insert label {
+  letter-spacing: -0.06em;
+  font-size: medium;
+  font-weight: bold;
+  padding-left: 4px;
+  color: var(--color--primary__900);
+}
+
+.record-page form .data-entry-fields .data-entry-fields--text-insert input, .record-page form .data-entry-fields .data-entry-fields--text-insert textarea {
+  font-family: Monsterrat;
+  border: 1px solid #C5C5C5;
+  border-radius: 7px;
+  margin-top: 0.75em;
+  margin-bottom: 25px;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 0.95em;
+  width: 50vw;
+  background-color: #f8f8f8;
+}
+
+.record-page form .data-entry-fields .data-entry-fields--text-insert input:focus, .record-page form .data-entry-fields .data-entry-fields--text-insert textarea:focus {
+  outline: 2px solid var(--accent-color);
+}
+
+.record-page form .data-entry-fields .data-entry-fields--image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 3vw;
+  margin-bottom: 20px;
+}
+
+.record-page form .data-entry-fields .data-entry-fields--image-upload label {
+  color: var(--color--primary__900);
+  font-size: medium;
+  letter-spacing: -0.06em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button {
+  width: 29vw;
+  height: 40vh;
+  border: 1px dashed #000;
+  border-radius: 10px;
+  padding: 40px;
+  margin-bottom: 40px;
+  box-shadow: 1px 1px 3px hsla(198deg, 100%, 10%, 0.05), 0px 8px 10px hsla(198deg, 100%, 45%, 0.05);
+  color: hsl(0deg, 0%, 57%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button > span {
+  color: var(--color--primary__700);
+  font-family: Monsterrat-bold;
+  cursor: pointer;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button:hover > span {
+  text-decoration: underline;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button input {
+  display: none;
+}
+
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-complete img {
+  width: calc(29vw + 80px);
+  color: var(--color--primary__700);
+  border-radius: 10px;
+  box-shadow: -8px -4px 5px white, 0px 5px 3px hsla(198deg, 100%, 0%, 0.05), 0 10px 20px hsla(198deg, 100%, 7%, 0.15);
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--restart {
+  margin-top: 27px;
+  color: var(--color--primary__700);
+  font-size: 14px;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--restart input[type=file] {
+  display: none;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--restart > label {
+  font-size: 14px;
+  color: var(--color--primary__900);
+  cursor: pointer;
+  font-family: Monsterrat-bold;
+  text-decoration: underline;
+  transition: 200ms ease-in;
+}
+.record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--restart > label:hover {
+  font-size: 15px;
+}
+.record-page form .response-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 50px;
+  padding: 0 2rem;
+  box-sizing: border-box;
+
+}
+.record-page form .response-button button {
+  font-family: Monsterrat-bold;
+  cursor: pointer;
+  color: white;
+  font-size: 1.2em;
+  padding: 0.7em;
+  width: 9em;
+  border: 0;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  text-shadow: 0 2px 5px hsla(198deg, 88%, 28%, 0.2);
+}
+.record-page form .response-button .response-button__submit {
+  background-color: var(--accent-color-darker);
+  box-shadow: 1px 2px 4px hsla(198deg, 70%, 20%, 0.4);
+  transition: 200ms;
+}
+.record-page form .response-button .response-button__submit:active {
+  box-shadow: inset -2px -4px 6px hsla(198deg, 51%, 40%, 0.7), 0px 1px 4px hsla(198deg, 70%, 20%, 0.4);
+}
+.record-page form .response-button .response-button__cancel {
+  background-color: #f9f9f9;
+  color: var(--color--primary__500);
+  box-shadow: var(--shadow);
+  border: 1px solid hsla(198deg, 31%, 88%, 0.2);
+}
+.record-page form .response-button .response-button__cancel:active {
+  box-shadow: var(--shadow-click);
+}
+.record-page label {
+  font-weight: 500;
+  font-size: 1.3em;
+  color: var(--txt-color);
+}
+.record-page input[type=date] {
+  font-family: "Montserrat" !important;
+  align-items: flex-start;
+}
+.record-page input[type=date]::-webkit-inner-spin-button,
+.record-page input[type=date]::-webkit-calendar-picker-indicator {
+  align-self: flex-end;
+}
+.record-page .feedback {
+  font-size: 14px;
+  font-family: Monsterrat-bold;
+  color: var(--color--primary__900);
+}
+.record-page .box {
+  height: 60%;
+  margin-top: 0.75em;
+}
+
+.descriptionArea {
+  resize: none;
+}
+
+@media only screen and (max-width: 978px) {
+  .record-page form .data-entry-fields {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--text-insert {
+    width: 60vw;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--text-insert li {
+    display: flex;
+    flex-direction: column;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--text-insert li input, .record-page form .data-entry-fields .data-entry-fields--text-insert li textarea {
+    width: 60vw;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--image-upload {
+    width: 60vw;
+    padding-left: 0;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--description {
+    margin-right: 0;
+    width: 58vw;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-button {
+    width: 51.6vw;
+  }
+  .record-page form .data-entry-fields .data-entry-fields--image-upload .data-entry-fields--image-upload--upload-complete img {
+    width: 61vw;
+  }
+  .record-page form .response-button {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5em;
+    box-sizing: border-box;
+  }
+  .record-page form .feedback {
+    margin: 20px auto;
+    position: relative;
+    left: 3vw;
+  }
+}
+
+/*# sourceMappingURL=RecordPage.css.map */

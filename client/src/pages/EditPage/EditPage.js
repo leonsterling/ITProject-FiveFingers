@@ -1,14 +1,11 @@
 // Import the necessary libraries
-import React, { useState, useEffect, Component } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import TextUpdateField from "./TextUpdateField.js";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import TextUpdateField from "./TextUpdateField";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import Navbar from "../Dashboard/Navbar.js";
-
-// Import Nav Bar
-import TopNav from '../Dashboard/TopNav';
-import MobileNav from '../Dashboard/MobileNav';
+import Navbar from "../../components/Navbar";
+import ClipLoader from "react-spinners/ClipLoader";
 
 // obtain token from cookie
 const cookies = new Cookies();
@@ -21,17 +18,14 @@ const feedbackMessages = {
 };
 
 const EditPage = () => {
-  
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
+
+  // Initialize the loader  
+  const /** boolean */ [toggleLoad, setToggleLoad] = useState(false);
 
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
-  console.log({_id})
-
-  const dummyData = {
-    artefactName: "Rose",
-    location: "Japan",
-  };
+  //console.log({ _id });
 
   const initialState = {
     artefactName: "",
@@ -40,8 +34,8 @@ const EditPage = () => {
     description: "",
     artefactImg: "",
     memories: "",
-    category:"",
-    associated:""
+    category: "",
+    associated: "",
   };
 
   async function updateArtefact(e) {
@@ -71,13 +65,20 @@ const EditPage = () => {
   function handleSubmit(e) {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
-    console.log("here")
-    if (!isValidInput(record)) {
+    console.log("here");
+    console.log(record);
+    let newRecord = JSON.parse(JSON.stringify(record));
+    newRecord.associated = record.associated.person;
+    newRecord.category = record.category.category_name;
+    console.log("New Record");
+    console.log(newRecord);
+    if (!isValidInput(newRecord)) {
       setFeedback(feedbackMessages.invalid);
       return;
     }
     updateArtefact();
     setFeedback(feedbackMessages.valid);
+    setToggleLoad(true);
    
   }
 
@@ -92,19 +93,41 @@ const EditPage = () => {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
   };
+  let currCat;
+  let currPer;
 
+  function mapResults(e){
+    const newState = {
+      artefactName: e.artefactName,
+      location: e.location,
+      description: e.description,
+      artefactImg: e.artefactImg,
+      memories: e.memories,
+      category: e.category.category_name,
+      associated: e.associated.person,
+    };
+    return newState;
+  }
   useEffect(function () {
-    console.log("HELLO");
     async function updatePage() {
       try {
         const response = await axios(configuration);
-        console.log(JSON.stringify(response.data));
-        setRecord(response.data);
+        //setRecord(response.data.result);
+        let mapped = mapResults(response.data.result)
+        setRecord(mapped);
+        //record.category = record.category.category_name;
+        //record.associated = record.associated.person;
+        currCat = record.category.category_name;
+        currPer = record.associated.person;
       } catch (error) {
         console.log(error);
       }
     }
     updatePage();
+
+
+    console.log(record);
+
   }, []);
 
   // Change the state of the record object based on user input
@@ -113,27 +136,34 @@ const EditPage = () => {
     console.log(record);
   }
 
-  console.log({record});
-  console.log("===========================================");
-  console.log(record.category.category_name);
-  console.log("===========================================");
   return (
     <>
-      <TopNav />
+      <Navbar />
+
+      <div className="loader" style={{ display : toggleLoad ? 'block' : 'none' }}>
+        <ClipLoader className="loading" color="white" size={50}/>
+        <h3>Updating your Artefact</h3>
+      </div>
 
       <div className="record-page">
-
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
           <h2>Edit Artefact</h2>
           <div className="data-entry-fields">
             {/* TEXT DATA*/}
-            <TextUpdateField handleChange={handleChange} initialData={record} cat ={record.category.category_name} per = {record.associated.person} />
-            
+            <TextUpdateField
+              handleChange={handleChange}
+              initialData={record}
+              cat={currCat}
+              per={currPer}
+            />
+
             {/* Image Display */}
             <div className="data-entry-fields--image-upload">
-              <label className='data-entry-fields--image-upload--description'>Artefact image</label>
-              <div className='data-entry-fields--image-upload--upload-complete'>
+              <label className="data-entry-fields--image-upload--description">
+                Artefact image
+              </label>
+              <div className="data-entry-fields--image-upload--upload-complete">
                 <img
                   src={record.artefactImg.imgURL}
                   alt="No Images have been Uploaded Yet"
@@ -145,7 +175,7 @@ const EditPage = () => {
           {/* This is the cancel button it just redirects to dashboard */}
           {/*<p>{feedback}</p>*/}
 
-          <div className="response-button" id="button" >
+          <div className="response-button" id="button">
             {/*
             <Link to={`/dashboard`}>
               <button className="response-button__cancel" type="submit">
@@ -153,7 +183,7 @@ const EditPage = () => {
               </button>
             </Link>
           */}
-            <button className="response-button__submit" type="submit" >
+            <button className="response-button__submit" type="submit">
               Save
             </button>
           </div>
@@ -166,6 +196,5 @@ const EditPage = () => {
     return data.artefactName !== "" && data.artefactImg !== "";
   }
 };
-
 
 export default EditPage;

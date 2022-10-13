@@ -1,0 +1,53 @@
+{
+    "componentArray" : [
+        {
+            "name" : "artefactName",
+            "label" : "Artefact Name *",
+            "placeholder" : "What is the artefact called?",
+            "type" : "text",
+            "component" : "input",
+            "required": true
+        },
+        {
+            "name" : "category",
+            "label" : "Category",
+            "placeholder" : "Enter a category",
+            "component" : "category",
+            "required": false
+        },
+        {
+            "name" : "description",
+            "label" : "Description",
+            "placeholder" : "How would you describe the artefact?",
+            "type" : "text",
+            "component" : "textarea",
+            "required": false
+        },
+        {
+            "name" : "memories",
+            "label" : "Memories",
+            "placeholder" : "What do you best remember the artefact by?",
+            "type" : "text",
+            "component" : "textarea",
+            "required": false
+        },
+        {
+            "name" : "associated",
+            "label" : "People associated with",
+            "placeholder" : "The people you share this memory with",
+            "type" : "text",
+            "component" : "category",
+            "required": false
+        },
+        {
+            "name" : "location",
+            "label" : "Location",
+            "placeholder" : "Where is this artefact located?",
+            "type" : "text",
+            "component" : "input",
+            "required": false
+        }
+
+    ]
+}
+

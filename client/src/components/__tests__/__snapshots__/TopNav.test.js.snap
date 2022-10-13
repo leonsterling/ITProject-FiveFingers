@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopNav renders correctly 1`] = `
+<nav
+  className="topnav"
+>
+  <div
+    className="topnav-left"
+    data-testid="nav-left"
+  >
+    <img
+      alt="Sterling logo"
+      src="LS-Logo.png"
+    />
+    Sterling Family Artefacts
+  </div>
+  <div
+    className="topnav-right"
+    data-testid="nav-right"
+  >
+    <a
+      className="topnav-button"
+      href="/dashboard"
+      onClick={[Function]}
+    >
+      <button
+        className="dashboard"
+        data-testid="dashboard-btn"
+      >
+        Dashboard
+      </button>
+    </a>
+    <a
+      className="topnav-button"
+      href="/add-artefact"
+      onClick={[Function]}
+    >
+      <button
+        className="add-artefact"
+        data-testid="add-btn"
+      >
+        Add Artefact
+      </button>
+    </a>
+    <div
+      className="topnav-button"
+      onClick={[Function]}
+    >
+      <button
+        className="logout"
+        data-testid="logout-btn"
+      >
+        <span />
+        Sign Out
+      </button>
+    </div>
+  </div>
+  <div
+    className="nav-icon"
+    data-testid="hamburger-btn"
+    onClick={[Function]}
+  >
+    <span />
+  </div>
+</nav>
+`;

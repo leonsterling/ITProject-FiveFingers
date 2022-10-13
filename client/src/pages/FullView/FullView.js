@@ -1,55 +1,75 @@
-// Import React and Hooks
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+/**
+ * @fileoverview The full-view page, where the user sees a single artefact
+ *               with all its recorded details
+ * Uses:
+ * - React for rendering HTML
+ * - Iconify for adding icons
+ * - Axios for getting information from the serverside
+ * - Universal Cookie for handling browser cookies and validating logins
+ */
 
-// Lightbox Import
+// Imports of packages
+import React, { useState, useEffect,  } from "react";
+import {useParams} from 'react-router-dom'
 import FsLightbox from "fslightbox-react";
 
-import axios from "axios";
-import Cookies from "universal-cookie";
-import "./FullView.css";
+import { Icon } from '@iconify/react';
 
-// Import Authentication and Cookies
-const cookies = new Cookies();
-const token = cookies.get("TOKEN");
+// Imports of local components
+import Navbar from "../../components/Navbar.js";
+import Skewer from "../../components/Skewer";
 
+// Imports of local utils
+import { getFullViewPromise } from '../../utils/dataHandler';
+// Style-based imports
+import "./FullView.scss";
+
+/**
+ * The component that gets all the data of a single artefact and then renders
+ * it for the user to view
+ * @return {React.Component}
+ */
 function FullView() {
   // if toggler is updated when lightbox is closed it will open it
   // if toggler is updated when lightbox is opened it will close it
-  const [toggler, setToggler] = useState(false);
+  const /** boolean */ [toggler, setToggler] = useState(false);
 
-  // id constant to send request based on the specific artefact id
-  const { _id } = useParams();
-  console.log({_id});
-  
+  const {_id} = useParams()
+
   // State to update the recordData of the artefact
+  /** ?{{
+   *     _id: string,
+   *     artefactName: string,
+   *     description: string,
+   *     memories: string,
+   *     location: string,
+   *     artefactImg: {{
+   *        imgURL: string,
+   *        publicID: string
+   *     }},
+   *     associated: {{
+   *        _id: string,
+   *        person: string
+   *     }},
+   *     category: {{
+   *        _id: string,
+   *        category_name: string
+   *     }}
+   *  }} */
   const [recordData, setRecordData] = useState(null);
 
-  const configuration = {
-    method: "get",
-    url: `http://localhost:5100/get-artefact/${_id}`,
-    headers: {
-      Authorization: `Bearer ${token}`, // authorized route with jwt token
-    },
-  };
-
-  console.log("URL =" + configuration.url);
-
-  // Get Function to retirev the artefact data
-  async function getRecord() {
-    const response = await axios(configuration);
-
-    //console.log(recordData);
-    if (!response) {
-    } else {
-      return response;
-    }
-  }
-
+  /**
+   * After rendering the basic component (without data), it calls the
+   * `getRecord` function to fetch and set the data accordingly
+   */
   useEffect(function () {
-    getRecord()
+    let currUrl = window.location.href.split('/');
+    let currId = currUrl[currUrl.indexOf("full-view") + 1];
+    console.log("Id:", currId);
+    getFullViewPromise(currId)
       .then((response) => {
-        setRecordData(response.data);
+        console.log(response.data);
+        setRecordData(response.data.result);
       })
       .catch((e) => {
         console.log(e.message);
@@ -66,6 +86,7 @@ function FullView() {
     recordCategory = null;
 
   if (recordData) {
+    console.log(recordData);
     recordName = recordData.artefactName;
     recordImg = recordData.artefactImg.imgURL;
     recordDescription = recordData.description;
@@ -75,26 +96,103 @@ function FullView() {
     recordCategory = recordData.category.category_name;
   }
 
+
   return (
-        <div>
-          <div className="header-fv">Full View</div>
-          <div className="img-container">
-            <img
-              className="cropped-ofp"
-              src={recordImg}
-              alt={recordName}
-              onClick={() => setToggler(!toggler)}
-            />
-            <p className="artefact-name">{recordName}</p>
-            <p className="artefact-tags">TestTag</p>
-            <FsLightbox toggler={toggler} sources={[recordImg]} />
-          </div>
-          <div>
-            <div>{recordDescription}</div>
-            <div>{recordCategory}</div>
-            <div>{recordPerson}</div>
+    <>
+      <Navbar />
+      <div className="full-view">
+        <div className="full-view-header">
+          <h2>View Artefact</h2>
+        </div>
+        <div className="artefact-image">
+          <img src={recordImg} alt={recordName} />
+          <div className="inner-shadow">
+            <h1 className="artefact-name">{recordName}</h1>
+            <div className="location">{recordLocation}</div>
+            <div className="light-box-toggle" onClick={() => setToggler(!toggler)}>
+              <Icon icon="icon-park-outline:full-screen-play" color="white" />
+            </div>
+            <div className="skewer-full">
+              <Skewer _id={_id} />
+            </div>
           </div>
         </div>
+        <div className="data-container">
+          <div className="quick-information">
+            <PersonAssociated data={recordPerson} />
+            <div className="separator">|</div>
+            <Tag data={recordCategory} />
+          </div>
+          <div className="detailed">
+            <RecordDescription data={recordDescription} />
+            <div></div>
+            <Memories data={recordMemories} />
+          </div>
+        </div>
+      </div>
+      <FsLightbox toggler={toggler} sources={[recordImg]} />
+    </>
+  );
+}
+
+/**
+ * The component that shows who this artefact is associated with
+ * @return {React.Component}
+ */
+function PersonAssociated({ data }) {
+  return (
+    <div className="associated">
+      Associated with <b>{data}</b>
+    </div>
+  );
+}
+
+/**
+ * The component that shows the categories that this artefact is associated
+ * with
+ * @return {React.Component}
+ */
+function Tag({ data }) {
+  return (
+    <div className="category">
+      <b>{data}</b>
+    </div>
+  );
+}
+
+function RecordDescription({ data }) {
+  let dataClass = "detailed--data";
+  if (data === undefined || data === "") {
+    data = "No description added, but always worth remembering";
+    dataClass += " undefined";
+  }
+  return (
+    <>
+      <div className="data-field">
+        <h2 className="detailed--header">Description</h2>
+        <div className={dataClass}>{data}</div>
+      </div>
+    </>
+  );
+}
+
+/**
+ * The component that shows the memories this artefact contains
+ * @return {React.Component}
+ */
+function Memories({ data }) {
+  let dataClass = "detailed--data";
+  if (data === undefined || data === "") {
+    data = "No memories recorded, but always worth sharing";
+    dataClass += " undefined";
+  }
+  return (
+    <>
+      <div className="data-field">
+        <h2 className="detailed--header">Memories</h2>
+        <div className={dataClass}>{data}</div>
+      </div>
+    </>
   );
 }
 

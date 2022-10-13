@@ -1,0 +1,100 @@
+/* hamburger menu */
+
+.nav-icon {
+    display: none;
+}
+
+.nav-icon-button {
+    font-size: 30px;
+}
+
+/* navbar styling */
+
+.topnav {
+    background: #96b3c2;
+    grid-area: nav;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-weight: 600;
+    z-index: 0;
+}
+
+.topnav-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align-last:justify;
+}
+
+.topnav-left > img {
+    height: 40px;
+    margin-right: 20px;
+}
+
+.topnav-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align-last: justify;
+}
+
+.topnav-button > button {
+    margin-left: 40px;
+    border: none;
+    background: none;
+    color: white;
+    font-family: "Montserrat";
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+}
+
+.topnav-button > button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 1px;
+    background-color: white;
+    transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.spacer {
+    margin-bottom: 75px;
+}
+
+.logout-icon-button {
+    margin-right: 5px;
+}
+
+@media only screen and (max-width: 978px) {
+    .nav-icon {
+        display:inline;
+    }
+    
+    .topnav-right {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .topnav-left {
+        display: none;
+    }
+}
+
+/* Animations */
+@media (hover: hover) and (pointer: fine) {
+    .topnav-button > button:hover::before{
+      left: 0;
+      right: auto;
+      width: 100%;
+      color: white;
+    }
+  }

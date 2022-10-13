@@ -1,0 +1,37 @@
+.skewer-component {
+    opacity: 1 !important;
+}
+
+.skewer-button {
+    cursor: pointer;
+    float: right;
+    background: #838383;
+    border: none;
+    border-radius: 50px;
+    padding: 4px 4px 0px 4px;
+    text-align: center;
+
+    svg {
+        font-size: 22px;
+        color: white;
+    }
+}
+
+.skewer-dropdown {
+    padding-top: 33px;
+    .text-left {
+        background: #333333;
+        border-radius: 8px;
+        padding: 10px;
+        .skewer-dropdown-item {
+            padding: 10px;
+            .link-line {
+                color: white;
+                width: 100%;
+            }
+            .link-line:hover {
+                font-weight: bold;
+            }
+        }
+    }
+}

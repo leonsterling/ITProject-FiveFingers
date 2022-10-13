@@ -1,6 +1,5 @@
 main {
     grid-area: main;
-    overflow-y: auto;
 }
 
 .list-view-container {
