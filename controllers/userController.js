@@ -420,7 +420,7 @@ const registerArtefact = async (req, res) => {
     "artefactImg.imgName": req.body.record.nameImg,
     "artefactImg.imgType" : req.body.record.typeImg,
     "artefactImg.imgSize": req.body.record.sizeImg,
-    // "artefactImg.path": pathImg
+    "artefactImg.path": path
   })
 
   // store artefact in database
@@ -689,30 +689,32 @@ const editArtefact = (req, res) => {
  * @param {Request} req
  * @param {Response} res
  */
+// delete artefact function for route: '/delete-artefact/:id'
 const deleteArtefact = async (req, res) => {
   const artefact_id = req.params.id;
   const artefact_record = await Artefact_Local.findOne({ _id: artefact_id });
 
   // deletes artefact with the corresponding MongoDB record ID
   Artefact_Local.deleteOne({ _id: artefact_id })
-    .then(() => {
-      // removes artefact image stored in Cloudinary
-      cloudinary.uploader.destroy(
-        artefact_record.artefactImg.publicID,
-        function (error, result) {
-          res.status(200).send({
-            message: "Artefact deleted successfully",
-            result,
-            artefact_record,
-          });
+    .then((artefact) => {
+      const pathFile = __dirname + artefact_record.artefactImg.path;
+
+      fs.unlink(pathFile, function (err) {
+        if (err) console.log(err);
+        else {
         }
-      );
+      });
+
+      res.status(200).send({
+        message: "Delete artefact successfully",
+        artefact
+      });
     })
     .catch((error) => {
       console.log(error);
       res.status(500).send({
-        message: "Error upon deleting artefact",
-        result,
+        message: "Internal Server Error, on deleteArtefact()",
+        artefact
       });
     });
 };

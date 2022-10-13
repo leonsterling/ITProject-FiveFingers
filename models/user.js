@@ -55,7 +55,8 @@ const artefactSchema_local = new mongoose.Schema({
     imgURL: { type: String },
     imgName: {type: String},
     imgType: {type: String},
-    imgSize: {type: String}
+    imgSize: {type: String},
+    path: {type: String}
   },
 });
 /** {mongoose.Schema} schema for user */
