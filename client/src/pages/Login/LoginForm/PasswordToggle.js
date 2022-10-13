@@ -5,7 +5,7 @@ const usePasswordToggle = () => {
     const [visible, setVisibility] = useState(false);
 
     const IconToggle = (
-        <Icon icon= { visible? "ant-design:eye-invisible-filled" : "ant-design:eye-filled" }
+        <Icon icon= { visible? "ant-design:eye-filled" : "ant-design:eye-invisible-filled" }
         onClick = {() => setVisibility(visibility => !visibility)}  
         />
     );

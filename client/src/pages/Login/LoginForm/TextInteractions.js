@@ -18,9 +18,6 @@ function TextInteractions({ feedbackMessage }) {
       <li>
         <p className="feedback">{feedbackMessage}</p>
       </li>
-      <li className="forget-password-link">
-        <h5>Forgot password?</h5>
-      </li>
     </>
   );
 }
