@@ -1,4 +1,8 @@
 import { Icon } from "@iconify/react";
+import { useState } from "react";
+import { getSearchCategoryPromise, getSearchAssociatedPromise } from "../../../utils/dataHandler";
+
+const buttonChoices = ["Category", "Associated"];
 
 function SearchContent({
   searchText,
@@ -6,31 +10,57 @@ function SearchContent({
   setSearchText,
   setIsSearched,
   handleDashboard,
-  setGetArtefactCallback,
-  handleSearch,
+  setNumPages,
+  currRendered,
+  setCurrRendered,
+  setCurrPageNum,
 }) {
+
+  let [ currSelected, setCurrSelected ] = useState("Category");
+  let allButtons = buttonChoices.map( (value, _) => {
+    let chosenClass = value === currSelected ? 'active' : 'inactive';
+    return (
+      <button className={chosenClass} onClick={() => {
+        setCurrSelected(value);
+      }}
+      >
+        {value}
+      </button>
+    )
+  });
+
   return (
     <>
       <Icon icon="akar-icons:search" />
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          setCurrRendered(currSelected);
           let currPromise;
           if (searchText === "") {
-            setIsSearched(false);
             currPromise = handleDashboard();
           } else {
-            setIsSearched(true);
-            currPromise = handleSearch(searchText);
+            setCurrPageNum(1);
+            switch (currSelected) {
+              case "Category":
+                currPromise = getSearchCategoryPromise(searchText, 1);
+                break;
+              case "Associated":
+                currPromise = getSearchAssociatedPromise(searchText, 1);
+                break;
+            }
           }
           currPromise
-            .then((res) => {
-              console.log(res.data);
-              setUserData(res.data.artefactRecords);
-            })
-            .catch((e) => {
-              console.log(e.message);
-            });
+              .then((res) => {
+                console.log(res.data)
+                console.log({ searchText });
+                setUserData(res.data.searched);
+                setNumPages(res.data.totalPages);
+              })
+              .catch((e) => {
+                console.log(e.message);
+              });
+
         }}
       >
         <input
@@ -39,6 +69,7 @@ function SearchContent({
           onChange={(e) => setSearchText(e.target.value)}
         />
       </form>
+      {allButtons}
     </>
   );
 }

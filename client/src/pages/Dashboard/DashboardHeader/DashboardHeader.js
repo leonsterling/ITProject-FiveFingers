@@ -10,7 +10,14 @@ function DashboardHeader({
 }) {
   return (
     <div className="dashboard-header">
-      <h2>My Artefacts</h2>
+      <div className='dashboard-header__left-area'>
+        <h2>My Artefacts</h2>
+        <ViewToggle
+          className="viewToggle"
+          isToggled={isToggled}
+          onToggle={() => setIsToggled(!isToggled)}
+        />
+      </div>
 
       <div
         className={

@@ -1,0 +1,81 @@
+// Added to prevent specificity issues
+.record-page form .data-entry-fields .data-entry-fields--text-insert
+.category {
+    .category__dropdown {
+      margin-top: -13px;
+      position: absolute;
+      z-index: 5;
+    }
+
+    .category-input {
+        display: flex;
+        justify-content: space-between;
+        z-index: 4;
+
+        .initial {
+            color: #717171;
+        }
+
+        span {
+            padding-top: 5px;
+        }
+
+        input {
+            margin: 0;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            outline: none;
+        }
+    }
+
+    .category__option, .category__cancel {
+        border: none;
+        box-shadow: none;
+        margin: 6px;
+        transition: 400ms;
+
+        &:hover {
+            background-color: #e6e6e6;
+        }
+    }
+
+    .category__add {
+        background-color: var(--color--primary__500);
+        color: white;
+        margin-bottom: 3px;
+
+        &:hover {
+            background-color: var(--color--primary__300);
+        }
+    }
+
+    .category__cancel {
+        color: darkgrey;
+
+        &:hover {
+            color: black;
+        }
+    }
+}
+
+// Added to prevent specificity issues
+.record-page form .data-entry-fields .data-entry-fields--text-insert
+.focused {
+    background-color: #0000;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+}
+
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
