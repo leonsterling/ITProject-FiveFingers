@@ -39,7 +39,7 @@ function TopNav({ mobileNavOpen, openMobileNav }) {
     window.location.href = "/";
   }
 
-  let /** React.Component */ DashboardButton = window.location.href.endsWith(
+  let /** React.Component */ DashboardButton = window.location.href.includes(
       "/dashboard"
     ) ? (
       <div className="topnav-button">
