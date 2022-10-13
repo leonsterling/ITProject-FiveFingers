@@ -128,6 +128,9 @@ function FullView() {
     <>
       <Navbar />
       <div className="full-view">
+        <div className="full-view-header">
+          <h2>View Artefact</h2>
+        </div>
         <div className="artefact-image">
           <img src={recordImg} alt={recordName} />
           <div className="inner-shadow">

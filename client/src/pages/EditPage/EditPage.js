@@ -5,6 +5,7 @@ import TextUpdateField from "./TextUpdateField";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import Navbar from "../../components/Navbar";
+import ClipLoader from "react-spinners/ClipLoader";
 
 // obtain token from cookie
 const cookies = new Cookies();
@@ -19,6 +20,9 @@ const feedbackMessages = {
 const EditPage = () => {
   
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
+
+  // Initialize the loader  
+  const /** boolean */ [toggleLoad, setToggleLoad] = useState(false);
 
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
@@ -69,6 +73,7 @@ const EditPage = () => {
     }
     updateArtefact();
     setFeedback(feedbackMessages.valid);
+    setToggleLoad(true);
    
   }
 
@@ -112,6 +117,11 @@ const EditPage = () => {
   return (
     <>
       <Navbar />
+
+      <div className="loader" style={{ display : toggleLoad ? 'block' : 'none' }}>
+        <ClipLoader className="loading" color="white" size={50}/>
+        <h3>Updating your Artefact</h3>
+      </div>
 
       <div className="record-page">
 
