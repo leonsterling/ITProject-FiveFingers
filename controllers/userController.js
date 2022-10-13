@@ -1,14 +1,26 @@
-// import libraries
+/**
+ * @fileoverview Uses the parsed request, transforms it into logic based on the
+ *               provided request (and any additional required data) and sends
+ *               an appropriate response, based on what the client requested
+ * Dependencies
+ * - BCrypt to implement encrypted security
+ * - JSON Web Token to send URL-safe claims between the server and client-side
+ *   code
+ * - Cloudinary to handle image files
+ */
+
+/* Imports of packages */
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { cloudinary } = require("../utils/cloudinary");
 
-// import mongoose models
+/* Imports of local modules */
 const { User, Artefact, Category, Associated } = require("../models/user");
 
-// constants
+/* Main implementation */
 const SALT_FACTOR = 10;
-const LIMIT = 4;
+
+const LIMIT = 20
 
 // helper functions
 const associatedFunc = (query, idx) =>
@@ -39,14 +51,12 @@ const categoryFunc = (query, idx) =>
 
 // login function for route: '/login'
 const loginUser = (req, res) => {
-  // trieds to find an existing user with the username
   User.findOne({ username: req.body.username })
     .then((user) => {
-      // user with username found, now checks password
       bcrypt
         .compare(req.body.password, user.password)
         .then((checkPass) => {
-          // incorrect password
+          // invalid
           if (!checkPass) {
             return res.status(500).send({
               message: "Login Unsuccessful",
@@ -54,7 +64,8 @@ const loginUser = (req, res) => {
               error,
             });
           }
-          // correct password, now generate JWT token
+
+          //generate JWT token
           const token = jwt.sign(
             { userId: user._id, username: user.username },
             "RANDOM-TOKEN",
@@ -75,7 +86,8 @@ const loginUser = (req, res) => {
           });
         });
     })
-    // incorrect username
+
+    // user is not registered in database
     .catch((error) => {
       res.status(500).send({
         message: "Login Unsuccessful",
@@ -112,7 +124,6 @@ const searchFuzzy = async (req, res) => {
   ])
     .then((artefactRecords) => {
       if (artefactRecords.length == 0) {
-        // no artefact matchd the query
         res.status(200).send({
           message: "Search query success with 0 artefacts",
           artefactRecords,
@@ -275,7 +286,11 @@ const allData = (req, res) => {
     });
 };
 
-// get all categories function for route: '/get-categories'
+/**
+ * Sends a response containing a list of all Category objects
+ * @param {Request} req
+ * @param {Response} res
+ */
 const getCategories = (req, res) => {
   Category.find()
     .then((result) => {
@@ -292,7 +307,11 @@ const getCategories = (req, res) => {
     });
 };
 
-// get all associated function for route: '/get-associated'
+/**
+ * Sends a response containing a list of all PersonAssociated objects
+ * @param {Request} req
+ * @param {Response} res
+ */
 const getAssociated = (req, res) => {
   Associated.find()
     .then((result) => {
@@ -309,9 +328,13 @@ const getAssociated = (req, res) => {
     });
 };
 
-// get a single artefact function for route: '/get-artefact/:id'
+/**
+ * Sends a response containing a single artefact, based on the artefact ID
+ * provided on the request data
+ * @param {Request} req
+ * @param {Response} res
+ */
 const artefact_details = async (req, res) => {
-  // finds an artefact corresponding to a MongoDB record ID
   Artefact.findById(req.params.id)
     .then((result) => {
       res.status(200).send({
@@ -327,9 +350,13 @@ const artefact_details = async (req, res) => {
     });
 };
 
-// register artefact function for route: '/add-artefact'
+/**
+ * Registers a new artefact, based on the provided and filtered request data
+ * @param {Request} req
+ * @param {Response} res
+ */
 const registerArtefact = async (req, res) => {
-  // upload image to Cloudinary
+  console.log(req.body.record.artefactImg);
   const image_data = await cloudinary.uploader.upload(
     req.body.record.artefactImg,
     {
@@ -339,7 +366,6 @@ const registerArtefact = async (req, res) => {
     }
   );
 
-  // create a new 'Artefact' record
   const artefact = new Artefact({
     artefactName: req.body.record.artefactName,
     description: req.body.record.description,
@@ -367,10 +393,6 @@ const registerArtefact = async (req, res) => {
               },
               function (err, doc) {
                 if (err) {
-                  res.status(500).send({
-                    message: "Error upon registering artefact",
-                    err,
-                  });
                 } else {
                 }
               }
@@ -476,9 +498,14 @@ const registerArtefact = async (req, res) => {
     });
 };
 
-// edit artefact function for route: '/edit-artefact/:id'
+/**
+ * Sends a response containing a single artefact, based on the artefact ID
+ * provided on the request data. Used to provide the user with the feature to
+ * edit a currently-existing artefact
+ * @param {Request} req
+ * @param {Response} res
+ */
 const editArtefact = (req, res) => {
-  // edits all artefact fields (except image)
   Artefact.findByIdAndUpdate(
     { _id: req.params.id },
     {
@@ -610,7 +637,11 @@ const editArtefact = (req, res) => {
     });
 };
 
-// delete artefact function for route: '/delete-artefact/:id'
+/**
+ * Deletes a currently-existing artefact
+ * @param {Request} req
+ * @param {Response} res
+ */
 const deleteArtefact = async (req, res) => {
   const artefact_id = req.params.id;
   const artefact_record = await Artefact.findOne({ _id: artefact_id });
@@ -639,12 +670,14 @@ const deleteArtefact = async (req, res) => {
     });
 };
 
-// change password function for route: '/change-password'
+/**
+ * Changes the password of the user safely through encryption
+ * @param {Request} req
+ * @param {Response} res
+ */
 const changePassword = async (req, res) => {
   // hash the password using bcrypt before saving to mongodb
   const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR);
-
-  // updates the password (hashed) of the user
   User.findOneAndUpdate(
     { username: req.body.username },
     { password: hashed_pass },

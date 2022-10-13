@@ -1,3 +1,13 @@
+/**
+ * @fileoverview Handles which methods/functions to call whenever a route
+ *               is requested
+ * Dependencies
+ * - ExpressJS to build a RESTful API on top of Node.js
+ * - JSON Web Token to send URL-safe claims between the server and client-side
+ *   code
+ * - Multer for handling form data
+ */
+
 // libraries imported
 const express = require('express') 
 const jwtAuth = require('../utils/jwt') 

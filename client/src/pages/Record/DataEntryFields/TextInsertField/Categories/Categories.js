@@ -53,6 +53,8 @@ function Categories({ data, index, handleChange }) {
             setVisibility(false);
             setLabel(categoryData);
 
+            console.log(categoryData);
+
             // Mimicks the event-handler
             console.log(data.name);
             let e = {

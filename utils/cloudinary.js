@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Integrates cloudinary with the server-side
+ * Dependencies
+ * - Cloudinary for handling image data
+ */
+
 const cloudinary = require("cloudinary").v2;
 require('dotenv').config()
 

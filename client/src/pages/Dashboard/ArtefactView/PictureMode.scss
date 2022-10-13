@@ -3,7 +3,7 @@ main {
 }
 
 .main-container {
-    // height: 100vh;
+    height: 100vh;
 }
 
 .main-cards {
@@ -34,26 +34,41 @@ main {
     flex-basis: 0%;
     flex-shrink: 1;
     display: block;
+    display:table;
 }
+
+.card-hover {
+    min-width: 0;
+    margin: 0px 0px 0px 20px;
+    width: 12em;
+    height: fit-content;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 25px 25px 0 25px;
+    border-radius: 5px;
+    position: absolute;
+
+}
+
 
 .card {
     min-width: 0;
-    margin: 15px 20px;
-    width: 15em;
+    margin: 20px;
+    width: 12em;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 15px;
+    padding: 25px;
     border-radius: 5px;
     background: #ffffff;
-    box-shadow: 2px 8px 10px hsla(190deg, 70%, 10%, 10%), -5px -5px 13px hsla(0, 0%, 94.9%, 50%);
-    border: 1px solid hsl(0deg 0% 88%);
+    box-shadow: 5px 5px 13px #ededed, -5px -5px 13px #ffffff;
 }
 
 .card > img {
     height: 200px;
     object-fit: contain;
     width: 100%;
+    cursor: pointer;
 }
 
 a.link-line {
@@ -63,17 +78,12 @@ a.link-line {
 
 .card-title {
     padding: 5px;
-    margin: 10px auto;
+    margin: 0 auto;
     white-space: nowrap; 
     text-align: center;
     width: 100%; 
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-    letter-spacing: -0.04em;
 }
 
 .card-extended {
@@ -88,6 +98,7 @@ article {
 }
 
 @media only screen and (max-width: 855px) {
+  
     .main-cards {
         grid-template-columns: 1fr;
         margin-bottom: 0;

@@ -15,13 +15,15 @@ import Cookies from "universal-cookie";
 import FsLightbox from "fslightbox-react";
 import axios from "axios";
 
-// Imports of local components
-import Navbar from "../../components/Navbar.js";
-
 // Imports of local utils
 import {
     getFullViewPromise
 } from "../../utils/dataHandler";
+import { Icon } from '@iconify/react';
+
+// Imports of local components
+import Navbar from "../../components/Navbar.js";
+import Skewer from "../../components/Skewer";
 
 // Style-based imports
 import "./FullView.scss";
@@ -41,11 +43,11 @@ function FullView() {
   const /** boolean */ [toggler, setToggler] = useState(false);
 
   // id constant to send request based on the specific artefact id
-  const /** string */ { id } = useParams();
+  const /** string */ { _id } = useParams();
 
   // State to update the recordData of the artefact
   /** ?{{
-   *     id: string,
+   *     _id: string,
    *     artefactName: string,
    *     description: string,
    *     memories: string,
@@ -55,11 +57,11 @@ function FullView() {
    *        publicID: string
    *     }},
    *     associated: {{
-   *        id: string,
+   *        _id: string,
    *        person: string
    *     }},
    *     category: {{
-   *        id: string,
+   *        _id: string,
    *        category_name: string
    *     }}
    *  }} */
@@ -74,7 +76,7 @@ function FullView() {
    *  }} */
   const configuration = {
     method: "get",
-    url: `http://localhost:5100/get-artefact/${id}`,
+    url: `http://localhost:5100/get-artefact/${_id}`,
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
@@ -135,11 +137,20 @@ function FullView() {
     <>
       <Navbar />
       <div className="full-view">
+        <div className="full-view-header">
+          <h2>View Artefact</h2>
+        </div>
         <div className="artefact-image">
           <img src={recordImg} alt={recordName} />
-          <div className="inner-shadow" onClick={() => setToggler(!toggler)}>
+          <div className="inner-shadow">
             <h1 className="artefact-name">{recordName}</h1>
             <div className="location">{recordLocation}</div>
+            <div className="light-box-toggle" onClick={() => setToggler(!toggler)}>
+              <Icon icon="icon-park-outline:full-screen-play" color="white" />
+            </div>
+            <div className="skewer-full">
+              <Skewer _id={_id} />
+            </div>
           </div>
         </div>
         <div className="data-container">

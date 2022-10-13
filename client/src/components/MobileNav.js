@@ -66,7 +66,9 @@ function MobileNav({ mobileNavOpen, closeMobileNav }) {
       </div>
 
       <div className="mobilenav-content">
-        {DashboardButton}
+        <Link className="mobilenav-link" to={`/dashboard`}>
+          Dashboard
+        </Link>
         <Link className="mobilenav-link" to={`/add-artefact`}>
           Add Artefact
         </Link>

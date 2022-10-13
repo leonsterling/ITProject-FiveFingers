@@ -1,3 +1,13 @@
+/**
+ * @fileoverview The starting point of the server file, used to securely serve
+ * the dynamically stored files to the front-end upon request
+ * Dependencies:
+ * - ExpressJS to build a RESTful API on top of Node.js
+ * - body-parser to parse HTTP request methods
+ * - CORS to safely transfer data between restricted resources (the artefacts)
+ *   to the font-end
+ */
+
 // imports libraries and frameworks used for the project
 const express = require('express'),
       bodyParser = require('body-parser'),

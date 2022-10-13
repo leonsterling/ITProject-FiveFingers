@@ -14,6 +14,22 @@
     --color--primary__300: hsl(190deg, 35%, 58%);
 }
 
+.loader {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    text-align: center;
+    padding-top: 30vh;
+    background: rgba(0, 0, 0, 0.7);
+    box-sizing: border-box;
+
+    h3 {
+        margin-top: 30px;
+        color: white;
+    }
+}
+
 .record-page {
     display: flex;
     margin-bottom: 69px;
@@ -158,6 +174,7 @@
                         font-family: Monsterrat-bold;
                         text-decoration: underline;
                         transition: 200ms ease-in;
+                        margin-left: 5px;
 
                         &:hover {
                             font-size: 15px;
@@ -238,6 +255,7 @@
         color: var(--color--primary__900);
         margin: auto;
         margin-bottom: 16px;
+        height: 25px;
     }
 
     .box {
