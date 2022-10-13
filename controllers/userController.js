@@ -20,7 +20,7 @@ const { User, Artefact, Category, Associated } = require("../models/user");
 /* Main implementation */
 const SALT_FACTOR = 10;
 
-const LIMIT = 20
+const LIMIT = 4
 
 // helper functions
 const associatedFunc = (query, idx) =>

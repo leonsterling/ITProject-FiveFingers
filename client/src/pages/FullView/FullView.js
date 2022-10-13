@@ -9,14 +9,10 @@
  */
 
 // Imports of packages
-import React, { useState, useEffect } from "react";
-import Cookies from "universal-cookie";
+import React, { useState, useEffect,  } from "react";
+import {useParams} from 'react-router-dom'
 import FsLightbox from "fslightbox-react";
 
-// Imports of local utils
-import {
-    getFullViewPromise
-} from "../../utils/dataHandler";
 import { Icon } from '@iconify/react';
 
 // Imports of local components
@@ -25,7 +21,6 @@ import Skewer from "../../components/Skewer";
 
 // Imports of local utils
 import { getFullViewPromise } from '../../utils/dataHandler';
-
 // Style-based imports
 import "./FullView.scss";
 
@@ -38,6 +33,8 @@ function FullView() {
   // if toggler is updated when lightbox is closed it will open it
   // if toggler is updated when lightbox is opened it will close it
   const /** boolean */ [toggler, setToggler] = useState(false);
+
+  const {_id} = useParams()
 
   // State to update the recordData of the artefact
   /** ?{{
