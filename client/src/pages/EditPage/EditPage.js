@@ -18,7 +18,6 @@ const feedbackMessages = {
 };
 
 const EditPage = () => {
-  
   const [feedback, setFeedback] = useState(feedbackMessages.initial);
 
   // Initialize the loader  
@@ -26,7 +25,7 @@ const EditPage = () => {
 
   // id constant to send request based on the specific artefact id
   const { _id } = useParams();
-  console.log({ _id });
+  //console.log({ _id });
 
   const initialState = {
     artefactName: "",
@@ -67,7 +66,13 @@ const EditPage = () => {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
     console.log("here");
-    if (!isValidInput(record)) {
+    console.log(record);
+    let newRecord = JSON.parse(JSON.stringify(record));
+    newRecord.associated = record.associated.person;
+    newRecord.category = record.category.category_name;
+    console.log("New Record");
+    console.log(newRecord);
+    if (!isValidInput(newRecord)) {
       setFeedback(feedbackMessages.invalid);
       return;
     }
@@ -88,19 +93,41 @@ const EditPage = () => {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
   };
+  let currCat;
+  let currPer;
 
+  function mapResults(e){
+    const newState = {
+      artefactName: e.artefactName,
+      location: e.location,
+      description: e.description,
+      artefactImg: e.artefactImg,
+      memories: e.memories,
+      category: e.category.category_name,
+      associated: e.associated.person,
+    };
+    return newState;
+  }
   useEffect(function () {
-    console.log("HELLO");
     async function updatePage() {
       try {
         const response = await axios(configuration);
-        setRecord(response.data.result);
-        console.log(JSON.stringify(response.data.re));
+        //setRecord(response.data.result);
+        let mapped = mapResults(response.data.result)
+        setRecord(mapped);
+        //record.category = record.category.category_name;
+        //record.associated = record.associated.person;
+        currCat = record.category.category_name;
+        currPer = record.associated.person;
       } catch (error) {
         console.log(error);
       }
     }
     updatePage();
+
+
+    console.log(record);
+
   }, []);
 
   // Change the state of the record object based on user input
@@ -108,11 +135,6 @@ const EditPage = () => {
     setRecord({ ...record, [event.target.name]: event.target.value });
     console.log(record);
   }
-
-  console.log({ record });
-  console.log("===========================================");
-  console.log(record.category.category_name);
-  console.log("===========================================");
 
   return (
     <>
@@ -124,7 +146,6 @@ const EditPage = () => {
       </div>
 
       <div className="record-page">
-
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
           <h2>Edit Artefact</h2>
@@ -133,8 +154,8 @@ const EditPage = () => {
             <TextUpdateField
               handleChange={handleChange}
               initialData={record}
-              cat={record.category.category_name}
-              per={record.associated.person}
+              cat={currCat}
+              per={currPer}
             />
 
             {/* Image Display */}
@@ -175,6 +196,5 @@ const EditPage = () => {
     return data.artefactName !== "" && data.artefactImg !== "";
   }
 };
-
 
 export default EditPage;

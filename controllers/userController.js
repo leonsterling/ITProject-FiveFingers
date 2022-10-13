@@ -356,7 +356,7 @@ const artefact_details = async (req, res) => {
  * @param {Response} res
  */
 const registerArtefact = async (req, res) => {
-  console.log(req.body.record.artefactImg);
+
   const image_data = await cloudinary.uploader.upload(
     req.body.record.artefactImg,
     {
@@ -506,6 +506,7 @@ const registerArtefact = async (req, res) => {
  * @param {Response} res
  */
 const editArtefact = (req, res) => {
+  console.log(req);
   Artefact.findByIdAndUpdate(
     { _id: req.params.id },
     {

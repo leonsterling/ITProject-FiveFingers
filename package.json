@@ -9,7 +9,7 @@
     "heroku-postbuild": "cd client && npm install && npm run build",
     "server": "nodemon server.js",
     "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
-    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "client": "npm start --prefix ./client",
     "dev": "concurrently \"npm run client \" \"npm run server\"",
     "prettier": "prettier --single-quote --no-semi --tab-width 4 --write **/*.js *.js"

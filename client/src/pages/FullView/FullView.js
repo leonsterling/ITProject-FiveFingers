@@ -10,10 +10,8 @@
 
 // Imports of packages
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
 import FsLightbox from "fslightbox-react";
-import axios from "axios";
 
 // Imports of local utils
 import {
@@ -25,12 +23,11 @@ import { Icon } from '@iconify/react';
 import Navbar from "../../components/Navbar.js";
 import Skewer from "../../components/Skewer";
 
+// Imports of local utils
+import { getFullViewPromise } from '../../utils/dataHandler';
+
 // Style-based imports
 import "./FullView.scss";
-
-// Import Authentication and Cookies
-const cookies = new Cookies();
-const token = cookies.get("TOKEN");
 
 /**
  * The component that gets all the data of a single artefact and then renders
@@ -41,9 +38,6 @@ function FullView() {
   // if toggler is updated when lightbox is closed it will open it
   // if toggler is updated when lightbox is opened it will close it
   const /** boolean */ [toggler, setToggler] = useState(false);
-
-  // id constant to send request based on the specific artefact id
-  const /** string */ { _id } = useParams();
 
   // State to update the recordData of the artefact
   /** ?{{
@@ -66,33 +60,6 @@ function FullView() {
    *     }}
    *  }} */
   const [recordData, setRecordData] = useState(null);
-
-  /** ?{{
-   *     method: string,
-   *     url: string,
-   *     headers: {{
-   *        Authorization: string
-   *     }}
-   *  }} */
-  const configuration = {
-    method: "get",
-    url: `http://localhost:5100/get-artefact/${_id}`,
-    headers: {
-      Authorization: `Bearer ${token}`, // authorized route with jwt token
-    },
-  };
-
-  /**
-   * Get Function to retrieve the artefact data
-   */
-  async function getRecord() {
-    const /** Promise */ response = await axios(configuration);
-
-    if (!response) {
-    } else {
-      return response;
-    }
-  }
 
   /**
    * After rendering the basic component (without data), it calls the
