@@ -159,7 +159,7 @@ const searchCategory = (req, res) => {
       if (totalSearched == 0) {
         // no artefact matchd the query
         res.status(200).send({
-          message: "Search query success with 0 artefacts ",
+          message: "Search query success with 0 artefacts",
           totalSearched,
         });
       } else {
@@ -182,7 +182,7 @@ const searchCategory = (req, res) => {
             let totalPages = Math.ceil(totalSearched / LIMIT);
 
             res.status(200).send({
-              message: `Successfully retrieved page ${pageNum}`,
+              message: "Search query success with " + searched.length + " artefacts",
               totalPages,
               searched,
             });
@@ -225,7 +225,7 @@ const searchAssociated = (req, res) => {
       if (totalSearched == 0) {
         // no artefact matchd the query
         res.status(200).send({
-          message: "Search query success with 0 artefacts ",
+          message: "Search query success with 0 artefacts",
           totalSearched,
         });
       } else {
@@ -248,7 +248,7 @@ const searchAssociated = (req, res) => {
             let totalPages = Math.ceil(totalSearched / LIMIT);
 
             res.status(200).send({
-              message: `Successfully retrieved page ${pageNum}`,
+              message: "Search query success with " + searched.length + " artefacts",
               totalPages,
               searched,
             });
@@ -506,7 +506,7 @@ const registerArtefact = async (req, res) => {
  * @param {Response} res
  */
 const editArtefact = (req, res) => {
-  console.log(req);
+
   Artefact.findByIdAndUpdate(
     { _id: req.params.id },
     {
