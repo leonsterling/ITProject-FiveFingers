@@ -42,7 +42,7 @@ app.use(express.json())
 
 // router of app in server
 const userRouter = require('./routers/userRouter')
-app.use('https://sterlingfamilyartefacts.herokuapp.com', userRouter)
+app.use('/', userRouter)
 
 // Tells the app to listen on port 5000 and logs that information to the console.
 app.listen(process.env.PORT || 5100, () => {
