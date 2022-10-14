@@ -23,7 +23,9 @@ app.use(
       credentials: true,
     })
 );
-
+*/
+app.use(cors());
+/*
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization','https://sterlingfamilyartefacts.herokuapp.com');
     if(req.method === 'OPTIONS') {
@@ -33,8 +35,6 @@ app.use((req,res,next)=>{
     next();
 });
 */
-
-app.use(cors());
 // app uses bodyParser to parse JSON objects from HTTP requests
 app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
@@ -44,6 +44,9 @@ app.use(express.json())
 // router of app in server
 const userRouter = require('./routers/userRouter')
 app.use('/', userRouter)
+
+// fetch image locally
+app.use('/getImage', express.static('storage'))
 
 // Tells the app to listen on port 5000 and logs that information to the console.
 app.listen(process.env.PORT || 5100, () => {

@@ -55,11 +55,26 @@ function TopNav({ mobileNavOpen, openMobileNav }) {
         <button className="dashboard">Dashboard</button>
       </Link>
     );
+  let /** React.Component */ SterlingButton = window.location.href.includes(
+      "/dashboard"
+    ) ? (
+      <div className="sterling-logo">
+        <img 
+        src={logo} 
+        alt="Sterling logo" 
+        onClick={() => window.location.reload()}
+        />
+      </div>
+    ) : (
+      /* else */ <Link className="sterling-logo" to={`/dashboard`}>
+          <img src={logo} alt="Sterling logo" />
+        </Link>
+    );
 
   return (
     <nav className="topnav">
       <div className="topnav-left">
-        <img src={logo} alt="Sterling logo" />
+        {SterlingButton}
         Sterling Family Artefacts
       </div>
       <div className="topnav-right">

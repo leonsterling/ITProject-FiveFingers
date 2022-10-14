@@ -163,7 +163,7 @@ function Tag({ data }) {
 function RecordDescription({ data }) {
   let dataClass = "detailed--data";
   if (data === undefined || data === "") {
-    data = "No description added, but always worth remembering";
+    data = "No description recorded, but always worth remembering";
     dataClass += " undefined";
   }
   return (
