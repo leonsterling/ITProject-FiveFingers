@@ -171,7 +171,7 @@ const searchAssociated = (req, res) => {
           totalSearched,
         });
       } else {
-        associatedFunc(query, idx)
+        associatedIndex(query, idx)
           .sort({ _id: -1 })
           .skip(idx)
           .limit(LIMIT)
