@@ -31,9 +31,10 @@
     text-align-last:justify;
 }
 
-.topnav-left > img {
+.topnav-left > .sterling-logo > img {
     height: 40px;
     margin-right: 20px;
+    cursor: pointer;
 }
 
 .topnav-right {

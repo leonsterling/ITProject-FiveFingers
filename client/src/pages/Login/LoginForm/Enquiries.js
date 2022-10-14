@@ -8,7 +8,7 @@
 
 // Imports of packages
 import { Icon } from "@iconify/react";
-import usePasswordToggle from '../PasswordToggle';
+import usePasswordToggle from './PasswordToggle';
 
 /**
  * Asks the user to provide their respective login information for the form
