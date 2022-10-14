@@ -143,6 +143,7 @@ function CategoryInput({
         value={label}
         onChange={(e) => {
           setLabel(e.target.value);
+          setVisibility(true);
           e.target.name = data.name;
           e.target.value = e.target.value.trim();
           console.log(e.target.name);

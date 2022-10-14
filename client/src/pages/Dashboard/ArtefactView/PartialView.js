@@ -9,7 +9,7 @@
  */
 
 // Imports of packages
-import React from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 
@@ -24,9 +24,13 @@ import "./PartialView.scss";
  * parent component and displays them in a figure HTML tag
  * @return {React.Component}
  */
-function PartialView({ title, image, desc, date, _id }) {
+function PartialView({ title, image, desc, date, _id, openFunction}) {
+
   return (
     <figure className="partial-view">
+      <div className="exit-partial">
+        <Icon icon="bi:x-lg" color="#f8f8f8" className="exit-button" onClick={()=>openFunction(_id)}/>
+      </div>
       <div className="image-side">
         <img
           className="image-partial-view"
@@ -39,7 +43,7 @@ function PartialView({ title, image, desc, date, _id }) {
           <p>{title}</p>
         </div>
         <div className="info-dec">
-          <p>Description:</p>
+          <p id="p-desc">Description:</p>
           <br></br>
           <p>{desc}</p>
         </div>
@@ -58,6 +62,9 @@ function PartialView({ title, image, desc, date, _id }) {
             </p>
           </Link>
         </div>
+      </div>
+      <div className="skewer-partial">
+        <Skewer _id={_id} className="skewer-menu-partial"/>
       </div>
     </figure>
   );

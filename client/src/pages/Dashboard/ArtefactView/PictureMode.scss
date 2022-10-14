@@ -34,7 +34,22 @@ main {
     flex-basis: 0%;
     flex-shrink: 1;
     display: block;
+    display:table;
 }
+
+.card-hover {
+    min-width: 0;
+    margin: 0px 0px 0px 20px;
+    width: 12em;
+    height: fit-content;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 25px 25px 0 25px;
+    border-radius: 5px;
+    position: absolute;
+
+}
+
 
 .card {
     min-width: 0;
@@ -53,6 +68,7 @@ main {
     height: 200px;
     object-fit: contain;
     width: 100%;
+    cursor: pointer;
 }
 
 a.link-line {
