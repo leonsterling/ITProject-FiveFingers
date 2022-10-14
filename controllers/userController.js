@@ -29,7 +29,7 @@ const SALT_FACTOR = 10;
 const LIMIT = 4;
 
 const HOST = "http://localhost";
-const PORT = 5100;
+const PORT = 3000;
 const URL = `${HOST}:${PORT}`;
 
 // helper functions

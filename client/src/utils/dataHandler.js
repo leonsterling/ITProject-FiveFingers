@@ -11,7 +11,7 @@ const /** ?string */ token = cookies.get("TOKEN");
  * For dev-mode
  * ------------------------------------------------------------ */
  const HOST = "http://localhost";
- const PORT = 5100;
+ const PORT = 3000;
  const URL = `${HOST}:${PORT}`;
 
 
