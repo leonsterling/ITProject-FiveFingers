@@ -21,25 +21,22 @@ const userController = require('../controllers/userController')
 
 // GET routes
 userRouter.get('/data', jwtAuth, userController.allData);
-userRouter.get('/get-artefact/:id', userController.artefact_details);
+userRouter.get('/get-artefact/:id', jwtAuth, userController.getArtefactDetails);
 userRouter.get('/get-categories', jwtAuth, userController.getCategories)
 userRouter.get('/get-associated', jwtAuth, userController.getAssociated)
 
 // GET search routes
 userRouter.get('/search-category/:query/:page', jwtAuth, userController.searchCategory)
 userRouter.get('/search-associated/:query/:page', jwtAuth, userController.searchAssociated)
-userRouter.get('/search-fuzzy/:query/:page', jwtAuth, userController.searchFuzzy)
 
 // POST routes for login
-userRouter.post('/register', userController.registerUser)
 userRouter.post('/login', userController.loginUser)
-userRouter.post('/change-password', userController.changePassword)
 
 // POST route to register Artefact
 userRouter.post('/add-artefact', jwtAuth, upload.single("artefact-image"), userController.registerArtefact),
 
 // PATCH route to edit artefact
-userRouter.patch('/edit-artefact/:id', userController.editArtefact);
+userRouter.patch('/edit-artefact/:id', jwtAuth, userController.editArtefact);
 
 // DELETE route to delete artefact
 userRouter.delete('/delete-artefact/:id', jwtAuth, userController.deleteArtefact)

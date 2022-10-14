@@ -12,37 +12,41 @@
 /* Imports of packages */
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { cloudinary } = require("../utils/cloudinary");
 const fs = require("fs");
 
 /* Imports of local modules */
-const { User, Artefact, Category, Associated, Artefact_Local } = require("../models/user");
+const {
+  User,
+  Artefact,
+  Category,
+  Associated,
+  Artefact_Local,
+} = require("../models/user");
 
 /* Main implementation */
 const SALT_FACTOR = 10;
 
-const LIMIT = 4
+const LIMIT = 4;
 
 const HOST = "http://localhost";
 const PORT = 5100;
 const URL = `${HOST}:${PORT}`;
 
 // helper functions
-const associatedFunc = (query, idx) =>
+const associatedIndex = (query, idx) =>
   Artefact_Local.aggregate([
     {
       $search: {
         index: "associated_index",
         phrase: {
           path: ["associated.person"],
-          query: query
+          query: query,
         },
-        
       },
-    }
+    },
   ]);
 
-const categoryFunc = (query, idx) =>
+const categoryIndex = (query, idx) =>
   Artefact_Local.aggregate([
     {
       $search: {
@@ -52,7 +56,7 @@ const categoryFunc = (query, idx) =>
           query: query,
         },
       },
-    }
+    },
   ]);
 
 // login function for route: '/login'
@@ -60,94 +64,46 @@ const loginUser = (req, res) => {
   User.findOne({ username: req.body.username })
     .then((user) => {
       bcrypt
-        .compare(req.body.password, user.password)
-        .then((checkPass) => {
-          // invalid
-          if (!checkPass) {
+        .compare(req.body.password, user.password, (err, checkPass) => {
+          if (err) {
             return res.status(500).send({
               message: "Login Unsuccessful",
               isValid: false,
-              error,
+              err,
+            });
+          }
+          
+          
+          if (!checkPass) {
+            return res.status(500).send({
+              message: "Invalid Password",
+              isValid: false,
+              err,
             });
           }
 
-          //generate JWT token
-          const token = jwt.sign(
-            { userId: user._id, username: user.username },
-            "RANDOM-TOKEN",
-            { expiresIn: "24h" }
-          );
-          res.status(200).send({
-            message: "Login Successful",
-            username: user.username,
-            isValid: true,
-            token,
-          });
+          else {
+            //generate JWT token
+            const token = jwt.sign(
+              { userId: user._id, username: user.username },
+              "RANDOM-TOKEN",
+              { expiresIn: "24h" }
+            );
+            return res.status(200).send({
+              message: "Login Successful",
+              username: user.username,
+              isValid: true,
+              token,
+            });
+          }
         })
-        .catch((error) => {
-          res.status(500).send({
-            message: "Login Unsuccessful",
-            isValid: false,
-            error,
-          });
-        });
     })
 
     // user is not registered in database
     .catch((error) => {
       res.status(500).send({
-        message: "Login Unsuccessful",
+        message: "Invalid Username",
         isValid: false,
-        error,
-      });
-    });
-};
-
-
-// basic search function for route: '/search-artefacts/:query'
-const searchFuzzy = async (req, res) => {
-  // tries to find artefacts that matches the query
-  // search index is based on <category> and <associated> fields
-  Artefact_Local.aggregate([
-    {
-      $search: {
-        index: "associated_category_index",
-        text: {
-          path: [
-            "associated.person",
-            "category.category_name",
-            "artefactName",
-            "description",
-          ],
-          query: req.params.query,
-          fuzzy: {
-            maxEdits: 2,
-            maxExpansions: 250,
-          },
-        },
-      },
-    },
-  ])
-    .then((artefactRecords) => {
-      if (artefactRecords.length == 0) {
-        res.status(200).send({
-          message: "Search query success with 0 artefacts",
-          artefactRecords,
-        });
-      } else {
-        // 1 or more artefacts matches the query
-        res.status(200).send({
-          message:
-            "Search query success with " +
-            artefactRecords.length +
-            " artefacts",
-          artefactRecords,
-        });
-      }
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message: "Error upon searching",
         error,
       });
     });
@@ -158,7 +114,7 @@ const searchCategory = (req, res) => {
   const pageNum = req.params.page;
 
   let idx = (pageNum - 1) * LIMIT;
-  categoryFunc(query)
+  categoryIndex(query)
     .then((artefactRecords) => {
       // console.log(artefactRecords)
       const totalSearched = artefactRecords.length;
@@ -169,26 +125,16 @@ const searchCategory = (req, res) => {
           totalSearched,
         });
       } else {
-        /*
-        // 1 or more artefacts matches the query
-        res.status(200).send({
-          message:
-            "Associated query success with " +
-            artefactRecords.length +
-            " artefacts",
-          artefactRecords,
-        });
-        */
-        categoryFunc(query)
-        .sort({_id: -1})
-        .skip(idx)
-        .limit(LIMIT)
+        categoryIndex(query)
+          .sort({ _id: -1 })
+          .skip(idx)
+          .limit(LIMIT)
           .then((searched) => {
-            const totalArtefact = searched.length;
-            let totalPages = Math.ceil(totalSearched / LIMIT);
+            const totalPages = Math.ceil(totalSearched / LIMIT);
 
             res.status(200).send({
-              message: "Search query success with " + searched.length + " artefacts",
+              message:
+                "Search query success with " + searched.length + " artefacts",
               totalPages,
               searched,
             });
@@ -214,17 +160,7 @@ const searchAssociated = (req, res) => {
   const pageNum = req.params.page;
 
   let idx = (pageNum - 1) * LIMIT;
-  Artefact_Local.aggregate([
-    {
-      $search: {
-        index: "associated_index",
-        text: {
-          path: ["associated.person"],
-          query: query,
-        },
-      },
-    },
-  ])
+  associatedIndex(query)
     .then((artefactRecords) => {
       // console.log(artefactRecords)
       const totalSearched = artefactRecords.length;
@@ -235,26 +171,16 @@ const searchAssociated = (req, res) => {
           totalSearched,
         });
       } else {
-        /*
-        // 1 or more artefacts matches the query
-        res.status(200).send({
-          message:
-            "Associated query success with " +
-            artefactRecords.length +
-            " artefacts",
-          artefactRecords,
-        });
-        */
         associatedFunc(query, idx)
-        .sort({_id: -1})
-        .skip(idx)
-        .limit(LIMIT)
+          .sort({ _id: -1 })
+          .skip(idx)
+          .limit(LIMIT)
           .then((searched) => {
-            const totalArtefact = searched.length;
-            let totalPages = Math.ceil(totalSearched / LIMIT);
+            const totalPages = Math.ceil(totalSearched / LIMIT);
 
             res.status(200).send({
-              message: "Search query success with " + searched.length + " artefacts",
+              message:
+                "Search query success with " + searched.length + " artefacts",
               totalPages,
               searched,
             });
@@ -340,7 +266,7 @@ const getAssociated = (req, res) => {
  * @param {Request} req
  * @param {Response} res
  */
-const artefact_details = async (req, res) => {
+const getArtefactDetails = async (req, res) => {
   Artefact_Local.findById(req.params.id)
     .then((result) => {
       res.status(200).send({
@@ -362,36 +288,14 @@ const artefact_details = async (req, res) => {
  * @param {Response} res
  */
 const registerArtefact = async (req, res) => {
-
-  /*
-  const image_data = await cloudinary.uploader.upload(
-    req.body.record.artefactImg,
-    {
-      upload_preset: "sterling_family_account",
-      allowed_formats: ["jpeg", "jpg", "png"],
-      format: "jpg",
-    }
-  );
   
-
-  const artefact = new Artefact({
-    artefactName: req.body.record.artefactName,
-    description: req.body.record.description,
-    memories: req.body.record.memories,
-    associated: null,
-    category: null,
-    location: req.body.record.location,
-    "artefactImg.imgURL": image_data.url,
-    "artefactImg.publicID": image_data.public_id,
-  });
-  */
-  const dateNow = Date.now()
+  const dateNow = Date.now();
   const path = `/../storage/${dateNow}_${req.body.record.nameImg}`;
-  const pathImg = `${URL}/getImage/${dateNow}_${req.body.record.nameImg}`
+  const pathImg = `${URL}/getImage/${dateNow}_${req.body.record.nameImg}`;
   const pathFile = __dirname + path;
 
-   // console.log(pathFile)
-   fs.writeFile(
+  // console.log(pathFile)
+  fs.writeFile(
     pathFile,
     req.body.record.artefactImg.split(",")[1],
     { encoding: "base64" },
@@ -399,16 +303,8 @@ const registerArtefact = async (req, res) => {
       if (err) console.log(err);
       else {
       }
-      /*
-      else {
-        fs.unlink(pathFile, function(err) {
-          if (err) console.log(err)
-          else {
-          }
-        })
-      }
-      */
-    })
+    }
+  );
 
   const artefact = new Artefact_Local({
     artefactName: req.body.record.artefactName,
@@ -419,10 +315,10 @@ const registerArtefact = async (req, res) => {
     location: req.body.record.location,
     "artefactImg.imgURL": pathImg,
     "artefactImg.imgName": req.body.record.nameImg,
-    "artefactImg.imgType" : req.body.record.typeImg,
+    "artefactImg.imgType": req.body.record.typeImg,
     "artefactImg.imgSize": req.body.record.sizeImg,
-    "artefactImg.path": path
-  })
+    "artefactImg.path": path,
+  });
 
   // store artefact in database
   artefact
@@ -553,7 +449,6 @@ const registerArtefact = async (req, res) => {
  * @param {Response} res
  */
 const editArtefact = (req, res) => {
-
   Artefact_Local.findByIdAndUpdate(
     { _id: req.params.id },
     {
@@ -614,7 +509,7 @@ const editArtefact = (req, res) => {
         .catch((error) => {
           res.status(500).send({
             message: "Error upon edit artefact",
-            err,
+            error,
           });
         });
 
@@ -708,64 +603,16 @@ const deleteArtefact = async (req, res) => {
 
       res.status(200).send({
         message: "Delete artefact successfully",
-        artefact
+        artefact,
       });
     })
     .catch((error) => {
       console.log(error);
       res.status(500).send({
         message: "Internal Server Error, on deleteArtefact()",
-        artefact
+        artefact,
       });
     });
-};
-
-/**
- * Changes the password of the user safely through encryption
- * @param {Request} req
- * @param {Response} res
- */
-const changePassword = async (req, res) => {
-  // hash the password using bcrypt before saving to mongodb
-  const hashed_pass = await bcrypt.hash(req.body.password, SALT_FACTOR);
-  User.findOneAndUpdate(
-    { username: req.body.username },
-    { password: hashed_pass },
-    function (err, doc) {
-      if (err) {
-        res.status(500).send({
-          message: "Error upon changing password",
-          err,
-        });
-      } else {
-        res.status(200).send({
-          message: "Password changed successfully",
-        });
-      }
-    }
-  );
-};
-
-// register new users
-// (HELPER FUNCTION, WILL BE REMOVED)
-const registerUser = async (req, res) => {
-  const user = new User(req.body);
-  await user
-    .save()
-    .then((result) => {
-      res.status(200).send({
-        message: "User Created Successfully",
-        result,
-      });
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message: "Error upon creating user",
-        error,
-      });
-    });
-
-  console.log(user);
 };
 
 // get data based on page for route: '/data/:page'
@@ -777,8 +624,7 @@ const getPage = async (req, res) => {
   // total count of all artefacts
   const totalArtefact = await Artefact_Local.countDocuments();
 
-  let totalPages = Math.ceil(totalArtefact / LIMIT)
-
+  let totalPages = Math.ceil(totalArtefact / LIMIT);
 
   let idx = (pageNum - 1) * LIMIT;
 
@@ -819,22 +665,16 @@ const getPage = async (req, res) => {
 module.exports = {
   allData,
   loginUser,
-  artefact_details,
+  getArtefactDetails,
   getCategories,
   getAssociated,
   registerArtefact,
   editArtefact,
   deleteArtefact,
-  changePassword,
-
   // no automatic testing yet
   getPage,
 
-  // helper function, not part of requirement
-  registerUser,
-
   // new search functions
   searchCategory,
-  searchAssociated,
-  searchFuzzy
+  searchAssociated
 };
