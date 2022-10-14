@@ -42,10 +42,12 @@ function PartialView({ title, image, desc, date, _id, openFunction}) {
         <div className="info-title">
           <p>{title}</p>
         </div>
-        <div className="info-dec">
-          <p id="p-desc">Description:</p>
-          <br></br>
-          <p>{desc}</p>
+        <div className="info-desc">
+          <p>
+            <span id="p-desc">Description:</span>
+            <br/>
+            {desc}
+          </p>
         </div>
         <div className="info-date">
           <p>{date}</p>

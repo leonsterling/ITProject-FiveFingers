@@ -17,12 +17,11 @@
 .loader {
     height: 100%;
     width: 100%;
-    position: absolute;
+    position: fixed;
     z-index: 5;
     text-align: center;
     padding-top: 30vh;
     background: rgba(0, 0, 0, 0.7);
-    box-sizing: border-box;
 
     h3 {
         margin-top: 30px;
