@@ -76,14 +76,6 @@ body {
     justify-content: space-between;
 }
 
-.dashboard-header .dashboard-header__left-area {
-    display: flex;
-}
-
-.dashboard-header .dashboard-header__left-area .viewToggle {
-    display: none;
-}
-
 .dashboard-header .dashboard-header__right-area {
     display: flex;
     align-items: center;
@@ -91,51 +83,17 @@ body {
     width: 470px;
 }
 
-@media only screen and (max-width: 722px) {
-    .dashboard-header {
-        flex-direction: column;
-    }
-
-    .dashboard-header .dashboard-header__right-area {
-        width: 100%;
-    }
-
-    .dashboard-header .dashboard-header__right-area .post-search .search-icon,
-    .dashboard-header .dashboard-header__right-area .search-icon {
-        width: 100%;
-    }
-
-    .dashboard-header .dashboard-header__right-area .search-icon form input {
-        width: 31vw;
-    }
-
-    .dashboard-header .search-icon button {
-        font-size: 11.5px;
-    }
-
-    .dashboard-header .dashboard-header__right-area .viewToggle {
-        display: none;
-    }
-
-    .dashboard-header .dashboard-header__left-area {
-        width: 100%;
-        margin-bottom: 15px;
-        align-items: center;
-    }
-
-    .dashboard-header .dashboard-header__left-area .viewToggle {
-        display: inline-block;
-    }
-}
-
-.dashboard-header .dashboard-header__right-area .search-icon input {
+.dashboard-header .dashboard-header__right-area input {
     border: none;
     outline: none;
-    z-index: 9;
-    width: 185px;
+    position: relative;
+    z-index: 20;
 }
 
 .dashboard-header .pre-search form {
+    width: 0;
+    height: 0;
+    position: absolute;
     left: 30px;
     top: 1px;
 }
@@ -145,12 +103,13 @@ body {
 .dashboard-header .post-search .search-icon
 {
     width: 38.5vw;
-    /* height: unset; */
+    height: unset;
     display: flex;
     margin-left: 6px;
 }
 
 .dashboard-header__right-area .search-icon {
+  scale: 1.5;
   border: 1px solid lightgray;
   padding: 4px;
   border-radius: 15px;
@@ -164,44 +123,19 @@ body {
 .dashboard-header .post-search .search-icon,
 .dashboard-header__right-area .search-icon {
     background-color: white;
-    width: 350px;
-    justify-content: space-between;
+    width: 280px;
+    justify-content: flex-start;
     padding-left: 12px;
-    box-shadow: 0px 2px 3px hsla(198deg, 100%, 9%, 10%), -1px -1px 5px #b0b0b042;
-    border: 2px solid white;
+    box-shadow: 0px 2px 3px hsla(198deg, 100%, 9%, 10%);
 }
 
 .dashboard-header__right-area .search-icon:focus-within{
     border: 2px solid var(--accent-color);
 }
 
-.dashboard-header .post-search .search-icon,
-.dashboard-header__right-area .search-icon .search-field {
-    width: 100%;
-}
-
 .viewToggle {
     margin-left: auto;
     margin-right: 0;
-}
-
-/* Dashboard searchbar */
-.dashboard-header .search-icon button {
-    border: none;
-    padding: 4px;
-}
-
-.dashboard-header .search-icon .active {
-    background-color: var(--accent-color);
-    border-radius: 100px;
-    color: white;
-    padding: 7px;
-    text-shadow: 1px 1.3px 3px hsl(190deg 42% 30%);
-}
-
-.dashboard-header .search-icon .inactive {
-    background-color: white;
-    color: hsl(0deg 0% 68%);
 }
 
 @media only screen and (max-width: 978px) {
@@ -214,4 +148,10 @@ body {
             "main";
     }
 
+}
+
+@media only screen and (max-width: 350px) {
+    .dashboard-header .viewToggle {
+        display: none;
+    }
 }

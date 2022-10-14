@@ -8,7 +8,6 @@
 
 // Imports of packages
 import { Icon } from "@iconify/react";
-import usePasswordToggle from '../PasswordToggle';
 
 /**
  * Asks the user to provide their respective login information for the form
@@ -17,8 +16,6 @@ import usePasswordToggle from '../PasswordToggle';
  * @return {React.Component}
  */
 function Enquiries({ inputClass, setUserName, setPassword }) {
-  const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-
   return (
     <>
       <li>
@@ -42,11 +39,13 @@ function Enquiries({ inputClass, setUserName, setPassword }) {
           <Icon icon="codicon:lock-small" />
         </span>
         <input
-          type={PasswordInputType}
+          type="password"
           id="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <span className="password-toggle">{ToggleIcon}</span>
+        <span>
+          <Icon className="password-toggle" icon="bi:eye-slash-fill" />
+        </span>
       </li>
     </>
   );

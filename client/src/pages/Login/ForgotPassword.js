@@ -1,8 +1,16 @@
-import React from 'react';
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
-
-// Import CSS
-import "./ForgotPasswordEmail.css";
+import classes from "./ForgotPassword.module.css";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
 function ForgetsPage() {
   return (

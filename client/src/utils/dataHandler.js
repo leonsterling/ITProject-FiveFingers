@@ -10,15 +10,14 @@ const /** ?string */ token = cookies.get("TOKEN");
 /* ------------------------------------------------------------
  * For dev-mode
  * ------------------------------------------------------------ */
- // const HOST = "http://localhost";
- // const PORT = 5100;
- // const URL = `${HOST}:${PORT}`;
+ //const HOST = "http://localhost";
+ //const PORT = 5100;
+ //const URL = `${HOST}:${PORT}`;
 
 
 /* ------------------------------------------------------------
  * For deployment-mode
  * ------------------------------------------------------------ */
-
 const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
 
 /* ------------------------------------------------------------
@@ -58,43 +57,10 @@ export async function getInitDashboardPromise () {
     });
 }
 
-export async function getPagePromise (pageNum) {
-  return setupPromise(/* configuration = */ {
-      method: "get",
-      url: `${URL}/data/${pageNum}`,
-      headers: {
-        // authorized route with jwt token
-        Authorization: `Bearer ${token}`, 
-      },
-    });
-}
-
 export async function getSearchPromise (searchText) {
   return setupPromise(/* configuration = */ {
       method: "get",
       url: `${URL}/search-artefacts/${searchText}`,
-      headers: {
-        // authorized route with jwt token
-        Authorization: `Bearer ${token}`,
-      },
-    });
-}
-
-export async function getSearchCategoryPromise (searchText, pageNum) {
-  return setupPromise(/* configuration = */ {
-      method: "get",
-      url: `${URL}/search-category/${searchText}/${pageNum}`,
-      headers: {
-        // authorized route with jwt token
-        Authorization: `Bearer ${token}`,
-      },
-    });
-}
-
-export async function getSearchAssociatedPromise (searchText, pageNum) {
-  return setupPromise(/* configuration = */ {
-      method: "get",
-      url: `${URL}/search-associated/${searchText}/${pageNum}`,
       headers: {
         // authorized route with jwt token
         Authorization: `Bearer ${token}`,
@@ -141,24 +107,6 @@ export async function getFullViewPromise (id) {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
   });
-}
-
-/* ------------------------------------------------------------
- * At ${URL}/edit-page
- * ------------------------------------------------------------ */
-export async function updateArtefact(id,record) {
-  // set configurations
-  const configuration = {
-    method: "patch",
-    url: `${URL}/edit-artefact/${id}`,
-    data: {
-      record,
-    },
-    headers: {
-      Authorization: `Bearer ${token}`, // authorized route with jwt token
-    },
-  };
-
 }
 
 /* ------------------------------------------------------------

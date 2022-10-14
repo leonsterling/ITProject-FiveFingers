@@ -22,13 +22,9 @@ const userController = require('../controllers/userController')
 // GET routes
 userRouter.get('/data', jwtAuth, userController.allData);
 userRouter.get('/get-artefact/:id', userController.artefact_details);
+userRouter.get('/search-artefacts/:query', jwtAuth, userController.searchBar)
 userRouter.get('/get-categories', jwtAuth, userController.getCategories)
 userRouter.get('/get-associated', jwtAuth, userController.getAssociated)
-
-// GET search routes
-userRouter.get('/search-category/:query/:page', jwtAuth, userController.searchCategory)
-userRouter.get('/search-associated/:query/:page', jwtAuth, userController.searchAssociated)
-userRouter.get('/search-fuzzy/:query/:page', jwtAuth, userController.searchFuzzy)
 
 // POST routes for login
 userRouter.post('/register', userController.registerUser)

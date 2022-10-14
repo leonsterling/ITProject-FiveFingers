@@ -7,14 +7,8 @@
  * - Universal Cookie for handling browser cookies and validating logins
  */
 
-// Imports of packages
-import React, { useState } from "react";
-
 // Style-based imports
 import "./ListView.css";
-
-// Import Skewer 
-import Skewer from "../../../components/Skewer"
 
 /**
  * The List View component. Handles data based on whether the top-level
@@ -22,44 +16,16 @@ import Skewer from "../../../components/Skewer"
  * @return {React.Component}
  */
 function ListView ({ userData, handleDashboard }) {
-  const /** string */ [hoverID, setHoverID] = useState("");
-  const /** boolean */ [hover, setHover] = useState(false);
-
-  function hoverFunction(id) {
-    // Change the state of the visibility to true
-    if (hoverID.length !== 0) {
-      setHover({
-        [hoverID]: !hover[hoverID],
-      });
-    }
-    setHover({
-      [id]: !hover[id],
-    });
-    setHoverID(id);
-  }
-
   let /** ?Array<React.Compoent> */ row = null;
   if (userData) {
     row = userData.map(
       ({ _id, artefactName, description, associated, category }) => (
-        <tr 
-        className='table-body' 
-        key={_id}
-        onMouseEnter={() => hoverFunction(_id)}
-        onMouseLeave={() => hoverFunction(_id)}
-        >
+        <tr className='table-body' key={_id}>
           <td className='table-cell' id="name-cell">{artefactName}</td>
           <td className='table-cell' id="desc-cell">{description.substring(0, 60)}</td>
           <td className='table-cell' id="category-cell">{category.category_name}</td>
           <td className='table-cell' id="person-cell">{associated.person}</td>
-          <td 
-          className='table-cell' 
-          id="kebab-menu"
-          style={{ opacity: hover[_id] ? 1 : 0 }}>
-            <div className="skewer-cell">
-              <Skewer _id={_id}/>
-            </div>
-          </td>
+          <td className='table-cell' id="kebab-menu"></td>
         </tr>
       )
     );

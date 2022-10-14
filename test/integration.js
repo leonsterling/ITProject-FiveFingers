@@ -28,7 +28,7 @@ const invalidUser = {
 };
 
 // dummy category and associated existing in database
-const validCategory = "Anime";
+const validCategory = "Postcard";
 const validAssociated = "Vik";
 
 // dummy invalid category and associated non-existing in database
@@ -36,11 +36,11 @@ const invalidCategory = "Non-existing-category";
 const invalidAssociated = "Non-existing-associated";
 
 // dummy query based on existing category and associated
-// const validQuery = validCategory;
-// const invalidQuery = invalidCategory;
+const validQuery = validCategory;
+const invalidQuery = invalidCategory;
 
 // existing artefactID in database
-const validId = "6347b0d1a6cad86042150377";
+const validId = "6330486ea4430795bb15ae0c";
 
 // dummy invalid ID
 const invalidId = "0123456789";
@@ -121,16 +121,16 @@ describe("Log In Integration Test", () => {
   });
 });
 
-/* category search  test */
-describe("Category Search Integration Test", () => {
+/* search test */
+describe("Basic Search Integration Test", () => {
   // valid search query
   it("Should retrieve artefacts that matches the query", (done) => {
     request(app)
-      .get(`/search-category/${validCategory}/${1}`)
+      .get(`/search-artefacts/${validQuery}`)
       .expect(HTPP_SUCCESS)
       .set({ Authorization: tempToken })
       .then((res) => {
-        const searched = res.body.searched;
+        const searched = res.body.artefactRecords;
         expect(res.body.message).to.be.eql(
           "Search query success with " + searched.length + " artefacts"
         );
@@ -142,41 +142,7 @@ describe("Category Search Integration Test", () => {
   // invalid search query
   it("Should retrieve no artefacts that matches an invalid query", (done) => {
     request(app)
-      .get(`/search-category/${invalidCategory}/${1}`)
-      .expect(HTPP_SUCCESS)
-      .set({ Authorization: tempToken })
-      .then((res) => {
-        expect(res.body.message).to.be.eql(
-          "Search query success with 0 artefacts"
-        );
-        done();
-      })
-      .catch((err) => done(err));
-  });
-});
-
-/* Associated search  test */
-describe("Associated Search Integration Test", () => {
-  // valid search query
-  it("Should retrieve artefacts that matches the query", (done) => {
-    request(app)
-      .get(`/search-associated/${validAssociated}/${1}`)
-      .expect(HTPP_SUCCESS)
-      .set({ Authorization: tempToken })
-      .then((res) => {
-        const searched = res.body.searched;
-        expect(res.body.message).to.be.eql(
-          "Search query success with " + searched.length + " artefacts"
-        );
-        done();
-      })
-      .catch((err) => done(err));
-  });
-
-  // invalid search query
-  it("Should retrieve no artefacts that matches an invalid query", (done) => {
-    request(app)
-      .get(`/search-associated/${invalidAssociated}/${1}`)
+      .get(`/search-artefacts/${invalidQuery}`)
       .expect(HTPP_SUCCESS)
       .set({ Authorization: tempToken })
       .then((res) => {

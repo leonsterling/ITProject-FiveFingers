@@ -24,7 +24,6 @@ import FullView from "./pages/FullView/FullView.js";
 import ListView from "./pages/Dashboard/ArtefactView/ListView.js";
 import EditPage from "./pages/EditPage/EditPage.js";
 import Skewer from "./components/Skewer.js";
-import NewEdit from "./pages/NewEdit/RecordPage.js";
 
 // Style-based imports
 import "./index.css";
@@ -63,8 +62,7 @@ root.render(
           </Route>
           <Route element={<EditPage />} path="/edit-artefact/:_id" exact>
           </Route>
-          <Route element={<NewEdit />} path="/edit-page/:_id" exact>
-          </Route>
+
           <Route element={<Skewer />} path="skewer" exact>
           </Route>
         </Route>

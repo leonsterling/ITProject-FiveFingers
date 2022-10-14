@@ -30,7 +30,6 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
-    "react-spinners": "^0.13.6",
     "react-test-renderer": "^18.2.0",
     "sass": "^1.54.9",
     "save": "^2.5.0",

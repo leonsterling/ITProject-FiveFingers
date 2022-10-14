@@ -2,8 +2,8 @@
     "componentArray" : [
         {
             "name" : "artefactName",
-            "label" : "Artefact Name *",
-            "placeholder" : "What is the artefact called?",
+            "label" : "Name",
+            "placeholder" : "What is it called...",
             "type" : "text",
             "component" : "input",
             "required": true
@@ -11,7 +11,7 @@
         {
             "name" : "category",
             "label" : "Category",
-            "placeholder" : "Enter a category",
+            "placeholder" : "Part of...",
             "type" : "text",
             "component" : "input",
             "required": true
@@ -19,7 +19,7 @@
         {
             "name" : "description",
             "label" : "Description",
-            "placeholder" : "How would you describe the artefact?",
+            "placeholder" : "If someone asked you, you would say...",
             "type" : "text",
             "component" : "textarea",
             "required": false
@@ -27,7 +27,7 @@
         {
             "name" : "memories",
             "label" : "Memories",
-            "placeholder" : "What do you best remember the artefact by?",
+            "placeholder" : "What you best remember",
             "type" : "text",
             "component" : "textarea",
             "required": false
@@ -43,7 +43,7 @@
         {
             "name" : "location",
             "label" : "Location",
-            "placeholder" : "Where is this artefact located?",
+            "placeholder" : "Where it came to your life...",
             "type" : "text",
             "component" : "input",
             "required": false

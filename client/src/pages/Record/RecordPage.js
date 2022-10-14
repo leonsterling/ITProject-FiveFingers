@@ -10,7 +10,6 @@
 
 // Imports of packages
 import React, { useState } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
 
 // Imports of local components
 import Navbar from "../../components/Navbar";
@@ -29,7 +28,7 @@ import "./RecordPage.scss";
 const feedbackMessages = {
   initial: "",
   invalid: "The artefact must have a valid name and a picture uploaded",
-  valid: "",
+  valid: "Adding your artefact",
 };
 
 /**
@@ -47,11 +46,6 @@ function RecordForm() {
   const /** string */ [feedback, setFeedback] = useState(
       feedbackMessages.initial
     );
-
-  let [submitActive, setSubmitActive] = useState(true);
-  
-  // Initialize the loader  
-  const /** boolean */ [toggleLoad, setToggleLoad] = useState(false);
 
   // The JSON object that is being constantly updated and sent
   /** ?{{
@@ -83,18 +77,14 @@ function RecordForm() {
   function handleSubmit(e) {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
-    setSubmitActive(false);
 
     // Prevents the user from submitting any invalid input
     if (!isValidInput(record)) {
       setFeedback(feedbackMessages.invalid);
-      setSubmitActive(true);
       return;
     }
 
     setFeedback(feedbackMessages.valid);
-    setToggleLoad(true);
-
     /**
      * Sends the validated data to the MongoDB database
      * @param e The javascript event
@@ -126,10 +116,6 @@ function RecordForm() {
   // Return an HTML of the Record Page
   return (
     <>
-      <div className="loader" style={{ display : toggleLoad ? 'block' : 'none' }}>
-        <ClipLoader className="loading" color="white" size={50}/>
-        <h3>Uploading your Artefact</h3>
-      </div>
       <Navbar />
       <div className="record-page">
         {/* The form that the user to send to database */}
@@ -146,7 +132,7 @@ function RecordForm() {
 
           {/* This is the cancel button it just redirects to dashboard */}
           <p className="feedback">{feedback}</p>
-          <RecordButtons submitActive={submitActive}/>
+          <RecordButtons />
         </form>
       </div>
     </>

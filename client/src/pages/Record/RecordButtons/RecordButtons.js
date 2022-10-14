@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function RecordButtons( { submitActive } ) {
+function RecordButtons() {
   return (
     <div className="response-button" id="button">
       <Link to={`/dashboard`}>
@@ -8,15 +8,7 @@ function RecordButtons( { submitActive } ) {
           Cancel
         </button>
       </Link>
-      <button
-        disabled={!submitActive}
-        className={
-          "response-button__submit" + (submitActive
-              ? ""
-              : " disabled"
-          )}
-        type="submit"
-      >
+      <button className="response-button__submit" type="submit">
         Submit
       </button>
     </div>
