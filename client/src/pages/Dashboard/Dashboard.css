@@ -189,6 +189,7 @@ body {
 .dashboard-header .search-icon button {
     border: none;
     padding: 4px;
+    cursor: pointer;
 }
 
 .dashboard-header .search-icon .active {
@@ -196,7 +197,6 @@ body {
     border-radius: 100px;
     color: white;
     padding: 7px;
-    text-shadow: 1px 1.3px 3px hsl(190deg 42% 30%);
 }
 
 .dashboard-header .search-icon .inactive {
