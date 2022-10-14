@@ -49,7 +49,7 @@ app.use('/', userRouter)
 app.use('/getImage', express.static('storage'))
 
 // Tells the app to listen on port 5000 and logs that information to the console.
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 5100, () => {
     console.log('Server is alive!')
 })
 
