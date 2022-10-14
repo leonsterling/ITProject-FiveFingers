@@ -66,11 +66,15 @@ function RecordForm() {
   const initialState = {
     artefactName: " ",
     artefactDate: "",
-    location: " ",
-    description: " ",
-    category: " ",
-    associated: " ",
+    location: "",
+    description: "",
+    memories: "",
+    category: "",
+    associated: "",
     artefactImg: "",
+    typeImg: "",
+    sizeImg: "",
+    nameImg: ""
   };
 
   // React hook to change the state of record
