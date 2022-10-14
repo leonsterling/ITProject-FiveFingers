@@ -23,7 +23,7 @@ app.use(
       credentials: true,
     })
 );
-*/
+
 app.use(cors());
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization','https://sterlingfamilyartefacts.herokuapp.com');
@@ -33,7 +33,7 @@ app.use((req,res,next)=>{
     }
     next();
 });
-
+*/
 // app uses bodyParser to parse JSON objects from HTTP requests
 app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
