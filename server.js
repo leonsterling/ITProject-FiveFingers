@@ -57,10 +57,13 @@ app.listen(process.env.PORT || 5100, () => {
 const path = require("path");
 
 // Step 1:
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(express.static(path.join(__dirname, "client/build")));
+
+// For any request that doesn't
+// match one above, send back React's index.html file.
 // Step 2:
 app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+  response.sendFile(path.join(__dirname, "./client/build", "index.html"));
 });
 
 // connect mongoose index in models folder

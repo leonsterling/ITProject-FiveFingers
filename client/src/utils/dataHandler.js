@@ -19,10 +19,11 @@ const /** ?string */ token = cookies.get("TOKEN");
  * For deployment-mode
  * ------------------------------------------------------------ */
 
-// const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
+//const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
 
 /* ------------------------------------------------------------
  * At ${URL}/login
+ *
  * ------------------------------------------------------------ */
 /**
  * Requests the server-side to check the provided credentials
