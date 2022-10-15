@@ -12,6 +12,7 @@
 const express = require('express'),
       bodyParser = require('body-parser'),
       cors = require('cors')
+      path = require('path')
 
 // app runs on express.js
 const app = express()
@@ -53,8 +54,6 @@ app.listen(process.env.PORT || 5100, () => {
     console.log('Server is alive!')
 })
 
-// Accessing the path module
-const path = require("path");
 
 // Step 1:
 app.use(express.static(path.join(__dirname, "client/build")));
