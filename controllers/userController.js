@@ -292,12 +292,11 @@ const getArtefactDetails = async (req, res) => {
  * @param {Response} res
  */
 const registerArtefact = async (req, res) => {
-  console.log (req.body.record)
   const dateNow = Date.now();
   const path = `/../storage/${dateNow}_${req.body.record.nameImg}`;
   const pathImg = `${URL}/getImage/${dateNow}_${req.body.record.nameImg}`;
   const pathFile = __dirname + path;
-  
+
   fs.writeFile(
     pathFile,
     req.body.record.artefactImg.split(",")[1],
