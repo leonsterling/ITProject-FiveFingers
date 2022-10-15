@@ -4,12 +4,16 @@ import { getSearchCategoryPromise, getSearchAssociatedPromise } from "../../../u
 
 const buttonChoices = ["Category", "Associated"];
 
+// Imports of local utils
+import {
+  getPagePromise,
+} from "../../../utils/dataHandler";
+
 function SearchContent({
   searchText,
   setUserData,
   setSearchText,
   setIsSearched,
-  handleDashboard,
   setNumPages,
   currRendered,
   setCurrRendered,
@@ -35,10 +39,12 @@ function SearchContent({
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          setCurrRendered(currSelected);
+          currRendered = currSelected;
           let currPromise;
           if (searchText === "") {
-            currPromise = handleDashboard();
+            console.log("This is an empty search");
+            currPromise = getPagePromise(1);
+            currRendered = "Dashboard"
           } else {
             setCurrPageNum(1);
             switch (currSelected) {
@@ -50,17 +56,23 @@ function SearchContent({
                 break;
             }
           }
+          setCurrRendered(currRendered);
           currPromise
-              .then((res) => {
-                console.log(res.data)
-                console.log({ searchText });
+            .then((res) => {
+              console.log(res.data)
+              console.log({ searchText });
+              setCurrPageNum(1);
+              if (buttonChoices.includes(currRendered)) {
                 setUserData(res.data.searched);
-                setNumPages(res.data.totalPages);
-              })
-              .catch((e) => {
-                console.log(e.message);
-              });
-
+              }
+              else {
+                setUserData(res.data.dataInPage);
+              }
+              setNumPages(res.data.totalPages);
+            })
+            .catch((e) => {
+              console.log(e.message);
+            });
         }}
       >
         <input

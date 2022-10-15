@@ -35,9 +35,9 @@ import "./Dashboard.css";
  */
 function Dashboard() {
   const /** boolean */ [isToggled, setIsToggled] = useState(false);
-  let /** ?string */ [userData, setUserData] = useState(null);
+  let /** ?string */ [userData, setUserData] = useState([]);
   let /** string */ [searchText, setSearchText] = useState("");
-  let /** callback */ setGetArtefactCallback = useState(handleDashboard)[1];
+  let /** callback */ setGetArtefactCallback = useState()[1];
 
   let /** boolean */ [isSearched, setIsSearched] = useState(false);
 
@@ -53,8 +53,6 @@ function Dashboard() {
     setSearchText,
     setUserData,
     setIsSearched,
-    handleDashboard,
-    setGetArtefactCallback,
     handleSearch,
     setNumPages,
     setCurrPageNum,
@@ -96,14 +94,6 @@ function Dashboard() {
       />
     </div>
   );
-}
-
-/**
- * Obtains the default Dashboard data and changes the
- * dashboard components accordingly
- */
-async function handleDashboard() {
-  return await getInitDashboardPromise();
 }
 
 /**
