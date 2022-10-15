@@ -3,6 +3,7 @@ import { useState } from "react";
 import { getSearchCategoryPromise, getSearchAssociatedPromise } from "../../../utils/dataHandler";
 
 const buttonChoices = ["Category", "Associated"];
+const FIRST_PAGE = 1;
 
 // Imports of local utils
 import {
@@ -61,7 +62,7 @@ function SearchContent({
             .then((res) => {
               console.log(res.data)
               console.log({ searchText });
-              setCurrPageNum(1);
+              setCurrPageNum(FIRST_PAGE);
               if (buttonChoices.includes(currRendered)) {
                 setUserData(res.data.searched);
               }

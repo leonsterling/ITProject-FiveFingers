@@ -51,7 +51,7 @@ function ArtefactView({
   );
   
   let finComponent;
-  if (userData.length == 0) {
+  if (userData == null) {
       finComponent = ( <EmptyUserData /> );
   }
   else {
