@@ -12,7 +12,7 @@
 const express = require('express'),
       bodyParser = require('body-parser'),
       cors = require('cors')
-      path = require("path");
+      path = require('path')
 
 // app runs on express.js
 const app = express()
