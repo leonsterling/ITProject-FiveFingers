@@ -6,7 +6,7 @@
  * - BCrypt to implement encrypted security
  * - JSON Web Token to send URL-safe claims between the server and client-side
  *   code
- * - Cloudinary to handle image files
+ * - FS to handle local upload of images into a local folder
  */
 
 /* Imports of packages */
@@ -14,7 +14,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 
-/* Imports of local modules */
+/* Imports of mongoose models */
 const {
   User,
   Artefact,
@@ -24,16 +24,17 @@ const {
 } = require("../models/user");
 
 /* Main implementation */
-const SALT_FACTOR = 10;
 
 const LIMIT = 4;
-
 const HOST = "http://localhost";
 const PORT = 5100;
 const URL = `${HOST}:${PORT}`;
 
-// helper functions
-const associatedIndex = (query, idx) =>
+/**
+ * MongoDB aggregate pipeline for the search index: "associated_index"
+ * @param {Query} query
+ */
+const associatedIndex = (query) =>
   Artefact_Local.aggregate([
     {
       $search: {
@@ -46,7 +47,11 @@ const associatedIndex = (query, idx) =>
     },
   ]);
 
-const categoryIndex = (query, idx) =>
+/**
+ * MongoDB aggregate pipeline for the search index: "category_index"
+ * @param {Query} query
+ */
+const categoryIndex = (query) =>
   Artefact_Local.aggregate([
     {
       $search: {
@@ -59,44 +64,45 @@ const categoryIndex = (query, idx) =>
     },
   ]);
 
-// login function for route: '/login'
+/**
+ * Sends a JWT token upon a user login session. Successfully logs a
+ * user in only if both the user's username and password are valid.
+ * @param {Request} req
+ * @param {Response} res
+ */
 const loginUser = (req, res) => {
   User.findOne({ username: req.body.username })
     .then((user) => {
-      bcrypt
-        .compare(req.body.password, user.password, (err, checkPass) => {
-          if (err) {
-            return res.status(500).send({
-              message: "Login Unsuccessful",
-              isValid: false,
-              err,
-            });
-          }
-          
-          
-          if (!checkPass) {
-            return res.status(500).send({
-              message: "Invalid Password",
-              isValid: false,
-              err,
-            });
-          }
+      bcrypt.compare(req.body.password, user.password, (err, checkPass) => {
+        if (err) {
+          return res.status(500).send({
+            message: "Internal Server Error, on loginUser()",
+            isValid: false,
+            err,
+          });
+        }
 
-          else {
-            //generate JWT token
-            const token = jwt.sign(
-              { userId: user._id, username: user.username },
-              "RANDOM-TOKEN",
-              { expiresIn: "24h" }
-            );
-            return res.status(200).send({
-              message: "Login Successful",
-              username: user.username,
-              isValid: true,
-              token,
-            });
-          }
-        })
+        if (!checkPass) {
+          return res.status(500).send({
+            message: "Invalid Password",
+            isValid: false,
+            err,
+          });
+        } else {
+          //generate JWT token
+          const token = jwt.sign(
+            { userId: user._id, username: user.username },
+            "RANDOM-TOKEN",
+            { expiresIn: "24h" }
+          );
+          return res.status(200).send({
+            message: "Login Successful",
+            username: user.username,
+            isValid: true,
+            token,
+          });
+        }
+      });
     })
 
     // user is not registered in database
@@ -109,6 +115,12 @@ const loginUser = (req, res) => {
     });
 };
 
+/**
+ * Sends all artefacts recorded that matches the search query 
+ * based on the the category field
+ * @param {Request} req
+ * @param {Response} res
+ */
 const searchCategory = (req, res) => {
   const query = req.params.query;
   const pageNum = req.params.page;
@@ -116,13 +128,12 @@ const searchCategory = (req, res) => {
   let idx = (pageNum - 1) * LIMIT;
   categoryIndex(query)
     .then((artefactRecords) => {
-      // console.log(artefactRecords)
       const totalSearched = artefactRecords.length;
       if (totalSearched == 0) {
-        // no artefact matchd the query
+        // no artefact matched the query
         res.status(200).send({
-          message: "Search query success with 0 artefacts",
-          totalSearched,
+          message: `${totalSearched} artefacts matched the query: ${query}`,
+          artefactRecords,
         });
       } else {
         categoryIndex(query)
@@ -131,17 +142,15 @@ const searchCategory = (req, res) => {
           .limit(LIMIT)
           .then((searched) => {
             const totalPages = Math.ceil(totalSearched / LIMIT);
-
             res.status(200).send({
-              message:
-                "Search query success with " + searched.length + " artefacts",
+              message: `${totalSearched} artefacts matched the query: ${query}`,
               totalPages,
               searched,
             });
           })
           .catch((error) => {
             res.status(500).send({
-              message: "Error upon searching",
+              message: "Internal Server Error, on searchCategory()",
               error,
             });
           });
@@ -149,12 +158,18 @@ const searchCategory = (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "Error upon searching",
+        message: "Internal Server Error, on searchCategory()",
         error,
       });
     });
 };
 
+/**
+ * Sends all artefacts recorded that matches the search query 
+ * based on the the associated field
+ * @param {Request} req
+ * @param {Response} res
+ */
 const searchAssociated = (req, res) => {
   const query = req.params.query;
   const pageNum = req.params.page;
@@ -162,13 +177,12 @@ const searchAssociated = (req, res) => {
   let idx = (pageNum - 1) * LIMIT;
   associatedIndex(query)
     .then((artefactRecords) => {
-      // console.log(artefactRecords)
       const totalSearched = artefactRecords.length;
       if (totalSearched == 0) {
         // no artefact matchd the query
         res.status(200).send({
-          message: "Search query success with 0 artefacts",
-          totalSearched,
+          message: `${totalSearched} artefacts matched the query: ${query}`,
+          artefactRecords,
         });
       } else {
         associatedIndex(query, idx)
@@ -179,15 +193,14 @@ const searchAssociated = (req, res) => {
             const totalPages = Math.ceil(totalSearched / LIMIT);
 
             res.status(200).send({
-              message:
-                "Search query success with " + searched.length + " artefacts",
+              message:`${totalSearched} artefacts matched the query: ${query}`,
               totalPages,
               searched,
             });
           })
           .catch((error) => {
             res.status(500).send({
-              message: "Error upon searching",
+              message: "Internal Server Error, on searchAssociated()",
               error,
             });
           });
@@ -195,24 +208,7 @@ const searchAssociated = (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "Error upon searching",
-        error,
-      });
-    });
-};
-
-// get all artefacts function for route: '/data'
-const allData = (req, res) => {
-  Artefact_Local.find()
-    .then((artefactRecords) => {
-      res.status(200).send({
-        message: "Successful in getting artefacts",
-        artefactRecords,
-      });
-    })
-    .catch((error) => {
-      res.status(500).send({
-        message: "Error upon getting artefacts",
+        message: "Internal Server Error, on searchAssociated()",
         error,
       });
     });
@@ -233,7 +229,7 @@ const getCategories = (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "Error in getting categories",
+        message: "Internal Server Error, on getCategories()",
         error,
       });
     });
@@ -254,7 +250,7 @@ const getAssociated = (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "Error in getting categories",
+        message: "Internal Server Error, on getCategories()",
         error,
       });
     });
@@ -276,7 +272,7 @@ const getArtefactDetails = async (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "Artefact retrieved unsuccessfully",
+        message: "Internal Server Error, on getArtefactDetails()",
         error,
       });
     });
@@ -288,19 +284,23 @@ const getArtefactDetails = async (req, res) => {
  * @param {Response} res
  */
 const registerArtefact = async (req, res) => {
-  
   const dateNow = Date.now();
   const path = `/../storage/${dateNow}_${req.body.record.nameImg}`;
   const pathImg = `${URL}/getImage/${dateNow}_${req.body.record.nameImg}`;
   const pathFile = __dirname + path;
 
-  // console.log(pathFile)
   fs.writeFile(
     pathFile,
     req.body.record.artefactImg.split(",")[1],
     { encoding: "base64" },
     function (err) {
-      if (err) console.log(err);
+      if (err) {
+        return res.status(500).send({
+          message: "Internal Server Error, on registerArtefact()",
+          err,
+        });
+      }
+      
       else {
       }
     }
@@ -323,19 +323,23 @@ const registerArtefact = async (req, res) => {
   // store artefact in database
   artefact
     .save()
-    .then((result1) => {
+    .then((artefact) => {
       // checks if category exists in database
       Category.findOne({ category_name: req.body.record.category })
-        .then((result2) => {
-          if (result2) {
+        .then((categoryObject) => {
+          if (categoryObject) {
             // stores the existing category object in the artefact record
             Artefact_Local.updateOne(
-              { _id: result1._id },
+              { _id: artefact._id },
               {
-                $set: { category: result2 },
+                $set: { category: categoryObject },
               },
               function (err, doc) {
                 if (err) {
+                  return res.status(500).send({
+                    message: "Internal Server Error, on registerArtefact()",
+                    err,
+                  });
                 } else {
                 }
               }
@@ -348,14 +352,14 @@ const registerArtefact = async (req, res) => {
 
             // updates category of artefact
             Artefact_Local.updateOne(
-              { _id: result1._id },
+              { _id: artefact._id },
               {
                 $set: { category: newCategory },
               },
               function (err, doc) {
                 if (err) {
-                  res.status(500).send({
-                    message: "Error upon registering artefact",
+                  return res.status(500).send({
+                    message: "Internal Server Error, on registerArtefact()",
                     err,
                   });
                 } else {
@@ -368,26 +372,26 @@ const registerArtefact = async (req, res) => {
           }
         })
         .catch((error) => {
-          res.status(500).send({
-            message: "Error upon registering artefact",
-            err,
+          return res.status(500).send({
+            message: "Internal Server Error, on registerArtefact()",
+            error,
           });
         });
 
       // checks if associated exists on database
       Associated.findOne({ person: req.body.record.associated })
-        .then((result3) => {
-          if (result3) {
+        .then((associatedObject) => {
+          if (associatedObject) {
             // stores the existing associated object in the artefact record
             Artefact_Local.updateOne(
-              { _id: result1._id },
+              { _id: artefact._id },
               {
-                $set: { associated: result3 },
+                $set: { associated: associatedObject },
               },
               function (err, doc) {
                 if (err) {
-                  res.status(500).send({
-                    message: "Error upon registering artefact",
+                  return res.status(500).send({
+                    message: "Internal Server Error, on registerArtefact()",
                     err,
                   });
                 } else {
@@ -402,14 +406,14 @@ const registerArtefact = async (req, res) => {
 
             // updates associated of artefact
             Artefact_Local.updateOne(
-              { _id: result1._id },
+              { _id: artefact._id },
               {
                 $set: { associated: newAssociated },
               },
               function (err, doc) {
                 if (err) {
-                  res.status(500).send({
-                    message: "Error upon registering artefact",
+                  return res.status(500).send({
+                    message: "Internal Server Error, on registerArtefact()",
                     err,
                   });
                 } else {
@@ -422,20 +426,20 @@ const registerArtefact = async (req, res) => {
           }
         })
         .catch((error) => {
-          res.status(500).send({
-            message: "Error upon registering artefact",
-            err,
+          return res.status(500).send({
+            message: "Internal Server Error, on registerArtefact()",
+            error,
           });
         });
 
-      res.status(200).send({
+      return res.status(200).send({
         message: "Artefact registered successfully",
-        result1,
+        artefact,
       });
     })
     .catch((error) => {
-      res.status(500).send({
-        message: "Error upon registering artefact",
+      return res.status(500).send({
+        message: "Internal Server Error, on registerArtefact()",
         error,
       });
     });
@@ -458,21 +462,21 @@ const editArtefact = (req, res) => {
       location: req.body.record.location,
     }
   )
-    .then((result1) => {
+    .then((artefact) => {
       // checks if category exists in database
       Category.findOne({ category_name: req.body.record.category })
-        .then((result2) => {
-          if (result2) {
+        .then((categoryObject) => {
+          if (categoryObject) {
             // stores the existing category object in the artefact record
             Artefact_Local.updateOne(
-              { _id: result1._id },
+              { _id: artefact._id },
               {
-                $set: { category: result2 },
+                $set: { category: categoryObject },
               },
               function (err, doc) {
                 if (err) {
-                  res.status(500).send({
-                    message: "Error upon registering artefact",
+                  return res.status(500).send({
+                    message: "Internal Server Error, on editArtefact()",
                     err,
                   });
                 } else {
@@ -487,14 +491,14 @@ const editArtefact = (req, res) => {
 
             // updates category of artefact
             Artefact_Local.updateOne(
-              { _id: result1._id },
+              { _id: artefact._id },
               {
                 $set: { category: newCategory },
               },
               function (err, doc) {
                 if (err) {
-                  res.status(500).send({
-                    message: "Error upon registering artefact",
+                  return res.status(500).send({
+                    message: "Internal Server Error, on editArtefact()",
                     err,
                   });
                 } else {
@@ -507,26 +511,26 @@ const editArtefact = (req, res) => {
           }
         })
         .catch((error) => {
-          res.status(500).send({
-            message: "Error upon edit artefact",
+          return res.status(500).send({
+            message: "Internal Server Error, on editArtefact()",
             error,
           });
         });
 
       // checks if associated exists on database
       Associated.findOne({ person: req.body.record.associated })
-        .then((result3) => {
-          if (result3) {
+        .then((associatedObject) => {
+          if (associatedObject) {
             // stores the existing associated object in the artefact record
             Artefact_Local.updateOne(
-              { _id: result1._id },
+              { _id: artefact._id },
               {
-                $set: { associated: result3 },
+                $set: { associated: associatedObject },
               },
               function (err, doc) {
                 if (err) {
-                  res.status(500).send({
-                    message: "Error upon edit artefact",
+                  return res.status(500).send({
+                    message: "Internal Server Error, on editArtefact()",
                     err,
                   });
                 } else {
@@ -541,14 +545,14 @@ const editArtefact = (req, res) => {
 
             // updates associated of artefact
             Artefact_Local.updateOne(
-              { _id: result1._id },
+              { _id: artefact._id },
               {
                 $set: { associated: newAssociated },
               },
               function (err, doc) {
                 if (err) {
-                  res.status(500).send({
-                    message: "Error upon edit artefact",
+                  return res.status(500).send({
+                    message: "Internal Server Error, on editArtefact()",
                     err,
                   });
                 } else {
@@ -561,20 +565,20 @@ const editArtefact = (req, res) => {
           }
         })
         .catch((error) => {
-          res.status(500).send({
-            message: "Error upon edit artefact",
-            err,
+          return res.status(500).send({
+            message: "Internal Server Error, on editArtefact()",
+            error,
           });
         });
 
-      res.status(200).send({
+      return res.status(200).send({
         message: "Edit artefact successfully",
-        result1,
+        artefact,
       });
     })
     .catch((error) => {
-      res.status(500).send({
-        message: "Error upon edit artefact",
+      return res.status(500).send({
+        message: "Internal Server Error, on editArtefact()",
         error,
       });
     });
@@ -590,43 +594,50 @@ const deleteArtefact = async (req, res) => {
   const artefact_id = req.params.id;
   const artefact_record = await Artefact_Local.findOne({ _id: artefact_id });
 
-  // deletes artefact with the corresponding MongoDB record ID
   Artefact_Local.deleteOne({ _id: artefact_id })
     .then((artefact) => {
       const pathFile = __dirname + artefact_record.artefactImg.path;
 
       fs.unlink(pathFile, function (err) {
-        if (err) console.log(err);
+        if (err) {
+        return res.status(500).send({
+          message: "Internal Server Error, on deleteArtefact()",
+          err
+        }) 
+      }
         else {
         }
       });
 
-      res.status(200).send({
+      return res.status(200).send({
         message: "Delete artefact successfully",
         artefact,
       });
     })
     .catch((error) => {
-      console.log(error);
-      res.status(500).send({
+      return res.status(500).send({
         message: "Internal Server Error, on deleteArtefact()",
-        artefact,
+        error
       });
     });
 };
 
-// get data based on page for route: '/data/:page'
-// (NO AUTOMATIC TESTING YET)
+
+/**
+ * Sends all artefacts in the database to be rendered on the dashboard.
+ * Artefacts are sent based on the page at which it is placed in
+ * @param {Request} req
+ * @param {Response} res
+ */
 const getPage = async (req, res) => {
-  // current page
+ 
   const pageNum = req.params.page;
 
-  // total count of all artefacts
   const totalArtefact = await Artefact_Local.countDocuments();
 
-  let totalPages = Math.ceil(totalArtefact / LIMIT);
+  const totalPages = Math.ceil(totalArtefact / LIMIT);
 
-  let idx = (pageNum - 1) * LIMIT;
+  const idx = (pageNum - 1) * LIMIT;
 
   await Artefact_Local.find()
     .sort({ _id: -1 })
@@ -636,7 +647,7 @@ const getPage = async (req, res) => {
       const dataPerPage = dataInPage.length;
 
       if (dataPerPage > 0) {
-        res.status(200).send({
+        return res.status(200).send({
           message: `Successfully retrieved page ${pageNum}`,
           dataPerPage,
           dataInPage,
@@ -644,8 +655,8 @@ const getPage = async (req, res) => {
           totalArtefact,
         });
       } else {
-        res.status(200).send({
-          message: "You ran out of artefacts!",
+        return res.status(200).send({
+          message: "Invalid Page Number",
           dataPerPage,
           dataInPage,
           totalPages,
@@ -655,7 +666,7 @@ const getPage = async (req, res) => {
     })
     .catch((error) => {
       res.status(500).send({
-        message: "Error occured in getting pages",
+        message: "Internal Server Error, on getPage()",
         error,
       });
     });
@@ -663,7 +674,6 @@ const getPage = async (req, res) => {
 
 // exports objects containing functions imported by router
 module.exports = {
-  allData,
   loginUser,
   getArtefactDetails,
   getCategories,
@@ -671,10 +681,7 @@ module.exports = {
   registerArtefact,
   editArtefact,
   deleteArtefact,
-  // no automatic testing yet
   getPage,
-
-  // new search functions
   searchCategory,
-  searchAssociated
+  searchAssociated,
 };
