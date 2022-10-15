@@ -22,10 +22,17 @@ const validUser = {
 };
 
 // dummy user non-existing in database
-const invalidUser = {
-  username: "kurniawan",
-  password: "vincent",
+const invalidUsername = {
+  username: "vincen",
+  password: "kurniawan",
 };
+
+// dummy user non-existing in database
+const invalidPassword = {
+  username: "vincent",
+  password: "kurniawa",
+};
+
 
 // dummy category and associated existing in database
 const validCategory = "Anime";
@@ -34,10 +41,6 @@ const validAssociated = "Vik";
 // dummy invalid category and associated non-existing in database
 const invalidCategory = "Non-existing-category";
 const invalidAssociated = "Non-existing-associated";
-
-// dummy query based on existing category and associated
-// const validQuery = validCategory;
-// const invalidQuery = invalidCategory;
 
 // existing artefactID in database
 const validId = "6347b0d1a6cad86042150377";
@@ -48,8 +51,20 @@ const invalidId = "0123456789";
 // variable for dummy artefact record
 let dummyID;
 
+// 
+const pageNum = 1
+
 // dummy image for dummy artefact
+
+const HOST = "http://localhost";
+const PORT = 5100;
+const URL = `${HOST}:${PORT}`;
+
 const img = `${__dirname}/test_image.jpeg`;
+
+const imgName = "test_image.jpeg"
+const imgSize = "207 kB"
+const imgType = "image/jpeg"
 
 // dummy artefact with existing category and associated
 const record = {
@@ -61,6 +76,9 @@ const record = {
     associated: validAssociated,
     category: validCategory,
     artefactImg: img,
+    nameImg: imgName,
+    sizeImg: imgSize,
+    typeImg: imgType
   },
 };
 
@@ -98,10 +116,10 @@ describe("Log In Integration Test", () => {
   it("Shouldn't accept non-exisiting username", (done) => {
     request(app)
       .post("/login")
-      .send(invalidUser)
+      .send(invalidUsername)
       .expect(HTTP_SERVER_ERROR)
       .then((res) => {
-        expect(res.body.message).to.be.eql("Login Unsuccessful");
+        expect(res.body.message).to.be.eql("Invalid Username");
         done();
       })
       .catch((err) => done(err));
@@ -111,17 +129,17 @@ describe("Log In Integration Test", () => {
   it("Shouldn't accept invalid password", (done) => {
     request(app)
       .post("/login")
-      .send(invalidUser)
+      .send(invalidPassword)
       .expect(500)
       .then((res) => {
-        expect(res.body.message).to.be.eql("Login Unsuccessful");
+        expect(res.body.message).to.be.eql("Invalid Password");
         done();
       })
       .catch((err) => done(err));
   });
 });
 
-/* category search  test */
+/* category search test */
 describe("Category Search Integration Test", () => {
   // valid search query
   it("Should retrieve artefacts that matches the query", (done) => {
@@ -130,9 +148,10 @@ describe("Category Search Integration Test", () => {
       .expect(HTPP_SUCCESS)
       .set({ Authorization: tempToken })
       .then((res) => {
-        const searched = res.body.searched;
+        const searched = res.body.totalSearched;
+        const query = res.body.query
         expect(res.body.message).to.be.eql(
-          "Search query success with " + searched.length + " artefacts"
+          `${searched} artefacts matched the query: ${query}`
         );
         done();
       })
@@ -146,8 +165,11 @@ describe("Category Search Integration Test", () => {
       .expect(HTPP_SUCCESS)
       .set({ Authorization: tempToken })
       .then((res) => {
+        const searched = res.body.totalSearched;
+        const query = res.body.query
         expect(res.body.message).to.be.eql(
-          "Search query success with 0 artefacts"
+          
+          `${searched} artefacts matched the query: ${query}`
         );
         done();
       })
@@ -164,9 +186,10 @@ describe("Associated Search Integration Test", () => {
       .expect(HTPP_SUCCESS)
       .set({ Authorization: tempToken })
       .then((res) => {
-        const searched = res.body.searched;
+        const searched = res.body.totalSearched;
+        const query = res.body.query
         expect(res.body.message).to.be.eql(
-          "Search query success with " + searched.length + " artefacts"
+          `${searched} artefacts matched the query: ${query}`
         );
         done();
       })
@@ -180,8 +203,11 @@ describe("Associated Search Integration Test", () => {
       .expect(HTPP_SUCCESS)
       .set({ Authorization: tempToken })
       .then((res) => {
+        const searched = res.body.artefactRecords;
+        const query = res.body.query
         expect(res.body.message).to.be.eql(
-          "Search query success with 0 artefacts"
+          
+          `${searched.length} artefacts matched the query: ${query}`
         );
         done();
       })
@@ -193,11 +219,11 @@ describe("Associated Search Integration Test", () => {
 describe("Get All Artefacts Integration Test", () => {
   it("Should retrieve all artefacts", (done) => {
     request(app)
-      .get("/data")
+      .get(`/data/${pageNum}`)
       .expect(HTPP_SUCCESS)
       .set({ Authorization: tempToken })
       .then((res) => {
-        expect(res.body.message).to.be.eql("Successful in getting artefacts");
+        expect(res.body.message).to.be.eql(`Successfully retrieved page ${pageNum}`);
         done();
       })
       .catch((err) => done(err));
@@ -238,7 +264,7 @@ describe("Get All Associated Integration Test", () => {
 describe("Get 1 Artefact Integration Test", () => {
   it("Should retrieve 1 artefact", (done) => {
     request(app)
-      .get(`/get-artefact/${validId}`)
+      .get(`/get-artefact/6347fb7c67e2b540bef80684`)
       .expect(HTPP_SUCCESS)
       .set({ Authorization: tempToken })
       .then((res) => {
@@ -254,12 +280,13 @@ describe("Get 1 Artefact Integration Test", () => {
       .expect(HTTP_SERVER_ERROR)
       .set({ Authorization: tempToken })
       .then((res) => {
-        expect(res.body.message).to.be.eql("Artefact retrieved unsuccessfully");
+        expect(res.body.message).to.be.eql("Internal Server Error, on getArtefactDetails()");
         done();
       })
       .catch((err) => done(err));
   });
 });
+
 
 // Add an artefact
 describe("Add Artefact Integration Test", () => {
@@ -270,7 +297,7 @@ describe("Add Artefact Integration Test", () => {
       .send(record)
       .expect(HTPP_SUCCESS)
       .then((res) => {
-        dummyID = res.body.result1._id;
+        dummyID = res.body.artefact._id;
         expect(res.body.message).to.be.eql("Artefact registered successfully");
         done();
       })
@@ -300,26 +327,10 @@ describe("Delete Artefact Integration Test", () => {
   it("Should delete an artefact", (done) => {
     request(app)
       .delete(`/delete-artefact/${dummyID}`)
-      .query({ id: validId })
       .set({ Authorization: tempToken })
       .expect(HTPP_SUCCESS)
       .then((res) => {
-        expect(res.body.message).to.be.eql("Artefact deleted successfully");
-        done();
-      })
-      .catch((err) => done(err));
-  });
-});
-
-// Change password
-describe("Change Password Integration Test", () => {
-  it("Should update the user's password", (done) => {
-    request(app)
-      .post(`/change-password`)
-      .send(validUser)
-      .expect(HTPP_SUCCESS)
-      .then((res) => {
-        expect(res.body.message).to.be.eql("Password changed successfully");
+        expect(res.body.message).to.be.eql("Deleted artefact successfully");
         done();
       })
       .catch((err) => done(err));
