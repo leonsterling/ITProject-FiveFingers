@@ -148,7 +148,7 @@ const EditPage = () => {
       <div className="record-page">
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
-          <h2>Edit Artefact</h2>
+          <h1>Edit Artefact</h1>
           <div className="data-entry-fields">
             {/* TEXT DATA*/}
             <TextUpdateField
