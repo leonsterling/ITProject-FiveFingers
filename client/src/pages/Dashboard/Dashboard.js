@@ -35,7 +35,7 @@ import "./Dashboard.css";
  */
 function Dashboard() {
   const /** boolean */ [isToggled, setIsToggled] = useState(false);
-  let /** ?string */ [userData, setUserData] = useState([]);
+  let /** ?string */ [userData, setUserData] = useState(null);
   let /** string */ [searchText, setSearchText] = useState("");
   let /** callback */ setGetArtefactCallback = useState()[1];
 
