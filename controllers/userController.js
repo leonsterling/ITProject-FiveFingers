@@ -26,7 +26,7 @@ const {
 /* Main implementation */
 const SALT_FACTOR = 10;
 
-const LIMIT = 4;
+const LIMIT = 16;
 
 const HOST = "http://localhost";
 const PORT = 5100;
