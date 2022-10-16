@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import "./Skewer.scss";
 
+import { deleteArtefact } from '../utils/dataHandler';
 
 const SkewerDropDown = ({_id}) => {
     let /** React.Component */ FullviewLink = window.location.href.includes(
@@ -58,10 +59,8 @@ const SkewerDropDown = ({_id}) => {
                 >
                   Cancel
               </button>
-              <button className="yes">
-                <Link to={`/delete/${_id}`} className="link-line">
+              <button className="yes" onClick={() => deleteArtefact(_id)}>
                   Delete
-                </Link>
               </button>
             </div>
           </div>
