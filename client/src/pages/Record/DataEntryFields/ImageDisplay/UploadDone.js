@@ -1,4 +1,10 @@
+import { useState } from "react";
 import FileBase from "react-file-base64";
+
+const feedback = {
+  initial: "",
+  invalid: "Not a valid image, please try again"
+}
 
 /**
  * The component that comes up after an image has been added after the first
@@ -7,11 +13,13 @@ import FileBase from "react-file-base64";
  * @return {React.Component}
  */
 function UploadDone({ record, setRecord }) {
+  let [feedbackMessage, setFeedbackMessage] = useState(feedback.initial);
   return (
     <>
       <label className="data-entry-fields--image-upload--description">
         Selected Image
       </label>
+      <div>{feedbackMessage}</div>
       <label>
         <div className="data-entry-fields--image-upload--upload-complete">
           <img src={record.artefactImg} alt="" />
@@ -25,12 +33,17 @@ function UploadDone({ record, setRecord }) {
             type="file"
             name="artefactImg"
             multiple={false}
-            onDone={({ base64, name, size, type}) => 
-            setRecord({ ...record, 
-              artefactImg: base64,
-              nameImg: name,
-              sizeImg: size,
-              typeImg: type })}
+            onDone={({ base64, name, size, type}) => {
+              if (!type.startsWith("image")) {
+                  setFeedbackMessage(feedback.invalid);
+                  return;
+              }
+              setRecord({ ...record, 
+                artefactImg: base64,
+                nameImg: name,
+                sizeImg: size,
+                typeImg: type });
+            }}
           />
         </label>
       </label>
