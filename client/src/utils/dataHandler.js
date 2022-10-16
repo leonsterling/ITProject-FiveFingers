@@ -160,6 +160,21 @@ export async function updateArtefact(id,record) {
 
 }
 
+
+/* ------------------------------------------------------------
+ * Others
+ * ------------------------------------------------------------ */
+export async function deleteArtefact (id) {
+  return setupPromise(/* configuration = */ {
+    method: "delete",
+    url: `${URL}/delete-artefact/${id}`,
+    headers: {
+      // authorized route with jwt token
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 /* ------------------------------------------------------------
  * Helper function
  * ------------------------------------------------------------ */
