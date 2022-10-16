@@ -25,11 +25,14 @@ const {
 
 /* Main implementation */
 
-const LIMIT = 4;
-const HOST = "http://localhost";
-const PORT = 5100;
+/* HTTP link on digital ocean droplet */
+// const HOST = "http://localhost";
+// const PORT = 5100;
 // const URL = `${HOST}:${PORT}`;
 const URL = `http://157.245.156.125`;
+
+// page limit constant 
+const LIMIT = 4;
 
 /**
  * MongoDB aggregate pipeline for the search index: "associated_index"
@@ -315,7 +318,6 @@ const registerArtefact = async (req, res) => {
     }
   );
   
-
   const artefact = new Artefact_Local({
     artefactName: req.body.record.artefactName,
     description: req.body.record.description,

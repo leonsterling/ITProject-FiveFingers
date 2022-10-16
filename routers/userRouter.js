@@ -29,7 +29,7 @@ userRouter.get('/get-associated', jwtAuth, userController.getAssociated)
 userRouter.get('/search-category/:query/:page', jwtAuth, userController.searchCategory)
 userRouter.get('/search-associated/:query/:page', jwtAuth, userController.searchAssociated)
 
-// POST routes for login
+// POST route for login
 userRouter.post('/login', userController.loginUser)
 
 // POST route to register Artefact
@@ -40,7 +40,6 @@ userRouter.patch('/edit-artefact/:id', jwtAuth, userController.editArtefact);
 
 // DELETE route to delete artefact
 userRouter.delete('/delete-artefact/:id', jwtAuth, userController.deleteArtefact)
-
 
 // export Router object
 module.exports = userRouter
