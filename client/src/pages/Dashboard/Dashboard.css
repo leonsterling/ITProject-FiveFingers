@@ -83,6 +83,7 @@ body {
 .dashboard-header .dashboard-header__left-area .search-message {
     color: #00000082;
     font-variant-caps: petite-caps;
+    flex: 1;
 }
 
 .dashboard-header .dashboard-header__left-area .search-message-initial {
