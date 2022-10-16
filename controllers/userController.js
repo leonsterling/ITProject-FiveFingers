@@ -28,7 +28,8 @@ const {
 const LIMIT = 4;
 const HOST = "http://localhost";
 const PORT = 5100;
-const URL = `${HOST}:${PORT}`;
+// const URL = `${HOST}:${PORT}`;
+const URL = `http://157.245.156.125`;
 
 /**
  * MongoDB aggregate pipeline for the search index: "associated_index"
@@ -134,6 +135,8 @@ const searchCategory = (req, res) => {
         res.status(200).send({
           message: `${totalSearched} artefacts matched the query: ${query}`,
           artefactRecords,
+          totalSearched,
+          query
         });
       } else {
         categoryIndex(query)
@@ -145,7 +148,9 @@ const searchCategory = (req, res) => {
             res.status(200).send({
               message: `${totalSearched} artefacts matched the query: ${query}`,
               totalPages,
+              totalSearched,
               searched,
+              query
             });
           })
           .catch((error) => {
@@ -183,6 +188,8 @@ const searchAssociated = (req, res) => {
         res.status(200).send({
           message: `${totalSearched} artefacts matched the query: ${query}`,
           artefactRecords,
+          totalSearched,
+          query
         });
       } else {
         associatedIndex(query, idx)
@@ -196,6 +203,8 @@ const searchAssociated = (req, res) => {
               message:`${totalSearched} artefacts matched the query: ${query}`,
               totalPages,
               searched,
+              totalSearched,
+              query
             });
           })
           .catch((error) => {
@@ -305,6 +314,7 @@ const registerArtefact = async (req, res) => {
       }
     }
   );
+  
 
   const artefact = new Artefact_Local({
     artefactName: req.body.record.artefactName,
@@ -610,7 +620,7 @@ const deleteArtefact = async (req, res) => {
       });
 
       return res.status(200).send({
-        message: "Delete artefact successfully",
+        message: "Deleted artefact successfully",
         artefact,
       });
     })
