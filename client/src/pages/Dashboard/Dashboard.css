@@ -80,6 +80,21 @@ body {
     display: flex;
 }
 
+.dashboard-header .dashboard-header__left-area .search-message {
+    color: #00000082;
+    font-variant-caps: petite-caps;
+}
+
+.dashboard-header .dashboard-header__left-area .search-message-initial {
+    color: black;
+    font-variant-caps: petite-caps;
+}
+
+.dashboard-header .dashboard-header__left-area .search-message b {
+    color: black;
+    font-family: Monsterrat-bold;
+}
+
 .dashboard-header .dashboard-header__left-area .viewToggle {
     display: none;
 }

@@ -19,7 +19,7 @@ function UploadDone({ record, setRecord }) {
       <label className="data-entry-fields--image-upload--description">
         Selected Image
       </label>
-      <div>{feedbackMessage}</div>
+      <div className='upload-feedback'>{feedbackMessage}</div>
       <label>
         <div className="data-entry-fields--image-upload--upload-complete">
           <img src={record.artefactImg} alt="" />

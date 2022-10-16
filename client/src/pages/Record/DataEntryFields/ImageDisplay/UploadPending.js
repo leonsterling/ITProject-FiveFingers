@@ -18,7 +18,7 @@ function UploadPending({ setRecord, record }) {
       <label className="data-entry-fields--image-upload--description">
         Upload Image
       </label>
-      <div>{feedbackMessage}</div>
+      <div className='upload-feedback'>{feedbackMessage}</div>
       <label className="data-entry-fields--image-upload--upload-button">
       <FileBase
             type="file"
