@@ -21,7 +21,10 @@ const SkewerDropDown = ({_id}) => {
         </div>
       );
 
+    let [confirmVisible, setConfirmVisible] = useState(' invisible');
+
     return (
+        <>
         <div className='skewer-dropdown'>
             <div className='text-left'>
                 <div className='skewer-dropdown-item'>
@@ -29,16 +32,41 @@ const SkewerDropDown = ({_id}) => {
                         Edit
                     </Link>
                 </div>
-                <div className='skewer-dropdown-item'>
-                    <Link to={`/delete/${_id}`} className="link-line">
-                        Delete
-                    </Link>
+                <div
+                  className='skewer-dropdown-item'
+                  onClick={() => setConfirmVisible(" visible")}
+                >
+                    <span className="link-line">Delete</span>
                 </div>
                 { FullviewLink }
             </div>
         </div>
-
-
+        <div
+          className={"confirm-delete" + confirmVisible}
+          onClick={() => setConfirmVisible(" invisible")}
+        >
+          <div className="delete-message-container">
+            <div className="message">
+              <span>Delete Artefact?</span>
+            </div>
+            <div className='button-choices'>
+              <button
+                className="no"
+                onClick={() =>
+                    setConfirmVisible(" invisible")
+                }
+                >
+                  Cancel
+              </button>
+              <button className="yes">
+                <Link to={`/delete/${_id}`} className="link-line">
+                  Delete
+                </Link>
+              </button>
+            </div>
+          </div>
+        </div>
+        </>
     )
 };
 

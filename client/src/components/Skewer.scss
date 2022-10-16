@@ -1,5 +1,116 @@
 .skewer-component {
     opacity: 1 !important;
+
+    .invisible {
+        display: none;
+    }
+
+    .visible {
+        display: flex;
+    }
+
+    .confirm-delete {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 11;
+        width: 100vw;
+        height: 100vh;
+        background-color: #00000059;
+        align-items: center;
+        justify-content: center;
+
+        &, & * {
+            font-family: Monsterrat-bold;
+            text-shadow: 1px 1px 2px #00000087;
+            font-variant-caps: all-small-caps;
+        }
+
+        .delete-message-container {
+            height: 11vh;
+            background-color: hsl(197.8, 17%, 45.9%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px;
+            border-radius: 15px;
+            width: 250px;
+
+            .message {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+
+                button {
+                    background-color: transparent;
+                    border: none;
+                    color: white;
+                    font-size: 20px;
+                    font-weight: bolder;
+                    text-shadow: 0px 0px 0px transparent;
+                    transition: 200ms;
+                    cursor: pointer;
+                    width: 30px;
+                    height: 30px;
+                    position: relative;
+                    top: -5px;
+
+                    &:hover {
+                        rotate: 180deg;
+                        top: -2px;
+                    }
+                }
+            }
+
+            .button-choices {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+
+                button {
+                    padding: 10px;
+                    border-radius: 7px;
+                    border: none;
+                    transition: 200ms;
+
+                    &:hover {
+                        scale: 1.1;
+                    }
+                }
+
+                .no {
+                    background-color: transparent;
+                    color: white;
+                    box-shadow: -3px -2px 5px transparent;
+
+                    &:hover {
+                        background-color: var(--color--primary__700);
+                        box-shadow: 2px 2px 4px #00000075;
+                    }
+                }
+
+                .yes {
+                    background-color: pink;
+                    text-shadow: none;
+
+                    * {
+                        letter-spacing: 0.06em;
+                    }
+
+                    &:hover {
+                        background-color: darkred;
+                        box-shadow: 2px 2px 4px rgba(108, 2, 2, 0.46);
+
+                        * {
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 .skewer-button {
