@@ -47,6 +47,7 @@ function Dashboard() {
   let /** string */ [ currRendered, setCurrRendered ] = useState("Dashboard");
 
   let /** string */ [open, setOpen] = useState(false);
+  let /** string */ [message, setMessage] = useState("My Artefacts");
 
   let searchParams = {
     searchText,
@@ -58,6 +59,7 @@ function Dashboard() {
     setCurrPageNum,
     currRendered,
     setCurrRendered,
+    setMessage
   };
 
   return (
@@ -68,6 +70,7 @@ function Dashboard() {
         isToggled={isToggled}
         setIsToggled={setIsToggled}
         searchParams={searchParams}
+        message={message}
       />
       <ArtefactView
         isToggled={isToggled}

@@ -14,10 +14,6 @@ const CSS_NON_CURRENT_PAGE = 'non-current-page';
 const CSS_CURRENT_PAGE = 'current-page';
 
 function PageNumHandler( { numPages, setNumPages, currPageNum, setCurrPageNum, setUserData, currRendered, searchText, setOpen } ) {
-    console.log({currRendered});
-
-    console.log("NumPages", numPages);
-
     let data = {currPageNum, numPages, currRendered, searchText};
     let setters = {setCurrPageNum, setUserData, setNumPages, setOpen};
     let allButtons = []
@@ -167,9 +163,12 @@ function dotList() {
 function IncrementButton ( { data, setters, message, incrementValue }) {
     if (data.numPages > 1) {
       return (
-          <button className="increment-button" onClick={() =>
-              setters.setCurrPageNum(data.currPageNum+incrementValue)
-          }>
+          <button className="increment-button" onClick={() => {
+              let newButtonNum = data.currPageNum+incrementValue;
+              if (newButtonNum >= 1 && newButtonNum <= data.numPages) {
+                handleClick(newButtonNum, data, setters);
+              }
+          }}>
             {message}
           </button>
       )

@@ -7,11 +7,12 @@ function DashboardHeader({
   isToggled,
   setIsToggled,
   searchParams,
+  message,
 }) {
   return (
     <div className="dashboard-header">
       <div className='dashboard-header__left-area'>
-        <h2>My Artefacts</h2>
+        <h2>{message}</h2>
         <ViewToggle
           className="viewToggle"
           isToggled={isToggled}

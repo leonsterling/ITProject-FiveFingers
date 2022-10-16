@@ -19,6 +19,7 @@ function SearchContent({
   currRendered,
   setCurrRendered,
   setCurrPageNum,
+  setMessage
 }) {
 
   let [ currSelected, setCurrSelected ] = useState("Category");
@@ -65,11 +66,16 @@ function SearchContent({
               setCurrPageNum(FIRST_PAGE);
               if (buttonChoices.includes(currRendered)) {
                 setUserData(res.data.searched);
+                setMessage(res.data.message);
               }
               else {
                 setUserData(res.data.dataInPage);
+                setMessage("My Artefacts");
               }
               setNumPages(res.data.totalPages);
+              if (res.data.message.startsWith('0')) {
+                  setNumPages(0);
+              }
             })
             .catch((e) => {
               console.log(e.message);
@@ -78,7 +84,6 @@ function SearchContent({
       >
         <input
           type="text"
-          onClick={() => console.log("Hello world")}
           onChange={(e) => setSearchText(e.target.value)}
         />
       </form>
