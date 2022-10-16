@@ -80,6 +80,23 @@ body {
     display: flex;
 }
 
+.dashboard-header .dashboard-header__left-area .search-message {
+    color: #00000082;
+    font-variant-caps: petite-caps;
+    flex: 1;
+}
+
+.dashboard-header .dashboard-header__left-area .search-message-initial {
+    color: black;
+    font-variant-caps: petite-caps;
+    font-family: Monsterrat-bold;
+}
+
+.dashboard-header .dashboard-header__left-area .search-message b {
+    color: black;
+    font-family: Monsterrat-bold;
+}
+
 .dashboard-header .dashboard-header__left-area .viewToggle {
     display: none;
 }
@@ -197,11 +214,19 @@ body {
     border-radius: 100px;
     color: white;
     padding: 7px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.368627451);
 }
 
 .dashboard-header .search-icon .inactive {
     background-color: white;
     color: hsl(0deg 0% 68%);
+    transition: 300ms;
+    box-shadow: -3px 0px 3px transparent;
+}
+
+.dashboard-header .search-icon .inactive:hover {
+    border-radius: 100px;
+    box-shadow: 0 0 3px #00000070;
 }
 
 @media only screen and (max-width: 978px) {

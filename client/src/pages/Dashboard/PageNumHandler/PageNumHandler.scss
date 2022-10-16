@@ -67,3 +67,11 @@
     }
 }
 
+
+@media only screen and (max-width: 850px) {
+    .page-handler {
+        .dot, .non-current-page {
+            display: none;
+        }
+    }
+}

@@ -12,7 +12,7 @@ function DashboardHeader({
   return (
     <div className="dashboard-header">
       <div className='dashboard-header__left-area'>
-        <h2>{message}</h2>
+        <HeaderMessage message={message} />
         <ViewToggle
           className="viewToggle"
           isToggled={isToggled}
@@ -43,6 +43,25 @@ function DashboardHeader({
       </div>
     </div>
   );
+}
+
+function HeaderMessage ( { message } ) {
+    let finMessage = (
+        <h3 className='search-message-initial'>{message}</h3>
+    );
+    if (!(message === "My Artefacts")) {
+        let messageList = message.split(' ');
+        let query = messageList
+          .slice(messageList.indexOf("query:")+1)
+          .join(' ');
+        finMessage = (
+          <h3 className='search-message'>
+            <b>{messageList[0]}</b> Artefacts in <b>{query}</b>
+          </h3>
+        )
+    }
+
+    return finMessage;
 }
 
 export default DashboardHeader;
