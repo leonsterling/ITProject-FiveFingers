@@ -17,29 +17,12 @@ const express = require('express'),
 // app runs on express.js
 const app = express()
 
-/* app uses cors to authenticate user
-app.use(
-    cors({
-      origin: "https://sterlingfamilyartefacts.herokuapp.com/", // location of the react app were connecting to
-      credentials: true,
-    })
-);
-*/
+// app uses cors HTTP protocol
 app.use(cors());
-/*
-app.use((req,res,next)=>{
-    res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization','https://sterlingfamilyartefacts.herokuapp.com');
-    if(req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods','PUT,POST,PATCH,DELETE,GET');
-        return res.status(200).json({});
-    }
-    next();
-});
-*/
+
 // app uses bodyParser to parse JSON objects from HTTP requests
 app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
-
 app.use(express.json())
 
 // router of app in server
@@ -53,7 +36,6 @@ app.use('/getImage', express.static(path.join(__dirname, 'storage')))
 app.listen(process.env.PORT || 5100, () => {
     console.log('Server is alive!')
 })
-
 
 // Step 1:
 app.use(express.static(path.join(__dirname, "client/build")));
