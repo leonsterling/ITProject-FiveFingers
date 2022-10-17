@@ -60,7 +60,6 @@ const SkewerDropDown = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumP
             <button className="yes" onClick={() => {
                 
                 // TODO: re-set the user data at the page
-                console.log({setUserData});
                 let pageProps = {
                   setUserData,
                   currPageNum,
@@ -68,13 +67,6 @@ const SkewerDropDown = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumP
                   setNumPages
                 }
                 setDataAccordingly(pageProps, _id);
-                getPagePromise(31)
-                  .then((response) => {
-                      console.log(res.data);
-                  })
-                  .catch ((err) => {
-                      console.log(err);
-                  })
             }}>
               Delete
             </button>
@@ -97,7 +89,7 @@ async function setDataAccordingly(pageProps, _id) {
     .then((res) => {
       if (res.data.totalPages < pageProps.currPageNum) {
           pageProps.currPageNum = res.data.totalPages;
-          setDataAccordingly(pageProps);
+          setDataAccordingly(pageProps, _id);
           return;
       }
       pageProps.setUserData(res.data.dataInPage);
