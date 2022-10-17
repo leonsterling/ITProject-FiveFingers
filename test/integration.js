@@ -6,15 +6,6 @@ const app = require("../server");
 const fs = require('fs')
 dotenv.config();
 
-/* Imports of mongoose models */
-const {
-  User,
-  Artefact,
-  Category,
-  Associated,
-  Artefact_Local,
-} = require("../models/user");
-
 // HTTP status constants
 const HTPP_SUCCESS = 200;
 const HTTP_SERVER_ERROR = 500;

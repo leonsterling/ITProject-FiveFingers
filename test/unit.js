@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 dotenv.config();
 
 // import mongoose models 
-const { User, Category, Associated, Artefact, Artefact_Local } = require("../models/user");
+const { User, Category, Associated, Artefact} = require("../models/user");
 
 /* MOCK DATA */
 
@@ -116,7 +116,7 @@ describe("Log In Unit Tests", () => {
 describe("Basic Search Unit Tests", () => {
   // matching search query from <category> field
   it("Should retrieve an artefact with matching <category> query", (done) => {
-    Artefact_Local.aggregate([
+    Artefact.aggregate([
       {
         $search: {
           index: "category_index",
@@ -136,7 +136,7 @@ describe("Basic Search Unit Tests", () => {
 
   // matching search query from <associated> field
   it("Should retrieve an artefact with matching <associated> query", (done) => {
-    Artefact_Local.aggregate([
+    Artefact.aggregate([
       {
         $search: {
           index: "associated_index",
@@ -156,7 +156,7 @@ describe("Basic Search Unit Tests", () => {
 
   // // non-matching search query from <associated> field
   it("Should not retrieve any artefact with non-matching <category> query", (done) => {
-    Artefact_Local.aggregate([
+    Artefact.aggregate([
       {
         $search: {
           index: "category_index",
@@ -176,7 +176,7 @@ describe("Basic Search Unit Tests", () => {
 
   // // non-matching search query from <associated> field
   it("Should not retrieve any artefact with non-matching <associated> query", (done) => {
-    Artefact_Local.aggregate([
+    Artefact.aggregate([
       {
         $search: {
           index: "associated_index",

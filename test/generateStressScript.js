@@ -32,7 +32,7 @@ const artefactTest = {
     }
   );
 
-  const artefact = new Artefact_Local({
+  const artefact = new Artefact({
     artefactName: req.body.record.artefactName,
     description: req.body.record.description,
     memories: req.body.record.memories,
@@ -55,7 +55,7 @@ const artefactTest = {
         .then((result2) => {
           if (result2) {
             // stores the existing category object in the artefact record
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: result1._id },
               {
                 $set: { category: result2 },
@@ -73,7 +73,7 @@ const artefactTest = {
             });
 
             // updates category of artefact
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: result1._id },
               {
                 $set: { category: newCategory },
@@ -105,7 +105,7 @@ const artefactTest = {
         .then((result3) => {
           if (result3) {
             // stores the existing associated object in the artefact record
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: result1._id },
               {
                 $set: { associated: result3 },
@@ -127,7 +127,7 @@ const artefactTest = {
             });
 
             // updates associated of artefact
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: result1._id },
               {
                 $set: { associated: newAssociated },
