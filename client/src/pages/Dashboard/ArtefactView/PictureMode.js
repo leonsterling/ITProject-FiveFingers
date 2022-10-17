@@ -25,7 +25,15 @@ import "./PictureMode.scss";
  * - renders each userData atom into its own pictorial component
  * @return {React.Component}
  */
-function PictureMode({ userData, setUserData, handleDashboard }) {
+
+function PictureMode({
+  userData,
+  handleDashboard,
+  setUserData,
+  currPageNum,
+  setCurrPageNum,
+  setNumPages,
+}) {
   const /** string */ [currID, setCurrID] = useState("");
 
   const /** boolean */ [open, setOpen] = useState(false);
@@ -74,28 +82,30 @@ function PictureMode({ userData, setUserData, handleDashboard }) {
           onMouseLeave={() => hoverFunction(_id)}
           style={{ padding: open[_id] ? "0 0 600px 0" : "0 0 0 0" }}
         >
-          
-
-        
           <div>
             <div className="card-wrapper">
-              <div 
+              <div
                 className="card-hover"
                 style={{ display: hover[_id] ? "block" : "none" }}
-                >
-                  <Skewer _id={_id} />
+              >
+                <Skewer
+                  _id={_id}
+                  setUserData={setUserData}
+                  currPageNum={currPageNum}
+                  setCurrPageNum={setCurrPageNum}
+                  setNumPages={setNumPages}
+                />
               </div>
 
               <div className="card">
-                <img 
-                src={artefactImg.imgURL} 
-                alt="" 
-                onClick={() => openFunction(_id)}/>
+                <img
+                  src={artefactImg.imgURL}
+                  alt=""
+                  onClick={() => openFunction(_id)}
+                />
                 <div className="card-title">{artefactName}</div>
               </div>
-
             </div>
-
 
             <div style={{ display: open[_id] ? "block" : "none" }}>
               <PartialView
