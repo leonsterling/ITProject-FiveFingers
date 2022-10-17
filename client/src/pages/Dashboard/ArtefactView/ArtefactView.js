@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+
 import PictureMode from "./PictureMode";
 import ListView from "./ListView";
+import EmptyUserData from "./EmptyUserData";
 
 // Imports of local utils
 import {
@@ -34,7 +36,7 @@ function ArtefactView({
       });
   }, []);
 
-  let component = isToggled ? (
+  let nonEmptyComponent = isToggled ? (
     <ListView
       userData={userData}
       setUserData={setUserData}
@@ -47,7 +49,15 @@ function ArtefactView({
       setOpen={setOpen}
     />
   );
-  return component;
+  
+  let finComponent;
+  if (userData == null) {
+      finComponent = ( <EmptyUserData /> );
+  }
+  else {
+      finComponent = nonEmptyComponent;
+  }
+  return finComponent;
 }
 
 export default ArtefactView;

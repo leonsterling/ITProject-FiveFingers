@@ -6,11 +6,48 @@
     margin-bottom: 75px;
     bottom: 0;
 
+    .dot {
+        --size: 6px;
+        width: var(--size);
+        height: var(--size);
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        margin: 0 3px;
+    }
+
     button {
         background: none;
-        padding: 10px;
-        border-radius: 6px;
+        padding: 12px;
+        border-radius: 50%;
         border: none;
+        width: 43px;
+        margin: 0 12px;
+        transition: 200ms;
+        outline: 1px solid transparent;
+        cursor: pointer;
+        box-shadow: 0 -2px 5px transparent;
+
+        &:hover {
+            outline: 2px solid var(--accent-color);
+            box-shadow: 1px 1px 3px hsla(190.1, 50%, 10%, 0.99);
+            background-color: hsl(187.8, 42%, 99%);
+            font-weight: 600;
+        }
+    }
+
+    .increment-button {
+        width: initial;
+        border-radius: 15px;
+        color: var(--accent-color-darker);
+        font-weight: bold;
+
+        &:hover {
+            outline: 2px solid var(--accent-color);
+            box-shadow: 1px 1px 3px hsla(190.1, 50%, 10%, 0.99);
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: bold;
+        }
     }
 
     .current-page {
@@ -18,6 +55,23 @@
         font-weight: bold;
         color: white;
         text-shadow: 0px 1px 0px white,1px 4px 5px hsl(190deg, 42%, 30%);
+        transition: 100ms;
+        box-shadow: inset 0 3px 3px #0000005e;
+
+        &:hover {
+            background-color: var(--accent-color);
+            filter: brightness(107%);
+            outline: 1px solid var(--color--primary__500);
+            box-shadow: 0 1px 3px var(--color--primary__900), -1px -1px 3px hsl(189.4, 10.7%, 95.3%);
+        }
     }
 }
 
+
+@media only screen and (max-width: 850px) {
+    .page-handler {
+        .dot, .non-current-page {
+            display: none;
+        }
+    }
+}

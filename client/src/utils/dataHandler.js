@@ -10,19 +10,20 @@ const /** ?string */ token = cookies.get("TOKEN");
 /* ------------------------------------------------------------
  * For dev-mode
  * ------------------------------------------------------------ */
- const HOST = "http://localhost";
- const PORT = 5100;
- const URL = `${HOST}:${PORT}`;
+ //const HOST = "http://localhost";
+ //const PORT = 5100;
+ const URL = `http://157.245.156.125`;
 
 
 /* ------------------------------------------------------------
  * For deployment-mode
  * ------------------------------------------------------------ */
 
-// const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
+//const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
 
 /* ------------------------------------------------------------
  * At ${URL}/login
+ *
  * ------------------------------------------------------------ */
 /**
  * Requests the server-side to check the provided credentials

@@ -20,7 +20,7 @@ const userRouter = express.Router()
 const userController = require('../controllers/userController')
 
 // GET routes
-userRouter.get('/data', jwtAuth, userController.allData);
+userRouter.get('/data/:page', jwtAuth, userController.getPage)
 userRouter.get('/get-artefact/:id', jwtAuth, userController.getArtefactDetails);
 userRouter.get('/get-categories', jwtAuth, userController.getCategories)
 userRouter.get('/get-associated', jwtAuth, userController.getAssociated)
@@ -29,7 +29,7 @@ userRouter.get('/get-associated', jwtAuth, userController.getAssociated)
 userRouter.get('/search-category/:query/:page', jwtAuth, userController.searchCategory)
 userRouter.get('/search-associated/:query/:page', jwtAuth, userController.searchAssociated)
 
-// POST routes for login
+// POST route for login
 userRouter.post('/login', userController.loginUser)
 
 // POST route to register Artefact
@@ -40,9 +40,6 @@ userRouter.patch('/edit-artefact/:id', jwtAuth, userController.editArtefact);
 
 // DELETE route to delete artefact
 userRouter.delete('/delete-artefact/:id', jwtAuth, userController.deleteArtefact)
-
-// testing pagination (NO AUTOMATIC TESTING YET)
-userRouter.get('/data/:page', jwtAuth, userController.getPage)
 
 // export Router object
 module.exports = userRouter

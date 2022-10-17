@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 dotenv.config();
 
 // import mongoose models 
-const { User, Category, Associated, Artefact } = require("../models/user");
+const { User, Category, Associated, Artefact, Artefact_Local } = require("../models/user");
 
 /* MOCK DATA */
 
@@ -116,12 +116,12 @@ describe("Log In Unit Tests", () => {
 describe("Basic Search Unit Tests", () => {
   // matching search query from <category> field
   it("Should retrieve an artefact with matching <category> query", (done) => {
-    Artefact.aggregate([
+    Artefact_Local.aggregate([
       {
         $search: {
-          index: "associated_category_index",
-          text: {
-            path: ["associated.person", "category.category_name"],
+          index: "category_index",
+          phrase: {
+            path: ["category.category_name"],
             query: validCategory,
           },
         },
@@ -136,12 +136,12 @@ describe("Basic Search Unit Tests", () => {
 
   // matching search query from <associated> field
   it("Should retrieve an artefact with matching <associated> query", (done) => {
-    Artefact.aggregate([
+    Artefact_Local.aggregate([
       {
         $search: {
-          index: "associated_category_index",
-          text: {
-            path: ["associated.person", "category.category_name"],
+          index: "associated_index",
+          phrase: {
+            path: ["associated.person"],
             query: validAssociated,
           },
         },
@@ -154,35 +154,15 @@ describe("Basic Search Unit Tests", () => {
       .catch((err) => done(err));
   });
 
-  // // matching search query from <category> AND <associated> fields
-  it("Should retrieve an artefact with matching <category> and <associated> query", (done) => {
-    Artefact.aggregate([
-      {
-        $search: {
-          index: "associated_category_index",
-          text: {
-            path: ["associated.person", "category.category_name"],
-            query: validCategory + " " + validAssociated,
-          },
-        },
-      },
-    ])
-      .then((artefactRecords) => {
-        assert.isNotNull(artefactRecords);
-        done();
-      })
-      .catch((err) => done(err));
-  });
-
-  // non-matching search query from <category> field
+  // // non-matching search query from <associated> field
   it("Should not retrieve any artefact with non-matching <category> query", (done) => {
-    Artefact.aggregate([
+    Artefact_Local.aggregate([
       {
         $search: {
-          index: "associated_category_index",
-          text: {
-            path: ["associated.person", "category.category_name"],
-            query: invalidCategory,
+          index: "category_index",
+          phrase: {
+            path: ["category.category_name"],
+            query: " ",
           },
         },
       },
@@ -196,13 +176,13 @@ describe("Basic Search Unit Tests", () => {
 
   // // non-matching search query from <associated> field
   it("Should not retrieve any artefact with non-matching <associated> query", (done) => {
-    Artefact.aggregate([
+    Artefact_Local.aggregate([
       {
         $search: {
-          index: "associated_category_index",
-          text: {
-            path: ["associated.person", "category.category_name"],
-            query: invalidAssociated,
+          index: "associated_index",
+          phrase: {
+            path: ["associated.person"],
+            query: " ",
           },
         },
       },
