@@ -142,12 +142,8 @@ export async function getFullViewPromise (id) {
   });
 }
 
-/* ------------------------------------------------------------
- * At ${URL}/edit-page
- * ------------------------------------------------------------ */
-export async function updateArtefact(id,record) {
-  // set configurations
-  const configuration = {
+export async function updateArtefact (id, record) {
+  return setupPromise(/* configuration = */ {
     method: "patch",
     url: `${URL}/edit-artefact/${id}`,
     data: {
@@ -156,10 +152,8 @@ export async function updateArtefact(id,record) {
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
-  };
-
+  });
 }
-
 
 /* ------------------------------------------------------------
  * Others

@@ -44,25 +44,25 @@ const EditPage = () => {
   function handleSubmit(e) {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
-    console.log("here");
-    console.log(record);
     let newRecord = JSON.parse(JSON.stringify(record));
     newRecord.associated = record.associated.person;
     newRecord.category = record.category.category_name;
-    console.log("New Record");
-    console.log(newRecord);
+
     if (!isValidInput(newRecord)) {
       setFeedback(feedbackMessages.invalid);
       return;
     }
+    
     updateArtefact(_id, record)
     .then((result) => {
+      console.log(result.data)
       window.location.href = "/dashboard";
     })
     .catch((error) => {
       error = new Error();
       console.log(error);
     });
+    
     setFeedback(feedbackMessages.valid);
     setToggleLoad(true);
    
