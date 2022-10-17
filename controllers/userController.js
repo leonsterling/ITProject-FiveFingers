@@ -26,10 +26,10 @@ const {
 /* Main implementation */
 
 /* HTTP link on digital ocean droplet */
-// const HOST = "http://localhost";
-// const PORT = 5100;
+const HOST = "http://localhost";
+const PORT = 5100;
 // const URL = `${HOST}:${PORT}`;
-const URL = `http://157.245.156.125`;
+// const URL = `http://157.245.156.125`;
 
 // page limit constant 
 const LIMIT = 16;
