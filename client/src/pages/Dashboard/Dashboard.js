@@ -81,6 +81,7 @@ function Dashboard() {
         isSearched={isSearched}
         getPagePromise={getPagePromise}
         currPageNum={currPageNum}
+        setCurrPageNum={setCurrPageNum}
         setNumPages={setNumPages}
         open={open}
         setOpen={setOpen}

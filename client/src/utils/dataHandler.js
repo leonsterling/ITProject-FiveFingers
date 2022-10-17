@@ -10,15 +10,15 @@ const /** ?string */ token = cookies.get("TOKEN");
 /* ------------------------------------------------------------
  * For dev-mode
  * ------------------------------------------------------------ */
- // const HOST = "http://localhost";
- // const PORT = 5100;
- // const URL = `${HOST}:${PORT}`
+ const HOST = "http://localhost";
+ const PORT = 5100;
+ const URL = `${HOST}:${PORT}`
 
 /* ------------------------------------------------------------
  * For deployment-mode
  * ------------------------------------------------------------ */
 
-const URL = `http://157.245.156.125`;
+ // const URL = `http://157.245.156.125`;
 
 /* ------------------------------------------------------------
  * At ${URL}/login
@@ -158,6 +158,21 @@ export async function updateArtefact(id,record) {
     },
   };
 
+}
+
+
+/* ------------------------------------------------------------
+ * Others
+ * ------------------------------------------------------------ */
+export async function deleteArtefact (id) {
+  return setupPromise(/* configuration = */ {
+    method: "delete",
+    url: `${URL}/delete-artefact/${id}`,
+    headers: {
+      // authorized route with jwt token
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
 
 /* ------------------------------------------------------------

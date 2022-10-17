@@ -16,6 +16,7 @@ function ArtefactView({
   userData,
   setUserData,
   currPageNum,
+  setCurrPageNum,
   setNumPages,
   open,
   setOpen,
@@ -47,6 +48,10 @@ function ArtefactView({
       setUserData={setUserData}
       open={open}
       setOpen={setOpen}
+      setUserData={setUserData}
+      currPageNum={currPageNum}
+      setCurrPageNum={setCurrPageNum}
+      setNumPages={setNumPages}
     />
   );
   
