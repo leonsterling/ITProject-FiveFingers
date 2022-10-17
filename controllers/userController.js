@@ -32,7 +32,7 @@ const {
 const URL = `http://157.245.156.125`;
 
 // page limit constant 
-const LIMIT = 4;
+const LIMIT = 16;
 
 /**
  * MongoDB aggregate pipeline for the search index: "associated_index"

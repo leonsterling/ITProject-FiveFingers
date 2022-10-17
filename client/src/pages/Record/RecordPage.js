@@ -107,7 +107,8 @@ function RecordForm() {
       // set configurations
       postArtefact(record)
         .then((result) => {
-          window.location.href = "/dashboard";
+          console.log(record);
+          //window.location.href = "/dashboard";
         })
         .catch((error) => {
           console.log(error);

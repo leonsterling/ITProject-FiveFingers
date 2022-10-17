@@ -24,7 +24,7 @@ import FullView from "./pages/FullView/FullView.js";
 import ListView from "./pages/Dashboard/ArtefactView/ListView.js";
 import EditPage from "./pages/EditPage/EditPage.js";
 import Skewer from "./components/Skewer.js";
-
+import StressPage from "./stressSimulator/stressSim.js";
 // Style-based imports
 import "./index.css";
 
@@ -63,6 +63,8 @@ root.render(
           <Route element={<EditPage />} path="/edit-artefact/:_id" exact>
           </Route>
           <Route element={<Skewer />} path="skewer" exact>
+          </Route>
+          <Route element={<StressPage />} path="stress-page" exact>
           </Route>
         </Route>
       </Routes>
