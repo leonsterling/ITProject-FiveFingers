@@ -64,7 +64,7 @@ function RecordForm() {
    * artefactImg: string,
    *  }} */
   const initialState = {
-    artefactName: " ",
+    artefactName: "",
     artefactDate: "",
     location: "",
     description: "",
@@ -107,8 +107,7 @@ function RecordForm() {
       // set configurations
       postArtefact(record)
         .then((result) => {
-          console.log(record);
-          //window.location.href = "/dashboard";
+          window.location.href = "/dashboard";
         })
         .catch((error) => {
           console.log(error);
