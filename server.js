@@ -21,10 +21,12 @@ const app = express()
 app.use(cors());
 
 // app uses bodyParser to parse JSON objects from HTTP requests
-
+/*
 app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
-
+*/
+app.use(express.json({limit: '25mb', extended: true}));
+app.use(express.urlencoded({limit: '25mb', extended: true}));
 
 app.use(express.json())
 
