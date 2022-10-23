@@ -1,4 +1,4 @@
-name: Deployment Flow
+name: Build and Deploy to Digital Ocean
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy Application to Digital Ocean
+      - name: Deploy NodeJS App
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{ secrets.SSH_HOST }} #IP address of the server to ssh
