@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 let img = fs.readFileSync(`${__dirname}/test_image.jpeg`, 'base64');
 img = "data:"+"image/png"+";base64," + img 
 

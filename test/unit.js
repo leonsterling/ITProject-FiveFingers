@@ -24,8 +24,8 @@ const invalidUser = {
 };
 
 // existing category and associated in database
-const validCategory = "Anime";
-const validAssociated = "Vik";
+const validCategory = "Art";
+const validAssociated = "Bob";
 
 // dummy category and associated non-existing in database
 const invalidCategory = "Non-existing-category";

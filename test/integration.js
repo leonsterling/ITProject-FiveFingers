@@ -36,8 +36,8 @@ const invalidPassword = {
 
 
 // dummy category and associated existing in database
-const validCategory = "Anime"
-const validAssociated = "Vik"
+const validCategory = "Art"
+const validAssociated = "Bob"
 
 // dummy invalid category and associated non-existing in database
 const invalidCategory = "Non-existing-category";
