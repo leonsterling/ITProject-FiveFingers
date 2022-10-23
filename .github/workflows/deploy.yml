@@ -10,12 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy NodeJS App
-        uses: appleboy/ssh-action@v0.1.2
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }} #IP address of the server to ssh
           key: ${{ secrets.SSH_KEY }} #Private or public key of server
           username: ${{ secrets.SSH_USERNAME }} #User of server to ssh into
-          
           
           
           script: |
