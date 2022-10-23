@@ -30,5 +30,6 @@ jobs:
             pm2 start server.js
             pm2 save --force
             pm2 restart all
+            echo "Deployment successful to Digital Ocean"
           
 
