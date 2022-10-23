@@ -6,30 +6,30 @@ on:
 
 # .github/workflows/custom-deploy.yml
 jobs:
-  custom-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
+      - name: Deploy Application to Digital Ocean
+        uses: appleboy/ssh-action@v0.1.2
         with:
-          fetch-depth: 0
-      - name: Heroku login credentials
-        run: |
-          cat > ~/.netrc <<EOF
-            machine api.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-            machine git.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-          EOF
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_EMAIL: "leoniangelaaa29@gmail.com"
-      - name: Add Heroku remote
-        run: heroku git:remote --app $HEROKU_APP_NAME
-        env:
-          HEROKU_APP_NAME: "sterlingfamilyartefacts"
-      - name: Push to Heroku
-        run: git push heroku main
+          host: ${{ secrets.SSH_HOST }} #IP address of the server to ssh
+          key: ${{ secrets.SSH_KEY }} #Private or public key of server
+          username: ${{ secrets.SSH_USERNAME }} #User of server to ssh into
+          
+          
+          
+          script: |
+            cd ITProject-FiveFingers
+            git pull
+            cd client
+            npm install -i
+            npm run build
+            cd ..
+            npm install -i
+            npm install pm2 -g
+            pm2 delete all
+            pm2 start server.js
+            pm2 save --force
+            pm2 restart all
+          
 
