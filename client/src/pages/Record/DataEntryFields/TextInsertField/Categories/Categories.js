@@ -34,6 +34,9 @@ function Categories({ data, index, handleChange }) {
 
   // Assign a button to every category we get
   let /** ?Array<React.Component> */ options;
+  // Choose whether to add a final label to let the user know about a new
+  // category
+  let finlabel;
   if (categoryList !== null) {
     let /** Array<string> */ filteredArray;
     if (label !== null) {
@@ -68,6 +71,16 @@ function Categories({ data, index, handleChange }) {
         />
       );
     });
+  }
+  
+  if (options && options.length === 0 && label.length > 0) {
+      isVisible = false;
+      finlabel = (
+          <p className="feedback">
+            Adding new {data.label}: <br/>
+            <span className="label">{label}</span>
+          </p>
+      )
   }
 
   // The base CSS class for the dropdown component
@@ -106,9 +119,8 @@ function Categories({ data, index, handleChange }) {
         {/* The dropdown component */}
         <div className={dropdownClass}>
           {options}
-
-          <CancelCategory setVisibility={setVisibility} />
         </div>
+        {finlabel}
       </li>
       <FocusState isVisible={isVisible} setVisibility={setVisibility} />
     </>

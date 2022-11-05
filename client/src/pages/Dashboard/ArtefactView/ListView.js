@@ -48,10 +48,18 @@ function ListView ({ userData, setUserData, currPageNum, setCurrPageNum, setNumP
         onMouseEnter={() => hoverFunction(_id)}
         onMouseLeave={() => hoverFunction(_id)}
         >
-          <td className='table-cell' id="name-cell">{artefactName}</td>
-          <td className='table-cell' id="desc-cell">{description.substring(0, 60)}</td>
-          <td className='table-cell' id="category-cell">{category.category_name}</td>
-          <td className='table-cell' id="person-cell">{associated.person}</td>
+          <td className='table-cell' id="name-cell">
+            {(artefactName) ? artefactName : "No name"}
+          </td>
+          <td className='table-cell dark-grey' id="desc-cell">
+            {(description) ? description.substring(0, 60): <i>No description given</i>}
+          </td>
+          <td className='table-cell dark-grey' id="category-cell">
+            {(category.category_name) ? category.category_name : <i>No category chosen</i> }
+          </td>
+          <td className='table-cell dark-grey' id="person-cell">
+            {(associated.person) ? associated.person : <i>No person associated</i>}
+          </td>
           <td 
           className='table-cell' 
           id="kebab-menu"

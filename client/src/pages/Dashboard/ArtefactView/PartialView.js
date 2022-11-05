@@ -47,7 +47,7 @@ function PartialView({ title, image, desc, date, _id, openFunction, setUserData,
             <p>
               <span id="p-desc">Description:</span>
               <br/>
-              <span className={(desc) ? '' : 'grey smaller'}>{(desc) ? desc : "No description given"}</span>
+              <span className={'grey smaller'}>{(desc) ? desc : "No description given"}</span>
               
             </p>
           </div>

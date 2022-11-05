@@ -32,7 +32,7 @@
 .card-hover {
     min-width: 0;
     margin: 0px 0px 0px 20px;
-    width: 12em;
+    width: 13.4em;
     height: fit-content;
     flex-direction: column;
     justify-content: space-around;
@@ -59,15 +59,15 @@
 
 .card {
     min-width: 0;
-    margin: 20px;
-    width: 12em;
+    margin: 25px;
+    width: 14.3em;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 25px;
+    padding: 0 13px;
     border-radius: 5px;
     background: #ffffff;
-    box-shadow: 5px 5px 13px #ededed, -5px -5px 13px #ffffff;
+    box-shadow: 5px 5px 13px #ededed, -5px -5px 13px #fff, inset 2px 2px 3px #0000000f;
 }
 
 .card > img {
