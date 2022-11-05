@@ -28,11 +28,11 @@ import "./PictureMode.scss";
 
 function PictureMode({
   userData,
-  handleDashboard,
   setUserData,
   currPageNum,
   setCurrPageNum,
   setNumPages,
+  mode
 }) {
   const /** string */ [currID, setCurrID] = useState("");
 
@@ -94,6 +94,7 @@ function PictureMode({
                   currPageNum={currPageNum}
                   setCurrPageNum={setCurrPageNum}
                   setNumPages={setNumPages}
+                  mode={mode}
                 />
               </div>
 
@@ -115,6 +116,11 @@ function PictureMode({
                 date={artefactDate}
                 _id={_id}
                 openFunction={openFunction}
+                setUserData={setUserData}
+                currPageNum={currPageNum}
+                setCurrPageNum={setCurrPageNum}
+                setNumPages={setNumPages}
+                mode={mode}
               />
             </div>
           </div>

@@ -5,7 +5,7 @@ import SkewerButton from "./SkewerButton";
 import SkewerDropDown from "./SkewerDropDown";
 import "./Skewer.scss";
 
-const Skewer = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumPages }) => {
+const Skewer = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumPages, mode }) => {
   const [openSkewer, setOpenSkewer] = useState(false);
   const drop = useRef(null);
 
@@ -25,7 +25,7 @@ const Skewer = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumPages }) 
   return (
     <>
       <div className="skewer-component" ref={drop}>
-        <SkewerButton onClick={() => setOpenSkewer(!openSkewer)} />
+        <SkewerButton onClick={() => console /** setOpenSkewer(!openSkewer) */} />
         {openSkewer && (
           <SkewerDropDown
             _id={_id}
@@ -33,6 +33,7 @@ const Skewer = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumPages }) 
             currPageNum={currPageNum}
             setCurrPageNum={setCurrPageNum}
             setNumPages={setNumPages}
+            mode={mode}
           />
         )}
       </div>

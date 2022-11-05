@@ -4,7 +4,7 @@ import "./Skewer.scss";
 
 import { deleteArtefact, getPagePromise } from "../utils/dataHandler";
 
-const SkewerDropDown = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumPages }) => {
+const SkewerDropDown = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumPages, mode }) => {
   let /** React.Component */ FullviewLink = window.location.href.includes(
       `full-view/${_id}`
     ) ? (
@@ -58,15 +58,30 @@ const SkewerDropDown = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumP
               Cancel
             </button>
             <button className="yes" onClick={() => {
-                
-                // TODO: re-set the user data at the page
-                let pageProps = {
-                  setUserData,
-                  currPageNum,
-                  setCurrPageNum,
-                  setNumPages
+
+                if (mode && mode==="dashboard") {
+                  let pageProps = {
+                    setUserData,
+                    currPageNum,
+                    setCurrPageNum,
+                    setNumPages
+                  }
+                  setDashboardData(pageProps, _id);
                 }
-                setDataAccordingly(pageProps, _id);
+                else {
+                  // Handle it for the full view
+                  let currUrl = window.location.href.split('/');
+                  let currId = currUrl[currUrl.indexOf("full-view") + 1];
+                  deleteArtefact(currId)
+                    .then((_res) => {
+                      window.location.href = '/'
+                    })
+                    .catch((e) => {
+                      console.log("e is:", e);
+                      console.log(e.message);
+                    });
+                  
+                }
             }}>
               Delete
             </button>
@@ -77,7 +92,7 @@ const SkewerDropDown = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumP
   );
 };
 
-async function setDataAccordingly(pageProps, _id) {
+async function setDashboardData(pageProps, _id) {
   await deleteArtefact(_id)
     .then((res) => {
       console.log(res.data);
@@ -85,11 +100,13 @@ async function setDataAccordingly(pageProps, _id) {
     .catch((e) => {
       console.log(e.message);
     });
-  getPagePromise(pageProps.currPageNum)
+  console.log("CurrPageNum:", pageProps.currPageNum);
+  let chosenPage = pageProps.currPageNum ? pageProps.currPageNum : 1;
+  getPagePromise(chosenPage)
     .then((res) => {
       if (res.data.totalPages < pageProps.currPageNum) {
           pageProps.currPageNum = res.data.totalPages;
-          setDataAccordingly(pageProps, _id);
+          setDashboardData(pageProps, _id);
           return;
       }
       pageProps.setUserData(res.data.dataInPage);

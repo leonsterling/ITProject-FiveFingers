@@ -37,10 +37,15 @@ function ArtefactView({
       });
   }, []);
 
+  let deleteMode = "dashboard"
   let nonEmptyComponent = isToggled ? (
     <ListView
       userData={userData}
       setUserData={setUserData}
+      currPageNum={currPageNum}
+      setCurrPageNum={setCurrPageNum}
+      setNumPages={setNumPages}
+      mode={deleteMode}
     />
   ) : (
     <PictureMode
@@ -48,10 +53,10 @@ function ArtefactView({
       setUserData={setUserData}
       open={open}
       setOpen={setOpen}
-      setUserData={setUserData}
       currPageNum={currPageNum}
       setCurrPageNum={setCurrPageNum}
       setNumPages={setNumPages}
+      mode={deleteMode}
     />
   );
   

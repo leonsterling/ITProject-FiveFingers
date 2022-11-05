@@ -131,6 +131,12 @@
         background: #333333;
         border-radius: 8px;
         padding: 10px;
+        box-shadow: 6px 9px 9px #00000066;
+        padding: 10px;
+        position: relative;
+        animation: gracious-appearance 400ms;
+        animation-fill-mode: forwards;
+
         .skewer-dropdown-item {
             padding: 10px;
             .link-line {
@@ -142,5 +148,18 @@
                 font-weight: bold;
             }
         }
+    }
+}
+
+@keyframes gracious-appearance {
+    0% {
+        opacity: 0;
+        left: 3px;
+        top: 8px;
+    }
+    100% {
+        opacity: 1;
+        left: -6px;
+        top: -4px;
     }
 }

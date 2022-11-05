@@ -24,7 +24,7 @@ import "./PartialView.scss";
  * parent component and displays them in a figure HTML tag
  * @return {React.Component}
  */
-function PartialView({ title, image, desc, date, _id, openFunction}) {
+function PartialView({ title, image, desc, date, _id, openFunction, setUserData, currPageNum, setCurrPageNum, setNumPages, mode }) {
 
   return (
     <figure className="partial-view">
@@ -66,7 +66,15 @@ function PartialView({ title, image, desc, date, _id, openFunction}) {
         </div>
       </div>
       <div className="skewer-partial">
-        <Skewer _id={_id} className="skewer-menu-partial"/>
+        <Skewer
+          _id={_id}
+          className="skewer-menu-partial"
+          setUserData={setUserData}
+          currPageNum={currPageNum}
+          setCurrPageNum={setCurrPageNum}
+          setNumPages={setNumPages}
+          mode={mode}
+        />
       </div>
     </figure>
   );

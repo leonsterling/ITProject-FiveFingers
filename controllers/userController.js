@@ -25,13 +25,13 @@ const {
 /* Main implementation */
 
 // page limit constant
-const LIMIT = 16;
+const LIMIT = 4;
 
-// const HOST = "http://localhost";
-// const PORT = 5100;
-// const URL = `${HOST}:${PORT}`;
+const HOST = "http://localhost";
+const PORT = 5100;
+const URL = `${HOST}:${PORT}`;
 
-const URL = `http://157.245.156.125`;
+// const URL = `http://157.245.156.125`;
 
 
 /**
@@ -666,15 +666,28 @@ const getPage = async (req, res) => {
           totalPages,
           totalArtefact,
         });
-      } else {
+      } 
+      
+      else if (dataPerPage == 0 && totalPages == 0) {
         return res.status(200).send({
-          message: "Invalid Page Number",
+          message: `Empty Dashboard (page ${pageNum})`,
           dataPerPage,
           dataInPage,
           totalPages,
           totalArtefact,
         });
-      }
+      } 
+
+      else {
+        return res.status(200).send({
+          message: `Invalid Page Number`,
+          dataPerPage,
+          dataInPage,
+          totalPages,
+          totalArtefact,
+        });
+      } 
+
     })
     .catch((error) => {
       res.status(500).send({

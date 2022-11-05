@@ -50,7 +50,6 @@ app.get("*", function (request, response) {
 // connect mongoose index in models folder
 require('./models')
 
-require('./utils/cloudinary')
 
 module.exports = app
 

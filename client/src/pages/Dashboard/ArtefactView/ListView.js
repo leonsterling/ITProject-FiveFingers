@@ -21,10 +21,10 @@ import Skewer from "../../../components/Skewer"
  * component chooses to search or display the default artefacts
  * @return {React.Component}
  */
-function ListView ({ userData, handleDashboard }) {
-  const /** string */ [hoverID, setHoverID] = useState("");
-  const /** boolean */ [hover, setHover] = useState(false);
-
+function ListView ({ userData, setUserData, currPageNum, setCurrPageNum, setNumPages }) {
+  const /** string */ [hoverID,   setHoverID] = useState("");
+  const /** boolean */ [hover,   setHover] = useState(false);
+                                 
   function hoverFunction(id) {
     // Change the state of the visibility to true
     if (hoverID.length !== 0) {
@@ -57,7 +57,13 @@ function ListView ({ userData, handleDashboard }) {
           id="kebab-menu"
           style={{ opacity: hover[_id] ? 1 : 0 }}>
             <div className="skewer-cell">
-              <Skewer _id={_id}/>
+              <Skewer
+                _id={_id}
+                setUserData={setUserData}
+                currPageNum={currPageNum}
+                setCurrPageNum={setCurrPageNum}
+                setNumPages={setNumPages}
+              />
             </div>
           </td>
         </tr>

@@ -28,7 +28,7 @@ const db = mongoose.connection.on("error", (err) => {
 
 // Log to console once the database is open
 db.once("open", async () => {
-  // console.log(`Mongo is connected! Started on ${db.host}:${db.port}`)
+  console.log(`Mongo is connected!`)
 });
 
 // imports "User" mongoose model
