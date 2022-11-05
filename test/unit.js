@@ -12,20 +12,20 @@ const { User, Category, Associated, Artefact} = require("../models/user");
 
 // existing user in database
 const validUser = {
-  username: "vincent",
-  password: "kurniawan",
-  hashPassword: "$2a$10$HoV8ohBfPxbi2qRn5GYZ7.mTMUVlMVe2dvBmGmV7qmIeb.0UDpnMe",
+  username: "test",
+  password: "test",
+  hashPassword: "$2a$10$92nS84GC86VA1Meh6fz8jO52fnthcer.f1QUDrwzt7K0gE0vQimOO",
 };
 
 // dummy user non-existing in database
 const invalidUser = {
-  username: "kurniawan",
-  password: "vincent",
+  username: "invalidTest",
+  password: "invalidTest",
 };
 
 // existing category and associated in database
-const validCategory = "Art";
-const validAssociated = "Bob";
+const validCategory = "Postcard";
+const validAssociated = "Sterling";
 
 // dummy category and associated non-existing in database
 const invalidCategory = "Non-existing-category";

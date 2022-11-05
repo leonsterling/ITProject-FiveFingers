@@ -670,7 +670,7 @@ const getPage = async (req, res) => {
       
       else if (dataPerPage == 0 && totalPages == 0) {
         return res.status(200).send({
-          message: `Empty Dashboard (page ${pageNum})`,
+          message: `Successfully retrieved page ${pageNum}`,
           dataPerPage,
           dataInPage,
           totalPages,
