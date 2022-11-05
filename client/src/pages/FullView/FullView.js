@@ -118,11 +118,15 @@ function FullView() {
           </div>
         </div>
         <div className="data-container">
-          <div className="quick-information">
-            <PersonAssociated data={recordPerson} />
-            <div className="separator">|</div>
-            <Tag data={recordCategory} />
-          </div>
+          {
+            (recordCategory || recordPerson) && (
+              <div className="quick-information">
+                <PersonAssociated data={recordPerson} />
+                { recordCategory && recordPerson && (<div className="separator">|</div>)}
+                <Tag data={recordCategory} />
+              </div>
+            )
+          }
           <div className="detailed">
             <RecordDescription data={recordDescription} />
             <div></div>
@@ -140,7 +144,7 @@ function FullView() {
  * @return {React.Component}
  */
 function PersonAssociated({ data }) {
-  return (
+  return data && (
     <div className="associated">
       Associated with <b>{data}</b>
     </div>
@@ -153,7 +157,7 @@ function PersonAssociated({ data }) {
  * @return {React.Component}
  */
 function Tag({ data }) {
-  return (
+  return data && (
     <div className="category">
       <b>{data}</b>
     </div>

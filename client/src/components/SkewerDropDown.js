@@ -100,12 +100,16 @@ async function setDashboardData(pageProps, _id) {
     .catch((e) => {
       console.log(e.message);
     });
-  console.log("CurrPageNum:", pageProps.currPageNum);
   let chosenPage = pageProps.currPageNum ? pageProps.currPageNum : 1;
   getPagePromise(chosenPage)
     .then((res) => {
       if (res.data.totalPages < pageProps.currPageNum) {
           pageProps.currPageNum = res.data.totalPages;
+          if (res.data.dataPerPage == 0 && res.data.totalPages == 0) {
+            pageProps.setUserData(null);
+            pageProps.setNumPages(0);
+            return;
+          }
           setDashboardData(pageProps, _id);
           return;
       }

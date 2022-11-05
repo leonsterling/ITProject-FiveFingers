@@ -86,8 +86,9 @@ function PictureMode({
             <div className="card-wrapper">
               <div
                 className="card-hover"
-                style={{ display: hover[_id] ? "block" : "none" }}
+                
               >
+                {/* style={{ display: hover[_id] ? "block" : "none" }} */}
                 <Skewer
                   _id={_id}
                   setUserData={setUserData}

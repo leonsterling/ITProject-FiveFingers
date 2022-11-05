@@ -31,12 +31,17 @@
         contain: content;
         width: 45vw;
         justify-content: center;
+
+        img {
+            border-radius: 7px;
+            box-shadow: 0 6px 13px #00000070;
+        }
     }
 
     .info-side {
         display: flex;        
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
         flex-wrap: wrap;
         height: 330px;
         flex: 1;
@@ -51,6 +56,9 @@
             font-weight: bold;
             font-size: 24px;
             overflow-x: hidden;
+            letter-spacing: 0.03em;
+            color: white;
+            margin-bottom: 15px;
         }
 
         .info-desc {
@@ -111,7 +119,7 @@
         .image-side {
             display: flex;
             position: relative;
-                
+            
         }
         .image-partial-view {
             height: 100%;
@@ -124,6 +132,7 @@
             margin-left: 10px;
             margin-bottom: 10px;
             margin-right: 10px;
+            width: 45vw;
                     
             .info-title{
                 justify-content: center;
@@ -146,7 +155,7 @@
 @media only screen and (max-width: 800px) {
     .partial-view {
         .image-side {
-            width: 45vw;
+            width: 90vw;
 
             img {
                 width: 45vw;
@@ -155,4 +164,12 @@
         }
     }
 
+}
+
+.grey, .grey * {
+    color: #c1c1c1;
+}
+
+.smaller {
+    font-size: smaller;
 }

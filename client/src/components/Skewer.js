@@ -25,7 +25,7 @@ const Skewer = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumPages, mo
   return (
     <>
       <div className="skewer-component" ref={drop}>
-        <SkewerButton onClick={() => console /** setOpenSkewer(!openSkewer) */} />
+        <SkewerButton onClick={() => setOpenSkewer(!openSkewer)} />
         {openSkewer && (
           <SkewerDropDown
             _id={_id}

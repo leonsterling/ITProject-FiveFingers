@@ -55,7 +55,7 @@ function ListView ({ userData, setUserData, currPageNum, setCurrPageNum, setNumP
           <td 
           className='table-cell' 
           id="kebab-menu"
-          style={{ opacity: hover[_id] ? 1 : 0 }}>
+          >
             <div className="skewer-cell">
               <Skewer
                 _id={_id}
@@ -63,6 +63,7 @@ function ListView ({ userData, setUserData, currPageNum, setCurrPageNum, setNumP
                 currPageNum={currPageNum}
                 setCurrPageNum={setCurrPageNum}
                 setNumPages={setNumPages}
+                mode={"dashboard"}
               />
             </div>
           </td>

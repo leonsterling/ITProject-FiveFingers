@@ -118,6 +118,7 @@
     border-radius: 50px;
     padding: 4px 4px 0px 4px;
     text-align: center;
+    box-shadow: 0px 5px 5px rgb(0 0 0 / 37%), inset 0 0 2px rgb(0 0 0 / 22%);
 
     svg {
         font-size: 22px;
@@ -125,8 +126,20 @@
     }
 }
 
+.partial-view .skewer-dropdown {
+    right: 0;
+}
+
+@media only screen and (max-width: 722px) {
+    .skewer-dropdown {
+        right: 0;
+    }
+}
+
 .skewer-dropdown {
-    padding-top: 33px;
+    margin-top: 33px;
+    position: absolute;
+
     .text-left {
         background: #333333;
         border-radius: 8px;
@@ -136,6 +149,7 @@
         position: relative;
         animation: gracious-appearance 400ms;
         animation-fill-mode: forwards;
+        border: 1px solid hsla(198deg, 100%, 86%, 30%);
 
         .skewer-dropdown-item {
             padding: 10px;
@@ -156,10 +170,12 @@
         opacity: 0;
         left: 3px;
         top: 8px;
+        transform: scaleX(1.2);
     }
     100% {
         opacity: 1;
         left: -6px;
         top: -4px;
+        transform: scaleX(1.0);
     }
 }

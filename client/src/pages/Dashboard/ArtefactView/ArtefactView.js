@@ -29,6 +29,11 @@ function ArtefactView({
     getPagePromise(currPageNum)
       .then((res) => {
         console.log(res.data);
+        if (res.data.dataPerPage == 0 && res.data.totalPages == 0) {
+            setUserData(null);
+            setNumPages(0);
+            return;
+        }
         setUserData(res.data.dataInPage);
         setNumPages(res.data.totalPages);
       })

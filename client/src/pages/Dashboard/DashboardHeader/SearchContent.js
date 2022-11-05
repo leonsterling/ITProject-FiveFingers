@@ -69,7 +69,9 @@ function SearchContent({
                 setMessage(res.data.message);
               }
               else {
-                setUserData(res.data.dataInPage);
+                let chosenData = (res.data.dataInPage.length === 0) ? null : res.data.dataInPage;
+                console.log(chosenData);
+                setUserData(chosenData);
                 setMessage("My Artefacts");
               }
               setNumPages(res.data.totalPages);

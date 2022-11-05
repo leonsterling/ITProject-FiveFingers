@@ -39,18 +39,18 @@ function PartialView({ title, image, desc, date, _id, openFunction, setUserData,
         />
       </div>
       <div className="info-side">
-        <div className="info-title">
-          <p>{title}</p>
-        </div>
-        <div className="info-desc">
-          <p>
-            <span id="p-desc">Description:</span>
-            <br/>
-            {desc}
-          </p>
-        </div>
-        <div className="info-date">
-          <p>{date}</p>
+        <div className="info-values">
+          <h2 className="info-title">
+            {title}
+          </h2>
+          <div className="info-desc">
+            <p>
+              <span id="p-desc">Description:</span>
+              <br/>
+              <span className={(desc) ? '' : 'grey smaller'}>{(desc) ? desc : "No description given"}</span>
+              
+            </p>
+          </div>
         </div>
         <div className="info-more">
           <Link to={`/full-view/${_id}`} className="link-line">
