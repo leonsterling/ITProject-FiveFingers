@@ -35,24 +35,6 @@ const artefactSchema = new mongoose.Schema({
   artefactDate: { type: Date },
   artefactImg: {
     imgURL: { type: String },
-    publicID: { type: String },
-  },
-});
-
-/** {mongoose.Schema} schema for artefact */
-const artefactSchema_local = new mongoose.Schema({
-  artefactName: {
-    type: String,
-    required: [true, "Artefact Name is Required"],
-  },
-  category: categorySchema,
-  description: { type: String },
-  memories: { type: String },
-  associated: associatedSchema,
-  location: { type: String },
-  artefactDate: { type: Date },
-  artefactImg: {
-    imgURL: { type: String },
     imgName: {type: String},
     imgType: {type: String},
     imgSize: {type: String},
@@ -97,7 +79,5 @@ const Artefact = mongoose.model("Artefacts", artefactSchema, "Artefacts");
 const Category = mongoose.model("Categories", categorySchema, "Categories");
 const Associated = mongoose.model("Associated", associatedSchema, "Associated");
 
-const Artefact_Local = mongoose.model("Artefacts_Local", artefactSchema_local, "Artefacts_Local")
-
 // export the constants
-module.exports = { User, Artefact, Category, Associated, Artefact_Local};
+module.exports = { User, Artefact, Category, Associated};

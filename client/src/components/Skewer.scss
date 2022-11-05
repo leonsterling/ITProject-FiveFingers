@@ -1,5 +1,113 @@
 .skewer-component {
     opacity: 1 !important;
+
+    .invisible {
+        display: none;
+    }
+
+    .visible {
+        display: flex;
+    }
+
+    .confirm-delete {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 11;
+        width: 100vw;
+        height: 100vh;
+        background-color: #00000059;
+        align-items: center;
+        justify-content: center;
+
+        &, & * {
+            font-family: Monsterrat-bold;
+            text-shadow: 1px 1px 2px #00000087;
+            font-variant-caps: all-small-caps;
+        }
+
+        .delete-message-container {
+            height: 11vh;
+            background-color: hsl(197.8, 17%, 45.9%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px;
+            border-radius: 15px;
+            width: 250px;
+
+            .message {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+
+                button {
+                    background-color: transparent;
+                    border: none;
+                    color: white;
+                    font-size: 20px;
+                    font-weight: bolder;
+                    text-shadow: 0px 0px 0px transparent;
+                    transition: 200ms;
+                    cursor: pointer;
+                    width: 30px;
+                    height: 30px;
+                    position: relative;
+                    top: -5px;
+
+                    &:hover {
+                        rotate: 180deg;
+                        top: -2px;
+                    }
+                }
+            }
+
+            .button-choices {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+
+                button {
+                    padding: 10px;
+                    border-radius: 7px;
+                    border: none;
+                    transition: 200ms;
+
+                    &:hover {
+                        scale: 1.1;
+                    }
+                }
+
+                .no {
+                    background-color: transparent;
+                    color: white;
+                    box-shadow: -3px -2px 5px transparent;
+
+                    &:hover {
+                        background-color: var(--color--primary__700);
+                        box-shadow: 2px 2px 4px #00000075;
+                    }
+                }
+
+                .yes {
+                    background-color: pink;
+                    text-shadow: none;
+
+                    * {
+                        letter-spacing: 0.06em;
+                    }
+
+                    &:hover {
+                        background-color: darkred;
+                        box-shadow: 2px 2px 4px rgba(108, 2, 2, 0.46);
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .skewer-button {
@@ -10,6 +118,7 @@
     border-radius: 50px;
     padding: 4px 4px 0px 4px;
     text-align: center;
+    box-shadow: 0px 5px 5px rgb(0 0 0 / 37%), inset 0 0 2px rgb(0 0 0 / 22%);
 
     svg {
         font-size: 22px;
@@ -17,12 +126,31 @@
     }
 }
 
+.partial-view .skewer-dropdown {
+    right: 0;
+}
+
+@media only screen and (max-width: 722px) {
+    .skewer-dropdown {
+        right: 0;
+    }
+}
+
 .skewer-dropdown {
-    padding-top: 33px;
+    margin-top: 33px;
+    position: absolute;
+
     .text-left {
         background: #333333;
         border-radius: 8px;
         padding: 10px;
+        box-shadow: 6px 9px 9px #00000066;
+        padding: 10px;
+        position: relative;
+        animation: gracious-appearance 400ms;
+        animation-fill-mode: forwards;
+        border: 1px solid hsla(198deg, 100%, 86%, 30%);
+
         .skewer-dropdown-item {
             padding: 10px;
             .link-line {
@@ -34,5 +162,20 @@
                 font-weight: bold;
             }
         }
+    }
+}
+
+@keyframes gracious-appearance {
+    0% {
+        opacity: 0;
+        left: 3px;
+        top: 8px;
+        transform: scaleX(1.2);
+    }
+    100% {
+        opacity: 1;
+        left: -6px;
+        top: -4px;
+        transform: scaleX(1.0);
     }
 }

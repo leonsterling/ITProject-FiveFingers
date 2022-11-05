@@ -12,14 +12,14 @@ const /** ?string */ token = cookies.get("TOKEN");
  * ------------------------------------------------------------ */
  const HOST = "http://localhost";
  const PORT = 5100;
- const URL = `${HOST}:${PORT}`;
-
+ const URL = `${HOST}:${PORT}`
 
 /* ------------------------------------------------------------
  * For deployment-mode
  * ------------------------------------------------------------ */
 
-//const URL = `https://sterlingfamilyartefacts.herokuapp.com`;
+// const URL = `http://157.245.156.125`;
+             
 
 /* ------------------------------------------------------------
  * At ${URL}/login
@@ -143,12 +143,8 @@ export async function getFullViewPromise (id) {
   });
 }
 
-/* ------------------------------------------------------------
- * At ${URL}/edit-page
- * ------------------------------------------------------------ */
-export async function updateArtefact(id,record) {
-  // set configurations
-  const configuration = {
+export async function updateArtefact (id, record) {
+  return setupPromise(/* configuration = */ {
     method: "patch",
     url: `${URL}/edit-artefact/${id}`,
     data: {
@@ -157,8 +153,21 @@ export async function updateArtefact(id,record) {
     headers: {
       Authorization: `Bearer ${token}`, // authorized route with jwt token
     },
-  };
+  });
+}
 
+/* ------------------------------------------------------------
+ * Others
+ * ------------------------------------------------------------ */
+export async function deleteArtefact (id) {
+  return setupPromise(/* configuration = */ {
+    method: "delete",
+    url: `${URL}/delete-artefact/${id}`,
+    headers: {
+      // authorized route with jwt token
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
 
 /* ------------------------------------------------------------

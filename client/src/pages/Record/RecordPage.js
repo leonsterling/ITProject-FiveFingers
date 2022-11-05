@@ -64,7 +64,7 @@ function RecordForm() {
    * artefactImg: string,
    *  }} */
   const initialState = {
-    artefactName: " ",
+    artefactName: "",
     artefactDate: "",
     location: "",
     description: "",

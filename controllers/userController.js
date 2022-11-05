@@ -19,23 +19,27 @@ const {
   User,
   Artefact,
   Category,
-  Associated,
-  Artefact_Local,
+  Associated
 } = require("../models/user");
 
 /* Main implementation */
 
-const LIMIT = 4;
+// page limit constant
+const LIMIT = 16;
+
 const HOST = "http://localhost";
 const PORT = 5100;
 const URL = `${HOST}:${PORT}`;
+
+// const URL = `http://157.245.156.125`;
+
 
 /**
  * MongoDB aggregate pipeline for the search index: "associated_index"
  * @param {Query} query
  */
 const associatedIndex = (query) =>
-  Artefact_Local.aggregate([
+  Artefact.aggregate([
     {
       $search: {
         index: "associated_index",
@@ -52,7 +56,7 @@ const associatedIndex = (query) =>
  * @param {Query} query
  */
 const categoryIndex = (query) =>
-  Artefact_Local.aggregate([
+  Artefact.aggregate([
     {
       $search: {
         index: "category_index",
@@ -134,6 +138,8 @@ const searchCategory = (req, res) => {
         res.status(200).send({
           message: `${totalSearched} artefacts matched the query: ${query}`,
           artefactRecords,
+          totalSearched,
+          query
         });
       } else {
         categoryIndex(query)
@@ -145,7 +151,9 @@ const searchCategory = (req, res) => {
             res.status(200).send({
               message: `${totalSearched} artefacts matched the query: ${query}`,
               totalPages,
+              totalSearched,
               searched,
+              query
             });
           })
           .catch((error) => {
@@ -183,6 +191,8 @@ const searchAssociated = (req, res) => {
         res.status(200).send({
           message: `${totalSearched} artefacts matched the query: ${query}`,
           artefactRecords,
+          totalSearched,
+          query
         });
       } else {
         associatedIndex(query, idx)
@@ -196,6 +206,8 @@ const searchAssociated = (req, res) => {
               message:`${totalSearched} artefacts matched the query: ${query}`,
               totalPages,
               searched,
+              totalSearched,
+              query
             });
           })
           .catch((error) => {
@@ -263,7 +275,7 @@ const getAssociated = (req, res) => {
  * @param {Response} res
  */
 const getArtefactDetails = async (req, res) => {
-  Artefact_Local.findById(req.params.id)
+  Artefact.findById(req.params.id)
     .then((result) => {
       res.status(200).send({
         message: "Artefact retrieved successfully",
@@ -305,8 +317,8 @@ const registerArtefact = async (req, res) => {
       }
     }
   );
-
-  const artefact = new Artefact_Local({
+  
+  const artefact = new Artefact({
     artefactName: req.body.record.artefactName,
     description: req.body.record.description,
     memories: req.body.record.memories,
@@ -329,7 +341,7 @@ const registerArtefact = async (req, res) => {
         .then((categoryObject) => {
           if (categoryObject) {
             // stores the existing category object in the artefact record
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: artefact._id },
               {
                 $set: { category: categoryObject },
@@ -351,7 +363,7 @@ const registerArtefact = async (req, res) => {
             });
 
             // updates category of artefact
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: artefact._id },
               {
                 $set: { category: newCategory },
@@ -383,7 +395,7 @@ const registerArtefact = async (req, res) => {
         .then((associatedObject) => {
           if (associatedObject) {
             // stores the existing associated object in the artefact record
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: artefact._id },
               {
                 $set: { associated: associatedObject },
@@ -405,7 +417,7 @@ const registerArtefact = async (req, res) => {
             });
 
             // updates associated of artefact
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: artefact._id },
               {
                 $set: { associated: newAssociated },
@@ -453,7 +465,7 @@ const registerArtefact = async (req, res) => {
  * @param {Response} res
  */
 const editArtefact = (req, res) => {
-  Artefact_Local.findByIdAndUpdate(
+  Artefact.findByIdAndUpdate(
     { _id: req.params.id },
     {
       artefactName: req.body.record.artefactName,
@@ -468,7 +480,7 @@ const editArtefact = (req, res) => {
         .then((categoryObject) => {
           if (categoryObject) {
             // stores the existing category object in the artefact record
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: artefact._id },
               {
                 $set: { category: categoryObject },
@@ -490,7 +502,7 @@ const editArtefact = (req, res) => {
             });
 
             // updates category of artefact
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: artefact._id },
               {
                 $set: { category: newCategory },
@@ -522,7 +534,7 @@ const editArtefact = (req, res) => {
         .then((associatedObject) => {
           if (associatedObject) {
             // stores the existing associated object in the artefact record
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: artefact._id },
               {
                 $set: { associated: associatedObject },
@@ -544,7 +556,7 @@ const editArtefact = (req, res) => {
             });
 
             // updates associated of artefact
-            Artefact_Local.updateOne(
+            Artefact.updateOne(
               { _id: artefact._id },
               {
                 $set: { associated: newAssociated },
@@ -592,9 +604,9 @@ const editArtefact = (req, res) => {
 // delete artefact function for route: '/delete-artefact/:id'
 const deleteArtefact = async (req, res) => {
   const artefact_id = req.params.id;
-  const artefact_record = await Artefact_Local.findOne({ _id: artefact_id });
+  const artefact_record = await Artefact.findOne({ _id: artefact_id });
 
-  Artefact_Local.deleteOne({ _id: artefact_id })
+  Artefact.deleteOne({ _id: artefact_id })
     .then((artefact) => {
       const pathFile = __dirname + artefact_record.artefactImg.path;
 
@@ -610,7 +622,7 @@ const deleteArtefact = async (req, res) => {
       });
 
       return res.status(200).send({
-        message: "Delete artefact successfully",
+        message: "Deleted artefact successfully",
         artefact,
       });
     })
@@ -633,13 +645,13 @@ const getPage = async (req, res) => {
  
   const pageNum = req.params.page;
 
-  const totalArtefact = await Artefact_Local.countDocuments();
+  const totalArtefact = await Artefact.countDocuments();
 
   const totalPages = Math.ceil(totalArtefact / LIMIT);
 
   const idx = (pageNum - 1) * LIMIT;
 
-  await Artefact_Local.find()
+  await Artefact.find()
     .sort({ _id: -1 })
     .skip(idx)
     .limit(LIMIT)
@@ -654,15 +666,28 @@ const getPage = async (req, res) => {
           totalPages,
           totalArtefact,
         });
-      } else {
+      } 
+      
+      else if (dataPerPage == 0 && totalPages == 0) {
         return res.status(200).send({
-          message: "Invalid Page Number",
+          message: `Empty Dashboard (page ${pageNum})`,
           dataPerPage,
           dataInPage,
           totalPages,
           totalArtefact,
         });
-      }
+      } 
+
+      else {
+        return res.status(200).send({
+          message: `Invalid Page Number`,
+          dataPerPage,
+          dataInPage,
+          totalPages,
+          totalArtefact,
+        });
+      } 
+
     })
     .catch((error) => {
       res.status(500).send({

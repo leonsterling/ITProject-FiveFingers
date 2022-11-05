@@ -3,17 +3,23 @@ import { useState } from "react";
 import { getSearchCategoryPromise, getSearchAssociatedPromise } from "../../../utils/dataHandler";
 
 const buttonChoices = ["Category", "Associated"];
+const FIRST_PAGE = 1;
+
+// Imports of local utils
+import {
+  getPagePromise,
+} from "../../../utils/dataHandler";
 
 function SearchContent({
   searchText,
   setUserData,
   setSearchText,
   setIsSearched,
-  handleDashboard,
   setNumPages,
   currRendered,
   setCurrRendered,
   setCurrPageNum,
+  setMessage
 }) {
 
   let [ currSelected, setCurrSelected ] = useState("Category");
@@ -35,10 +41,12 @@ function SearchContent({
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          setCurrRendered(currSelected);
+          currRendered = currSelected;
           let currPromise;
           if (searchText === "") {
-            currPromise = handleDashboard();
+            console.log("This is an empty search");
+            currPromise = getPagePromise(1);
+            currRendered = "Dashboard"
           } else {
             setCurrPageNum(1);
             switch (currSelected) {
@@ -50,22 +58,34 @@ function SearchContent({
                 break;
             }
           }
+          setCurrRendered(currRendered);
           currPromise
-              .then((res) => {
-                console.log(res.data)
-                console.log({ searchText });
+            .then((res) => {
+              console.log(res.data)
+              console.log({ searchText });
+              setCurrPageNum(FIRST_PAGE);
+              if (buttonChoices.includes(currRendered)) {
                 setUserData(res.data.searched);
-                setNumPages(res.data.totalPages);
-              })
-              .catch((e) => {
-                console.log(e.message);
-              });
-
+                setMessage(res.data.message);
+              }
+              else {
+                let chosenData = (res.data.dataInPage.length === 0) ? null : res.data.dataInPage;
+                console.log(chosenData);
+                setUserData(chosenData);
+                setMessage("My Artefacts");
+              }
+              setNumPages(res.data.totalPages);
+              if (res.data.message.startsWith('0')) {
+                  setNumPages(0);
+              }
+            })
+            .catch((e) => {
+              console.log(e.message);
+            });
         }}
       >
         <input
           type="text"
-          onClick={() => console.log("Hello world")}
           onChange={(e) => setSearchText(e.target.value)}
         />
       </form>

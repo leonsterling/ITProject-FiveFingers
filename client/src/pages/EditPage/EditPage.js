@@ -6,6 +6,8 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import Navbar from "../../components/Navbar";
 import ClipLoader from "react-spinners/ClipLoader";
+import { getFullViewPromise } from "../../utils/dataHandler";
+import { updateArtefact } from "../../utils/dataHandler";
 
 // obtain token from cookie
 const cookies = new Cookies();
@@ -38,45 +40,29 @@ const EditPage = () => {
     associated: "",
   };
 
-  async function updateArtefact(e) {
-    // set configurations
-    const configuration = {
-      method: "patch",
-      url: `http://localhost:5100/edit-artefact/${_id}`,
-      data: {
-        record,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`, // authorized route with jwt token
-      },
-    };
-
-    // make the API call
-    axios(configuration)
-      .then((result) => {
-        window.location.href = "/dashboard";
-      })
-      .catch((error) => {
-        error = new Error();
-        console.log(error);
-      });
-  }
   // NOT DONE YET
   function handleSubmit(e) {
     // Prevent the user from refreshing the page when they input "enter"
     e.preventDefault();
-    console.log("here");
-    console.log(record);
     let newRecord = JSON.parse(JSON.stringify(record));
     newRecord.associated = record.associated.person;
     newRecord.category = record.category.category_name;
-    console.log("New Record");
-    console.log(newRecord);
+
     if (!isValidInput(newRecord)) {
       setFeedback(feedbackMessages.invalid);
       return;
     }
-    updateArtefact();
+    
+    updateArtefact(_id, record)
+    .then((result) => {
+      console.log(result.data)
+      window.location.href = "/dashboard";
+    })
+    .catch((error) => {
+      error = new Error();
+      console.log(error);
+    });
+    
     setFeedback(feedbackMessages.valid);
     setToggleLoad(true);
    
@@ -85,14 +71,6 @@ const EditPage = () => {
   // React hook to change the state of record
   const [record, setRecord] = useState(initialState);
 
-  // Hook to get the data
-  const configuration = {
-    method: "get",
-    url: `http://localhost:5100/get-artefact/${_id}`,
-    headers: {
-      Authorization: `Bearer ${token}`, // authorized route with jwt token
-    },
-  };
   let currCat;
   let currPer;
 
@@ -111,7 +89,7 @@ const EditPage = () => {
   useEffect(function () {
     async function updatePage() {
       try {
-        const response = await axios(configuration);
+        const response = await getFullViewPromise (_id)
         //setRecord(response.data.result);
         let mapped = mapResults(response.data.result)
         setRecord(mapped);
@@ -148,7 +126,7 @@ const EditPage = () => {
       <div className="record-page">
         {/* The form that the user to send to database */}
         <form onSubmit={(e) => handleSubmit(e)}>
-          <h2>Edit Artefact</h2>
+          <h1>Edit Artefact</h1>
           <div className="data-entry-fields">
             {/* TEXT DATA*/}
             <TextUpdateField

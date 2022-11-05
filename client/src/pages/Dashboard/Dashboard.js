@@ -37,7 +37,7 @@ function Dashboard() {
   const /** boolean */ [isToggled, setIsToggled] = useState(false);
   let /** ?string */ [userData, setUserData] = useState(null);
   let /** string */ [searchText, setSearchText] = useState("");
-  let /** callback */ setGetArtefactCallback = useState(handleDashboard)[1];
+  let /** callback */ setGetArtefactCallback = useState()[1];
 
   let /** boolean */ [isSearched, setIsSearched] = useState(false);
 
@@ -47,19 +47,19 @@ function Dashboard() {
   let /** string */ [ currRendered, setCurrRendered ] = useState("Dashboard");
 
   let /** string */ [open, setOpen] = useState(false);
+  let /** string */ [message, setMessage] = useState("My Artefacts");
 
   let searchParams = {
     searchText,
     setSearchText,
     setUserData,
     setIsSearched,
-    handleDashboard,
-    setGetArtefactCallback,
     handleSearch,
     setNumPages,
     setCurrPageNum,
     currRendered,
     setCurrRendered,
+    setMessage
   };
 
   return (
@@ -70,6 +70,7 @@ function Dashboard() {
         isToggled={isToggled}
         setIsToggled={setIsToggled}
         searchParams={searchParams}
+        message={message}
       />
       <ArtefactView
         isToggled={isToggled}
@@ -80,6 +81,7 @@ function Dashboard() {
         isSearched={isSearched}
         getPagePromise={getPagePromise}
         currPageNum={currPageNum}
+        setCurrPageNum={setCurrPageNum}
         setNumPages={setNumPages}
         open={open}
         setOpen={setOpen}
@@ -96,14 +98,6 @@ function Dashboard() {
       />
     </div>
   );
-}
-
-/**
- * Obtains the default Dashboard data and changes the
- * dashboard components accordingly
- */
-async function handleDashboard() {
-  return await getInitDashboardPromise();
 }
 
 /**

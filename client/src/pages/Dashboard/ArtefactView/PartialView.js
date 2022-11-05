@@ -24,7 +24,7 @@ import "./PartialView.scss";
  * parent component and displays them in a figure HTML tag
  * @return {React.Component}
  */
-function PartialView({ title, image, desc, date, _id, openFunction}) {
+function PartialView({ title, image, desc, date, _id, openFunction, setUserData, currPageNum, setCurrPageNum, setNumPages, mode }) {
 
   return (
     <figure className="partial-view">
@@ -39,18 +39,18 @@ function PartialView({ title, image, desc, date, _id, openFunction}) {
         />
       </div>
       <div className="info-side">
-        <div className="info-title">
-          <p>{title}</p>
-        </div>
-        <div className="info-desc">
-          <p>
-            <span id="p-desc">Description:</span>
-            <br/>
-            {desc}
-          </p>
-        </div>
-        <div className="info-date">
-          <p>{date}</p>
+        <div className="info-values">
+          <h2 className="info-title">
+            {title}
+          </h2>
+          <div className="info-desc">
+            <p>
+              <span id="p-desc">Description:</span>
+              <br/>
+              <span className={(desc) ? '' : 'grey smaller'}>{(desc) ? desc : "No description given"}</span>
+              
+            </p>
+          </div>
         </div>
         <div className="info-more">
           <Link to={`/full-view/${_id}`} className="link-line">
@@ -66,7 +66,15 @@ function PartialView({ title, image, desc, date, _id, openFunction}) {
         </div>
       </div>
       <div className="skewer-partial">
-        <Skewer _id={_id} className="skewer-menu-partial"/>
+        <Skewer
+          _id={_id}
+          className="skewer-menu-partial"
+          setUserData={setUserData}
+          currPageNum={currPageNum}
+          setCurrPageNum={setCurrPageNum}
+          setNumPages={setNumPages}
+          mode={mode}
+        />
       </div>
     </figure>
   );
