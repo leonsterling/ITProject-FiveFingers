@@ -19,7 +19,7 @@ let tempToken;
 const validUser = {
   username: "test",
   password: "test",
-  hashPassword: "$2a$10$92nS84GC86VA1Meh6fz8jO52fnthcer.f1QUDrwzt7K0gE0vQimOO",
+  hashPassword: "$2a$10$gUZ8UgFgaA3JH11RV1l0IOOdVDby7mn2ovTW3fRQT57P7rbxg86ZG",
 };
 
 // dummy user non-existing in database
