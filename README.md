@@ -196,7 +196,7 @@ It's the same as server, just `cd client` first.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Contributors
+## Contributors
 | Name                    | Student No | Email                             | 
 | ----------------------- | ---------- | --------------------------------- | 
 | Leoni Angela            | 1179015    | leonia@student.unimelb.edu.au     | 
@@ -207,6 +207,8 @@ It's the same as server, just `cd client` first.
 
 **Supervisor**  
 Stephanie Brooke
+**Client**  
+Professor Leon Sterling
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
