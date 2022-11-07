@@ -83,4 +83,8 @@ td.table-cell {
     .name-table {
         width: 95%;
     }
+
+    .list-table {
+        overflow-y: clip;
+    }
 }

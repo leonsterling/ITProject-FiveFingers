@@ -34,6 +34,8 @@ function Categories({ data, index, handleChange, val }) {
   // categories button, the cancel button or the button itself
   let /** boolean */ [isVisible, setVisibility] = useState(false);
 
+  let finlabel;
+
   // Assign a button to every category we get
   let /** ?Array<React.Component> */ options;
   if (categoryList !== null) {
@@ -71,7 +73,15 @@ function Categories({ data, index, handleChange, val }) {
       );
     });
   }
-
+  if (options && options.length === 0 && label.length > 0) {
+    isVisible = false;
+    finlabel = (
+        <p className="feedback">
+          Adding new {data.label}: <br/>
+          <span className="label">{label}</span>
+        </p>
+    )
+  }
   // The base CSS class for the dropdown component
   const /** string */ dropdownBaseClass = "input-like category__dropdown ";
 
@@ -130,12 +140,11 @@ function Categories({ data, index, handleChange, val }) {
           data={data}
         />
 
-        {/* The dropdown component */}
-        <div className={dropdownClass}>
+       {/* The dropdown component */}
+       <div className={dropdownClass}>
           {options}
-
-          <CancelCategory setVisibility={setVisibility} />
         </div>
+        {finlabel}
       </li>
       <FocusState isVisible={isVisible} setVisibility={setVisibility} />
     </>

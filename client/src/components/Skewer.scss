@@ -118,6 +118,8 @@
     padding: 4px 4px 0px 4px;
     text-align: center;
     box-shadow: 0px 5px 5px rgb(0 0 0 / 37%), inset 0 0 2px rgb(0 0 0 / 22%);
+    position: relative;
+    z-index: 5;
 
     svg {
         font-size: 22px;
@@ -133,6 +135,20 @@
     .skewer-dropdown {
         right: 0;
     }
+
+    tbody .table-body{
+        width: 100%;
+        display: flex;
+    }
+
+    #name-cell {
+        width: 15ch;
+        text-overflow: ellipsis;
+    }
+
+    .list-view-container .list-table .artefact-list {
+        table-layout: initial;
+    }
 }
 
 .skewer-dropdown {
@@ -140,6 +156,7 @@
     position: absolute;
     right: 0;
     width: max-content;
+    z-index: 6;
 
     .text-left {
         background: #333333;
