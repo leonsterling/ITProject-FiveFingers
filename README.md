@@ -207,6 +207,7 @@ It's the same as server, just `cd client` first.
 
 **Supervisor**  
 Stephanie Brooke
+
 **Client**  
 Professor Leon Sterling
 
