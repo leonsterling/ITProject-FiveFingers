@@ -1,4 +1,10 @@
 <!-- PROJECT LOGO -->
+<a name="readme-top"></a>
+
+[![Contributors][contributors-shield]][contributors-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+
 <br />
 <div align="center">
   <a href="https://github.com/LeoniA29/ITProject-FiveFingers">
@@ -59,8 +65,8 @@ This gave us the following requirements:
 | Edit previous registered artefact                         | Implement a pagination feature    |
 | Delete existing artefacts                                 |     |
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-  
 ### Team Members
 | Name                    | Student No | Email                             | 
 | ----------------------- | ---------- | --------------------------------- | 
@@ -70,8 +76,22 @@ This gave us the following requirements:
 | Tahmin Ahmed            | 1146663    | tahmin@student.unimelb.edu.au     | 
 | Vincent Kurniawan       | 1110090    | vkurniawan@student.unimelb.edu.au | 
 
-With Stephanie Brooke supervising our development
+**Supervisor**  
+Stephanie Brooke
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Documentation
+- [Project Roadmap](https://fivefingers.atlassian.net/l/cp/fXsAt7vx)
+- [Low Fidelity Prototype](https://www.figma.com/file/fnZ2IqeLl3tUlzs3on4mkA/Low-Fidelity-Brainstorm-Scribbles?node-id=0%3A1)
+- [High Fidelity Prototype](https://www.figma.com/file/9qD6wRJdeD93kv5KwXBW86/High-Fidelity-Prototype?node-id=2%3A2)
+- [User Stories](https://fivefingers.atlassian.net/l/cp/A1Gs3ovL)
+- [Motivational Model](https://fivefingers.atlassian.net/l/cp/muD0ZW2E)
+- [Architecture Diagram](https://fivefingers.atlassian.net/l/cp/wJchCgAa)
+- [Database Schema Model](https://fivefingers.atlassian.net/l/cp/1BwPqK49)
+- [API Documentation](https://fivefingers.atlassian.net/l/cp/bho1n1TL)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Technical details
 
@@ -90,3 +110,41 @@ With Stephanie Brooke supervising our development
                 // Code for stress tests
 ```
 
+### Built With
+
+This section lists any major frameworks/libraries used to bootstrap this project. 
+
+* [![MongoDB][MongoDB.img]][Mongo-url]
+* [![Express][Express.js]][Express-url]
+* [![React][React.js]][React-url]
+* [![Node][Node.js]][Node-url]
+* [![Github Actions][Githuba]][Githuba-url]
+* [![Jest][Jest.img]][Jest-url]
+* [![Mocha][Mocha.img]][Mocha-url]
+
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/LeoniA29/ITProject-FiveFingers.svg?style=for-the-badge
+[contributors-url]: https://github.com/LeoniA29/ITProject-FiveFingers/graphs/contributors
+[issues-shield]: https://img.shields.io/github/issues/LeoniA29/ITProject-FiveFingers.svg?style=for-the-badge
+[issues-url]: https://github.com/LeoniA29/ITProject-FiveFingers/issues
+[license-shield]: https://img.shields.io/github/license/LeoniA29/ITProject-FiveFingers.svg?style=for-the-badge
+[license-url]: https://github.com/LeoniA29/ITProject-FiveFingers/blob/main/LICENSE
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[MongoDB.img]: https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white
+[Mongo-url]: https://www.mongodb.com/
+[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[Express-url]: https://expressjs.com/
+[Node.js]: 	https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
+[Node-url]: https://nodejs.org/en/
+[Githuba]: https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white
+[Githuba-url]: https://github.com/features/actions
+[Jest.img]: https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white
+[Jest-url]: https://jestjs.io/
+[Mocha.img]: https://img.shields.io/badge/mocha.js-323330?style=for-the-badge&logo=mocha&logoColor=Brown
+[Mocha-url]: https://mochajs.org/
