@@ -38,7 +38,6 @@ Sterling Family Artefacts **is a home for all your artefacts**. Easily preserve 
 - [Project Background](#about-the-project)
   * [Description](#description)
   * [Requirements](#requirements)
-  * [Team Members](#team-members)
 - [Documentation](#documentation)
 - [Technical Details](#technical-details)
   * [Folder Structure](#folder-structure)
@@ -47,6 +46,7 @@ Sterling Family Artefacts **is a home for all your artefacts**. Easily preserve 
   * [Local Development](#local-development)
   * [Running Serverside](#run-serverside)
   * [Running Clientside](#run-clientside)
+- [Contributors](#contributors)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -69,20 +69,6 @@ This gave us the following requirements:
 | Add speicfic cateogries or assocaition for an artefact    | Do fuzzy searches    |
 | Edit previous registered artefact                         | Implement a pagination feature    |
 | Delete existing artefacts                                 |     |
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Team Members
-| Name                    | Student No | Email                             | 
-| ----------------------- | ---------- | --------------------------------- | 
-| Leoni Angela            | 1179015    | leonia@student.unimelb.edu.au     | 
-| Nadya Aurelia Herryyanto| 1185814    | nherryyanto@student.unimelb.edu.au| 
-| Nicholas Riykco Widjaya | 1179000    | riykco.widjaya@unimelb.edu.au     | 
-| Tahmin Ahmed            | 1146663    | tahmin@student.unimelb.edu.au     | 
-| Vincent Kurniawan       | 1110090    | vkurniawan@student.unimelb.edu.au | 
-
-**Supervisor**  
-Stephanie Brooke
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -207,6 +193,20 @@ npm test
 #### Install new npm packages for React UI
 It's the same as server, just `cd client` first.
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Contributors
+| Name                    | Student No | Email                             | 
+| ----------------------- | ---------- | --------------------------------- | 
+| Leoni Angela            | 1179015    | leonia@student.unimelb.edu.au     | 
+| Nadya Aurelia Herryyanto| 1185814    | nherryyanto@student.unimelb.edu.au| 
+| Nicholas Riykco Widjaya | 1179000    | riykco.widjaya@unimelb.edu.au     | 
+| Tahmin Ahmed            | 1146663    | tahmin@student.unimelb.edu.au     | 
+| Vincent Kurniawan       | 1110090    | vkurniawan@student.unimelb.edu.au | 
+
+**Supervisor**  
+Stephanie Brooke
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
