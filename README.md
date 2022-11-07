@@ -1,11 +1,33 @@
-# Sterling Family Artefact
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/LeoniA29/ITProject-FiveFingers">
+    <img src="client/public/logo512.png" alt="Logo" width="100" height="100">
+  </a>
+
+  <h3 align="center">Sterling Family Artefact</h3>
+
+  <p align="center">
+    Home for all your artefacts
+    <br />
+    <a href="https://fivefingers.atlassian.net/l/cp/AuHmbHFH"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="http://157.245.156.125/login">View Demo</a>
+    ·
+    <a href="https://github.com/LeoniA29/ITProject-FiveFingers/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/LeoniA29/ITProject-FiveFingers/issues">Request Feature</a>
+  </p>
+</div>
 
 
-<Family Artefact App> by Five Fingers
-This project is a web application made by Team 098 of COMP30022.
+## Sterling Family Artefact
+
+Sterling Family Artefacts **is a home for all your artefacts**. Easily preserve all of your family legacy and memories. Stay organised with Sterling Family Artefacts.
 
 
-# Table of Contents
+## Table of Contents
 
 - [Project Background](#project-background)
   * [Description](#description)
@@ -14,10 +36,14 @@ This project is a web application made by Team 098 of COMP30022.
   * [Required Features](#required-features)
   * [Additional Features](#additional-features)
   * [Documentation](#documentation)
-  
-# Project Background
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+<img src="client/public/Cover.png" alt="cover">
+
 ### Description
-Our client is Professor Leon Sterlin, a professor at the University of Melbourne. He requested a CRUD interface web application that would allow him to create records of artefacts, read it in various different format and styles and edit or delete existing artefacts. The application would be primarily used to store photos of family artefacts. He requested the application be able to be used both on mobile and desktop devices so he's able to show said artefact records to his families.
+Sterling Family Artefact, a project by Group 098 (Five Fingers) of University of Melbourne's COMP30022 IT Project, is a CRUD (Create, Read, Update, Delete) interface web application to store photos of our client's family artefacts. Sterling Family Artefact offers a personalised experience for our client, developed with robustness in mind, and shared in DNA many similarities with our client’s site – from the colour scheme to the font usage. This application enables users to create records of artefacts, read it in various different formats and styles, edit and delete existing artefacts, and is compatible on both mobile and desktop devices to conveniently show artefact records to the user's friends and family anytime, anywhere.
 
 This gave us the following requirements:
 
@@ -47,5 +73,20 @@ This gave us the following requirements:
 With Stephanie Brooke supervising our development
 
 
+## Technical details
 
+### Folder Structure
+```js
+/
+├── client/    
+│   │           // Project root
+│   ├── src/
+│   │           // Main code
+│   └── src/components/__tests__/
+│               // Frontend unit tests
+├── models/
+│               // Code for Mongoose
+└── tests/
+                // Code for stress tests
+```
 
