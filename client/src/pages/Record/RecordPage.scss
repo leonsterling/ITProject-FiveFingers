@@ -211,16 +211,17 @@
                 transition: 200ms;
 
                 &:hover {
-                    scale: 1.1;
+                    scale: 1.05;
                     box-shadow: 0 10px 25px -11px hsla(198deg, 70%, 20%, 0.4);
                 }
             }
 
             .response-button__submit {
-                background-color: var(--accent-color-darker);
+                background-color: var(--accent-color);
                 box-shadow: 1px 2px 4px hsla(198deg, 70%, 20%, 0.4);
 
                 &:active {
+                    background-color: var(--accent-color-darker);
                     box-shadow: 0px 0px 7px hsla(198deg, 51%, 40%, 0.7), inset 2px 4px 4px hsla(198deg, 70%, 20%, 0.9);
                 }
             }
