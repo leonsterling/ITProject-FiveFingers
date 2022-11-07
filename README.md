@@ -38,6 +38,7 @@ Sterling Family Artefacts **is a home for all your artefacts**. Easily preserve 
 - [Project Background](#about-the-project)
   * [Description](#description)
   * [Requirements](#requirements)
+  * [Accomplished](#accomplished)
 - [Documentation](#documentation)
 - [Technical Details](#technical-details)
   * [Folder Structure](#folder-structure)
@@ -70,6 +71,19 @@ This gave us the following requirements:
 | Edit previous registered artefact                         | Implement a pagination feature    |
 | Delete existing artefacts                                 |     |
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Accomplished                                       
+1. Log in and Log out Functionalieis                         
+2. View Partial Data of the Artefact                          
+3. View Full Data of the Artefact                            
+4. View Artefacts in a table format                           
+5. Add Artefacts                                              
+6. Add speicfic cateogries or assocaition for an artefact    
+7. Edit previous registered artefact                          
+8. Delete existing artefacts                                 
+9. Implement a pagination feature                            
+10. Search artefacts by cateogies and association             
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Documentation
