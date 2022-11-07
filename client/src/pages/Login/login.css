@@ -47,6 +47,7 @@
   font-size: 21px;
   margin-top: 2px;
   display: flex;
+  cursor: pointer;
 }
 .login-page form ul .input-field span svg {
   stroke: gray;

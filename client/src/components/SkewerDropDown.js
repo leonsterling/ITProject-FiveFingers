@@ -48,7 +48,7 @@ const SkewerDropDown = ({ _id, setUserData, currPageNum, setCurrPageNum, setNumP
       >
         <div className="delete-message-container" onClick={(e) => e.stopPropagation()}>
           <div className="message">
-            <span>Delete Artefact?</span>
+            <span>Are you sure you want to delete this artefact?</span>
           </div>
           <div className="button-choices">
             <button
