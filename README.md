@@ -35,13 +35,18 @@ Sterling Family Artefacts **is a home for all your artefacts**. Easily preserve 
 
 ## Table of Contents
 
-- [Project Background](#project-background)
+- [Project Background](#about-the-project)
   * [Description](#description)
   * [Requirements](#requirements)
   * [Team Members](#team-members)
-  * [Required Features](#required-features)
-  * [Additional Features](#additional-features)
-  * [Documentation](#documentation)
+- [Documentation](#documentation)
+- [Technical Details](#technical-details)
+  * [Folder Structure](#folder-structure)
+  * [Tech Stack](#built-with)
+- [Installation](#installation)
+  * [Local Development](#local-development)
+  * [Running Serverside](#run-serverside)
+  * [Running Clientside](#run-clientside)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -122,6 +127,85 @@ This section lists any major frameworks/libraries used to bootstrap this project
 * [![Jest][Jest.img]][Jest-url]
 * [![Mocha][Mocha.img]][Mocha-url]
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Installation
+### Local Development
+
+Because this app is made of two npm projects, there are two places to run `npm` commands:
+
+1. **Node API server** in `server/`
+2. **React UI** in `client/` directory.
+
+Test the app:
+```
+# in root directory
+npm run dev
+```
+
+Test the built app:
+```
+# in root directory
+npm build
+npm start
+
+# to test the whole app
+npm test
+```
+
+### Run Serverside
+
+In a terminal:
+
+```bash
+# Change directory first!
+cd server
+
+# Initial setup
+npm install
+
+# Start the server
+npm start
+
+# Test the server
+npm test
+```
+
+#### Install new npm packages for Server
+Note: server and client are *separate*.  `cd` to the correct directory (`/` or `client/`) before doing this.
+```bash
+cd
+npm install package-name --save
+```
+
+If the package you want to add is a development package, use the command
+```bash
+npm install package-name --save-dev
+```
+
+
+### Run Clientside
+
+The React app is configured to proxy backend requests to the local Node server. (See [`"proxy"` config](client/package.json))
+
+In a separate terminal from the API server, start the UI:
+
+```bash
+# Always change directory, first
+cd client/
+
+# Initial setup
+npm install
+
+# Start the client
+npm start
+
+# Test the client
+npm test
+```
+
+#### Install new npm packages for React UI
+It's the same as server, just `cd client` first.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
