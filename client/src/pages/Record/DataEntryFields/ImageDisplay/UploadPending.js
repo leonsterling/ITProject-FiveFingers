@@ -36,7 +36,7 @@ function UploadPending({ setRecord, record }) {
                 typeImg: type });
             }}
           />
-        Drop your images here, or select <span>click to browse</span>
+        <span>Click to browse</span>
       </label>
     </>
   );
