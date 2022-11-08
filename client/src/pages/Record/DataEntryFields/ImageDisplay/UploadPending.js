@@ -25,6 +25,8 @@ function UploadPending({ setRecord, record }) {
             name="artefactImg"
             multiple={false}
             onDone={({ base64, name, size, type}) => {
+              // All image formats are supported this 
+              // way, including ones that are yet to be recognized by a browser
               if (!type.startsWith("image")) {
                   setFeedbackMessage(feedback.invalid);
                   return;
